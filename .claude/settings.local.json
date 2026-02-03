@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gradle wrapper:*)",
+      "Bash(/Users/yukiyang/Desktop/yukis_very_important_folder/UW/CSE503/project/gradlew:*)",
+      "WebFetch(domain:soot-oss.github.io)",
+      "WebSearch",
+      "Bash(jar tf:*)",
+      "Bash(javap:*)",
+      "Bash(./gradlew build:*)",
+      "Bash(./gradlew run:*)",
+      "Bash(./gradlew test:*)",
+      "Bash(tree:*)"
+    ]
+  }
+}

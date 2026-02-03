@@ -1,0 +1,276 @@
+package edu.uw.cse.purity.output;
+
+import edu.uw.cse.purity.analysis.MethodSummary;
+import edu.uw.cse.purity.analysis.PurityChecker;
+import edu.uw.cse.purity.graph.*;
+import edu.uw.cse.purity.graph.PointsToGraph.EdgeTarget;
+import edu.uw.cse.purity.graph.PointsToGraph.MutatedField;
+import sootup.core.jimple.basic.Local;
+import sootup.core.signatures.FieldSignature;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.*;
+
+/**
+ * Prints points-to graph summaries in text and DOT (Graphviz) format.
+ *
+ * DOT color scheme:
+ *   InsideNode    -> green box       (newly allocated, mutations OK)
+ *   ParameterNode -> blue ellipse    (prestate, mutations = impure)
+ *   LoadNode      -> red diamond     (external/unknown, mutations = impure)
+ *   GlobalNode    -> orange octagon  (static field escape)
+ *   InsideEdge    -> solid arrow
+ *   OutsideEdge   -> dashed arrow
+ */
+public class GraphPrinter {
+
+    /**
+     * Print a text summary of the points-to graph to stdout.
+     */
+    public static void printTextSummary(MethodSummary summary) {
+        PointsToGraph graph = summary.getExitGraph();
+        String sig = summary.getMethodSignature();
+
+        System.out.println("--- Points-To Graph for " + sig + " ---");
+        System.out.println();
+
+        // Nodes
+        Set<Node> allNodes = graph.getAllNodes();
+        List<Node> sortedNodes = new ArrayList<>(allNodes);
+        sortedNodes.sort(Comparator.comparing(Node::getId));
+
+        System.out.println("Nodes:");
+        if (sortedNodes.isEmpty()) {
+            System.out.println("  (none)");
+        }
+        for (Node n : sortedNodes) {
+            System.out.println("  " + n.getId() + " [" + nodeKindLabel(n) + "]" + nodeDescription(n));
+        }
+        System.out.println();
+
+        // Edges
+        System.out.println("Edges:");
+        Map<Node, Map<FieldSignature, Set<EdgeTarget>>> edges = graph.getEdges();
+        boolean hasEdges = false;
+        List<Node> edgeSources = new ArrayList<>(edges.keySet());
+        edgeSources.sort(Comparator.comparing(Node::getId));
+        for (Node source : edgeSources) {
+            Map<FieldSignature, Set<EdgeTarget>> fieldMap = edges.get(source);
+            List<FieldSignature> fields = new ArrayList<>(fieldMap.keySet());
+            fields.sort(Comparator.comparing(f -> f != null ? f.getName() : "[]"));
+            for (FieldSignature field : fields) {
+                Set<EdgeTarget> targets = fieldMap.get(field);
+                for (EdgeTarget et : targets) {
+                    String fieldName = field != null ? field.getName() : "[]";
+                    String edgeStyle = et.type() == EdgeType.INSIDE ? "INSIDE, solid" : "OUTSIDE, dashed";
+                    System.out.println("  " + source.getId() + " --" + fieldName
+                        + "--> " + et.target().getId() + "  (" + edgeStyle + ")");
+                    hasEdges = true;
+                }
+            }
+        }
+        if (!hasEdges) {
+            System.out.println("  (none)");
+        }
+        System.out.println();
+
+        // Variable Mapping
+        System.out.println("Variable Mapping:");
+        Map<Local, Set<Node>> varMap = graph.getVarPointsTo();
+        if (varMap.isEmpty()) {
+            System.out.println("  (none)");
+        }
+        List<Map.Entry<Local, Set<Node>>> varEntries = new ArrayList<>(varMap.entrySet());
+        varEntries.sort(Comparator.comparing(e -> e.getKey().getName()));
+        for (Map.Entry<Local, Set<Node>> entry : varEntries) {
+            Set<Node> targets = entry.getValue();
+            if (!targets.isEmpty()) {
+                List<String> ids = targets.stream().map(Node::getId).sorted().toList();
+                System.out.println("  " + entry.getKey().getName() + " -> {" + String.join(", ", ids) + "}");
+            }
+        }
+        System.out.println();
+
+        // Prestate Nodes
+        Set<Node> prestateNodes = PurityChecker.computePrestateNodes(graph);
+        List<String> prestateIds = prestateNodes.stream().map(Node::getId).sorted().toList();
+        System.out.println("Prestate Nodes: {" + String.join(", ", prestateIds) + "}");
+
+        // Mutated Fields
+        Set<MutatedField> mutations = graph.getMutatedFields();
+        System.out.print("Mutated Fields: {");
+        List<String> mutStrs = new ArrayList<>();
+        for (MutatedField mf : mutations) {
+            String fieldName = mf.field() != null ? mf.field().getName() : "[]";
+            mutStrs.add("(" + mf.node().getId() + ", " + fieldName + ")");
+        }
+        mutStrs.sort(String::compareTo);
+        System.out.println(String.join(", ", mutStrs) + "}");
+
+        // Global side effect
+        if (graph.hasGlobalSideEffect()) {
+            System.out.println("Global Side Effect: YES");
+        }
+
+        // Global escaped
+        Set<Node> escaped = graph.getGlobalEscaped();
+        if (!escaped.isEmpty()) {
+            List<String> escapedIds = escaped.stream().map(Node::getId).sorted().toList();
+            System.out.println("Globally Escaped: {" + String.join(", ", escapedIds) + "}");
+        }
+
+        System.out.println();
+    }
+
+    /**
+     * Write a DOT file for the points-to graph.
+     * File is named based on the method signature.
+     */
+    public static void writeDotFile(MethodSummary summary) {
+        PointsToGraph graph = summary.getExitGraph();
+        String sig = summary.getMethodSignature();
+        String fileName = dotFileName(sig);
+
+        File dotDir = new File("dot-graph");
+        if (!dotDir.exists()) {
+            dotDir.mkdirs();
+        }
+
+        try (PrintWriter out = new PrintWriter(new FileWriter(new File(dotDir, fileName)))) {
+            out.println("digraph \"" + escapeDot(sig) + "\" {");
+            out.println("  rankdir=LR;");
+            out.println("  node [fontname=\"Helvetica\", fontsize=10];");
+            out.println("  edge [fontname=\"Helvetica\", fontsize=9];");
+            out.println();
+
+            Set<Node> allNodes = graph.getAllNodes();
+            Set<Node> prestateNodes = PurityChecker.computePrestateNodes(graph);
+
+            // Emit nodes
+            for (Node n : allNodes) {
+                String attrs = dotNodeAttrs(n);
+                out.println("  \"" + escapeDot(n.getId()) + "\" [" + attrs + "];");
+            }
+            out.println();
+
+            // Emit variable mapping as record nodes
+            Map<Local, Set<Node>> varMap = graph.getVarPointsTo();
+            for (Map.Entry<Local, Set<Node>> entry : varMap.entrySet()) {
+                String varName = entry.getKey().getName();
+                if (entry.getValue().isEmpty()) continue;
+                out.println("  \"var_" + escapeDot(varName) + "\" [label=\"" + escapeDot(varName)
+                    + "\", shape=plaintext, fontcolor=gray40];");
+                for (Node target : entry.getValue()) {
+                    out.println("  \"var_" + escapeDot(varName) + "\" -> \""
+                        + escapeDot(target.getId()) + "\" [style=dotted, color=gray60];");
+                }
+            }
+            out.println();
+
+            // Emit heap edges
+            Map<Node, Map<FieldSignature, Set<EdgeTarget>>> edges = graph.getEdges();
+            for (Map.Entry<Node, Map<FieldSignature, Set<EdgeTarget>>> entry : edges.entrySet()) {
+                Node source = entry.getKey();
+                for (Map.Entry<FieldSignature, Set<EdgeTarget>> fe : entry.getValue().entrySet()) {
+                    String fieldName = fe.getKey() != null ? fe.getKey().getName() : "[]";
+                    for (EdgeTarget et : fe.getValue()) {
+                        String style = et.type() == EdgeType.INSIDE
+                            ? "style=solid, color=black"
+                            : "style=dashed, color=gray30";
+                        out.println("  \"" + escapeDot(source.getId()) + "\" -> \""
+                            + escapeDot(et.target().getId()) + "\" [label=\"" + escapeDot(fieldName)
+                            + "\", " + style + "];");
+                    }
+                }
+            }
+
+            // Mark mutated nodes
+            Set<MutatedField> mutations = graph.getMutatedFields();
+            Set<Node> mutatedNodes = new HashSet<>();
+            for (MutatedField mf : mutations) {
+                mutatedNodes.add(mf.node());
+            }
+            for (Node mn : mutatedNodes) {
+                if (prestateNodes.contains(mn)) {
+                    // Highlight prestate mutations (impurity source)
+                    out.println("  \"" + escapeDot(mn.getId())
+                        + "\" [penwidth=3.0, color=red];");
+                }
+            }
+
+            out.println("}");
+
+            System.out.println("DOT output written to: dot-graph/" + fileName);
+        } catch (IOException e) {
+            System.err.println("Error writing DOT file dot-graph/" + fileName + ": " + e.getMessage());
+        }
+    }
+
+    // --- Helpers ---
+
+    private static String nodeKindLabel(Node n) {
+        return switch (n.getKind()) {
+            case INSIDE -> "InsideNode";
+            case PARAMETER -> "ParameterNode";
+            case LOAD -> "LoadNode";
+            case GLOBAL -> "GlobalNode";
+        };
+    }
+
+    private static String nodeDescription(Node n) {
+        if (n instanceof InsideNode in) {
+            return " " + in.getLabel();
+        } else if (n instanceof ParameterNode pn) {
+            return " param " + pn.getParamIndex();
+        } else if (n instanceof LoadNode ln) {
+            return " " + ln.getLabel();
+        } else if (n instanceof GlobalNode) {
+            return " (static fields)";
+        }
+        return "";
+    }
+
+    private static String dotNodeAttrs(Node n) {
+        return switch (n.getKind()) {
+            case INSIDE -> {
+                String label = n.getId();
+                if (n instanceof InsideNode in) label = n.getId() + "\\n" + in.getLabel();
+                yield "label=\"" + escapeDot(label) + "\", shape=box, style=filled, fillcolor=palegreen";
+            }
+            case PARAMETER -> {
+                String label = n.getId();
+                if (n instanceof ParameterNode pn) label = n.getId() + "\\nparam " + pn.getParamIndex();
+                yield "label=\"" + escapeDot(label) + "\", shape=ellipse, style=filled, fillcolor=lightblue";
+            }
+            case LOAD -> {
+                String label = n.getId();
+                if (n instanceof LoadNode ln) label = n.getId() + "\\n" + ln.getLabel();
+                yield "label=\"" + escapeDot(label) + "\", shape=diamond, style=filled, fillcolor=lightsalmon";
+            }
+            case GLOBAL ->
+                "label=\"GBL\\n(static)\", shape=octagon, style=filled, fillcolor=orange";
+        };
+    }
+
+    /**
+     * Generate a safe filename from a method signature.
+     */
+    private static String dotFileName(String sig) {
+        // Remove angle brackets, colons, spaces, parens
+        String name = sig.replaceAll("[<>: (),]", "_")
+                        .replaceAll("_+", "_")
+                        .replaceAll("^_|_$", "");
+        if (name.length() > 80) {
+            name = name.substring(0, 80);
+        }
+        return name + ".dot";
+    }
+
+    private static String escapeDot(String s) {
+        return s.replace("\\", "\\\\")
+                .replace("\"", "\\\"");
+    }
+}

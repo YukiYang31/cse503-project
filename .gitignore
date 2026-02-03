@@ -1,0 +1,8 @@
+dot-graph/
+.gradle/
+build/
+bin/
+*.class
+.DS_Store
+out/
+*.log
