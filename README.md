@@ -230,4 +230,4 @@ Adding inter-procedural support (see **How to Extend** above) would resolve both
 
 1. A. Salcianu and M. Rinard. *Purity and Side Effect Analysis for Java Programs*. VMCAI 2005.
 2. R. Madhavan, G. Ramalingam, and K. Vaswani. *Purity Analysis: An Abstract Interpretation Formulation*. SAS 2011.
-# cse503-project
+
