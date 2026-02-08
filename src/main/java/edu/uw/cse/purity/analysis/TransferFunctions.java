@@ -410,6 +410,33 @@ public class TransferFunctions {
         }
     }
 
+    // --- Helper: milestone detection for debug tracing ---
+
+    /**
+     * Returns true if this statement type is a "key milestone" that warrants
+     * a debug graph snapshot (identity, field/static/array ops, allocations, invocations).
+     */
+    public static boolean isKeyMilestone(Stmt stmt) {
+        if (stmt instanceof JIdentityStmt) return true;
+        if (stmt instanceof JInvokeStmt) return true;
+        if (stmt instanceof JAssignStmt assignStmt) {
+            Value lhs = assignStmt.getLeftOp();
+            Value rhs = assignStmt.getRightOp();
+            // Field/static/array stores
+            if (lhs instanceof JInstanceFieldRef) return true;
+            if (lhs instanceof JStaticFieldRef) return true;
+            if (lhs instanceof JArrayRef) return true;
+            // Allocations, field/static/array loads, invocations
+            if (rhs instanceof JNewExpr) return true;
+            if (rhs instanceof JNewArrayExpr) return true;
+            if (rhs instanceof JInstanceFieldRef) return true;
+            if (rhs instanceof JStaticFieldRef) return true;
+            if (rhs instanceof JArrayRef) return true;
+            if (rhs instanceof AbstractInvokeExpr) return true;
+        }
+        return false;
+    }
+
     // --- Helper: check if a node could be a prestate node ---
 
     /**

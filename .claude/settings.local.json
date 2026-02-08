@@ -10,7 +10,9 @@
       "Bash(./gradlew build:*)",
       "Bash(./gradlew run:*)",
       "Bash(./gradlew test:*)",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)"
     ]
   }
 }

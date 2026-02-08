@@ -22,12 +22,14 @@ public class Main {
         List<String> sourceFiles = new ArrayList<>();
         boolean showGraph = false;
         boolean noMerge = false;
+        boolean debug = false;
         String methodFilter = null;
 
         for (int i = 0; i < args.length; i++) {
             switch (args[i]) {
                 case "--show-graph" -> showGraph = true;
                 case "--no-merge" -> noMerge = true;
+                case "--debug" -> debug = true;
                 case "--method" -> {
                     if (i + 1 < args.length) {
                         methodFilter = args[++i];
@@ -56,7 +58,7 @@ public class Main {
             System.exit(1);
         }
 
-        AnalysisConfig config = new AnalysisConfig(showGraph, noMerge, methodFilter);
+        AnalysisConfig config = new AnalysisConfig(showGraph, noMerge, methodFilter, debug);
 
         try {
             // Step 1: Compile .java to .class
@@ -65,7 +67,8 @@ public class Main {
             System.out.println("Compiled to: " + classDir);
 
             // Step 2: Run purity analysis via SootUp
-            PurityAnalysisRunner runner = new PurityAnalysisRunner(config, classDir);
+            List<Path> sourcePaths = sourceFiles.stream().map(Path::of).toList();
+            PurityAnalysisRunner runner = new PurityAnalysisRunner(config, classDir, sourcePaths);
             runner.run();
 
         } catch (Exception e) {
@@ -84,6 +87,7 @@ public class Main {
         System.out.println("  --show-graph    Print points-to graphs and generate DOT files");
         System.out.println("  --no-merge      Disable node merging (show pure 2005-style graphs)");
         System.out.println("  --method <name> Analyze only the specified method");
+        System.out.println("  --debug         Write per-method HTML debug traces to debug/ directory");
         System.out.println("  --help, -h      Show this help message");
     }
 }

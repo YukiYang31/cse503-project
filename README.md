@@ -33,7 +33,7 @@ Constructors have a special rule: direct field writes to `this` (`this.f = x`) a
 | `edu.uw.cse.purity` | CLI entry point, configuration, source compilation, analysis orchestration |
 | `edu.uw.cse.purity.graph` | Points-to graph data structures: nodes, edges, the graph itself |
 | `edu.uw.cse.purity.analysis` | Dataflow analysis engine: flow analysis, transfer functions, purity checking |
-| `edu.uw.cse.purity.output` | Result formatting: text verdicts and DOT graph output |
+| `edu.uw.cse.purity.output` | Result formatting: text verdicts, DOT graph output, and HTML debug traces |
 | `edu.uw.cse.purity.util` | Utilities: node merging optimization, safe method whitelist |
 
 ### Key Files
@@ -45,6 +45,7 @@ Constructors have a special rule: direct field writes to `this` (`this.f = x`) a
 - **`TransferFunctions.java`** — Maps each Jimple statement type to a graph operation (the abstract semantics)
 - **`PurityFlowAnalysis.java`** — Forward dataflow analysis extending SootUp's `ForwardFlowAnalysis`
 - **`PurityChecker.java`** — Determines purity from the exit graph: checks prestate mutations and global escape
+- **`DebugHtmlWriter.java`** — Generates per-method HTML debug traces with visual graph renderings via viz.js
 - **`NodeMerger.java`** — Madhavan et al. (2011) optimization: enforces at most one outgoing edge per (node, field, type) triple
 - **`SafeMethods.java`** — Whitelist of known-pure methods and constructors
 
@@ -117,6 +118,12 @@ Disable with `--no-merge` to see the pure 2005-style graph.
 
 # Combine flags
 ./gradlew run --args="MyFile.java --show-graph --no-merge"
+
+# Generate HTML debug traces with visual graphs (opens in browser)
+./gradlew run --args="MyFile.java --debug"
+
+# Debug a specific method
+./gradlew run --args="MyFile.java --debug --method myMethod"
 ```
 
 ### Render DOT Graphs
@@ -131,6 +138,7 @@ dot -Tpng 'MethodName.dot' -o graph.png
 | `--show-graph` | Print text graph summaries and write DOT files for each method |
 | `--no-merge` | Disable node merging; show uncompressed 2005-style graphs |
 | `--method <name>` | Only analyze methods with this name |
+| `--debug` | Write per-method HTML debug traces to `debug/` directory (implies `--show-graph`) |
 
 ## Understanding the Output
 
@@ -158,6 +166,28 @@ When `--show-graph` is used, each method's exit graph is printed showing:
 - **Solid arrow**: InsideEdge (write/mutation)
 - **Dashed arrow**: OutsideEdge (read from pre-existing heap)
 - **Red border**: Prestate node that was mutated (impurity source)
+
+### Debug HTML Traces
+
+When `--debug` is used, the tool writes one self-contained HTML file per method to the `debug/` directory. Open any file in a browser to see:
+
+1. **Jimple Body** — The full Jimple IR for the method, with line numbers
+2. **Analysis Trace (Key Milestones)** — A visual points-to graph after each significant statement:
+   - Identity statements (parameter/this setup)
+   - Field loads and stores (`x = y.f`, `x.f = y`)
+   - Static field reads and writes
+   - Array loads and stores
+   - Object allocations (`new T()`)
+   - Method invocations
+   - Skips trivial statements (local copies, casts, gotos, ifs)
+3. **Exit Graph** — The final points-to graph at method exit, rendered visually
+4. **Prestate Nodes** — The set of nodes representing pre-existing objects
+5. **Set W (Mutated Fields)** — All (node, field) pairs that were written to
+6. **Purity Result** — The final verdict (PURE/IMPURE) with reason
+
+Graphs are rendered in the browser using [viz.js](https://github.com/nicknisi/viz.js) (Graphviz compiled to JavaScript) loaded from a CDN — no Graphviz installation required. The same DOT color scheme described above applies: green boxes for inside nodes, blue ellipses for parameter nodes, red diamonds for load nodes, and red borders for impurity sources.
+
+`--debug` automatically implies `--show-graph`, so DOT files and text summaries are also generated alongside the HTML traces.
 
 ## How to Extend
 

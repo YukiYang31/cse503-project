@@ -8,10 +8,7 @@ import edu.uw.cse.purity.graph.PointsToGraph.MutatedField;
 import sootup.core.jimple.basic.Local;
 import sootup.core.signatures.FieldSignature;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -126,13 +123,85 @@ public class GraphPrinter {
     }
 
     /**
+     * Generate a DOT string for the given points-to graph.
+     */
+    public static String generateDotString(PointsToGraph graph, String label) {
+        StringWriter sw = new StringWriter();
+        PrintWriter out = new PrintWriter(sw);
+
+        out.println("digraph \"" + escapeDot(label) + "\" {");
+        out.println("  rankdir=LR;");
+        out.println("  node [fontname=\"Helvetica\", fontsize=10];");
+        out.println("  edge [fontname=\"Helvetica\", fontsize=9];");
+        out.println();
+
+        Set<Node> allNodes = graph.getAllNodes();
+        Set<Node> prestateNodes = PurityChecker.computePrestateNodes(graph);
+
+        // Emit nodes
+        for (Node n : allNodes) {
+            String attrs = dotNodeAttrs(n);
+            out.println("  \"" + escapeDot(n.getId()) + "\" [" + attrs + "];");
+        }
+        out.println();
+
+        // Emit variable mapping as record nodes
+        Map<Local, Set<Node>> varMap = graph.getVarPointsTo();
+        for (Map.Entry<Local, Set<Node>> entry : varMap.entrySet()) {
+            String varName = entry.getKey().getName();
+            if (entry.getValue().isEmpty()) continue;
+            out.println("  \"var_" + escapeDot(varName) + "\" [label=\"" + escapeDot(varName)
+                + "\", shape=plaintext, fontcolor=gray40];");
+            for (Node target : entry.getValue()) {
+                out.println("  \"var_" + escapeDot(varName) + "\" -> \""
+                    + escapeDot(target.getId()) + "\" [style=dotted, color=gray60];");
+            }
+        }
+        out.println();
+
+        // Emit heap edges
+        Map<Node, Map<FieldSignature, Set<EdgeTarget>>> edges = graph.getEdges();
+        for (Map.Entry<Node, Map<FieldSignature, Set<EdgeTarget>>> entry : edges.entrySet()) {
+            Node source = entry.getKey();
+            for (Map.Entry<FieldSignature, Set<EdgeTarget>> fe : entry.getValue().entrySet()) {
+                String fieldName = fe.getKey() != null ? fe.getKey().getName() : "[]";
+                for (EdgeTarget et : fe.getValue()) {
+                    String style = et.type() == EdgeType.INSIDE
+                        ? "style=solid, color=black"
+                        : "style=dashed, color=gray30";
+                    out.println("  \"" + escapeDot(source.getId()) + "\" -> \""
+                        + escapeDot(et.target().getId()) + "\" [label=\"" + escapeDot(fieldName)
+                        + "\", " + style + "];");
+                }
+            }
+        }
+
+        // Mark mutated nodes
+        Set<MutatedField> mutations = graph.getMutatedFields();
+        Set<Node> mutatedNodes = new HashSet<>();
+        for (MutatedField mf : mutations) {
+            mutatedNodes.add(mf.node());
+        }
+        for (Node mn : mutatedNodes) {
+            if (prestateNodes.contains(mn)) {
+                out.println("  \"" + escapeDot(mn.getId())
+                    + "\" [penwidth=3.0, color=red];");
+            }
+        }
+
+        out.println("}");
+        out.flush();
+        return sw.toString();
+    }
+
+    /**
      * Write a DOT file for the points-to graph.
      * File is named based on the method signature.
      */
     public static void writeDotFile(MethodSummary summary) {
         PointsToGraph graph = summary.getExitGraph();
         String sig = summary.getMethodSignature();
-        String fileName = dotFileName(sig);
+        String fileName = sanitizeFileName(sig) + ".dot";
 
         File dotDir = new File("dot-graph");
         if (!dotDir.exists()) {
@@ -140,69 +209,7 @@ public class GraphPrinter {
         }
 
         try (PrintWriter out = new PrintWriter(new FileWriter(new File(dotDir, fileName)))) {
-            out.println("digraph \"" + escapeDot(sig) + "\" {");
-            out.println("  rankdir=LR;");
-            out.println("  node [fontname=\"Helvetica\", fontsize=10];");
-            out.println("  edge [fontname=\"Helvetica\", fontsize=9];");
-            out.println();
-
-            Set<Node> allNodes = graph.getAllNodes();
-            Set<Node> prestateNodes = PurityChecker.computePrestateNodes(graph);
-
-            // Emit nodes
-            for (Node n : allNodes) {
-                String attrs = dotNodeAttrs(n);
-                out.println("  \"" + escapeDot(n.getId()) + "\" [" + attrs + "];");
-            }
-            out.println();
-
-            // Emit variable mapping as record nodes
-            Map<Local, Set<Node>> varMap = graph.getVarPointsTo();
-            for (Map.Entry<Local, Set<Node>> entry : varMap.entrySet()) {
-                String varName = entry.getKey().getName();
-                if (entry.getValue().isEmpty()) continue;
-                out.println("  \"var_" + escapeDot(varName) + "\" [label=\"" + escapeDot(varName)
-                    + "\", shape=plaintext, fontcolor=gray40];");
-                for (Node target : entry.getValue()) {
-                    out.println("  \"var_" + escapeDot(varName) + "\" -> \""
-                        + escapeDot(target.getId()) + "\" [style=dotted, color=gray60];");
-                }
-            }
-            out.println();
-
-            // Emit heap edges
-            Map<Node, Map<FieldSignature, Set<EdgeTarget>>> edges = graph.getEdges();
-            for (Map.Entry<Node, Map<FieldSignature, Set<EdgeTarget>>> entry : edges.entrySet()) {
-                Node source = entry.getKey();
-                for (Map.Entry<FieldSignature, Set<EdgeTarget>> fe : entry.getValue().entrySet()) {
-                    String fieldName = fe.getKey() != null ? fe.getKey().getName() : "[]";
-                    for (EdgeTarget et : fe.getValue()) {
-                        String style = et.type() == EdgeType.INSIDE
-                            ? "style=solid, color=black"
-                            : "style=dashed, color=gray30";
-                        out.println("  \"" + escapeDot(source.getId()) + "\" -> \""
-                            + escapeDot(et.target().getId()) + "\" [label=\"" + escapeDot(fieldName)
-                            + "\", " + style + "];");
-                    }
-                }
-            }
-
-            // Mark mutated nodes
-            Set<MutatedField> mutations = graph.getMutatedFields();
-            Set<Node> mutatedNodes = new HashSet<>();
-            for (MutatedField mf : mutations) {
-                mutatedNodes.add(mf.node());
-            }
-            for (Node mn : mutatedNodes) {
-                if (prestateNodes.contains(mn)) {
-                    // Highlight prestate mutations (impurity source)
-                    out.println("  \"" + escapeDot(mn.getId())
-                        + "\" [penwidth=3.0, color=red];");
-                }
-            }
-
-            out.println("}");
-
+            out.print(generateDotString(graph, sig));
             System.out.println("DOT output written to: dot-graph/" + fileName);
         } catch (IOException e) {
             System.err.println("Error writing DOT file dot-graph/" + fileName + ": " + e.getMessage());
@@ -256,17 +263,16 @@ public class GraphPrinter {
     }
 
     /**
-     * Generate a safe filename from a method signature.
+     * Generate a safe filename base from a method signature (no extension).
      */
-    private static String dotFileName(String sig) {
-        // Remove angle brackets, colons, spaces, parens
+    public static String sanitizeFileName(String sig) {
         String name = sig.replaceAll("[<>: (),]", "_")
                         .replaceAll("_+", "_")
                         .replaceAll("^_|_$", "");
         if (name.length() > 80) {
             name = name.substring(0, 80);
         }
-        return name + ".dot";
+        return name;
     }
 
     private static String escapeDot(String s) {
