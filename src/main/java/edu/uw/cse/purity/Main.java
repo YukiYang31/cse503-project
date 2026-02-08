@@ -21,14 +21,14 @@ public class Main {
         // Parse CLI arguments
         List<String> sourceFiles = new ArrayList<>();
         boolean showGraph = false;
-        boolean noMerge = false;
+        boolean merge = false;
         boolean debug = false;
         String methodFilter = null;
 
         for (int i = 0; i < args.length; i++) {
             switch (args[i]) {
                 case "--show-graph" -> showGraph = true;
-                case "--no-merge" -> noMerge = true;
+                case "--merge" -> merge = true;
                 case "--debug" -> debug = true;
                 case "--method" -> {
                     if (i + 1 < args.length) {
@@ -58,7 +58,7 @@ public class Main {
             System.exit(1);
         }
 
-        AnalysisConfig config = new AnalysisConfig(showGraph, noMerge, methodFilter, debug);
+        AnalysisConfig config = new AnalysisConfig(showGraph, merge, methodFilter, debug);
 
         try {
             // Step 1: Compile .java to .class
@@ -85,7 +85,7 @@ public class Main {
         System.out.println();
         System.out.println("Options:");
         System.out.println("  --show-graph    Print points-to graphs and generate DOT files");
-        System.out.println("  --no-merge      Disable node merging (show pure 2005-style graphs)");
+        System.out.println("  --merge         Enable node merging (Madhavan et al. 2011 optimization)");
         System.out.println("  --method <name> Analyze only the specified method");
         System.out.println("  --debug         Write per-method HTML debug traces to debug/ directory");
         System.out.println("  --help, -h      Show this help message");

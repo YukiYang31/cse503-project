@@ -89,7 +89,7 @@ Node merging is applied in three places:
 2. At CFG join points (inside `merge()`)
 3. At method exit before purity checking
 
-Disable with `--no-merge` to see the pure 2005-style graph.
+Node merging is disabled by default (showing pure 2005-style graphs). Enable with `--merge`.
 
 ## How to Build & Run
 
@@ -113,11 +113,11 @@ Disable with `--no-merge` to see the pure 2005-style graph.
 # Show points-to graphs (text + DOT files)
 ./gradlew run --args="MyFile.java --show-graph"
 
-# Disable node merging (pure 2005-style graphs)
-./gradlew run --args="MyFile.java --no-merge"
+# Enable node merging (Madhavan et al. 2011 optimization)
+./gradlew run --args="MyFile.java --merge"
 
 # Combine flags
-./gradlew run --args="MyFile.java --show-graph --no-merge"
+./gradlew run --args="MyFile.java --show-graph --merge"
 
 # Generate HTML debug traces with visual graphs (opens in browser)
 ./gradlew run --args="MyFile.java --debug"
@@ -136,7 +136,7 @@ dot -Tpng 'MethodName.dot' -o graph.png
 | Flag | Description |
 |---|---|
 | `--show-graph` | Print text graph summaries and write DOT files for each method |
-| `--no-merge` | Disable node merging; show uncompressed 2005-style graphs |
+| `--merge` | Enable node merging (Madhavan et al. 2011 optimization) |
 | `--method <name>` | Only analyze methods with this name |
 | `--debug` | Write per-method HTML debug traces to `debug/` directory (implies `--show-graph`) |
 

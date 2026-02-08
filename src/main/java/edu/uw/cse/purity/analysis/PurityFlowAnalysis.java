@@ -66,7 +66,7 @@ public class PurityFlowAnalysis extends ForwardFlowAnalysis<PointsToGraph> {
         out.mergeWith(in2);
 
         // Fix #3: Apply node merging at join points (if enabled)
-        if (!config.noMerge) {
+        if (config.merge) {
             NodeMerger.enforceUniqueness(out);
         }
     }
@@ -95,7 +95,7 @@ public class PurityFlowAnalysis extends ForwardFlowAnalysis<PointsToGraph> {
         }
 
         // Final node merging at method exit (if enabled)
-        if (!config.noMerge) {
+        if (config.merge) {
             NodeMerger.enforceUniqueness(exitGraph);
         }
 

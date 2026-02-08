@@ -226,7 +226,7 @@ public class TransferFunctions {
         graph.strongUpdate(lhs, result);
 
         // Apply node merging after field load (if enabled)
-        if (!config.noMerge) {
+        if (config.merge) {
             NodeMerger.enforceUniqueness(graph);
         }
     }
@@ -283,7 +283,7 @@ public class TransferFunctions {
 
         graph.strongUpdate(lhs, result);
 
-        if (!config.noMerge) {
+        if (config.merge) {
             NodeMerger.enforceUniqueness(graph);
         }
     }

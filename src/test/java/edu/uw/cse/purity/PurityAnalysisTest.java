@@ -210,11 +210,11 @@ public class PurityAnalysisTest {
         assertEquals(PurityResult.IMPURE, getResult("PaperMain", "flipAll"));
     }
 
-    // --- No-merge equivalence: results should be the same ---
+    // --- Merge equivalence: results should be the same with merging enabled ---
 
     @Test
-    public void testNoMergeEquivalence() throws Exception {
-        AnalysisConfig noMergeConfig = new AnalysisConfig(false, true, null);
+    public void testMergeEquivalence() throws Exception {
+        AnalysisConfig mergeConfig = new AnalysisConfig(false, true, null);
 
         String[] testFiles = {
             "src/test/resources/testcases/PureMethods.java",
@@ -235,7 +235,7 @@ public class PurityAnalysisTest {
                 StmtGraph<?> cfg = body.getStmtGraph();
                 String methodName = method.getName();
 
-                PurityFlowAnalysis analysis = new PurityFlowAnalysis(cfg, body, noMergeConfig, method.isStatic());
+                PurityFlowAnalysis analysis = new PurityFlowAnalysis(cfg, body, mergeConfig, method.isStatic());
                 PointsToGraph exitGraph = analysis.getExitGraph();
                 boolean isConstructor = "<init>".equals(methodName);
                 MethodSummary summary = PurityChecker.check(

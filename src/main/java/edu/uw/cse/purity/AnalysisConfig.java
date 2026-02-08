@@ -6,18 +6,18 @@ package edu.uw.cse.purity;
  */
 public class AnalysisConfig {
     public final boolean showGraph;
-    public final boolean noMerge;
+    public final boolean merge;
     public final String methodFilter; // null means analyze all methods
     public final boolean debug;
 
-    public AnalysisConfig(boolean showGraph, boolean noMerge, String methodFilter, boolean debug) {
+    public AnalysisConfig(boolean showGraph, boolean merge, String methodFilter, boolean debug) {
         this.showGraph = showGraph || debug; // --debug implies --show-graph
-        this.noMerge = noMerge;
+        this.merge = merge;
         this.methodFilter = methodFilter;
         this.debug = debug;
     }
 
-    public AnalysisConfig(boolean showGraph, boolean noMerge, String methodFilter) {
-        this(showGraph, noMerge, methodFilter, false);
+    public AnalysisConfig(boolean showGraph, boolean merge, String methodFilter) {
+        this(showGraph, merge, methodFilter, false);
     }
 }
