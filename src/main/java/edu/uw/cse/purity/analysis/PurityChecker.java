@@ -29,6 +29,14 @@ public class PurityChecker {
      */
     public static MethodSummary check(String methodSig, PointsToGraph exitGraph,
                                        boolean isConstructor) {
+        // Step 0: Validate graph invariants
+        List<String> violations = exitGraph.validateInvariants();
+        if (!violations.isEmpty()) {
+            return new MethodSummary(methodSig, exitGraph,
+                MethodSummary.PurityResult.GRAPH_VIOLATION,
+                String.join("; ", violations));
+        }
+
         // Step 1: Immediate check for static field writes (Fix #4)
         if (exitGraph.hasGlobalSideEffect()) {
             return new MethodSummary(methodSig, exitGraph,

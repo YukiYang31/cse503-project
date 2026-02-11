@@ -27,9 +27,18 @@ public class ResultPrinter {
         for (MethodSummary s : summaries) {
             String sig = formatSignature(s.getMethodSignature());
             String padded = String.format("%-" + (maxLen + 2) + "s", sig);
-            String verdict = s.getResult() == MethodSummary.PurityResult.PURE
-                ? "PURE"
-                : "IMPURE  (" + s.getReason() + ")";
+            String verdict;
+            switch (s.getResult()) {
+                case PURE:
+                    verdict = "PURE";
+                    break;
+                case GRAPH_VIOLATION:
+                    verdict = "\033[31mGRAPH VIOLATION  (" + s.getReason() + ")\033[0m";
+                    break;
+                default:
+                    verdict = "IMPURE  (" + s.getReason() + ")";
+                    break;
+            }
             System.out.println(padded + ": " + verdict);
         }
         System.out.println();

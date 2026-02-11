@@ -44,7 +44,7 @@ Constructors have a special rule: direct field writes to `this` (`this.f = x`) a
 - **`PointsToGraph.java`** — Core data structure: variable-to-node mappings, heap edges, mutation tracking, global escape tracking
 - **`TransferFunctions.java`** — Maps each Jimple statement type to a graph operation (the abstract semantics)
 - **`PurityFlowAnalysis.java`** — Forward dataflow analysis extending SootUp's `ForwardFlowAnalysis`
-- **`PurityChecker.java`** — Determines purity from the exit graph: checks prestate mutations and global escape
+- **`PurityChecker.java`** — Validates graph invariants, then determines purity from the exit graph: checks prestate mutations and global escape
 - **`DebugHtmlWriter.java`** — Generates per-method HTML debug traces with visual graph renderings via viz.js
 - **`NodeMerger.java`** — Madhavan et al. (2011) optimization: enforces at most one outgoing edge per (node, field, type) triple
 - **`SafeMethods.java`** — Whitelist of known-pure methods and constructors
@@ -70,6 +70,15 @@ In Jimple, `new T()` compiles to two statements: `x = new T` followed by `specia
 ### Constructor `this` Mutation
 
 The constructor exception is precise: only direct `this.f = x` writes (where `this` is `ParameterNode(0)`) are exempt. Writes that traverse through `this` to reach other prestate objects (e.g., `this.list.add(x)` where `this.list` is a prestate object) are still flagged as impure.
+
+### Graph Invariant Validation
+
+Before checking purity, the exit graph is validated against two structural invariants from the Salcianu & Rinard (2005) model:
+
+1. **Rule 1**: An `InsideNode` cannot be the source of an `OUTSIDE` edge. Inside nodes represent objects allocated within the method — they have no pre-existing heap to read from.
+2. **Rule 2**: An `OUTSIDE` edge cannot lead to an `InsideNode`. Outside edges represent reads from the pre-existing heap, which cannot contain freshly allocated objects.
+
+If either rule is violated, the tool prints the violations in **red** (ANSI escape codes) and skips the PURE/IMPURE verdict entirely. This catches bugs in graph construction or node merging that would otherwise produce unsound results.
 
 ### Static Field Writes = Immediate Impurity
 
@@ -149,6 +158,12 @@ PureMethods.add(int,int)        : PURE
 ImpureMethods.setX(Point,int)   : IMPURE  (mutates prestate node P1 via field x)
 ImpureMethods.increment()       : IMPURE  (writes to static field)
 ```
+
+If a graph invariant violation is detected, the verdict is printed in red instead:
+```
+BuggyMethod.foo()  : GRAPH VIOLATION  (Rule 1 violated: InsideNode I0 has outside edge --f--> L0)
+```
+This indicates a bug in graph construction rather than a purity property of the method.
 
 ### Graph Text Summary
 When `--show-graph` is used, each method's exit graph is printed showing:

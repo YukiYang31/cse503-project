@@ -297,6 +297,40 @@ public class PointsToGraph {
         }
     }
 
+    // --- Invariant validation ---
+
+    /**
+     * Validate graph invariants per Salcianu & Rinard (2005):
+     * Rule 1: InsideNode cannot be the source of an OUTSIDE edge.
+     * Rule 2: An OUTSIDE edge cannot lead to an InsideNode.
+     *
+     * @return list of violation descriptions (empty if no violations)
+     */
+    public List<String> validateInvariants() {
+        List<String> violations = new ArrayList<>();
+        for (Map.Entry<Node, Map<FieldSignature, Set<EdgeTarget>>> entry : edges.entrySet()) {
+            Node source = entry.getKey();
+            for (Map.Entry<FieldSignature, Set<EdgeTarget>> fe : entry.getValue().entrySet()) {
+                String fieldName = fe.getKey() != null ? fe.getKey().getName() : "[]";
+                for (EdgeTarget et : fe.getValue()) {
+                    if (et.type() == EdgeType.OUTSIDE) {
+                        // Rule 1: InsideNode cannot be source of an outside edge
+                        if (source instanceof InsideNode) {
+                            violations.add("Rule 1 violated: InsideNode " + source.getId()
+                                + " has outside edge --" + fieldName + "--> " + et.target().getId());
+                        }
+                        // Rule 2: Outside edge cannot lead to InsideNode
+                        if (et.target() instanceof InsideNode) {
+                            violations.add("Rule 2 violated: Outside edge from " + source.getId()
+                                + " --" + fieldName + "--> leads to InsideNode " + et.target().getId());
+                        }
+                    }
+                }
+            }
+        }
+        return violations;
+    }
+
     // --- Equality (for fixed-point detection) ---
 
     @Override

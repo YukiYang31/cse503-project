@@ -16,7 +16,7 @@ import java.util.*;
 public class DebugHtmlWriter implements Closeable {
 
     public record SourceFile(String fileName, String content) {}
-    private record TraceEntry(int stepNumber, String stmtText, String dotSource) {}
+    private record TraceEntry(int stepNumber, String stmtText, String dotSource, String mutatedFieldsText) {}
 
     private final String methodSig;
     private final Path outputPath;
@@ -63,7 +63,8 @@ public class DebugHtmlWriter implements Closeable {
     public void addTraceEntry(String stmtText, PointsToGraph graph) {
         stepCounter++;
         String dotSource = GraphPrinter.generateDotString(graph, "Step " + stepCounter);
-        traceEntries.add(new TraceEntry(stepCounter, stmtText, dotSource));
+        String wText = formatMutatedFields(graph.getMutatedFields());
+        traceEntries.add(new TraceEntry(stepCounter, stmtText, dotSource, wText));
     }
 
     public void setExitGraph(PointsToGraph graph) {
@@ -76,14 +77,18 @@ public class DebugHtmlWriter implements Closeable {
         this.prestateNodesText = "{" + String.join(", ", ids) + "}";
     }
 
-    public void setMutatedFields(Set<MutatedField> mutations) {
+    private static String formatMutatedFields(Set<MutatedField> mutations) {
         List<String> mutStrs = new ArrayList<>();
         for (MutatedField mf : mutations) {
             String fieldName = mf.field() != null ? mf.field().getName() : "[]";
             mutStrs.add("(" + mf.node().getId() + ", " + fieldName + ")");
         }
         mutStrs.sort(String::compareTo);
-        this.mutatedFieldsText = "{" + String.join(", ", mutStrs) + "}";
+        return "{" + String.join(", ", mutStrs) + "}";
+    }
+
+    public void setMutatedFields(Set<MutatedField> mutations) {
+        this.mutatedFieldsText = formatMutatedFields(mutations);
     }
 
     public void setPurityResult(String result, String reason) {
@@ -152,6 +157,7 @@ public class DebugHtmlWriter implements Closeable {
             out.println("<div class=\"graph-container\" id=\"graph-" + entry.stepNumber + "\">");
             out.println("<p class=\"loading\">Rendering graph...</p>");
             out.println("</div>");
+            out.println("<p class=\"data\"><strong>W = </strong>" + escapeHtml(entry.mutatedFieldsText) + "</p>");
             out.println("</div>");
         }
 

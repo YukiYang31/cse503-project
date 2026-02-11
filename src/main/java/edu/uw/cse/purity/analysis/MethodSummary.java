@@ -14,7 +14,8 @@ public class MethodSummary {
 
     public enum PurityResult {
         PURE,
-        IMPURE
+        IMPURE,
+        GRAPH_VIOLATION
     }
 
     private final String methodSignature;
