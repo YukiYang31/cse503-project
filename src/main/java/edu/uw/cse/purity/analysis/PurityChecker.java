@@ -53,16 +53,16 @@ public class PurityChecker {
         // Step 3: Compute set W
         Set<MutatedField> setW = exitGraph.getMutatedFields();
 
-        // Step 3a: Check for static field writes (GlobalNode mutations in W)
-        for (MutatedField mf : setW) {
-            if (mf.node() instanceof GlobalNode) {
-                String fieldName = mf.field() != null ? mf.field().getName() : "unknown";
-                if (debug) System.out.println("Debug== [purity] GlobalNode mutation in W => IMPURE (writes to static field " + fieldName + ")");
-                return new MethodSummary(methodSig, exitGraph,
-                    MethodSummary.PurityResult.IMPURE,
-                    "writes to static field " + fieldName);
-            }
-        }
+        // // Step 3a: Check for static field writes (GlobalNode mutations in W)
+        // for (MutatedField mf : setW) {
+        //     if (mf.node() instanceof GlobalNode) {
+        //         String fieldName = mf.field() != null ? mf.field().getName() : "unknown";
+        //         if (debug) System.out.println("Debug== [purity] GlobalNode mutation in W => IMPURE (writes to static field " + fieldName + ")");
+        //         return new MethodSummary(methodSig, exitGraph,
+        //             MethodSummary.PurityResult.IMPURE,
+        //             "writes to static field " + fieldName);
+        //     }
+        // }
 
         if (debug) {
             System.out.println("Debug== [purity] set A (prestate nodes): " + nodeSetStr(setA));
