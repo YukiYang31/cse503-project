@@ -116,6 +116,8 @@ public class PurityAnalysisRunner {
             }
 
             try {
+                if (config.debug) System.out.println("\nDebug== ===== Analyzing method: " + sig + " =====");
+
                 // Run the forward flow analysis
                 PurityFlowAnalysis analysis = new PurityFlowAnalysis(
                     cfg, body, config, method.isStatic(), debugWriter);
@@ -125,12 +127,17 @@ public class PurityAnalysisRunner {
 
                 // Check purity
                 boolean isConstructor = "<init>".equals(method.getName());
-                MethodSummary summary = PurityChecker.check(sig, exitGraph, isConstructor);
+                MethodSummary summary = PurityChecker.check(sig, exitGraph, isConstructor, config.debug);
 
                 // Write debug output
                 if (debugWriter != null) {
                     debugWriter.setExitGraph(exitGraph);
+                    debugWriter.setInsideEdges(exitGraph);
+                    debugWriter.setOutsideEdges(exitGraph);
+                    debugWriter.setLocalVariables(exitGraph);
+                    debugWriter.setEscapedNodes(exitGraph.getGlobalEscaped());
                     debugWriter.setPrestateNodes(PurityChecker.computePrestateNodes(exitGraph));
+                    debugWriter.setGloballyEscapedNodes(PurityChecker.computeGloballyEscapedNodes(exitGraph));
                     debugWriter.setMutatedFields(exitGraph.getMutatedFields());
                     debugWriter.setPurityResult(
                         summary.getResult().name(), summary.getReason());

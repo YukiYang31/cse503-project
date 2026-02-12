@@ -10,13 +10,14 @@ import java.util.*;
 /**
  * Determines method purity from the exit PointsToGraph.
  *
- * Algorithm (corrected per Critical Fixes #2 and #4):
+ * Algorithm (Sălcianu &amp; Rinard 2005):
  * 1. If hasGlobalSideEffect → IMPURE (static field write)
- * 2. Compute prestate nodes (BFS from ParameterNodes via OutsideEdges)
- * 3. Check mutations: if any prestate node was mutated → IMPURE
- *    - Constructor exception: direct writes to this.f are allowed
- * 4. Check global escape of prestate nodes → IMPURE
- * 5. Otherwise → PURE
+ * 2. Compute set A = prestate nodes (BFS from ParameterNodes via OutsideEdges)
+ * 3. Compute set B = globally escaped closure (BFS from E ∪ {nGBL} via all edges)
+ * 4. Compute set W = mutated fields
+ * 5. For each n ∈ A: (a) n ∉ B and (b) no ⟨n,f⟩ ∈ W
+ *    - Constructor exception: ignore mutations for P0
+ * 6. Otherwise → PURE
  */
 public class PurityChecker {
 
@@ -29,58 +30,77 @@ public class PurityChecker {
      */
     public static MethodSummary check(String methodSig, PointsToGraph exitGraph,
                                        boolean isConstructor) {
+        return check(methodSig, exitGraph, isConstructor, false);
+    }
+
+    public static MethodSummary check(String methodSig, PointsToGraph exitGraph,
+                                       boolean isConstructor, boolean debug) {
         // Step 0: Validate graph invariants
         List<String> violations = exitGraph.validateInvariants();
         if (!violations.isEmpty()) {
+            if (debug) System.out.println("Debug== [purity] graph invariant violation: " + String.join("; ", violations));
             return new MethodSummary(methodSig, exitGraph,
                 MethodSummary.PurityResult.GRAPH_VIOLATION,
                 String.join("; ", violations));
         }
 
-        // Step 1: Immediate check for static field writes (Fix #4)
+        // Step 1: Immediate check for static field writes
         if (exitGraph.hasGlobalSideEffect()) {
+            if (debug) System.out.println("Debug== [purity] hasGlobalSideEffect = true => IMPURE");
             return new MethodSummary(methodSig, exitGraph,
                 MethodSummary.PurityResult.IMPURE,
                 "writes to static field");
         }
 
-        // Step 2: Compute prestate nodes
-        Set<Node> prestateNodes = computePrestateNodes(exitGraph);
+        // Step 2: Compute set A (prestate nodes)
+        Set<Node> setA = computePrestateNodes(exitGraph);
 
-        // Step 3: Check mutations
-        for (MutatedField mf : exitGraph.getMutatedFields()) {
-            Node mutatedNode = mf.node();
+        // Step 3: Compute set B (globally escaped closure)
+        Set<Node> setB = computeGloballyEscapedNodes(exitGraph);
 
-            // Skip GlobalNode mutations (already handled by hasGlobalSideEffect)
-            if (mutatedNode instanceof GlobalNode) continue;
+        // Step 4: Compute set W
+        Set<MutatedField> setW = exitGraph.getMutatedFields();
 
-            // Is this a prestate node?
-            if (prestateNodes.contains(mutatedNode)) {
-                // Constructor exception (Fix #2):
-                // Allow direct writes to this.f (ParameterNode(0))
-                // but NOT writes to objects reachable through this
-                if (isConstructor && mutatedNode instanceof ParameterNode pn
-                    && pn.getParamIndex() == 0) {
-                    continue; // this.f = x is allowed in constructors
+        if (debug) {
+            System.out.println("Debug== [purity] set A (prestate nodes): " + nodeSetStr(setA));
+            System.out.println("Debug== [purity] set B (globally escaped): " + nodeSetStr(setB));
+            System.out.println("Debug== [purity] set W (mutated fields): " + mutatedFieldsStr(setW));
+        }
+
+        // Step 5: For each n ∈ A, check (a) n ∉ B and (b) no ⟨n,f⟩ ∈ W
+        for (Node n : setA) {
+            // Check (a): n ∉ B
+            if (setB.contains(n)) {
+                if (debug) System.out.println("Debug== [purity] prestate node " + n.getId() + " ∈ set B (globally escaped) => IMPURE");
+                return new MethodSummary(methodSig, exitGraph,
+                    MethodSummary.PurityResult.IMPURE,
+                    "prestate node " + n.getId() + " escapes to global scope");
+            }
+
+            // Check (b): no ⟨n,f⟩ ∈ W (with constructor exception for P0)
+            for (MutatedField mf : setW) {
+                if (mf.node().equals(n)) {
+                    // Skip GlobalNode mutations (already handled by hasGlobalSideEffect)
+                    if (n instanceof GlobalNode) continue;
+
+                    // Constructor exception: allow direct writes to this.f (P0)
+                    if (isConstructor && n instanceof ParameterNode pn
+                        && pn.getParamIndex() == 0) {
+                        if (debug) System.out.println("Debug== [purity] constructor exception: allowing mutation of P0");
+                        continue;
+                    }
+
+                    String fieldName = mf.field() != null ? mf.field().getName() : "array element";
+                    if (debug) System.out.println("Debug== [purity] prestate node " + n.getId() + " mutated via " + fieldName + " => IMPURE");
+                    return new MethodSummary(methodSig, exitGraph,
+                        MethodSummary.PurityResult.IMPURE,
+                        "mutates prestate node " + n.getId() + " via field " + fieldName);
                 }
-
-                String fieldName = mf.field() != null ? mf.field().getName() : "array element";
-                return new MethodSummary(methodSig, exitGraph,
-                    MethodSummary.PurityResult.IMPURE,
-                    "mutates prestate node " + mutatedNode.getId() + " via field " + fieldName);
             }
         }
 
-        // Step 4: Check if any prestate node escaped to global scope
-        for (Node prestateNode : prestateNodes) {
-            if (exitGraph.isGloballyEscaped(prestateNode)) {
-                return new MethodSummary(methodSig, exitGraph,
-                    MethodSummary.PurityResult.IMPURE,
-                    "prestate node " + prestateNode.getId() + " escapes to global scope");
-            }
-        }
-
-        // Step 5: PURE
+        // Step 6: PURE
+        if (debug) System.out.println("Debug== [purity] no prestate mutations, no global escape => PURE");
         return new MethodSummary(methodSig, exitGraph,
             MethodSummary.PurityResult.PURE, null);
     }
@@ -122,5 +142,55 @@ public class PurityChecker {
         }
 
         return prestate;
+    }
+
+    /**
+     * Compute set B: all nodes reachable from E ∪ {nGBL} via any edges.
+     * These are nodes potentially accessible (and mutable) by the entire program.
+     */
+    public static Set<Node> computeGloballyEscapedNodes(PointsToGraph graph) {
+        Set<Node> escaped = new HashSet<>();
+        Queue<Node> worklist = new LinkedList<>();
+
+        // Seed: E (directly escaped nodes) ∪ {nGBL}
+        for (Node n : graph.getGlobalEscaped()) {
+            if (escaped.add(n)) worklist.add(n);
+        }
+        if (escaped.add(GlobalNode.INSTANCE)) {
+            worklist.add(GlobalNode.INSTANCE);
+        }
+
+        // BFS along all edges (inside + outside)
+        while (!worklist.isEmpty()) {
+            Node current = worklist.poll();
+            Map<FieldSignature, Set<EdgeTarget>> fieldMap =
+                graph.getEdges().getOrDefault(current, Map.of());
+            for (Set<EdgeTarget> targets : fieldMap.values()) {
+                for (EdgeTarget et : targets) {
+                    if (escaped.add(et.target())) {
+                        worklist.add(et.target());
+                    }
+                }
+            }
+        }
+
+        return escaped;
+    }
+
+    /** Format a set of nodes as "{id1, id2, ...}" for debug output. */
+    static String nodeSetStr(Set<Node> nodes) {
+        List<String> ids = nodes.stream().map(Node::getId).sorted().toList();
+        return "{" + String.join(", ", ids) + "}";
+    }
+
+    /** Format mutated fields as "{(node, field), ...}" for debug output. */
+    static String mutatedFieldsStr(Set<MutatedField> mutations) {
+        List<String> strs = new ArrayList<>();
+        for (MutatedField mf : mutations) {
+            String fieldName = mf.field() != null ? mf.field().getName() : "[]";
+            strs.add("⟨" + mf.node().getId() + ", " + fieldName + "⟩");
+        }
+        strs.sort(String::compareTo);
+        return "{" + String.join(", ", strs) + "}";
     }
 }

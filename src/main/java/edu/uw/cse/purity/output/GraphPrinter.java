@@ -25,13 +25,15 @@ import java.util.*;
 public class GraphPrinter {
 
     /**
-     * Print a text summary of the points-to graph to stdout.
+     * Print a text summary of the points-to graph to stdout,
+     * presented as G = ⟨I, O, L, E⟩ per Salcianu &amp; Rinard (2005).
      */
     public static void printTextSummary(MethodSummary summary) {
         PointsToGraph graph = summary.getExitGraph();
         String sig = summary.getMethodSignature();
 
         System.out.println("--- Points-To Graph for " + sig + " ---");
+        System.out.println("G = \u27e8I, O, L, E\u27e9");
         System.out.println();
 
         // Nodes
@@ -48,34 +50,20 @@ public class GraphPrinter {
         }
         System.out.println();
 
-        // Edges
-        System.out.println("Edges:");
-        Map<Node, Map<FieldSignature, Set<EdgeTarget>>> edges = graph.getEdges();
-        boolean hasEdges = false;
-        List<Node> edgeSources = new ArrayList<>(edges.keySet());
-        edgeSources.sort(Comparator.comparing(Node::getId));
-        for (Node source : edgeSources) {
-            Map<FieldSignature, Set<EdgeTarget>> fieldMap = edges.get(source);
-            List<FieldSignature> fields = new ArrayList<>(fieldMap.keySet());
-            fields.sort(Comparator.comparing(f -> f != null ? f.getName() : "[]"));
-            for (FieldSignature field : fields) {
-                Set<EdgeTarget> targets = fieldMap.get(field);
-                for (EdgeTarget et : targets) {
-                    String fieldName = field != null ? field.getName() : "[]";
-                    String edgeStyle = et.type() == EdgeType.INSIDE ? "INSIDE, solid" : "OUTSIDE, dashed";
-                    System.out.println("  " + source.getId() + " --" + fieldName
-                        + "--> " + et.target().getId() + "  (" + edgeStyle + ")");
-                    hasEdges = true;
-                }
-            }
-        }
-        if (!hasEdges) {
-            System.out.println("  (none)");
-        }
+        // I (Inside Edges)
+        System.out.println("I (Inside Edges):");
+        Map<Node, Map<FieldSignature, Set<Node>>> insideEdges = graph.getInsideEdges();
+        printFilteredEdges(insideEdges);
         System.out.println();
 
-        // Variable Mapping
-        System.out.println("Variable Mapping:");
+        // O (Outside Edges)
+        System.out.println("O (Outside Edges):");
+        Map<Node, Map<FieldSignature, Set<Node>>> outsideEdges = graph.getOutsideEdges();
+        printFilteredEdges(outsideEdges);
+        System.out.println();
+
+        // L (Local Variables)
+        System.out.println("L (Local Variables):");
         Map<Local, Set<Node>> varMap = graph.getVarPointsTo();
         if (varMap.isEmpty()) {
             System.out.println("  (none)");
@@ -91,35 +79,60 @@ public class GraphPrinter {
         }
         System.out.println();
 
+        // E (Globally Escaped)
+        Set<Node> escaped = graph.getGlobalEscaped();
+        List<String> escapedIds = escaped.stream().map(Node::getId).sorted().toList();
+        System.out.println("E (Globally Escaped): {" + String.join(", ", escapedIds) + "}");
+        System.out.println();
+
+        // --- Purity Analysis ---
+        System.out.println("--- Purity Analysis ---");
+
+        // W (Mutated Fields)
+        Set<MutatedField> mutations = graph.getMutatedFields();
+        List<String> mutStrs = new ArrayList<>();
+        for (MutatedField mf : mutations) {
+            String fieldName = mf.field() != null ? mf.field().getName() : "[]";
+            mutStrs.add("\u27e8" + mf.node().getId() + ", " + fieldName + "\u27e9");
+        }
+        mutStrs.sort(String::compareTo);
+        System.out.println("W (Mutated Fields): {" + String.join(", ", mutStrs) + "}");
+
         // Prestate Nodes
         Set<Node> prestateNodes = PurityChecker.computePrestateNodes(graph);
         List<String> prestateIds = prestateNodes.stream().map(Node::getId).sorted().toList();
         System.out.println("Prestate Nodes: {" + String.join(", ", prestateIds) + "}");
 
-        // Mutated Fields
-        Set<MutatedField> mutations = graph.getMutatedFields();
-        System.out.print("Mutated Fields: {");
-        List<String> mutStrs = new ArrayList<>();
-        for (MutatedField mf : mutations) {
-            String fieldName = mf.field() != null ? mf.field().getName() : "[]";
-            mutStrs.add("(" + mf.node().getId() + ", " + fieldName + ")");
-        }
-        mutStrs.sort(String::compareTo);
-        System.out.println(String.join(", ", mutStrs) + "}");
-
-        // Global side effect
-        if (graph.hasGlobalSideEffect()) {
-            System.out.println("Global Side Effect: YES");
-        }
-
-        // Global escaped
-        Set<Node> escaped = graph.getGlobalEscaped();
-        if (!escaped.isEmpty()) {
-            List<String> escapedIds = escaped.stream().map(Node::getId).sorted().toList();
-            System.out.println("Globally Escaped: {" + String.join(", ", escapedIds) + "}");
-        }
+        // Global Side Effect
+        System.out.println("Global Side Effect: " + (graph.hasGlobalSideEffect() ? "YES" : "NO"));
 
         System.out.println();
+    }
+
+    /**
+     * Print a filtered edge map (used for I and O sections).
+     */
+    private static void printFilteredEdges(Map<Node, Map<FieldSignature, Set<Node>>> edgeMap) {
+        boolean hasEdges = false;
+        List<Node> sources = new ArrayList<>(edgeMap.keySet());
+        sources.sort(Comparator.comparing(Node::getId));
+        for (Node source : sources) {
+            Map<FieldSignature, Set<Node>> fieldMap = edgeMap.get(source);
+            List<FieldSignature> fields = new ArrayList<>(fieldMap.keySet());
+            fields.sort(Comparator.comparing(f -> f != null ? f.getName() : "[]"));
+            for (FieldSignature field : fields) {
+                String fieldName = field != null ? field.getName() : "[]";
+                List<Node> targets = new ArrayList<>(fieldMap.get(field));
+                targets.sort(Comparator.comparing(Node::getId));
+                for (Node target : targets) {
+                    System.out.println("  " + source.getId() + " --" + fieldName + "--> " + target.getId());
+                    hasEdges = true;
+                }
+            }
+        }
+        if (!hasEdges) {
+            System.out.println("  (none)");
+        }
     }
 
     /**

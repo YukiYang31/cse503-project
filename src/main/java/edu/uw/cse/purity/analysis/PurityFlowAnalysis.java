@@ -50,6 +50,7 @@ public class PurityFlowAnalysis extends ForwardFlowAnalysis<PointsToGraph> {
 
     @Override
     protected void flowThrough(PointsToGraph in, Stmt stmt, PointsToGraph out) {
+        if (config.debug) System.out.println("Debug== [flow] processing: " + stmt);
         // Copy in to out, then apply transfer function
         in.copyInto(out);
         transfer.apply(stmt, out);
@@ -61,6 +62,7 @@ public class PurityFlowAnalysis extends ForwardFlowAnalysis<PointsToGraph> {
 
     @Override
     protected void merge(PointsToGraph in1, PointsToGraph in2, PointsToGraph out) {
+        if (config.debug) System.out.println("Debug== [merge] merging at join point");
         // Union semantics at join points
         in1.copyInto(out);
         out.mergeWith(in2);
@@ -82,6 +84,8 @@ public class PurityFlowAnalysis extends ForwardFlowAnalysis<PointsToGraph> {
     public PointsToGraph getExitGraph() {
         PointsToGraph exitGraph = new PointsToGraph();
         List<? extends Stmt> tails = graph.getTails();
+
+        if (config.debug) System.out.println("Debug== computing exit graph from " + tails.size() + " tail(s)");
 
         boolean first = true;
         for (Stmt tail : tails) {

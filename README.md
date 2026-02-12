@@ -6,7 +6,7 @@ A static analysis tool that determines whether Java methods are **pure** — tha
 
 This tool implements the intra-procedural purity analysis described by:
 
-1. **Salcianu & Rinard (2005)** — *Purity and Side Effect Analysis for Java Programs* — defines purity via a pointer/escape analysis using a points-to graph with four node types (Inside, Parameter, Load, Global) and two edge types (Inside, Outside).
+1. **Salcianu & Rinard (2005)** — *Purity and Side Effect Analysis for Java Programs* — defines purity via a pointer/escape analysis using a points-to graph **G = ⟨I, O, L, E⟩** (inside edges, outside edges, local variable state, escaped nodes) with four node types (Inside, Parameter, Load, Global) and two edge types (Inside, Outside).
 2. **Madhavan et al. (2011)** — *Purity Analysis: An Abstract Interpretation Formulation* — provides a lattice-theoretic reformulation with a node merging optimization that bounds graph size.
 
 ### What "Pure" Means
@@ -166,12 +166,13 @@ BuggyMethod.foo()  : GRAPH VIOLATION  (Rule 1 violated: InsideNode I0 has outsid
 This indicates a bug in graph construction rather than a purity property of the method.
 
 ### Graph Text Summary
-When `--show-graph` is used, each method's exit graph is printed showing:
-- **Nodes**: All abstract heap locations with their type and description
-- **Edges**: Heap edges labeled with field names and edge type (INSIDE=solid, OUTSIDE=dashed)
-- **Variable Mapping**: Which local variables point to which nodes
-- **Prestate Nodes**: Nodes representing pre-existing objects (mutations here = impure)
-- **Mutated Fields**: Which (node, field) pairs were written to
+When `--show-graph` is used, each method's exit graph is presented as **G = ⟨I, O, L, E⟩** per the paper's formal definition:
+- **Nodes** — all abstract heap locations with their type and description
+- **I (Inside Edges)** — heap references created by the method (writes)
+- **O (Outside Edges)** — heap references read from pre-existing objects
+- **L (Local Variables)** — which local variables point to which nodes
+- **E (Globally Escaped)** — nodes whose address is stored in static fields
+- **W (Mutated Fields)** — which (node, field) pairs were written to (purity analysis supplement)
 
 ### DOT Graph Color Scheme
 - **Green box** (InsideNode): Newly allocated object — mutations are safe
@@ -196,9 +197,10 @@ When `--debug` is used, the tool writes one self-contained HTML file per method 
    - Method invocations
    - Skips trivial statements (local copies, casts, gotos, ifs)
 3. **Exit Graph** — The final points-to graph at method exit, rendered visually
-4. **Prestate Nodes** — The set of nodes representing pre-existing objects
-5. **Set W (Mutated Fields)** — All (node, field) pairs that were written to
-6. **Purity Result** — The final verdict (PURE/IMPURE) with reason
+4. **Graph Components G = ⟨I, O, L, E⟩** — textual breakdown of the exit graph into its four formal components
+5. **Prestate Nodes** — The set of nodes representing pre-existing objects
+6. **Set W (Mutated Fields)** — All (node, field) pairs that were written to
+7. **Purity Result** — The final verdict (PURE/IMPURE) with reason
 
 Graphs are rendered in the browser using [viz.js](https://github.com/nicknisi/viz.js) (Graphviz compiled to JavaScript) loaded from a CDN — no Graphviz installation required. The same DOT color scheme described above applies: green boxes for inside nodes, blue ellipses for parameter nodes, red diamonds for load nodes, and red borders for impurity sources.
 

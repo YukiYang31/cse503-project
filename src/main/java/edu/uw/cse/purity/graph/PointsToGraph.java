@@ -7,8 +7,19 @@ import java.util.*;
 
 /**
  * The core data structure for the purity analysis.
- * Represents a points-to graph with variable mappings, heap edges,
- * mutation tracking, and global escape information.
+ * Represents a points-to graph G = ⟨I, O, L, E⟩ per Salcianu &amp; Rinard (2005):
+ * <ul>
+ *   <li><b>I</b> (inside edges) — heap references created by writes ({@link EdgeType#INSIDE} entries in {@link #edges})</li>
+ *   <li><b>O</b> (outside edges) — heap references read from pre-existing objects ({@link EdgeType#OUTSIDE} entries in {@link #edges})</li>
+ *   <li><b>L</b> (local variables) — which locals point to which nodes ({@link #varPointsTo})</li>
+ *   <li><b>E</b> (globally escaped) — nodes whose address is stored in static fields ({@link #globalEscaped})</li>
+ * </ul>
+ *
+ * Additional fields not in the formal G tuple but needed for purity analysis:
+ * <ul>
+ *   <li><b>W</b> (mutated fields) — tracked in {@link #mutatedFields}</li>
+ *   <li><b>hasGlobalSideEffect</b> — boolean flag for static field writes</li>
+ * </ul>
  */
 public class PointsToGraph {
 
@@ -149,6 +160,32 @@ public class PointsToGraph {
 
     public Map<Node, Map<FieldSignature, Set<EdgeTarget>>> getEdges() {
         return Collections.unmodifiableMap(edges);
+    }
+
+    /** Get inside edges only (set I in the paper). */
+    public Map<Node, Map<FieldSignature, Set<Node>>> getInsideEdges() {
+        return filterEdgesByType(EdgeType.INSIDE);
+    }
+
+    /** Get outside edges only (set O in the paper). */
+    public Map<Node, Map<FieldSignature, Set<Node>>> getOutsideEdges() {
+        return filterEdgesByType(EdgeType.OUTSIDE);
+    }
+
+    private Map<Node, Map<FieldSignature, Set<Node>>> filterEdgesByType(EdgeType type) {
+        Map<Node, Map<FieldSignature, Set<Node>>> result = new HashMap<>();
+        for (Map.Entry<Node, Map<FieldSignature, Set<EdgeTarget>>> entry : edges.entrySet()) {
+            for (Map.Entry<FieldSignature, Set<EdgeTarget>> fe : entry.getValue().entrySet()) {
+                for (EdgeTarget et : fe.getValue()) {
+                    if (et.type() == type) {
+                        result.computeIfAbsent(entry.getKey(), k -> new HashMap<>())
+                              .computeIfAbsent(fe.getKey(), k -> new HashSet<>())
+                              .add(et.target());
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     /** Get all nodes present in the graph */

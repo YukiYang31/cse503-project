@@ -3,6 +3,8 @@ package edu.uw.cse.purity.output;
 import edu.uw.cse.purity.graph.Node;
 import edu.uw.cse.purity.graph.PointsToGraph;
 import edu.uw.cse.purity.graph.PointsToGraph.MutatedField;
+import sootup.core.jimple.basic.Local;
+import sootup.core.signatures.FieldSignature;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -27,7 +29,12 @@ public class DebugHtmlWriter implements Closeable {
     private int stepCounter = 0;
 
     private String exitGraphDot;
+    private String insideEdgesText;     // I
+    private String outsideEdgesText;    // O
+    private String localVariablesText;  // L
+    private String escapedNodesText;    // E
     private String prestateNodesText;
+    private String globallyEscapedNodesText;
     private String mutatedFieldsText;
     private boolean hasGlobalSideEffect;
     private String purityResult;
@@ -72,9 +79,73 @@ public class DebugHtmlWriter implements Closeable {
         this.hasGlobalSideEffect = graph.hasGlobalSideEffect();
     }
 
+    /** Set inside edges text (I) from the exit graph. */
+    public void setInsideEdges(PointsToGraph graph) {
+        this.insideEdgesText = formatEdgeMap(graph.getInsideEdges());
+    }
+
+    /** Set outside edges text (O) from the exit graph. */
+    public void setOutsideEdges(PointsToGraph graph) {
+        this.outsideEdgesText = formatEdgeMap(graph.getOutsideEdges());
+    }
+
+    /** Set local variables text (L) from the exit graph. */
+    public void setLocalVariables(PointsToGraph graph) {
+        Map<Local, Set<Node>> varMap = graph.getVarPointsTo();
+        if (varMap.isEmpty()) {
+            this.localVariablesText = "(none)";
+            return;
+        }
+        List<Map.Entry<Local, Set<Node>>> entries = new ArrayList<>(varMap.entrySet());
+        entries.sort(Comparator.comparing(e -> e.getKey().getName()));
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<Local, Set<Node>> entry : entries) {
+            Set<Node> targets = entry.getValue();
+            if (!targets.isEmpty()) {
+                List<String> ids = targets.stream().map(Node::getId).sorted().toList();
+                if (sb.length() > 0) sb.append("\n");
+                sb.append(entry.getKey().getName()).append(" \u2192 {").append(String.join(", ", ids)).append("}");
+            }
+        }
+        this.localVariablesText = sb.length() > 0 ? sb.toString() : "(none)";
+    }
+
+    /** Set escaped nodes text (E) — the raw set E, not the BFS closure set B. */
+    public void setEscapedNodes(Set<Node> nodes) {
+        List<String> ids = nodes.stream().map(Node::getId).sorted().toList();
+        this.escapedNodesText = "{" + String.join(", ", ids) + "}";
+    }
+
+    private static String formatEdgeMap(Map<Node, Map<FieldSignature, Set<Node>>> edgeMap) {
+        if (edgeMap.isEmpty()) return "(none)";
+        List<Node> sources = new ArrayList<>(edgeMap.keySet());
+        sources.sort(Comparator.comparing(Node::getId));
+        StringBuilder sb = new StringBuilder();
+        for (Node source : sources) {
+            Map<FieldSignature, Set<Node>> fieldMap = edgeMap.get(source);
+            List<FieldSignature> fields = new ArrayList<>(fieldMap.keySet());
+            fields.sort(Comparator.comparing(f -> f != null ? f.getName() : "[]"));
+            for (FieldSignature field : fields) {
+                String fieldName = field != null ? field.getName() : "[]";
+                List<Node> targets = new ArrayList<>(fieldMap.get(field));
+                targets.sort(Comparator.comparing(Node::getId));
+                for (Node target : targets) {
+                    if (sb.length() > 0) sb.append("\n");
+                    sb.append(source.getId()).append(" --").append(fieldName).append("--> ").append(target.getId());
+                }
+            }
+        }
+        return sb.length() > 0 ? sb.toString() : "(none)";
+    }
+
     public void setPrestateNodes(Set<Node> nodes) {
         List<String> ids = nodes.stream().map(Node::getId).sorted().toList();
         this.prestateNodesText = "{" + String.join(", ", ids) + "}";
+    }
+
+    public void setGloballyEscapedNodes(Set<Node> nodes) {
+        List<String> ids = nodes.stream().map(Node::getId).sorted().toList();
+        this.globallyEscapedNodesText = "{" + String.join(", ", ids) + "}";
     }
 
     private static String formatMutatedFields(Set<MutatedField> mutations) {
@@ -167,9 +238,32 @@ public class DebugHtmlWriter implements Closeable {
         out.println("<p class=\"loading\">Rendering graph...</p>");
         out.println("</div>");
 
-        // Prestate Nodes
-        out.println("<h2>Prestate Nodes</h2>");
+        // Graph Components G = ⟨I, O, L, E⟩
+        out.println("<h2>Graph Components G = \u27e8I, O, L, E\u27e9</h2>");
+
+        out.println("<h3>I (Inside Edges)</h3>");
+        out.println("<pre class=\"data\">"
+            + escapeHtml(insideEdgesText != null ? insideEdgesText : "(none)") + "</pre>");
+
+        out.println("<h3>O (Outside Edges)</h3>");
+        out.println("<pre class=\"data\">"
+            + escapeHtml(outsideEdgesText != null ? outsideEdgesText : "(none)") + "</pre>");
+
+        out.println("<h3>L (Local Variables)</h3>");
+        out.println("<pre class=\"data\">"
+            + escapeHtml(localVariablesText != null ? localVariablesText : "(none)") + "</pre>");
+
+        out.println("<h3>E (Globally Escaped)</h3>");
+        out.println("<p class=\"data\">"
+            + escapeHtml(escapedNodesText != null ? escapedNodesText : "{}") + "</p>");
+
+        // Set A (Prestate Nodes)
+        out.println("<h2>Set A (Prestate Nodes)</h2>");
         out.println("<p class=\"data\">" + escapeHtml(prestateNodesText != null ? prestateNodesText : "{}") + "</p>");
+
+        // Set B (Globally Escaped Nodes)
+        out.println("<h2>Set B (Globally Escaped Nodes)</h2>");
+        out.println("<p class=\"data\">" + escapeHtml(globallyEscapedNodesText != null ? globallyEscapedNodesText : "{}") + "</p>");
 
         // Set W
         out.println("<h2>Set W (Mutated Fields)</h2>");

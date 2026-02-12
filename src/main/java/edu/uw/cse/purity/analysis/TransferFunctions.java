@@ -18,6 +18,7 @@ import sootup.core.signatures.MethodSignature;
 import sootup.core.types.ReferenceType;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -75,11 +76,13 @@ public class TransferFunctions {
         if (rhs instanceof JThisRef) {
             // r0 := @this → map to ParameterNode(0)
             graph.strongUpdate(local, Set.of(new ParameterNode(0)));
+            if (config.debug) System.out.println("Debug== @this: " + local.getName() + " -> P0");
         } else if (rhs instanceof JParameterRef paramRef) {
             int paramIndex = paramRef.getIndex();
             // For instance methods, offset by 1 (index 0 is 'this')
             int nodeIndex = isStaticMethod ? paramIndex : paramIndex + 1;
             graph.strongUpdate(local, Set.of(new ParameterNode(nodeIndex)));
+            if (config.debug) System.out.println("Debug== @parameter[" + paramIndex + "]: " + local.getName() + " -> P" + nodeIndex);
         }
         // Skip JCaughtExceptionRef — not relevant for purity
     }
@@ -173,12 +176,14 @@ public class TransferFunctions {
         InsideNode node = new InsideNode(insideNodeCounter++,
             "new " + newExpr.getType().getClassName());
         graph.strongUpdate(lhs, Set.of(node));
+        if (config.debug) System.out.println("Debug== new " + newExpr.getType().getClassName() + ": " + lhs.getName() + " -> " + node.getId());
     }
 
     /** x = new T[size] → create InsideNode for the array */
     private void handleNewArray(Local lhs, PointsToGraph graph) {
         InsideNode node = new InsideNode(insideNodeCounter++, "new array");
         graph.strongUpdate(lhs, Set.of(node));
+        if (config.debug) System.out.println("Debug== new array: " + lhs.getName() + " -> " + node.getId());
     }
 
     /** x = y → strong update: copy y's targets to x */
@@ -186,6 +191,7 @@ public class TransferFunctions {
         if (!(lhs.getType() instanceof ReferenceType)) return;
         Set<Node> targets = graph.pointsTo(rhs);
         graph.strongUpdate(lhs, new HashSet<>(targets));
+        if (config.debug) System.out.println("Debug== copy: " + lhs.getName() + " = " + rhs.getName() + ", targets = " + nodeSetToString(targets));
     }
 
     /**
@@ -201,6 +207,8 @@ public class TransferFunctions {
         FieldSignature field = fieldRef.getFieldSignature();
         Set<Node> baseNodes = graph.pointsTo(base);
         Set<Node> result = new HashSet<>();
+
+        if (config.debug) System.out.println("Debug== field load: " + lhs.getName() + " = " + base.getName() + "." + field.getName() + ", base points to " + nodeSetToString(baseNodes));
 
         for (Node n : baseNodes) {
             // Collect existing inside-edge targets
@@ -218,12 +226,14 @@ public class TransferFunctions {
                         "load " + field.getName() + " from " + n.getId());
                     graph.addOutsideEdge(n, field, loadNode);
                     result.add(loadNode);
+                    if (config.debug) System.out.println("Debug==   created LoadNode " + loadNode.getId() + " for escaped node " + n.getId() + "." + field.getName());
                 }
                 // Otherwise the existing outside targets are already in result
             }
         }
 
         graph.strongUpdate(lhs, result);
+        if (config.debug) System.out.println("Debug==   result: " + lhs.getName() + " -> " + nodeSetToString(result));
 
         // Apply node merging after field load (if enabled)
         if (config.merge) {
@@ -239,11 +249,14 @@ public class TransferFunctions {
         Set<Node> rhsNodes = (rhs instanceof Local rhsLocal)
             ? graph.pointsTo(rhsLocal) : new HashSet<>();
 
+        if (config.debug) System.out.println("Debug== field store: " + base.getName() + "." + field.getName() + " = " + rhs + ", base points to " + nodeSetToString(baseNodes) + ", rhs points to " + nodeSetToString(rhsNodes));
+
         for (Node baseNode : baseNodes) {
             for (Node rhsNode : rhsNodes) {
                 graph.addInsideEdge(baseNode, field, rhsNode);
             }
             graph.recordMutation(baseNode, field);
+            if (config.debug) System.out.println("Debug==   recorded mutation: (" + baseNode.getId() + ", " + field.getName() + ")");
         }
     }
 
@@ -253,12 +266,16 @@ public class TransferFunctions {
         Set<Node> rhsNodes = (rhs instanceof Local rhsLocal)
             ? graph.pointsTo(rhsLocal) : new HashSet<>();
 
+        if (config.debug) System.out.println("Debug== static field store: " + field.getSubSignature() + " = " + rhs + ", rhs points to " + nodeSetToString(rhsNodes));
+
         for (Node rhsNode : rhsNodes) {
             graph.addInsideEdge(GlobalNode.INSTANCE, field, rhsNode);
             graph.markGlobalEscaped(rhsNode);
+            if (config.debug) System.out.println("Debug==   " + rhsNode.getId() + " escapes to global");
         }
         graph.recordMutation(GlobalNode.INSTANCE, field);
         graph.setHasGlobalSideEffect(); // Fix #4: immediate impurity
+        if (config.debug) System.out.println("Debug==   marked hasGlobalSideEffect = true");
     }
 
     /** x = staticField → outside edge from GlobalNode + load node */
@@ -267,6 +284,8 @@ public class TransferFunctions {
 
         FieldSignature field = staticRef.getFieldSignature();
         Set<Node> result = new HashSet<>();
+
+        if (config.debug) System.out.println("Debug== static field load: " + lhs.getName() + " = " + field.getSubSignature());
 
         // Collect existing targets
         result.addAll(graph.getTargets(GlobalNode.INSTANCE, field, EdgeType.INSIDE));
@@ -279,9 +298,11 @@ public class TransferFunctions {
                 "load static " + field.getName());
             graph.addOutsideEdge(GlobalNode.INSTANCE, field, loadNode);
             result.add(loadNode);
+            if (config.debug) System.out.println("Debug==   created LoadNode " + loadNode.getId() + " for static field " + field.getName());
         }
 
         graph.strongUpdate(lhs, result);
+        if (config.debug) System.out.println("Debug==   result: " + lhs.getName() + " -> " + nodeSetToString(result));
 
         if (config.merge) {
             NodeMerger.enforceUniqueness(graph);
@@ -295,6 +316,7 @@ public class TransferFunctions {
         if (op instanceof Local rhsLocal) {
             Set<Node> targets = graph.pointsTo(rhsLocal);
             graph.strongUpdate(lhs, new HashSet<>(targets));
+            if (config.debug) System.out.println("Debug== cast: " + lhs.getName() + " = (" + castExpr.getType() + ") " + rhsLocal.getName() + ", targets = " + nodeSetToString(targets));
         }
     }
 
@@ -307,6 +329,8 @@ public class TransferFunctions {
         Set<Node> baseNodes = graph.pointsTo(base);
         Set<Node> result = new HashSet<>();
 
+        if (config.debug) System.out.println("Debug== array load: " + lhs.getName() + " = " + base.getName() + "[i], base points to " + nodeSetToString(baseNodes));
+
         for (Node n : baseNodes) {
             // For arrays, we model element access: the array node itself "contains" its elements
             // A simple model: if the array node is prestate, create a load node
@@ -314,6 +338,7 @@ public class TransferFunctions {
                 LoadNode loadNode = new LoadNode(loadNodeCounter++,
                     "array element from " + n.getId());
                 result.add(loadNode);
+                if (config.debug) System.out.println("Debug==   created LoadNode " + loadNode.getId() + " for array element from " + n.getId());
             }
             // Also include any InsideNodes that were stored into this array
             for (var fieldEntry : graph.getEdges().getOrDefault(n, java.util.Map.of()).entrySet()) {
@@ -324,6 +349,7 @@ public class TransferFunctions {
         }
 
         graph.strongUpdate(lhs, result);
+        if (config.debug) System.out.println("Debug==   result: " + lhs.getName() + " -> " + nodeSetToString(result));
     }
 
     /** y[i] = x → treat like field store */
@@ -333,10 +359,13 @@ public class TransferFunctions {
         Set<Node> rhsNodes = (rhs instanceof Local rhsLocal)
             ? graph.pointsTo(rhsLocal) : new HashSet<>();
 
+        if (config.debug) System.out.println("Debug== array store: " + base.getName() + "[i] = " + rhs + ", base points to " + nodeSetToString(baseNodes));
+
         for (Node baseNode : baseNodes) {
             // Record as mutation of the array object
             // We use null field to represent array element writes
             graph.recordMutation(baseNode, null);
+            if (config.debug) System.out.println("Debug==   recorded mutation: (" + baseNode.getId() + ", [])");
             // We don't add specific field edges for arrays (simplification)
             // The mutation record is sufficient for purity checking
         }
@@ -362,12 +391,14 @@ public class TransferFunctions {
         MethodSignature methodSig = invokeExpr.getMethodSignature();
 
         if (SafeMethods.isSafe(methodSig)) {
+            if (config.debug) System.out.println("Debug== safe method call: " + methodSig + ", no side effects");
             // Safe method: no side effects on the graph
             // If there's a return value of reference type, treat as fresh node
             if (returnVar != null && returnVar.getType() instanceof ReferenceType) {
                 InsideNode freshReturn = new InsideNode(insideNodeCounter++,
                     "return from " + methodSig.getName());
                 graph.strongUpdate(returnVar, Set.of(freshReturn));
+                if (config.debug) System.out.println("Debug==   return value: " + returnVar.getName() + " -> " + freshReturn.getId());
             }
             return;
         }
@@ -395,6 +426,8 @@ public class TransferFunctions {
         // Conservative: mark as having global side effect (unknown call could do anything)
         graph.setHasGlobalSideEffect();
 
+        if (config.debug) System.out.println("Debug== see a method invocation, conservatively mark as having global side effect.");
+
         // Return value: point to GlobalNode (could be anything)
         if (returnVar != null && returnVar.getType() instanceof ReferenceType) {
             graph.strongUpdate(returnVar, Set.of(GlobalNode.INSTANCE));
@@ -405,6 +438,7 @@ public class TransferFunctions {
     private void handleReturn(JReturnStmt stmt, PointsToGraph graph) {
         Value retVal = stmt.getOp();
         if (retVal instanceof Local retLocal && retLocal.getType() instanceof ReferenceType) {
+            if (config.debug) System.out.println("Debug== return: " + retLocal.getName() + " -> " + nodeSetToString(graph.pointsTo(retLocal)));
             // Store in a conceptual RETURN variable — we don't actually need this
             // for purity checking, but it's useful for inter-procedural extension
         }
@@ -449,5 +483,11 @@ public class TransferFunctions {
         return n instanceof ParameterNode
             || n instanceof LoadNode
             || n instanceof GlobalNode;
+    }
+
+    /** Format a set of nodes as a readable string for debug output */
+    private static String nodeSetToString(Set<Node> nodes) {
+        List<String> ids = nodes.stream().map(Node::getId).sorted().toList();
+        return "{" + String.join(", ", ids) + "}";
     }
 }
