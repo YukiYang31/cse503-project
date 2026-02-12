@@ -15,10 +15,9 @@ import java.util.*;
  *   <li><b>E</b> (globally escaped) — nodes whose address is stored in static fields ({@link #globalEscaped})</li>
  * </ul>
  *
- * Additional fields not in the formal G tuple but needed for purity analysis:
+ * Additional field not in the formal G tuple but needed for purity analysis:
  * <ul>
  *   <li><b>W</b> (mutated fields) — tracked in {@link #mutatedFields}</li>
- *   <li><b>hasGlobalSideEffect</b> — boolean flag for static field writes</li>
  * </ul>
  */
 public class PointsToGraph {
@@ -38,15 +37,11 @@ public class PointsToGraph {
     /** Nodes that have escaped to static fields */
     private final Set<Node> globalEscaped;
 
-    /** Immediate impurity flag — set when a static field is written */
-    private boolean hasGlobalSideEffect;
-
     public PointsToGraph() {
         this.varPointsTo = new HashMap<>();
         this.edges = new HashMap<>();
         this.mutatedFields = new HashSet<>();
         this.globalEscaped = new HashSet<>();
-        this.hasGlobalSideEffect = false;
     }
 
     // --- Record types ---
@@ -142,16 +137,6 @@ public class PointsToGraph {
         return Collections.unmodifiableSet(globalEscaped);
     }
 
-    // --- Global side effect ---
-
-    public void setHasGlobalSideEffect() {
-        this.hasGlobalSideEffect = true;
-    }
-
-    public boolean hasGlobalSideEffect() {
-        return hasGlobalSideEffect;
-    }
-
     // --- Graph accessors ---
 
     public Map<Local, Set<Node>> getVarPointsTo() {
@@ -225,7 +210,6 @@ public class PointsToGraph {
         }
         clone.mutatedFields.addAll(this.mutatedFields);
         clone.globalEscaped.addAll(this.globalEscaped);
-        clone.hasGlobalSideEffect = this.hasGlobalSideEffect;
         return clone;
     }
 
@@ -247,7 +231,6 @@ public class PointsToGraph {
         }
         dest.mutatedFields.addAll(this.mutatedFields);
         dest.globalEscaped.addAll(this.globalEscaped);
-        dest.hasGlobalSideEffect = this.hasGlobalSideEffect;
     }
 
     // --- Merge (union for join points) ---
@@ -272,8 +255,6 @@ public class PointsToGraph {
         mutatedFields.addAll(other.mutatedFields);
         // Union global escaped
         globalEscaped.addAll(other.globalEscaped);
-        // Propagate global side effect
-        hasGlobalSideEffect |= other.hasGlobalSideEffect;
     }
 
     // --- Node replacement (used by NodeMerger) ---
@@ -374,8 +355,7 @@ public class PointsToGraph {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PointsToGraph other)) return false;
-        return hasGlobalSideEffect == other.hasGlobalSideEffect
-            && varPointsTo.equals(other.varPointsTo)
+        return varPointsTo.equals(other.varPointsTo)
             && edges.equals(other.edges)
             && mutatedFields.equals(other.mutatedFields)
             && globalEscaped.equals(other.globalEscaped);
@@ -383,6 +363,6 @@ public class PointsToGraph {
 
     @Override
     public int hashCode() {
-        return Objects.hash(varPointsTo, edges, mutatedFields, globalEscaped, hasGlobalSideEffect);
+        return Objects.hash(varPointsTo, edges, mutatedFields, globalEscaped);
     }
 }

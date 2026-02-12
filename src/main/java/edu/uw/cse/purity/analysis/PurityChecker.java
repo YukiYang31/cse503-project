@@ -11,13 +11,13 @@ import java.util.*;
  * Determines method purity from the exit PointsToGraph.
  *
  * Algorithm (Sălcianu &amp; Rinard 2005):
- * 1. If hasGlobalSideEffect → IMPURE (static field write)
- * 2. Compute set A = prestate nodes (BFS from ParameterNodes via OutsideEdges)
- * 3. Compute set B = globally escaped closure (BFS from E ∪ {nGBL} via all edges)
- * 4. Compute set W = mutated fields
- * 5. For each n ∈ A: (a) n ∉ B and (b) no ⟨n,f⟩ ∈ W
+ * 1. Compute set A = prestate nodes (BFS from ParameterNodes via OutsideEdges)
+ * 2. Compute set B = globally escaped closure (BFS from E ∪ {nGBL} via all edges)
+ * 3. Compute set W = mutated fields
+ *    - If ⟨GlobalNode, f⟩ ∈ W → IMPURE (static field write)
+ * 4. For each n ∈ A: (a) n ∉ B and (b) no ⟨n,f⟩ ∈ W
  *    - Constructor exception: ignore mutations for P0
- * 6. Otherwise → PURE
+ * 5. Otherwise → PURE
  */
 public class PurityChecker {
 
@@ -44,22 +44,25 @@ public class PurityChecker {
                 String.join("; ", violations));
         }
 
-        // Step 1: Immediate check for static field writes
-        if (exitGraph.hasGlobalSideEffect()) {
-            if (debug) System.out.println("Debug== [purity] hasGlobalSideEffect = true => IMPURE");
-            return new MethodSummary(methodSig, exitGraph,
-                MethodSummary.PurityResult.IMPURE,
-                "writes to static field");
-        }
-
-        // Step 2: Compute set A (prestate nodes)
+        // Step 1: Compute set A (prestate nodes)
         Set<Node> setA = computePrestateNodes(exitGraph);
 
-        // Step 3: Compute set B (globally escaped closure)
+        // Step 2: Compute set B (globally escaped closure)
         Set<Node> setB = computeGloballyEscapedNodes(exitGraph);
 
-        // Step 4: Compute set W
+        // Step 3: Compute set W
         Set<MutatedField> setW = exitGraph.getMutatedFields();
+
+        // Step 3a: Check for static field writes (GlobalNode mutations in W)
+        for (MutatedField mf : setW) {
+            if (mf.node() instanceof GlobalNode) {
+                String fieldName = mf.field() != null ? mf.field().getName() : "unknown";
+                if (debug) System.out.println("Debug== [purity] GlobalNode mutation in W => IMPURE (writes to static field " + fieldName + ")");
+                return new MethodSummary(methodSig, exitGraph,
+                    MethodSummary.PurityResult.IMPURE,
+                    "writes to static field " + fieldName);
+            }
+        }
 
         if (debug) {
             System.out.println("Debug== [purity] set A (prestate nodes): " + nodeSetStr(setA));
@@ -80,9 +83,6 @@ public class PurityChecker {
             // Check (b): no ⟨n,f⟩ ∈ W (with constructor exception for P0)
             for (MutatedField mf : setW) {
                 if (mf.node().equals(n)) {
-                    // Skip GlobalNode mutations (already handled by hasGlobalSideEffect)
-                    if (n instanceof GlobalNode) continue;
-
                     // Constructor exception: allow direct writes to this.f (P0)
                     if (isConstructor && n instanceof ParameterNode pn
                         && pn.getParamIndex() == 0) {

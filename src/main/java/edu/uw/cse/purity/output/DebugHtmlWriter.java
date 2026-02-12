@@ -36,7 +36,6 @@ public class DebugHtmlWriter implements Closeable {
     private String prestateNodesText;
     private String globallyEscapedNodesText;
     private String mutatedFieldsText;
-    private boolean hasGlobalSideEffect;
     private String purityResult;
     private String purityReason;
 
@@ -76,7 +75,6 @@ public class DebugHtmlWriter implements Closeable {
 
     public void setExitGraph(PointsToGraph graph) {
         this.exitGraphDot = GraphPrinter.generateDotString(graph, "Exit Graph");
-        this.hasGlobalSideEffect = graph.hasGlobalSideEffect();
     }
 
     /** Set inside edges text (I) from the exit graph. */
@@ -268,9 +266,6 @@ public class DebugHtmlWriter implements Closeable {
         // Set W
         out.println("<h2>Set W (Mutated Fields)</h2>");
         out.println("<p class=\"data\">" + escapeHtml(mutatedFieldsText != null ? mutatedFieldsText : "{}") + "</p>");
-        if (hasGlobalSideEffect) {
-            out.println("<p class=\"warning\">Global Side Effect: YES</p>");
-        }
 
         // Purity Result
         out.println("<h2>Purity Result</h2>");

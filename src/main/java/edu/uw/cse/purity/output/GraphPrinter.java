@@ -103,9 +103,6 @@ public class GraphPrinter {
         List<String> prestateIds = prestateNodes.stream().map(Node::getId).sorted().toList();
         System.out.println("Prestate Nodes: {" + String.join(", ", prestateIds) + "}");
 
-        // Global Side Effect
-        System.out.println("Global Side Effect: " + (graph.hasGlobalSideEffect() ? "YES" : "NO"));
-
         System.out.println();
     }
 

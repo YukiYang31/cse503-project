@@ -260,7 +260,7 @@ public class TransferFunctions {
         }
     }
 
-    /** staticField = y → inside edge from GlobalNode, record mutation, set hasGlobalSideEffect */
+    /** staticField = v → add pointed-to nodes to E, record mutation on field */
     private void handleStaticFieldStore(JStaticFieldRef staticRef, Value rhs, PointsToGraph graph) {
         FieldSignature field = staticRef.getFieldSignature();
         Set<Node> rhsNodes = (rhs instanceof Local rhsLocal)
@@ -268,14 +268,13 @@ public class TransferFunctions {
 
         if (config.debug) System.out.println("Debug== static field store: " + field.getSubSignature() + " = " + rhs + ", rhs points to " + nodeSetToString(rhsNodes));
 
+        // Paper rule: add all nodes pointed to by v to E
         for (Node rhsNode : rhsNodes) {
-            graph.addInsideEdge(GlobalNode.INSTANCE, field, rhsNode);
             graph.markGlobalEscaped(rhsNode);
             if (config.debug) System.out.println("Debug==   " + rhsNode.getId() + " escapes to global");
         }
+        // Paper rule: record a mutation on the static field f
         graph.recordMutation(GlobalNode.INSTANCE, field);
-        graph.setHasGlobalSideEffect(); // Fix #4: immediate impurity
-        if (config.debug) System.out.println("Debug==   marked hasGlobalSideEffect = true");
     }
 
     /** x = staticField → outside edge from GlobalNode + load node */
@@ -423,10 +422,7 @@ public class TransferFunctions {
             }
         }
 
-        // Conservative: mark as having global side effect (unknown call could do anything)
-        graph.setHasGlobalSideEffect();
-
-        if (config.debug) System.out.println("Debug== see a method invocation, conservatively mark as having global side effect.");
+        if (config.debug) System.out.println("Debug== see an unknown method invocation, conservatively escaping all arguments.");
 
         // Return value: point to GlobalNode (could be anything)
         if (returnVar != null && returnVar.getType() instanceof ReferenceType) {
