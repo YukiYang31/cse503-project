@@ -85,8 +85,7 @@ public class PurityAnalysisRunner {
             }
         }
 
-        // Print results
-        ResultPrinter.print(summaries);
+        
 
         // Print graphs if requested
         if (config.showGraph) {
@@ -95,6 +94,9 @@ public class PurityAnalysisRunner {
                 GraphPrinter.writeDotFile(summary);
             }
         }
+
+        // Print results
+        ResultPrinter.print(summaries);
     }
 
     private MethodSummary analyzeMethod(JavaSootMethod method,

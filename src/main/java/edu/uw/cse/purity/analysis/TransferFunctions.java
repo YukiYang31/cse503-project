@@ -235,7 +235,7 @@ public class TransferFunctions {
                 Set<Node> existingOutside = graph.getTargets(n, field, EdgeType.OUTSIDE);
                 if (existingOutside.isEmpty()) {
                     LoadNode loadNode = new LoadNode(loadNodeCounter++,
-                        "load " + field.getName() + " from " + n.getId());
+                        "load " + field.getName() + " from " + describeNode(n));
                     graph.addOutsideEdge(n, field, loadNode);
                     result.add(loadNode);
                     if (config.debug) System.out.println("Debug==   created LoadNode " + loadNode.getId() + " for escaped node " + n.getId() + "." + field.getName());
@@ -347,7 +347,7 @@ public class TransferFunctions {
             // A simple model: if the array node is prestate, create a load node
             if (isPrestateReachable(n)) {
                 LoadNode loadNode = new LoadNode(loadNodeCounter++,
-                    "array element from " + n.getId());
+                    "array element from " + describeNode(n));
                 result.add(loadNode);
                 if (config.debug) System.out.println("Debug==   created LoadNode " + loadNode.getId() + " for array element from " + n.getId());
             }
@@ -491,6 +491,16 @@ public class TransferFunctions {
         return n instanceof ParameterNode
             || n instanceof LoadNode
             || n instanceof GlobalNode;
+    }
+
+    /** Return a human-readable description for a node (label if available, otherwise ID) */
+    private static String describeNode(Node n) {
+        if (n instanceof ParameterNode pn) {
+            String label = pn.getLabel();
+            return label.contains("parameter") ? label : "parameter " + label;
+        }
+        if (n instanceof LoadNode ln) return ln.getLabel();
+        return n.getId();
     }
 
     /** Format a set of nodes as a readable string for debug output */
