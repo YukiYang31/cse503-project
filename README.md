@@ -82,7 +82,7 @@ If either rule is violated, the tool prints the violations in **red** (ANSI esca
 
 ### Static Field Writes = Immediate Impurity
 
-A `hasGlobalSideEffect` boolean in the graph is set whenever a static field is written. This is checked first in `PurityChecker` — no graph traversal needed.
+When a static field is written, the analysis records a mutation on `GlobalNode` with the written field. Since `GlobalNode` is always in the globally escaped set B, any prestate node stored into a static field will appear in B, and the mutation record `⟨GlobalNode, field⟩` in set W triggers an impurity verdict during the standard graph-based purity check.
 
 ### Strong vs Weak Updates
 
@@ -155,8 +155,8 @@ dot -Tpng 'MethodName.dot' -o graph.png
 ```
 === Purity Analysis Results ===
 PureMethods.add(int,int)        : PURE
-ImpureMethods.setX(Point,int)   : IMPURE  (mutates prestate node P1 via field x)
-ImpureMethods.increment()       : IMPURE  (writes to static field)
+ImpureMethods.setX(Point,int)   : IMPURE  (mutates Point parameter via field x)
+ImpureMethods.increment()       : IMPURE  (writes to static field counter)
 ```
 
 If a graph invariant violation is detected, the verdict is printed in red instead:

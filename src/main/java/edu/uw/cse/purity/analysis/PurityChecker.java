@@ -70,14 +70,14 @@ public class PurityChecker {
             System.out.println("Debug== [purity] set W (mutated fields): " + mutatedFieldsStr(setW));
         }
 
-        // Step 5: For each n ∈ A, check (a) n ∉ B and (b) no ⟨n,f⟩ ∈ W
+        // Step 4: For each n ∈ A, check (a) n ∉ B and (b) no ⟨n,f⟩ ∈ W
         for (Node n : setA) {
             // Check (a): n ∉ B
             if (setB.contains(n)) {
                 if (debug) System.out.println("Debug== [purity] prestate node " + n.getId() + " ∈ set B (globally escaped) => IMPURE");
                 return new MethodSummary(methodSig, exitGraph,
                     MethodSummary.PurityResult.IMPURE,
-                    "prestate node " + n.getId() + " escapes to global scope");
+                    describeNode(n) + " escapes to global scope");
             }
 
             // Check (b): no ⟨n,f⟩ ∈ W (with constructor exception for P0)
@@ -94,15 +94,24 @@ public class PurityChecker {
                     if (debug) System.out.println("Debug== [purity] prestate node " + n.getId() + " mutated via " + fieldName + " => IMPURE");
                     return new MethodSummary(methodSig, exitGraph,
                         MethodSummary.PurityResult.IMPURE,
-                        "mutates prestate node " + n.getId() + " via field " + fieldName);
+                        "mutates " + describeNode(n) + " via field " + fieldName);
                 }
             }
         }
 
-        // Step 6: PURE
+        // Step 5: PURE
         if (debug) System.out.println("Debug== [purity] no prestate mutations, no global escape => PURE");
         return new MethodSummary(methodSig, exitGraph,
             MethodSummary.PurityResult.PURE, null);
+    }
+
+    /**
+     * Produce a human-readable description for a node, used in impurity reason strings.
+     */
+    private static String describeNode(Node n) {
+        if (n instanceof ParameterNode pn) return pn.getLabel();
+        if (n instanceof LoadNode ln) return "loaded object '" + ln.getLabel() + "'";
+        return n.getId();
     }
 
     /**

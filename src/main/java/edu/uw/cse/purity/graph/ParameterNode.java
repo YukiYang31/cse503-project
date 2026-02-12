@@ -7,14 +7,20 @@ package edu.uw.cse.purity.graph;
  */
 public class ParameterNode extends Node {
     private final int paramIndex;
+    private final String label;
 
-    public ParameterNode(int paramIndex) {
+    public ParameterNode(int paramIndex, String label) {
         super("P" + paramIndex);
         this.paramIndex = paramIndex;
+        this.label = label;
     }
 
     public int getParamIndex() {
         return paramIndex;
+    }
+
+    public String getLabel() {
+        return label;
     }
 
     @Override

@@ -30,6 +30,7 @@ public class TransferFunctions {
 
     private final AnalysisConfig config;
     private final boolean isStaticMethod;
+    private final List<String> paramTypeNames; // nullable — falls back to index-based labels
 
     // Counters for generating unique node IDs
     private int insideNodeCounter = 0;
@@ -39,8 +40,13 @@ public class TransferFunctions {
     public static final String RETURN_VAR_NAME = "$RETURN";
 
     public TransferFunctions(AnalysisConfig config, boolean isStaticMethod) {
+        this(config, isStaticMethod, null);
+    }
+
+    public TransferFunctions(AnalysisConfig config, boolean isStaticMethod, List<String> paramTypeNames) {
         this.config = config;
         this.isStaticMethod = isStaticMethod;
+        this.paramTypeNames = paramTypeNames;
     }
 
     /**
@@ -75,13 +81,19 @@ public class TransferFunctions {
 
         if (rhs instanceof JThisRef) {
             // r0 := @this → map to ParameterNode(0)
-            graph.strongUpdate(local, Set.of(new ParameterNode(0)));
+            graph.strongUpdate(local, Set.of(new ParameterNode(0, "this")));
             if (config.debug) System.out.println("Debug== @this: " + local.getName() + " -> P0");
         } else if (rhs instanceof JParameterRef paramRef) {
             int paramIndex = paramRef.getIndex();
             // For instance methods, offset by 1 (index 0 is 'this')
             int nodeIndex = isStaticMethod ? paramIndex : paramIndex + 1;
-            graph.strongUpdate(local, Set.of(new ParameterNode(nodeIndex)));
+            String label;
+            if (paramTypeNames != null && paramIndex < paramTypeNames.size()) {
+                label = paramTypeNames.get(paramIndex) + " parameter";
+            } else {
+                label = "parameter " + paramIndex;
+            }
+            graph.strongUpdate(local, Set.of(new ParameterNode(nodeIndex, label)));
             if (config.debug) System.out.println("Debug== @parameter[" + paramIndex + "]: " + local.getName() + " -> P" + nodeIndex);
         }
         // Skip JCaughtExceptionRef — not relevant for purity

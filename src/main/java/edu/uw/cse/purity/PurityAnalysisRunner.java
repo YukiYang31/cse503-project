@@ -13,6 +13,7 @@ import sootup.core.jimple.common.stmt.Stmt;
 import sootup.core.model.Body;
 import sootup.core.model.Position;
 import sootup.java.bytecode.inputlocation.JavaClassPathAnalysisInputLocation;
+import sootup.core.types.Type;
 import sootup.java.core.JavaSootClass;
 import sootup.java.core.JavaSootMethod;
 import sootup.java.core.views.JavaView;
@@ -118,9 +119,16 @@ public class PurityAnalysisRunner {
             try {
                 if (config.debug) System.out.println("\nDebug== ===== Analyzing method: " + sig + " =====");
 
+                // Extract simple type names for parameter labels
+                List<String> paramTypeNames = method.getSignature().getParameterTypes()
+                    .stream()
+                    .map(Type::toString)
+                    .map(t -> { int dot = t.lastIndexOf('.'); return dot >= 0 ? t.substring(dot + 1) : t; })
+                    .toList();
+
                 // Run the forward flow analysis
                 PurityFlowAnalysis analysis = new PurityFlowAnalysis(
-                    cfg, body, config, method.isStatic(), debugWriter);
+                    cfg, body, config, method.isStatic(), debugWriter, paramTypeNames);
 
                 // Get the exit graph
                 PointsToGraph exitGraph = analysis.getExitGraph();
