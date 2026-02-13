@@ -187,8 +187,10 @@ When `--show-graph` is used, each method's exit graph is presented as **G = ⟨I
 
 When `--debug` is used, the tool writes one self-contained HTML file per method to the `debug/` directory. Open any file in a browser to see:
 
-1. **Jimple Body** — The full Jimple IR for the method, with line numbers
-2. **Analysis Trace (Key Milestones)** — A visual points-to graph after each significant statement:
+1. **Java Source Code** — The original source lines for the method
+2. **Bytecode** — JVM bytecode for the method, disassembled via ASM's `Textifier` (no `javap` needed)
+3. **Jimple Body** — The full Jimple IR for the method, with line numbers
+4. **Analysis Trace (Key Milestones)** — A visual points-to graph after each significant statement:
    - Identity statements (parameter/this setup)
    - Field loads and stores (`x = y.f`, `x.f = y`)
    - Static field reads and writes
@@ -196,11 +198,13 @@ When `--debug` is used, the tool writes one self-contained HTML file per method 
    - Object allocations (`new T()`)
    - Method invocations
    - Skips trivial statements (local copies, casts, gotos, ifs)
-3. **Exit Graph** — The final points-to graph at method exit, rendered visually
-4. **Graph Components G = ⟨I, O, L, E⟩** — textual breakdown of the exit graph into its four formal components
-5. **Prestate Nodes** — The set of nodes representing pre-existing objects
-6. **Set W (Mutated Fields)** — All (node, field) pairs that were written to
-7. **Purity Result** — The final verdict (PURE/IMPURE) with reason
+5. **Exit Graph** — The final points-to graph at method exit, rendered visually
+6. **Graph Components G = ⟨I, O, L, E⟩** — textual breakdown of the exit graph into its four formal components
+7. **Prestate Nodes** — The set of nodes representing pre-existing objects
+8. **Set W (Mutated Fields)** — All (node, field) pairs that were written to
+9. **Purity Result** — The final verdict (PURE/IMPURE) with reason
+
+This gives a complete view of the compilation pipeline: **Java source → JVM bytecode → Jimple IR → analysis**.
 
 Graphs are rendered in the browser using [viz.js](https://github.com/nicknisi/viz.js) (Graphviz compiled to JavaScript) loaded from a CDN — no Graphviz installation required. The same DOT color scheme described above applies: green boxes for inside nodes, blue ellipses for parameter nodes, red diamonds for load nodes, and red borders for impurity sources.
 
