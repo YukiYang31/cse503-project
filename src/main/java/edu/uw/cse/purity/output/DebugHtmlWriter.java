@@ -24,6 +24,7 @@ public class DebugHtmlWriter implements Closeable {
     private final Path outputPath;
 
     private List<SourceFile> sourceFiles = List.of();
+    private List<String> bytecodeLines = List.of();
     private final List<String> jimpleStatements = new ArrayList<>();
     private final List<TraceEntry> traceEntries = new ArrayList<>();
     private int stepCounter = 0;
@@ -57,6 +58,10 @@ public class DebugHtmlWriter implements Closeable {
 
     public void setSourceCode(List<SourceFile> sources) {
         this.sourceFiles = sources;
+    }
+
+    public void setBytecode(List<String> lines) {
+        this.bytecodeLines = lines;
     }
 
     public void addJimpleStatement(String stmtText) {
@@ -203,6 +208,17 @@ public class DebugHtmlWriter implements Closeable {
                 }
                 out.println("</pre>");
             }
+        }
+
+        // Bytecode
+        if (!bytecodeLines.isEmpty()) {
+            out.println("<h2>Bytecode</h2>");
+            out.println("<pre class=\"bytecode\">");
+            for (int i = 0; i < bytecodeLines.size(); i++) {
+                out.println(String.format("<span class=\"line-num\">%3d</span>  %s",
+                    i + 1, escapeHtml(bytecodeLines.get(i))));
+            }
+            out.println("</pre>");
         }
 
         // Jimple Body
@@ -387,6 +403,17 @@ public class DebugHtmlWriter implements Closeable {
             font-size: 13px;
             line-height: 1.5;
             overflow-x: auto;
+        }
+        .bytecode {
+            background: #1c2333;
+            color: #b0c4de;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            overflow-x: auto;
+            border-left: 4px solid #f0ad4e;
         }
         .line-num {
             color: #6c7086;

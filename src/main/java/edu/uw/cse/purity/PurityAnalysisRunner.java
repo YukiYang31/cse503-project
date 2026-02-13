@@ -18,10 +18,20 @@ import sootup.java.core.JavaSootClass;
 import sootup.java.core.JavaSootMethod;
 import sootup.java.core.views.JavaView;
 
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.util.Textifier;
+import org.objectweb.asm.util.TraceMethodVisitor;
+
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -113,6 +123,7 @@ public class PurityAnalysisRunner {
                 debugWriter = DebugHtmlWriter.create(sig);
                 debugWriter.setSourceCode(
                     extractMethodSource(cfg, sourceContents));
+                debugWriter.setBytecode(extractBytecode(method));
                 for (Stmt stmt : cfg.getStmts()) {
                     debugWriter.addJimpleStatement(stmt.toString());
                 }
@@ -212,6 +223,93 @@ public class PurityAnalysisRunner {
             result.add(new DebugHtmlWriter.SourceFile(label, snippet.toString()));
         }
         return result;
+    }
+
+    /**
+     * Use ASM to extract disassembled bytecode for a specific method from its .class file.
+     */
+    private List<String> extractBytecode(JavaSootMethod method) {
+        try {
+            // Resolve .class file path from classDir + fully qualified class name
+            String className = method.getDeclaringClassType().getFullyQualifiedName();
+            Path classFile = classDir.resolve(className.replace('.', '/') + ".class");
+            if (!Files.exists(classFile)) {
+                return List.of("// .class file not found: " + classFile);
+            }
+
+            byte[] classBytes = Files.readAllBytes(classFile);
+
+            // Build JVM method descriptor from SootUp types
+            String methodName = method.getName();
+            String descriptor = buildDescriptor(method);
+
+            // Use a custom ClassVisitor to only trace the matching method
+            Textifier textifier = new Textifier();
+            ClassReader reader = new ClassReader(classBytes);
+            reader.accept(new ClassVisitor(Opcodes.ASM9) {
+                @Override
+                public MethodVisitor visitMethod(int access, String name, String desc,
+                                                  String signature, String[] exceptions) {
+                    if (name.equals(methodName) && desc.equals(descriptor)) {
+                        // Trace this method
+                        return new TraceMethodVisitor(textifier);
+                    }
+                    return null; // skip other methods
+                }
+            }, 0);
+
+            // Convert Textifier output to lines
+            StringWriter sw = new StringWriter();
+            try (PrintWriter pw = new PrintWriter(sw)) {
+                textifier.print(pw);
+            }
+            String output = sw.toString();
+            if (output.isBlank()) {
+                return List.of("// Could not find method " + methodName + descriptor + " in bytecode");
+            }
+
+            // Split into lines, trimming trailing empty lines
+            List<String> lines = new ArrayList<>(Arrays.asList(output.split("\n", -1)));
+            while (!lines.isEmpty() && lines.getLast().isBlank()) {
+                lines.removeLast();
+            }
+            return lines;
+
+        } catch (IOException e) {
+            return List.of("// Error reading bytecode: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Build a JVM method descriptor (e.g., "(ILjava/lang/String;)V") from SootUp method types.
+     */
+    private static String buildDescriptor(JavaSootMethod method) {
+        StringBuilder sb = new StringBuilder("(");
+        for (Type paramType : method.getSignature().getParameterTypes()) {
+            sb.append(toJvmType(paramType.toString()));
+        }
+        sb.append(")");
+        sb.append(toJvmType(method.getSignature().getType().toString()));
+        return sb.toString();
+    }
+
+    private static String toJvmType(String sootType) {
+        // Handle array types
+        if (sootType.endsWith("[]")) {
+            return "[" + toJvmType(sootType.substring(0, sootType.length() - 2));
+        }
+        return switch (sootType) {
+            case "void"    -> "V";
+            case "boolean" -> "Z";
+            case "byte"    -> "B";
+            case "char"    -> "C";
+            case "short"   -> "S";
+            case "int"     -> "I";
+            case "long"    -> "J";
+            case "float"   -> "F";
+            case "double"  -> "D";
+            default        -> "L" + sootType.replace('.', '/') + ";";
+        };
     }
 
     private List<DebugHtmlWriter.SourceFile> readSourceFiles() {
