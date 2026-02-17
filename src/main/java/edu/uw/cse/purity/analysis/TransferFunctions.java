@@ -76,8 +76,14 @@ public class TransferFunctions {
         Value lhs = stmt.getLeftOp();
         Value rhs = stmt.getRightOp();
 
-        if (!(lhs instanceof Local local)) return;
-        if (!(lhs.getType() instanceof ReferenceType)) return;
+        if (!(lhs instanceof Local local)) {
+            if (config.debug) System.out.println("Debug== skipping identity stmt: lhs is not a local: " + lhs);
+            return;
+        }
+        if (!(lhs.getType() instanceof ReferenceType)) {
+            if (config.debug) System.out.println("Debug== skipping identity stmt: lhs type is not ReferenceType: " + lhs.getType());
+            return;
+        }
 
         if (rhs instanceof JThisRef) {
             // r0 := @this → map to ParameterNode(0)
