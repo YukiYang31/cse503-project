@@ -131,13 +131,13 @@ public class TimingRecorder {
             for (MethodTiming mt : methods) {
                 maxSigLen = Math.max(maxSigLen, mt.methodSignature.length());
             }
-            // Pad to at least 40, cap at 60
-            int sigWidth = Math.max(40, Math.min(60, maxSigLen + 2));
+            // Pad to at least 40, cap at 80
+            int sigWidth = Math.max(40, Math.min(80, maxSigLen + 2));
 
-            String headerFmt = "  %-" + sigWidth + "s | %9s | %9s | %9s | %5s | %s%n";
+            String headerFmt = "  %-" + sigWidth + "s | %11s | %11s | %11s | %5s | %s%n";
             String rowFmt    = "  %-" + sigWidth + "s | %8.1f ms | %8.1f ms | %8.1f ms | %5d | %5d + %d%n";
             String sepMethod = "-".repeat(sigWidth);
-            String sep = "  " + sepMethod + "-+-----------+-----------+-----------+-------+------------";
+            String sep = "  " + sepMethod + "-+-------------+-------------+-------------+-------+------------";
 
             System.out.printf(headerFmt, "Method", "Dataflow", "Purity", "Total", "Stmts", "Graph (N+E)");
             System.out.println(sep);
