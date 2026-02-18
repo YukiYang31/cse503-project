@@ -47,6 +47,7 @@ public class TimingRecorder {
     private long totalNs;
     private long compilationNs;
     private long irLoadingNs;
+    private long callGraphNs;
 
     // Per-method data (also used to accumulate dataflow/purity totals)
     private final List<MethodTiming> methods = new ArrayList<>();
@@ -70,6 +71,10 @@ public class TimingRecorder {
 
     public void recordIrLoading(long ns) {
         irLoadingNs = ns;
+    }
+
+    public void recordCallGraph(long ns) {
+        callGraphNs = ns;
     }
 
     public void addMethodTiming(MethodTiming mt) {
@@ -105,10 +110,16 @@ public class TimingRecorder {
                 ms(compilationNs), pct(compilationNs, totalNs));
         System.out.printf("  SootUp IR loading:           %8.1f ms  (%s)%n",
                 ms(irLoadingNs), pct(irLoadingNs, totalNs));
+        System.out.printf("  Call graph construction:     %8.1f ms  (%s)%n",
+                ms(callGraphNs), pct(callGraphNs, totalNs));
         System.out.printf("  Dataflow analysis (total):   %8.1f ms  (%s)%n",
                 ms(dataflowTotalNs), pct(dataflowTotalNs, totalNs));
         System.out.printf("  Purity checking (total):     %8.1f ms  (%s)%n",
                 ms(purityCheckTotalNs), pct(purityCheckTotalNs, totalNs));
+        long accountedNs = compilationNs + irLoadingNs + callGraphNs + dataflowTotalNs + purityCheckTotalNs;
+        long overheadNs = totalNs - accountedNs;
+        System.out.printf("  Other / overhead:            %8.1f ms  (%s)%n",
+                ms(overheadNs), pct(overheadNs, totalNs));
 
         // Per-method breakdown
         if (!methods.isEmpty()) {
@@ -181,8 +192,12 @@ public class TimingRecorder {
             sb.append("    \"totalMs\": ").append(roundMs(totalNs)).append(",\n");
             sb.append("    \"compilationMs\": ").append(roundMs(compilationNs)).append(",\n");
             sb.append("    \"irLoadingMs\": ").append(roundMs(irLoadingNs)).append(",\n");
+            sb.append("    \"callGraphMs\": ").append(roundMs(callGraphNs)).append(",\n");
             sb.append("    \"dataflowTotalMs\": ").append(roundMs(dataflowTotalNs)).append(",\n");
-            sb.append("    \"purityCheckTotalMs\": ").append(roundMs(purityCheckTotalNs)).append("\n");
+            sb.append("    \"purityCheckTotalMs\": ").append(roundMs(purityCheckTotalNs)).append(",\n");
+            long accountedNs = compilationNs + irLoadingNs + callGraphNs + dataflowTotalNs + purityCheckTotalNs;
+            long overheadNs = totalNs - accountedNs;
+            sb.append("    \"overheadMs\": ").append(roundMs(overheadNs)).append("\n");
             sb.append("  },\n");
 
             // Methods
@@ -250,6 +265,7 @@ public class TimingRecorder {
         @Override public void endTotal() {}
         @Override public void recordCompilation(long ns) {}
         @Override public void recordIrLoading(long ns) {}
+        @Override public void recordCallGraph(long ns) {}
         @Override public void addMethodTiming(MethodTiming mt) {}
         @Override public void setSourceFiles(List<String> sourceFiles) {}
         @Override public void printReport() {}

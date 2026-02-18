@@ -96,7 +96,14 @@ public class PurityAnalysisRunner {
         }
 
         // Build call graph and compute bottom-up analysis order
+        long cgStart = 0;
+        if (config.timing) cgStart = System.nanoTime();
+
         List<List<JavaSootMethod>> batches = CallGraphBuilder.computeBottomUpOrder(classes, config);
+
+        if (config.timing) {
+            timer.recordCallGraph(System.nanoTime() - cgStart);
+        }
 
         // Analyze methods bottom-up with inter-procedural summary cache
         SummaryCache cache = new SummaryCache();

@@ -171,6 +171,84 @@ dot -Tpng 'MethodName.dot' -o graph.png
 | `--debug` | Write per-method HTML debug traces to `debug/` directory (implies `--show-graph` and `--timing`) |
 | `--timing` | Print timing summary and save structured JSON to `timing/` directory |
 
+### Timing Pipeline
+
+When `--timing` is enabled, timestamps are recorded around each phase of the pipeline.
+The flowchart below shows exactly where each measurement is taken:
+
+```
+Main.java                              PurityAnalysisRunner.java
+─────────                              ─────────────────────────
+
+timer.startTotal()                     ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐
+    │                                                                        │
+    ▼                                                                        │
+┌──────────────────────────┐                                                 │
+│  JavaCompiler.compile()  │  ◀── ⏱ Compilation (javac)                     │
+│  timer.recordCompilation │                                                 │
+└──────────────────────────┘                                                 │
+    │                                                                        │
+    ▼                                                                        │
+  runner.run() ───────────────▶  run()                                       │
+                                  │                                          │
+                                  ▼                                          │
+                            ┌────────────────────────┐                       │
+                            │  new JavaView(classDir) │                      │
+                            │  view.getClasses()      │  ◀── ⏱ SootUp IR    │  Total
+                            │  timer.recordIrLoading  │       loading        │  wall-
+                            └────────────────────────┘                       │  clock
+                                  │                                          │
+                                  ▼                                          │
+                            ┌────────────────────────┐                       │
+                            │  readSourceFiles()      │  (not timed;         │
+                            │  (debug mode only)      │   negligible)        │
+                            └────────────────────────┘                       │
+                                  │                                          │
+                                  ▼                                          │
+                            ┌─────────────────────────────┐                  │
+                            │  CallGraphBuilder            │                 │
+                            │    .computeBottomUpOrder()   │  ◀── ⏱ Call     │
+                            │  timer.recordCallGraph       │      graph      │
+                            └─────────────────────────────┘                  │
+                                  │                                          │
+                                  ▼                                          │
+                            ┌─ for each method batch ──────────────────┐     │
+                            │                                          │     │
+                            │  ┌────────────────────────────────────┐  │     │
+                            │  │  PurityFlowAnalysis(...)           │  │     │
+                            │  │  analysis.getExitGraph()           │  │     │
+                            │  │  dataflowNs = elapsed              │  │     │
+                            │  └────────────────────────────────────┘  │     │
+                            │        │              ◀── ⏱ Dataflow     │     │
+                            │        ▼                  (per-method)   │     │
+                            │  ┌────────────────────────────────────┐  │     │
+                            │  │  PurityChecker.check(...)          │  │     │
+                            │  │  purityNs = elapsed                │  │     │
+                            │  └────────────────────────────────────┘  │     │
+                            │        │              ◀── ⏱ Purity       │     │
+                            │        ▼                  (per-method)   │     │
+                            │  timer.addMethodTiming(...)              │     │
+                            │  (accumulates into dataflow/purity       │     │
+                            │   totals)                                │     │
+                            └──────────────────────────────────────────┘     │
+                                  │                                          │
+                                  ▼                                          │
+                            ┌────────────────────────┐                       │
+                            │  GraphPrinter           │  (not timed;         │
+                            │  ResultPrinter.print()  │   negligible)        │
+                            └────────────────────────┘                       │
+                                  │                                          │
+    ◀──────────────────────── return                                         │
+    │                                                                        │
+timer.endTotal()                   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘
+timer.printReport()
+timer.saveJson()
+```
+
+The five timed phases (Compilation → IR Loading → Call Graph → Dataflow → Purity) account for the
+vast majority of wall-clock time. Small gaps between phases (source file reading, result printing,
+loop overhead) are not individually timed.
+
 ## Understanding the Output
 
 ### Purity Verdicts
