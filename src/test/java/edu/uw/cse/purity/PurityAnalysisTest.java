@@ -52,7 +52,7 @@ public class PurityAnalysisTest {
         Collection<JavaSootClass> classes = view.getClasses();
 
         // Build call graph and compute bottom-up order for inter-procedural analysis
-        List<List<JavaSootMethod>> batches = CallGraphBuilder.computeBottomUpOrder(classes, CONFIG);
+        List<List<JavaSootMethod>> batches = CallGraphBuilder.computeBottomUpOrder(classes, CONFIG).batches();
         SummaryCache cache = new SummaryCache();
 
         for (List<JavaSootMethod> batch : batches) {
@@ -145,15 +145,15 @@ public class PurityAnalysisTest {
         assertEquals(PurityResult.IMPURE, getResult("ImpureMethods", "setX"));
     }
 
-    // @Test
-    // public void testImpureIncrement() {
-    //     assertEquals(PurityResult.IMPURE, getResult("ImpureMethods", "increment"));
-    // }
+    @Test
+    public void testImpureIncrement() {
+        assertEquals(PurityResult.IMPURE, getResult("ImpureMethods", "increment"));
+    }
 
-    // @Test
-    // public void testImpureGetAndIncrement() {
-    //     assertEquals(PurityResult.IMPURE, getResult("ImpureMethods", "getAndIncrement"));
-    // }
+    @Test
+    public void testImpureGetAndIncrement() {
+        assertEquals(PurityResult.IMPURE, getResult("ImpureMethods", "getAndIncrement"));
+    }
 
     // --- NewObjectMutation ---
 
@@ -169,10 +169,10 @@ public class PurityAnalysisTest {
         assertEquals(PurityResult.IMPURE, getResult("StaticFieldEscape", "setShared"));
     }
 
-    // @Test
-    // public void testImpureCreateAndEscape() {
-    //     assertEquals(PurityResult.IMPURE, getResult("StaticFieldEscape", "createAndEscape"));
-    // }
+    @Test
+    public void testImpureCreateAndEscape() {
+        assertEquals(PurityResult.IMPURE, getResult("StaticFieldEscape", "createAndEscape"));
+    }
 
     @Test
     public void testGetSharedIsPure() {
@@ -324,7 +324,7 @@ public class PurityAnalysisTest {
         JavaView view = new JavaView(inputLocation);
 
         Collection<JavaSootClass> classes = view.getClasses();
-        List<List<JavaSootMethod>> batches = CallGraphBuilder.computeBottomUpOrder(classes, CONFIG);
+        List<List<JavaSootMethod>> batches = CallGraphBuilder.computeBottomUpOrder(classes, CONFIG).batches();
         SummaryCache cache = new SummaryCache();
 
         for (List<JavaSootMethod> batch : batches) {

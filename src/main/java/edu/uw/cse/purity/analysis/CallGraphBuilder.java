@@ -1,6 +1,7 @@
 package edu.uw.cse.purity.analysis;
 
 import edu.uw.cse.purity.AnalysisConfig;
+import java.util.*;
 import sootup.core.jimple.basic.Value;
 import sootup.core.jimple.common.expr.AbstractInvokeExpr;
 import sootup.core.jimple.common.stmt.JAssignStmt;
@@ -11,7 +12,6 @@ import sootup.core.signatures.MethodSignature;
 import sootup.java.core.JavaSootClass;
 import sootup.java.core.JavaSootMethod;
 
-import java.util.*;
 
 /**
  * Builds an intra-file call graph and computes bottom-up analysis order.
@@ -19,6 +19,16 @@ import java.util.*;
  * For recursive programs (SCCs), methods in the same SCC are grouped into batches.
  */
 public class CallGraphBuilder {
+
+    /**
+     * Result of call graph construction: the bottom-up analysis order plus the raw call graph.
+     * @param batches      methods grouped by SCC in bottom-up order
+     * @param callGraph    caller signature → set of callee signatures
+     */
+    public record Result(
+            List<List<JavaSootMethod>> batches,
+            Map<String, Set<String>> callGraph
+    ) {}
 
     /**
      * Compute the bottom-up analysis order for all concrete methods in the given classes.
@@ -30,7 +40,7 @@ public class CallGraphBuilder {
      * @param config  analysis configuration (for debug output)
      * @return batches in bottom-up order
      */
-    public static List<List<JavaSootMethod>> computeBottomUpOrder(
+    public static Result computeBottomUpOrder(
             Collection<JavaSootClass> classes, AnalysisConfig config) {
 
         // Collect all concrete methods and build signature-to-method map
@@ -117,7 +127,7 @@ public class CallGraphBuilder {
             }
         }
 
-        return result;
+        return new Result(result, callGraph);
     }
 
     /** Extract an invoke expression from a statement, if present */

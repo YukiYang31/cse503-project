@@ -39,6 +39,7 @@ public class DebugHtmlWriter implements Closeable {
     private String mutatedFieldsText;
     private String purityResult;
     private String purityReason;
+    private String callGraphDot;   // DOT source for the dependency graph
 
     private DebugHtmlWriter(String methodSig, Path outputPath) {
         this.methodSig = methodSig;
@@ -170,6 +171,107 @@ public class DebugHtmlWriter implements Closeable {
         this.purityReason = reason;
     }
 
+    /**
+     * Build a visual dependency graph (DOT) showing the entire call graph,
+     * with the current method highlighted.
+     * @param currentMethodSig  the signature of the current method
+     * @param callGraph         caller sig → set of callee sigs
+     */
+    public void setCallGraph(String currentMethodSig, Map<String, Set<String>> callGraph) {
+        // Collect all nodes that appear in the call graph (as caller or callee)
+        Set<String> allNodes = new LinkedHashSet<>();
+        List<String[]> edges = new ArrayList<>();
+        for (Map.Entry<String, Set<String>> entry : callGraph.entrySet()) {
+            String caller = entry.getKey();
+            allNodes.add(caller);
+            for (String callee : entry.getValue()) {
+                allNodes.add(callee);
+                edges.add(new String[]{caller, callee});
+            }
+        }
+        // Also include the current method even if it has no edges
+        allNodes.add(currentMethodSig);
+
+        // Sort edges for deterministic output
+        edges.sort((a, b) -> {
+            int cmp = a[0].compareTo(b[0]);
+            return cmp != 0 ? cmp : a[1].compareTo(b[1]);
+        });
+
+        // Build DOT
+        StringBuilder dot = new StringBuilder();
+        dot.append("digraph CallGraph {\n");
+        dot.append("  rankdir=LR;\n");
+        dot.append("  node [shape=box, style=filled, fillcolor=\"#f1f5f9\", "
+                 + "fontname=\"Helvetica\", fontsize=11];\n");
+        dot.append("  edge [color=\"#64748b\"];\n");
+
+        // Assign stable node IDs
+        Map<String, String> nodeIds = new LinkedHashMap<>();
+        int idx = 0;
+        List<String> sortedNodes = new ArrayList<>(allNodes);
+        sortedNodes.sort(String::compareTo);
+        for (String sig : sortedNodes) {
+            nodeIds.put(sig, "n" + idx++);
+        }
+
+        // Emit nodes
+        for (String sig : sortedNodes) {
+            String nid = nodeIds.get(sig);
+            String label = shortLabel(sig);
+            if (sig.equals(currentMethodSig)) {
+                // Highlight the current method
+                dot.append("  ").append(nid)
+                   .append(" [label=\"").append(dotEscape(label))
+                   .append("\", fillcolor=\"#dbeafe\", penwidth=2.5, color=\"#2563eb\"];\n");
+            } else {
+                dot.append("  ").append(nid)
+                   .append(" [label=\"").append(dotEscape(label)).append("\"];\n");
+            }
+        }
+
+        // Emit edges
+        for (String[] edge : edges) {
+            String fromId = nodeIds.get(edge[0]);
+            String toId = nodeIds.get(edge[1]);
+            if (fromId != null && toId != null) {
+                dot.append("  ").append(fromId).append(" -> ").append(toId).append(";\n");
+            }
+        }
+
+        dot.append("}\n");
+        this.callGraphDot = dot.toString();
+    }
+
+    /**
+     * Produce a short human-readable label from a full method signature.
+     * e.g. "<PaperMain: void flipAll(List)>" → "PaperMain.flipAll(List)"
+     */
+    private static String shortLabel(String sig) {
+        // Strip < and >
+        String s = sig;
+        if (s.startsWith("<")) s = s.substring(1);
+        if (s.endsWith(">")) s = s.substring(0, s.length() - 1);
+        // Split on ": "
+        int colonIdx = s.indexOf(": ");
+        if (colonIdx < 0) return s;
+        String className = s.substring(0, colonIdx);
+        String rest = s.substring(colonIdx + 2); // e.g. "void flipAll(List)"
+        // Extract method name + params: skip the return type
+        int parenIdx = rest.indexOf('(');
+        if (parenIdx < 0) return className + "." + rest;
+        // Find the method name (last token before '(')
+        String beforeParen = rest.substring(0, parenIdx);
+        int spaceIdx = beforeParen.lastIndexOf(' ');
+        String methodName = spaceIdx >= 0 ? beforeParen.substring(spaceIdx + 1) : beforeParen;
+        String params = rest.substring(parenIdx);
+        return className + "." + methodName + params;
+    }
+
+    private static String dotEscape(String s) {
+        return s.replace("\\", "\\\\").replace("\"", "\\\"");
+    }
+
     @Override
     public void close() throws IOException {
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(outputPath.toFile())))) {
@@ -229,6 +331,15 @@ public class DebugHtmlWriter implements Closeable {
                 i + 1, escapeHtml(jimpleStatements.get(i))));
         }
         out.println("</pre>");
+
+        // Call Graph (Dependency Graph)
+        if (callGraphDot != null) {
+            out.println("<h2>Call Dependency Graph</h2>");
+            out.println("<p class=\"muted\">Full call graph. Current method highlighted in blue.</p>");
+            out.println("<div class=\"graph-container\" id=\"call-graph\">");
+            out.println("<p class=\"loading\">Rendering graph...</p>");
+            out.println("</div>");
+        }
 
         // Analysis Trace
         out.println("<h2>Analysis Trace (Key Milestones)</h2>");
@@ -299,7 +410,10 @@ public class DebugHtmlWriter implements Closeable {
             out.println("  \"graph-" + entry.stepNumber + "\": " + jsStringLiteral(entry.dotSource) + ",");
         }
         if (exitGraphDot != null) {
-            out.println("  \"exit-graph\": " + jsStringLiteral(exitGraphDot));
+            out.println("  \"exit-graph\": " + jsStringLiteral(exitGraphDot) + ",");
+        }
+        if (callGraphDot != null) {
+            out.println("  \"call-graph\": " + jsStringLiteral(callGraphDot));
         }
         out.println("};");
         out.println();

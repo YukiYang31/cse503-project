@@ -99,7 +99,9 @@ public class PurityAnalysisRunner {
         long cgStart = 0;
         if (config.timing) cgStart = System.nanoTime();
 
-        List<List<JavaSootMethod>> batches = CallGraphBuilder.computeBottomUpOrder(classes, config);
+        CallGraphBuilder.Result cgResult = CallGraphBuilder.computeBottomUpOrder(classes, config);
+        List<List<JavaSootMethod>> batches = cgResult.batches();
+        Map<String, Set<String>> callGraph = cgResult.callGraph();
 
         if (config.timing) {
             timer.recordCallGraph(System.nanoTime() - cgStart);
@@ -116,7 +118,7 @@ public class PurityAnalysisRunner {
                 if (!method.isConcrete()) continue;
                 if (config.methodFilter != null && !method.getName().equals(config.methodFilter)) continue;
 
-                MethodSummary summary = analyzeMethod(method, sourceContents, cache);
+                MethodSummary summary = analyzeMethod(method, sourceContents, cache, callGraph);
                 if (summary != null) {
                     storeSummary(method, summary, cache);
                     summaries.add(summary);
@@ -140,7 +142,7 @@ public class PurityAnalysisRunner {
                                 method.getSignature().toString(),
                                 method.getSignature().getSubSignature().toString());
 
-                        MethodSummary newSummary = analyzeMethod(method, sourceContents, cache);
+                        MethodSummary newSummary = analyzeMethod(method, sourceContents, cache, callGraph);
                         if (newSummary != null) {
                             storeSummary(method, newSummary, cache);
                             if (oldSummary == null || oldSummary.getResult() != newSummary.getResult()) {
@@ -189,7 +191,8 @@ public class PurityAnalysisRunner {
 
     private MethodSummary analyzeMethod(JavaSootMethod method,
                                         List<DebugHtmlWriter.SourceFile> sourceContents,
-                                        SummaryCache cache) {
+                                        SummaryCache cache,
+                                        Map<String, Set<String>> callGraph) {
         try {
             // Fetch body and CFG once (Fix #6: View Cache Trap)
             Body body = method.getBody();
@@ -206,6 +209,7 @@ public class PurityAnalysisRunner {
                 for (Stmt stmt : cfg.getStmts()) {
                     debugWriter.addJimpleStatement(stmt.toString());
                 }
+                debugWriter.setCallGraph(sig, callGraph);
             }
 
             try {
