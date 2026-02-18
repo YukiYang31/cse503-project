@@ -4,7 +4,7 @@ A static analysis tool that determines whether Java methods are **pure** — tha
 
 ## Theoretical Background
 
-This tool implements the intra-procedural purity analysis described by:
+This tool implements the purity analysis described by:
 
 1. **Salcianu & Rinard (2005)** — *Purity and Side Effect Analysis for Java Programs* — defines purity via a pointer/escape analysis using a points-to graph **G = ⟨I, O, L, E⟩** (inside edges, outside edges, local variable state, escaped nodes) with four node types (Inside, Parameter, Load, Global) and two edge types (Inside, Outside).
 2. **Madhavan et al. (2011)** — *Purity Analysis: An Abstract Interpretation Formulation* — provides a lattice-theoretic reformulation with a node merging optimization that bounds graph size.
@@ -23,7 +23,15 @@ Constructors have a special rule: direct field writes to `this` (`this.f = x`) a
 ## Architecture
 
 ```
-.java source --> javac --> .class bytecode --> SootUp/Jimple --> PointsToGraph --> PurityChecker --> verdict
+.java source --> javac --> .class bytecode --> SootUp/Jimple
+                                                    |
+                                              CallGraphBuilder (bottom-up order)
+                                                    |
+                                              for each method (bottom-up):
+                                                    |
+                                              PointsToGraph (with inter-procedural summary instantiation)
+                                                    |
+                                              PurityChecker --> verdict + MethodSummary (cached)
 ```
 
 ### Package Structure
@@ -32,7 +40,7 @@ Constructors have a special rule: direct field writes to `this` (`this.f = x`) a
 |---|---|
 | `edu.uw.cse.purity` | CLI entry point, configuration, source compilation, analysis orchestration |
 | `edu.uw.cse.purity.graph` | Points-to graph data structures: nodes, edges, the graph itself |
-| `edu.uw.cse.purity.analysis` | Dataflow analysis engine: flow analysis, transfer functions, purity checking |
+| `edu.uw.cse.purity.analysis` | Dataflow analysis engine: flow analysis, transfer functions, purity checking, inter-procedural summary instantiation |
 | `edu.uw.cse.purity.output` | Result formatting: text verdicts, DOT graph output, and HTML debug traces |
 | `edu.uw.cse.purity.util` | Utilities: node merging optimization, safe method whitelist |
 
@@ -40,11 +48,14 @@ Constructors have a special rule: direct field writes to `this` (`this.f = x`) a
 
 - **`Main.java`** — CLI argument parsing, invokes `JavaCompiler` then `PurityAnalysisRunner`
 - **`JavaCompiler.java`** — Compiles `.java` to `.class` in a temp directory using `javax.tools.JavaCompiler`
-- **`PurityAnalysisRunner.java`** — Creates a SootUp `JavaView`, iterates methods, runs analysis on each
+- **`PurityAnalysisRunner.java`** — Creates a SootUp `JavaView`, builds call graph, analyzes methods bottom-up with inter-procedural summary cache
 - **`PointsToGraph.java`** — Core data structure: variable-to-node mappings, heap edges, mutation tracking, global escape tracking
-- **`TransferFunctions.java`** — Maps each Jimple statement type to a graph operation (the abstract semantics)
+- **`TransferFunctions.java`** — Maps each Jimple statement type to a graph operation; looks up callee summaries from `SummaryCache` for inter-procedural calls
 - **`PurityFlowAnalysis.java`** — Forward dataflow analysis extending SootUp's `ForwardFlowAnalysis`
 - **`PurityChecker.java`** — Validates graph invariants, then determines purity from the exit graph: checks prestate mutations and global escape
+- **`GraphInstantiator.java`** — Section 5.3 of Salcianu & Rinard: instantiates callee summaries at call sites by computing a node mapping (mu), combining graphs, removing captured load nodes, and propagating mutations
+- **`SummaryCache.java`** — Stores method summaries keyed by full signature and sub-signature (for virtual/interface dispatch resolution)
+- **`CallGraphBuilder.java`** — Builds an intra-file call graph and computes bottom-up analysis order using Tarjan's SCC algorithm
 - **`DebugHtmlWriter.java`** — Generates per-method HTML debug traces with visual graph renderings via viz.js
 - **`NodeMerger.java`** — Madhavan et al. (2011) optimization: enforces at most one outgoing edge per (node, field, type) triple
 - **`SafeMethods.java`** — Whitelist of known-pure methods and constructors
@@ -59,9 +70,16 @@ SootUp is the modern successor to Soot. Key advantages:
 - Modular architecture, actively maintained
 - Clean Jimple IR with pattern-matchable statement types
 
-### Intra-Procedural Scope
+### Inter-Procedural Analysis (Section 5.3)
 
-This implementation analyzes one method at a time. Unknown method calls are handled conservatively (flagged as potentially impure). This is sound but may produce false positives for methods that call other pure methods. See the **Extensibility** section for how inter-procedural support could be added.
+The analysis processes methods bottom-up over an intra-file call graph. When method A calls method B (both in the analyzed files), B's summary is instantiated at A's call site using the algorithm from Section 5.3 of Salcianu & Rinard (2005):
+
+1. **Call graph construction**: `CallGraphBuilder` collects invoke targets from Jimple, resolves virtual/interface calls to concrete implementations within the analyzed classes, and computes a bottom-up order using Tarjan's SCC algorithm.
+2. **Bottom-up analysis**: Methods are analyzed in reverse topological order. Leaf methods (no user-defined callees) are analyzed first; their summaries are cached and used when analyzing their callers.
+3. **Summary instantiation**: At each call site, `GraphInstantiator` maps callee parameter nodes to caller argument nodes (via a least-fixed-point mu mapping), combines inside/outside edges, removes captured load nodes, and propagates callee mutations to the caller's graph.
+4. **SCC handling**: For mutually recursive methods, the analysis iterates within each SCC until summaries stabilize (max 5 iterations).
+
+Calls to methods outside the analyzed files (e.g., JDK methods) still use the conservative fallback unless listed in `SafeMethods`.
 
 ### Constructor Whitelist (the `<init>` Trap)
 
@@ -80,7 +98,7 @@ Before checking purity, the exit graph is validated against two structural invar
 
 If either rule is violated, the tool prints the violations in **red** (ANSI escape codes) and skips the PURE/IMPURE verdict entirely. This catches bugs in graph construction or node merging that would otherwise produce unsound results.
 
-### Static Field Writes = Immediate Impurity
+### Static Field Writes = Impurity
 
 When a static field is written, the analysis records a mutation on `GlobalNode` with the written field. Since `GlobalNode` is always in the globally escaped set B, any prestate node stored into a static field will appear in B, and the mutation record `⟨GlobalNode, field⟩` in set W triggers an impurity verdict during the standard graph-based purity check.
 
@@ -225,17 +243,15 @@ Edit `SafeMethods.java`. Three categories:
 ### Adding Transfer Functions
 Edit `TransferFunctions.java`. The `apply()` method dispatches on `Stmt` type. Add new cases by pattern matching on Jimple statement types.
 
-### Inter-Procedural Extension
-The architecture supports inter-procedural analysis without rewriting:
+### Inter-Procedural Analysis (Section 5.3)
+The inter-procedural analysis follows Section 5.3 of the paper. Key components:
 
-1. **`MethodSummary`** already stores the exit `PointsToGraph` per method — the exact artifact needed for composition.
-2. **`PointsToGraph` uses `ParameterNode`s** as placeholders for caller-provided objects. At a call site, these can be substituted with caller's actual nodes.
-3. **`TransferFunctions.handleInvoke()`** is the dispatch point — replace the conservative fallback with callee summary lookup and graph instantiation.
+1. **`CallGraphBuilder`** builds an intra-file call graph from Jimple invoke statements and computes a bottom-up analysis order using Tarjan's SCC algorithm.
+2. **`SummaryCache`** stores method summaries keyed by both full signature and sub-signature (for virtual/interface dispatch resolution).
+3. **`GraphInstantiator`** implements the 4-step summary instantiation algorithm: compute node mapping μ (least fixed point of 3 constraints), combine caller/callee graphs, simplify by removing captured load nodes, and propagate mutated fields.
+4. **`TransferFunctions.handleInvoke()`** checks the cache between the `SafeMethods` whitelist and conservative fallback, applying callee summaries when available.
 
-To add inter-procedural support, you would need:
-- A `SummaryCache` (`Map<MethodSignature, MethodSummary>`) populated during bottom-up call graph traversal
-- A `GraphInstantiator` to map callee `ParameterNode`s to caller argument nodes and merge graphs
-- Cycle handling for recursive methods (iterate until summaries stabilize)
+To extend this further (e.g., whole-program analysis), the main change would be expanding `CallGraphBuilder` to include methods from library JARs or use a pre-computed call graph.
 
 ## Validation Against the Paper
 
@@ -256,7 +272,7 @@ For methods that do not involve inter-procedural calls, our tool's exit graphs m
 
 ### Purity Verdict Comparison
 
-| Method | Paper (inter-procedural) | Our Tool (intra-procedural) | Notes |
+| Method | Paper (inter-procedural) | Our Tool | Notes |
 |---|---|---|---|
 | `Point.<init>` | PURE | PURE | Constructor exception for `this.f` writes |
 | `Cell.<init>` | PURE | PURE | Constructor exception |
@@ -265,19 +281,17 @@ For methods that do not involve inter-procedural calls, our tool's exit graphs m
 | `ListItr.hasNext()` | PURE | PURE | Only reads, no mutations |
 | `Point.flip()` | IMPURE | IMPURE | Mutates prestate `this.x`, `this.y` |
 | `ListItr.next()` | IMPURE | IMPURE | Mutates prestate `this.cell` |
-| `List.add()` | IMPURE | IMPURE | Mutates `this.head`; also conservative on `Cell.<init>` call |
-| `List.iterator()` | PURE | **IMPURE** | Conservative: unknown `ListItr.<init>` call |
-| `Main.sumX()` | **PURE** | **IMPURE** | Conservative: unknown calls to `iterator()`, `hasNext()`, `next()` |
-| `Main.flipAll()` | IMPURE | IMPURE | Both agree; paper provides finer detail via write effects |
+| `List.add()` | IMPURE | IMPURE | Mutates `this.head` |
+| `List.iterator()` | PURE | PURE | Inter-procedural: `ListItr.<init>` summary shows only InsideNode mutation |
+| `Main.sumX()` | PURE | PURE | Inter-procedural: `iterator()`, `hasNext()`, `next()` summaries compose correctly |
+| `Main.flipAll()` | IMPURE | IMPURE | Inter-procedural: `flip()` mutation on prestate objects propagates through |
 
-The two divergences (`List.iterator` and `Main.sumX`) are expected consequences of intra-procedural analysis. The paper's inter-procedural analysis can determine that `sumX` is pure because it composes method summaries: the iterator returned by `list.iterator()` is an InsideNode, and all mutations by `it.next()` target only that InsideNode (not any prestate node). Our tool lacks this cross-method reasoning and conservatively flags any unknown call as potentially impure.
-
-Adding inter-procedural support (see **How to Extend** above) would resolve both cases by instantiating callee `MethodSummary` graphs at call sites, exactly as described in Section 5.3 of the paper.
+All results now match the paper's inter-procedural analysis. The key cases are `List.iterator()` and `Main.sumX()`, which require composing method summaries across multiple call sites to determine that the iterator is a fresh InsideNode and all mutations target only that InsideNode (not any prestate object).
 
 ## Known Limitations
 
-- **Conservative on unknown calls**: Any call to a method not in `SafeMethods` is treated as potentially impure. This is sound but may produce false positives.
-- **No inter-procedural analysis**: User-defined methods called from the analyzed method are treated conservatively. This is the primary source of false positives — methods like `sumX` that are pure (per the paper's inter-procedural analysis) are flagged impure because their callees cannot be analyzed.
+- **Inter-procedural scope is same-file only**: The bottom-up analysis covers methods defined in the analyzed source files. Calls to external methods (libraries, JDK) not in `SafeMethods` are still treated conservatively.
+- **Recursive call chains use bounded iteration**: Mutually recursive methods (SCCs in the call graph) are analyzed by iterating up to 5 times. If summaries do not stabilize, the last computed summary is used. The paper suggests iterating to a true fixed point; we cap at 5 for practical reasons.
 - **No exception-path precision**: Exception control flow is handled by SootUp's CFG but not modeled with special precision.
 - **Array modeling is simplified**: Array elements are tracked via mutation records but not with per-index precision.
 

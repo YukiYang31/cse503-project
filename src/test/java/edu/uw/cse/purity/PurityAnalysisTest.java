@@ -1,14 +1,17 @@
 package edu.uw.cse.purity;
 
+import edu.uw.cse.purity.analysis.CallGraphBuilder;
 import edu.uw.cse.purity.analysis.MethodSummary;
 import edu.uw.cse.purity.analysis.MethodSummary.PurityResult;
 import edu.uw.cse.purity.analysis.PurityChecker;
 import edu.uw.cse.purity.analysis.PurityFlowAnalysis;
+import edu.uw.cse.purity.analysis.SummaryCache;
 import edu.uw.cse.purity.graph.PointsToGraph;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import sootup.core.graph.StmtGraph;
 import sootup.core.model.Body;
+import sootup.core.types.Type;
 import sootup.java.bytecode.inputlocation.JavaClassPathAnalysisInputLocation;
 import sootup.java.core.JavaSootClass;
 import sootup.java.core.JavaSootMethod;
@@ -46,28 +49,81 @@ public class PurityAnalysisTest {
             new JavaClassPathAnalysisInputLocation(classDir.toString());
         JavaView view = new JavaView(inputLocation);
 
-        for (JavaSootClass sootClass : view.getClasses()) {
-            String className = sootClass.getName();
-            Map<String, PurityResult> methodResults = new HashMap<>();
+        Collection<JavaSootClass> classes = view.getClasses();
 
-            for (JavaSootMethod method : sootClass.getMethods()) {
+        // Build call graph and compute bottom-up order for inter-procedural analysis
+        List<List<JavaSootMethod>> batches = CallGraphBuilder.computeBottomUpOrder(classes, CONFIG);
+        SummaryCache cache = new SummaryCache();
+
+        for (List<JavaSootMethod> batch : batches) {
+            if (batch.size() == 1) {
+                JavaSootMethod method = batch.get(0);
                 if (!method.isConcrete()) continue;
-
-                Body body = method.getBody();
-                StmtGraph<?> cfg = body.getStmtGraph();
-                String methodName = method.getName();
-
-                PurityFlowAnalysis analysis = new PurityFlowAnalysis(cfg, body, CONFIG, method.isStatic());
-                PointsToGraph exitGraph = analysis.getExitGraph();
-                boolean isConstructor = "<init>".equals(methodName);
-                MethodSummary summary = PurityChecker.check(
-                    method.getSignature().toString(), exitGraph, isConstructor);
-
-                methodResults.put(methodName, summary.getResult());
+                MethodSummary summary = analyzeWithCache(method, cache);
+                if (summary != null) {
+                    storeSummary(method, summary, cache);
+                    storeResult(method, summary);
+                }
+            } else {
+                // SCC: iterate until stable
+                for (int iter = 0; iter < 5; iter++) {
+                    boolean anyChanged = false;
+                    for (JavaSootMethod method : batch) {
+                        if (!method.isConcrete()) continue;
+                        MethodSummary old = cache.lookup(
+                                method.getSignature().toString(),
+                                method.getSignature().getSubSignature().toString());
+                        MethodSummary summary = analyzeWithCache(method, cache);
+                        if (summary != null) {
+                            storeSummary(method, summary, cache);
+                            if (old == null || old.getResult() != summary.getResult()) anyChanged = true;
+                        }
+                    }
+                    if (!anyChanged) break;
+                }
+                for (JavaSootMethod method : batch) {
+                    if (!method.isConcrete()) continue;
+                    MethodSummary summary = cache.lookup(
+                            method.getSignature().toString(),
+                            method.getSignature().getSubSignature().toString());
+                    if (summary != null) storeResult(method, summary);
+                }
             }
-
-            results.put(className, methodResults);
         }
+    }
+
+    private static MethodSummary analyzeWithCache(JavaSootMethod method, SummaryCache cache) {
+        try {
+            Body body = method.getBody();
+            StmtGraph<?> cfg = body.getStmtGraph();
+            List<String> paramTypeNames = method.getSignature().getParameterTypes()
+                    .stream().map(Type::toString)
+                    .map(t -> { int dot = t.lastIndexOf('.'); return dot >= 0 ? t.substring(dot + 1) : t; })
+                    .toList();
+
+            PurityFlowAnalysis analysis = new PurityFlowAnalysis(
+                    cfg, body, CONFIG, method.isStatic(), null, paramTypeNames, cache);
+            PointsToGraph exitGraph = analysis.getExitGraph();
+            boolean isConstructor = "<init>".equals(method.getName());
+            MethodSummary purityResult = PurityChecker.check(
+                    method.getSignature().toString(), exitGraph, isConstructor);
+            return new MethodSummary(method.getSignature().toString(), exitGraph,
+                    purityResult.getResult(), purityResult.getReason(),
+                    exitGraph.getReturnTargets());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private static void storeSummary(JavaSootMethod method, MethodSummary summary, SummaryCache cache) {
+        cache.put(method.getSignature().toString(),
+                method.getSignature().getSubSignature().toString(), summary);
+    }
+
+    private static void storeResult(JavaSootMethod method, MethodSummary summary) {
+        String className = method.getDeclaringClassType().getClassName();
+        results.computeIfAbsent(className, k -> new HashMap<>())
+                .put(method.getName(), summary.getResult());
     }
 
     // --- PureMethods ---
@@ -187,19 +243,17 @@ public class PurityAnalysisTest {
     }
 
     @Test
-    public void testPaperListIteratorImpure() {
-        // List.iterator() calls unknown ListItr constructor
-        // Intra-procedural: conservatively IMPURE
-        // NOTE: With inter-procedural analysis (paper), this would be PURE
-        assertEquals(PurityResult.IMPURE, getResult("List", "iterator"));
+    public void testPaperListIteratorPure() {
+        // List.iterator() calls ListItr constructor which is PURE
+        // Inter-procedural: ListItr.<init> summary shows only InsideNode mutation → PURE
+        assertEquals(PurityResult.PURE, getResult("List", "iterator"));
     }
 
     @Test
-    public void testPaperSumXImpure() {
+    public void testPaperSumXPure() {
         // Paper Section 2.4: sumX is PURE with inter-procedural analysis
-        // Our intra-procedural tool: conservatively IMPURE (unknown calls to
-        // list.iterator(), it.hasNext(), it.next())
-        assertEquals(PurityResult.IMPURE, getResult("PaperMain", "sumX"));
+        // Inter-procedural: iterator(), hasNext(), next() summaries are instantiated
+        assertEquals(PurityResult.PURE, getResult("PaperMain", "sumX"));
     }
 
     @Test
@@ -248,6 +302,121 @@ public class PurityAnalysisTest {
                 }
             }
         }
+    }
+
+    // ===================================================================
+    // Inter-Procedural Tests (Section 5.3)
+    // ===================================================================
+
+    private static Map<String, Map<String, PurityResult>> ipResults;
+
+    private static void setUpInterProcedural() throws Exception {
+        if (ipResults != null) return; // already initialized
+        ipResults = new HashMap<>();
+
+        String[] testFiles = {
+            "src/test/resources/interprocedural/InterProceduralTest.java"
+        };
+
+        Path classDir = JavaCompiler.compile(Arrays.asList(testFiles));
+        JavaClassPathAnalysisInputLocation inputLocation =
+            new JavaClassPathAnalysisInputLocation(classDir.toString());
+        JavaView view = new JavaView(inputLocation);
+
+        Collection<JavaSootClass> classes = view.getClasses();
+        List<List<JavaSootMethod>> batches = CallGraphBuilder.computeBottomUpOrder(classes, CONFIG);
+        SummaryCache cache = new SummaryCache();
+
+        for (List<JavaSootMethod> batch : batches) {
+            if (batch.size() == 1) {
+                JavaSootMethod method = batch.get(0);
+                if (!method.isConcrete()) continue;
+                MethodSummary summary = analyzeWithCache(method, cache);
+                if (summary != null) {
+                    storeSummary(method, summary, cache);
+                    String className = method.getDeclaringClassType().getClassName();
+                    ipResults.computeIfAbsent(className, k -> new HashMap<>())
+                            .put(method.getName(), summary.getResult());
+                }
+            } else {
+                for (int iter = 0; iter < 5; iter++) {
+                    boolean anyChanged = false;
+                    for (JavaSootMethod method : batch) {
+                        if (!method.isConcrete()) continue;
+                        MethodSummary old = cache.lookup(method.getSignature().toString(),
+                                method.getSignature().getSubSignature().toString());
+                        MethodSummary summary = analyzeWithCache(method, cache);
+                        if (summary != null) {
+                            storeSummary(method, summary, cache);
+                            if (old == null || old.getResult() != summary.getResult()) anyChanged = true;
+                        }
+                    }
+                    if (!anyChanged) break;
+                }
+                for (JavaSootMethod method : batch) {
+                    if (!method.isConcrete()) continue;
+                    MethodSummary summary = cache.lookup(method.getSignature().toString(),
+                            method.getSignature().getSubSignature().toString());
+                    if (summary != null) {
+                        String className = method.getDeclaringClassType().getClassName();
+                        ipResults.computeIfAbsent(className, k -> new HashMap<>())
+                                .put(method.getName(), summary.getResult());
+                    }
+                }
+            }
+        }
+    }
+
+    private PurityResult getIPResult(String className, String methodName) throws Exception {
+        setUpInterProcedural();
+        Map<String, PurityResult> classResults = ipResults.get(className);
+        if (classResults == null) fail("Class not found in IP results: " + className);
+        return classResults.get(methodName);
+    }
+
+    @Test
+    public void testIPReaderGetValuePure() throws Exception {
+        assertEquals(PurityResult.PURE, getIPResult("IPReader", "getValue"));
+    }
+
+    @Test
+    public void testIPReaderReadViaHelperPure() throws Exception {
+        assertEquals(PurityResult.PURE, getIPResult("IPReader", "readViaHelper"));
+    }
+
+    @Test
+    public void testIPFactoryCreatePure() throws Exception {
+        assertEquals(PurityResult.PURE, getIPResult("IPFactory", "create"));
+    }
+
+    @Test
+    public void testIPConsumerMakeAndReadPure() throws Exception {
+        assertEquals(PurityResult.PURE, getIPResult("IPConsumer", "makeAndRead"));
+    }
+
+    @Test
+    public void testIPMutatorModifyImpure() throws Exception {
+        assertEquals(PurityResult.IMPURE, getIPResult("IPMutator", "modify"));
+    }
+
+    @Test
+    public void testIPImpureCallerDoModifyImpure() throws Exception {
+        assertEquals(PurityResult.IMPURE, getIPResult("IPImpureCaller", "doModify"));
+    }
+
+    @Test
+    public void testIPIterHasNextPure() throws Exception {
+        assertEquals(PurityResult.PURE, getIPResult("IPIter", "hasNext"));
+    }
+
+    @Test
+    public void testIPLinkedListIteratorPure() throws Exception {
+        assertEquals(PurityResult.PURE, getIPResult("IPLinkedList", "iterator"));
+    }
+
+    @Test
+    public void testIPSumSumPure() throws Exception {
+        assertEquals(PurityResult.PURE, getIPResult("IPSum", "sum"));
     }
 
     // --- Helper ---

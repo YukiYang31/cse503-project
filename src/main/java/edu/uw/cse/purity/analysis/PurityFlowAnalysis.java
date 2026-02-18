@@ -30,18 +30,24 @@ public class PurityFlowAnalysis extends ForwardFlowAnalysis<PointsToGraph> {
 
     public PurityFlowAnalysis(StmtGraph<?> cfg, Body body, AnalysisConfig config,
                                boolean isStatic, DebugHtmlWriter debugWriter) {
-        this(cfg, body, config, isStatic, debugWriter, null);
+        this(cfg, body, config, isStatic, debugWriter, null, null);
     }
 
     public PurityFlowAnalysis(StmtGraph<?> cfg, Body body, AnalysisConfig config,
                                boolean isStatic, DebugHtmlWriter debugWriter,
                                List<String> paramTypeNames) {
+        this(cfg, body, config, isStatic, debugWriter, paramTypeNames, null);
+    }
+
+    public PurityFlowAnalysis(StmtGraph<?> cfg, Body body, AnalysisConfig config,
+                               boolean isStatic, DebugHtmlWriter debugWriter,
+                               List<String> paramTypeNames, SummaryCache summaryCache) {
         super(cfg);
         this.config = config;
         this.body = body;
         this.isStatic = isStatic;
         this.debugWriter = debugWriter;
-        this.transfer = new TransferFunctions(config, isStatic, paramTypeNames);
+        this.transfer = new TransferFunctions(config, isStatic, paramTypeNames, summaryCache);
         execute();
     }
 

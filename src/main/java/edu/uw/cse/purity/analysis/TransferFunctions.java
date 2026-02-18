@@ -17,8 +17,11 @@ import sootup.core.signatures.FieldSignature;
 import sootup.core.signatures.MethodSignature;
 import sootup.core.types.ReferenceType;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -31,28 +34,51 @@ public class TransferFunctions {
     private final AnalysisConfig config;
     private final boolean isStaticMethod;
     private final List<String> paramTypeNames; // nullable — falls back to index-based labels
+    private final SummaryCache summaryCache; // nullable — null means intra-procedural only
 
-    // Counters for generating unique node IDs
-    private int insideNodeCounter = 0;
-    private int loadNodeCounter = 0;
+    /**
+     * Per-statement counter snapshots ensure that re-processing the same statement
+     * (during fixed-point iteration in loops) produces deterministic node IDs.
+     * Maps statement identity → [insideCounter, loadCounter] at entry.
+     */
+    private final Map<Stmt, int[]> stmtCounterSnapshot = new IdentityHashMap<>();
 
     // Special local variable representing the return value
     public static final String RETURN_VAR_NAME = "$RETURN";
 
     public TransferFunctions(AnalysisConfig config, boolean isStaticMethod) {
-        this(config, isStaticMethod, null);
+        this(config, isStaticMethod, null, null);
     }
 
     public TransferFunctions(AnalysisConfig config, boolean isStaticMethod, List<String> paramTypeNames) {
+        this(config, isStaticMethod, paramTypeNames, null);
+    }
+
+    public TransferFunctions(AnalysisConfig config, boolean isStaticMethod,
+                              List<String> paramTypeNames, SummaryCache summaryCache) {
         this.config = config;
         this.isStaticMethod = isStaticMethod;
         this.paramTypeNames = paramTypeNames;
+        this.summaryCache = summaryCache;
     }
+
 
     /**
      * Apply the transfer function for the given statement, mutating the graph.
      */
     public void apply(Stmt stmt, PointsToGraph graph) {
+        // Restore counter snapshot for this statement (ensures deterministic node IDs
+        // when the same statement is re-processed during fixed-point iteration in loops)
+        int[] snapshot = stmtCounterSnapshot.get(stmt);
+        if (snapshot != null) {
+            graph.setInsideNodeCounter(snapshot[0]);
+            graph.setLoadNodeCounter(snapshot[1]);
+        } else {
+            stmtCounterSnapshot.put(stmt, new int[]{
+                graph.getInsideNodeCounter(), graph.getLoadNodeCounter()
+            });
+        }
+
         try {
             if (stmt instanceof JIdentityStmt identityStmt) {
                 handleIdentity(identityStmt, graph);
@@ -187,19 +213,32 @@ public class TransferFunctions {
         }
     }
 
+    // --- Node counter helpers: read/write from graph for deterministic fixed-point ---
+
+    private InsideNode nextInsideNode(PointsToGraph graph, String label) {
+        int counter = graph.getInsideNodeCounter();
+        graph.setInsideNodeCounter(counter + 1);
+        return new InsideNode(counter, label);
+    }
+
+    private LoadNode nextLoadNode(PointsToGraph graph, String label) {
+        int counter = graph.getLoadNodeCounter();
+        graph.setLoadNodeCounter(counter + 1);
+        return new LoadNode(counter, label);
+    }
+
     // --- Individual transfer functions ---
 
     /** x = new T → create InsideNode, strong update */
     private void handleNew(Local lhs, JNewExpr newExpr, PointsToGraph graph) {
-        InsideNode node = new InsideNode(insideNodeCounter++,
-            "new " + newExpr.getType().getClassName());
+        InsideNode node = nextInsideNode(graph, "new " + newExpr.getType().getClassName());
         graph.strongUpdate(lhs, Set.of(node));
         if (config.debug) System.out.println("Debug== new " + newExpr.getType().getClassName() + ": " + lhs.getName() + " -> " + node.getId());
     }
 
     /** x = new T[size] → create InsideNode for the array */
     private void handleNewArray(Local lhs, PointsToGraph graph) {
-        InsideNode node = new InsideNode(insideNodeCounter++, "new array");
+        InsideNode node = nextInsideNode(graph, "new array");
         graph.strongUpdate(lhs, Set.of(node));
         if (config.debug) System.out.println("Debug== new array: " + lhs.getName() + " -> " + node.getId());
     }
@@ -240,7 +279,7 @@ public class TransferFunctions {
                 // Check if we already have an outside edge for this (n, field)
                 Set<Node> existingOutside = graph.getTargets(n, field, EdgeType.OUTSIDE);
                 if (existingOutside.isEmpty()) {
-                    LoadNode loadNode = new LoadNode(loadNodeCounter++,
+                    LoadNode loadNode = nextLoadNode(graph,
                         "load " + field.getName() + " from " + describeNode(n));
                     graph.addOutsideEdge(n, field, loadNode);
                     result.add(loadNode);
@@ -311,7 +350,7 @@ public class TransferFunctions {
         // Add outside edge if none exists
         Set<Node> existingOutside = graph.getTargets(GlobalNode.INSTANCE, field, EdgeType.OUTSIDE);
         if (existingOutside.isEmpty()) {
-            LoadNode loadNode = new LoadNode(loadNodeCounter++,
+            LoadNode loadNode = nextLoadNode(graph,
                 "load static " + field.getName());
             graph.addOutsideEdge(GlobalNode.INSTANCE, field, loadNode);
             result.add(loadNode);
@@ -352,7 +391,7 @@ public class TransferFunctions {
             // For arrays, we model element access: the array node itself "contains" its elements
             // A simple model: if the array node is prestate, create a load node
             if (isPrestateReachable(n)) {
-                LoadNode loadNode = new LoadNode(loadNodeCounter++,
+                LoadNode loadNode = nextLoadNode(graph,
                     "array element from " + describeNode(n));
                 result.add(loadNode);
                 if (config.debug) System.out.println("Debug==   created LoadNode " + loadNode.getId() + " for array element from " + n.getId());
@@ -412,12 +451,60 @@ public class TransferFunctions {
             // Safe method: no side effects on the graph
             // If there's a return value of reference type, treat as fresh node
             if (returnVar != null && returnVar.getType() instanceof ReferenceType) {
-                InsideNode freshReturn = new InsideNode(insideNodeCounter++,
+                InsideNode freshReturn = nextInsideNode(graph,
                     "return from " + methodSig.getName());
                 graph.strongUpdate(returnVar, Set.of(freshReturn));
                 if (config.debug) System.out.println("Debug==   return value: " + returnVar.getName() + " -> " + freshReturn.getId());
             }
             return;
+        }
+
+        // Inter-procedural: check summary cache for callee summary
+        if (summaryCache != null) {
+            String fullSig = methodSig.toString();
+            String subSig = methodSig.getSubSignature().toString();
+            MethodSummary calleeSummary = summaryCache.lookup(fullSig, subSig);
+            if (calleeSummary != null) {
+                if (config.debug) System.out.println("Debug== inter-procedural call: " + methodSig + " (found summary)");
+
+                // Build actual arguments list
+                List<Set<Node>> actualArgs = new ArrayList<>();
+
+                // For instance calls, receiver is arg 0
+                if (invokeExpr instanceof AbstractInstanceInvokeExpr instanceInvoke) {
+                    Local base = instanceInvoke.getBase();
+                    actualArgs.add(new HashSet<>(graph.pointsTo(base)));
+                }
+
+                // Regular arguments
+                for (Value arg : invokeExpr.getArgs()) {
+                    if (arg instanceof Local argLocal && argLocal.getType() instanceof ReferenceType) {
+                        actualArgs.add(new HashSet<>(graph.pointsTo(argLocal)));
+                    } else {
+                        // Primitive arg — add empty set as placeholder
+                        actualArgs.add(new HashSet<>());
+                    }
+                }
+
+                // Determine if callee is static
+                boolean isCalleeStatic = !(invokeExpr instanceof AbstractInstanceInvokeExpr);
+
+                // Instantiate callee summary into caller graph
+                GraphInstantiator.InstantiationResult result = GraphInstantiator.instantiate(
+                        graph,
+                        calleeSummary.getExitGraph(),
+                        calleeSummary.getReturnTargets(),
+                        calleeSummary.getExitGraph().getMutatedFields(),
+                        actualArgs,
+                        returnVar,
+                        isCalleeStatic,
+                        graph.getInsideNodeCounter(), graph.getLoadNodeCounter(),
+                        config.debug);
+
+                graph.setInsideNodeCounter(result.nextInsideCounter());
+                graph.setLoadNodeCounter(result.nextLoadCounter());
+                return;
+            }
         }
 
         // Unknown method: conservatively mark all reference-type arguments as globally escaped
@@ -448,13 +535,12 @@ public class TransferFunctions {
         }
     }
 
-    /** return x → track return value */
+    /** return x → track return value for inter-procedural analysis */
     private void handleReturn(JReturnStmt stmt, PointsToGraph graph) {
         Value retVal = stmt.getOp();
         if (retVal instanceof Local retLocal && retLocal.getType() instanceof ReferenceType) {
             if (config.debug) System.out.println("Debug== return: " + retLocal.getName() + " -> " + nodeSetToString(graph.pointsTo(retLocal)));
-            // Store in a conceptual RETURN variable — we don't actually need this
-            // for purity checking, but it's useful for inter-procedural extension
+            graph.addReturnTargets(graph.pointsTo(retLocal));
         }
     }
 

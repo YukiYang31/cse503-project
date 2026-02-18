@@ -37,12 +37,32 @@ public class PointsToGraph {
     /** Nodes that have escaped to static fields */
     private final Set<Node> globalEscaped;
 
+    /** Nodes that the method's return value may point to (for inter-procedural analysis) */
+    private final Set<Node> returnTargets;
+
+    /**
+     * Node counters embedded in the graph state so that the forward flow analysis
+     * fixed-point iteration produces deterministic node IDs.
+     * When a graph is copied (for flowThrough), the counters come along;
+     * when graphs are merged (at join points), counters are max'd.
+     */
+    private int insideNodeCounter = 0;
+    private int loadNodeCounter = 0;
+
     public PointsToGraph() {
         this.varPointsTo = new HashMap<>();
         this.edges = new HashMap<>();
         this.mutatedFields = new HashSet<>();
         this.globalEscaped = new HashSet<>();
+        this.returnTargets = new HashSet<>();
     }
+
+    // --- Node counter accessors (for TransferFunctions) ---
+
+    public int getInsideNodeCounter() { return insideNodeCounter; }
+    public void setInsideNodeCounter(int val) { insideNodeCounter = val; }
+    public int getLoadNodeCounter() { return loadNodeCounter; }
+    public void setLoadNodeCounter(int val) { loadNodeCounter = val; }
 
     // --- Record types ---
 
@@ -137,6 +157,16 @@ public class PointsToGraph {
         return Collections.unmodifiableSet(globalEscaped);
     }
 
+    // --- Return targets (for inter-procedural analysis) ---
+
+    public void addReturnTargets(Set<Node> targets) {
+        returnTargets.addAll(targets);
+    }
+
+    public Set<Node> getReturnTargets() {
+        return Collections.unmodifiableSet(returnTargets);
+    }
+
     // --- Graph accessors ---
 
     public Map<Local, Set<Node>> getVarPointsTo() {
@@ -210,6 +240,9 @@ public class PointsToGraph {
         }
         clone.mutatedFields.addAll(this.mutatedFields);
         clone.globalEscaped.addAll(this.globalEscaped);
+        clone.returnTargets.addAll(this.returnTargets);
+        clone.insideNodeCounter = this.insideNodeCounter;
+        clone.loadNodeCounter = this.loadNodeCounter;
         return clone;
     }
 
@@ -219,6 +252,7 @@ public class PointsToGraph {
         dest.edges.clear();
         dest.mutatedFields.clear();
         dest.globalEscaped.clear();
+        dest.returnTargets.clear();
         for (Map.Entry<Local, Set<Node>> entry : varPointsTo.entrySet()) {
             dest.varPointsTo.put(entry.getKey(), new HashSet<>(entry.getValue()));
         }
@@ -231,6 +265,9 @@ public class PointsToGraph {
         }
         dest.mutatedFields.addAll(this.mutatedFields);
         dest.globalEscaped.addAll(this.globalEscaped);
+        dest.returnTargets.addAll(this.returnTargets);
+        dest.insideNodeCounter = this.insideNodeCounter;
+        dest.loadNodeCounter = this.loadNodeCounter;
     }
 
     // --- Merge (union for join points) ---
@@ -255,6 +292,11 @@ public class PointsToGraph {
         mutatedFields.addAll(other.mutatedFields);
         // Union global escaped
         globalEscaped.addAll(other.globalEscaped);
+        // Union return targets
+        returnTargets.addAll(other.returnTargets);
+        // Max node counters (ensure deterministic IDs after merge)
+        insideNodeCounter = Math.max(insideNodeCounter, other.insideNodeCounter);
+        loadNodeCounter = Math.max(loadNodeCounter, other.loadNodeCounter);
     }
 
     // --- Node replacement (used by NodeMerger) ---
@@ -315,6 +357,39 @@ public class PointsToGraph {
         }
     }
 
+    // --- Node removal (for inter-procedural simplification) ---
+
+    /** Remove a node from all edges, varPointsTo, mutatedFields, and globalEscaped */
+    public void removeNode(Node n) {
+        // Remove from varPointsTo
+        for (Set<Node> targets : varPointsTo.values()) {
+            targets.remove(n);
+        }
+        // Remove as edge source
+        edges.remove(n);
+        // Remove as edge target
+        for (Map<FieldSignature, Set<EdgeTarget>> fieldMap : edges.values()) {
+            for (Set<EdgeTarget> ets : fieldMap.values()) {
+                ets.removeIf(et -> et.target().equals(n));
+            }
+        }
+        // Remove from mutatedFields
+        mutatedFields.removeIf(mf -> mf.node().equals(n));
+        // Remove from globalEscaped
+        globalEscaped.remove(n);
+        // Remove from returnTargets
+        returnTargets.remove(n);
+    }
+
+    /** Remove all outside edges where n is the source */
+    public void removeOutsideEdgesFrom(Node n) {
+        Map<FieldSignature, Set<EdgeTarget>> fieldMap = edges.get(n);
+        if (fieldMap == null) return;
+        for (Set<EdgeTarget> ets : fieldMap.values()) {
+            ets.removeIf(et -> et.type() == EdgeType.OUTSIDE);
+        }
+    }
+
     // --- Invariant validation ---
 
     /**
@@ -358,11 +433,12 @@ public class PointsToGraph {
         return varPointsTo.equals(other.varPointsTo)
             && edges.equals(other.edges)
             && mutatedFields.equals(other.mutatedFields)
-            && globalEscaped.equals(other.globalEscaped);
+            && globalEscaped.equals(other.globalEscaped)
+            && returnTargets.equals(other.returnTargets);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(varPointsTo, edges, mutatedFields, globalEscaped);
+        return Objects.hash(varPointsTo, edges, mutatedFields, globalEscaped, returnTargets);
     }
 }

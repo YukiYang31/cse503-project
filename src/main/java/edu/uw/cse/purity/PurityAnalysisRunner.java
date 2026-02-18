@@ -1,8 +1,10 @@
 package edu.uw.cse.purity;
 
+import edu.uw.cse.purity.analysis.CallGraphBuilder;
 import edu.uw.cse.purity.analysis.MethodSummary;
 import edu.uw.cse.purity.analysis.PurityChecker;
 import edu.uw.cse.purity.analysis.PurityFlowAnalysis;
+import edu.uw.cse.purity.analysis.SummaryCache;
 import edu.uw.cse.purity.graph.PointsToGraph;
 import edu.uw.cse.purity.output.DebugHtmlWriter;
 import edu.uw.cse.purity.output.GraphPrinter;
@@ -93,26 +95,71 @@ public class PurityAnalysisRunner {
             sourceContents = readSourceFiles();
         }
 
+        // Build call graph and compute bottom-up analysis order
+        List<List<JavaSootMethod>> batches = CallGraphBuilder.computeBottomUpOrder(classes, config);
+
+        // Analyze methods bottom-up with inter-procedural summary cache
+        SummaryCache cache = new SummaryCache();
         List<MethodSummary> summaries = new ArrayList<>();
 
-        for (JavaSootClass sootClass : classes) {
-            for (JavaSootMethod method : sootClass.getMethods()) {
+        for (List<JavaSootMethod> batch : batches) {
+            if (batch.size() == 1) {
+                // Single method (non-recursive): analyze once with cache
+                JavaSootMethod method = batch.get(0);
                 if (!method.isConcrete()) continue;
+                if (config.methodFilter != null && !method.getName().equals(config.methodFilter)) continue;
 
-                // Apply method filter if specified
-                if (config.methodFilter != null
-                    && !method.getName().equals(config.methodFilter)) {
-                    continue;
+                MethodSummary summary = analyzeMethod(method, sourceContents, cache);
+                if (summary != null) {
+                    storeSummary(method, summary, cache);
+                    summaries.add(summary);
+                }
+            } else {
+                // SCC (mutually recursive methods): iterate until summaries stabilize
+                if (config.debug) {
+                    List<String> names = batch.stream()
+                            .map(m -> m.getDeclaringClassType().getClassName() + "." + m.getName())
+                            .toList();
+                    System.out.println("Debug== Analyzing SCC: " + names);
                 }
 
-                MethodSummary summary = analyzeMethod(method, sourceContents);
-                if (summary != null) {
-                    summaries.add(summary);
+                int maxIterations = 5;
+                for (int iter = 0; iter < maxIterations; iter++) {
+                    boolean anyChanged = false;
+                    for (JavaSootMethod method : batch) {
+                        if (!method.isConcrete()) continue;
+
+                        MethodSummary oldSummary = cache.lookup(
+                                method.getSignature().toString(),
+                                method.getSignature().getSubSignature().toString());
+
+                        MethodSummary newSummary = analyzeMethod(method, sourceContents, cache);
+                        if (newSummary != null) {
+                            storeSummary(method, newSummary, cache);
+                            if (oldSummary == null || oldSummary.getResult() != newSummary.getResult()) {
+                                anyChanged = true;
+                            }
+                        }
+                    }
+                    if (!anyChanged) {
+                        if (config.debug) System.out.println("Debug== SCC stabilized after " + (iter + 1) + " iterations");
+                        break;
+                    }
+                }
+
+                // Collect final summaries for the SCC methods
+                for (JavaSootMethod method : batch) {
+                    if (!method.isConcrete()) continue;
+                    if (config.methodFilter != null && !method.getName().equals(config.methodFilter)) continue;
+                    MethodSummary summary = cache.lookup(
+                            method.getSignature().toString(),
+                            method.getSignature().getSubSignature().toString());
+                    if (summary != null) {
+                        summaries.add(summary);
+                    }
                 }
             }
         }
-
-
 
         // Print graphs if requested
         if (config.showGraph) {
@@ -126,8 +173,16 @@ public class PurityAnalysisRunner {
         ResultPrinter.print(summaries);
     }
 
+    /** Store a summary in the cache, keyed by both full and sub signature */
+    private void storeSummary(JavaSootMethod method, MethodSummary summary, SummaryCache cache) {
+        String fullSig = method.getSignature().toString();
+        String subSig = method.getSignature().getSubSignature().toString();
+        cache.put(fullSig, subSig, summary);
+    }
+
     private MethodSummary analyzeMethod(JavaSootMethod method,
-                                        List<DebugHtmlWriter.SourceFile> sourceContents) {
+                                        List<DebugHtmlWriter.SourceFile> sourceContents,
+                                        SummaryCache cache) {
         try {
             // Fetch body and CFG once (Fix #6: View Cache Trap)
             Body body = method.getBody();
@@ -160,9 +215,9 @@ public class PurityAnalysisRunner {
                 long dataflowStart = 0;
                 if (config.timing) dataflowStart = System.nanoTime();
 
-                // Run the forward flow analysis
+                // Run the forward flow analysis (with inter-procedural cache)
                 PurityFlowAnalysis analysis = new PurityFlowAnalysis(
-                    cfg, body, config, method.isStatic(), debugWriter, paramTypeNames);
+                    cfg, body, config, method.isStatic(), debugWriter, paramTypeNames, cache);
 
                 // Get the exit graph
                 PointsToGraph exitGraph = analysis.getExitGraph();
@@ -174,9 +229,12 @@ public class PurityAnalysisRunner {
                 long purityStart = 0;
                 if (config.timing) purityStart = System.nanoTime();
 
-                // Check purity
+                // Check purity (include return targets for inter-procedural summaries)
                 boolean isConstructor = "<init>".equals(method.getName());
-                MethodSummary summary = PurityChecker.check(sig, exitGraph, isConstructor, config.debug);
+                MethodSummary purityResult = PurityChecker.check(sig, exitGraph, isConstructor, config.debug);
+                MethodSummary summary = new MethodSummary(sig, exitGraph,
+                        purityResult.getResult(), purityResult.getReason(),
+                        exitGraph.getReturnTargets());
 
                 long purityNs = 0;
                 if (config.timing) purityNs = System.nanoTime() - purityStart;
