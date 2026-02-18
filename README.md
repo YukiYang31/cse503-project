@@ -133,6 +133,9 @@ Node merging is disabled by default (showing pure 2005-style graphs). Enable wit
 
 # Debug a specific method
 ./gradlew run --args="MyFile.java --debug --method myMethod"
+
+# Print timing summary and save JSON to timing/
+./gradlew run --args="MyFile.java --timing"
 ```
 
 ### Render DOT Graphs
@@ -147,7 +150,8 @@ dot -Tpng 'MethodName.dot' -o graph.png
 | `--show-graph` | Print text graph summaries and write DOT files for each method |
 | `--merge` | Enable node merging (Madhavan et al. 2011 optimization) |
 | `--method <name>` | Only analyze methods with this name |
-| `--debug` | Write per-method HTML debug traces to `debug/` directory (implies `--show-graph`) |
+| `--debug` | Write per-method HTML debug traces to `debug/` directory (implies `--show-graph` and `--timing`) |
+| `--timing` | Print timing summary and save structured JSON to `timing/` directory |
 
 ## Understanding the Output
 

@@ -7,6 +7,7 @@ import edu.uw.cse.purity.graph.PointsToGraph;
 import edu.uw.cse.purity.output.DebugHtmlWriter;
 import edu.uw.cse.purity.output.GraphPrinter;
 import edu.uw.cse.purity.output.ResultPrinter;
+import edu.uw.cse.purity.util.TimingRecorder;
 import sootup.core.graph.StmtGraph;
 import sootup.core.jimple.basic.NoPositionInformation;
 import sootup.core.jimple.common.stmt.Stmt;
@@ -34,6 +35,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Loads compiled classes via SootUp's JavaView, iterates methods,
@@ -44,11 +47,18 @@ public class PurityAnalysisRunner {
     private final AnalysisConfig config;
     private final Path classDir;
     private final List<Path> sourceFiles;
+    private final TimingRecorder timer;
 
-    public PurityAnalysisRunner(AnalysisConfig config, Path classDir, List<Path> sourceFiles) {
+    public PurityAnalysisRunner(AnalysisConfig config, Path classDir, List<Path> sourceFiles,
+                                TimingRecorder timer) {
         this.config = config;
         this.classDir = classDir;
         this.sourceFiles = sourceFiles;
+        this.timer = timer;
+    }
+
+    public PurityAnalysisRunner(AnalysisConfig config, Path classDir, List<Path> sourceFiles) {
+        this(config, classDir, sourceFiles, TimingRecorder.NOOP);
     }
 
     public PurityAnalysisRunner(AnalysisConfig config, Path classDir) {
@@ -57,12 +67,19 @@ public class PurityAnalysisRunner {
 
     public void run() {
         // Create SootUp view pointing at compiled classes
+        long irStart = 0;
+        if (config.timing) irStart = System.nanoTime();
+
         JavaClassPathAnalysisInputLocation inputLocation =
             new JavaClassPathAnalysisInputLocation(classDir.toString());
         JavaView view = new JavaView(inputLocation);
 
         // Get all classes from the input location
         Collection<JavaSootClass> classes = view.getClasses();
+
+        if (config.timing) {
+            timer.recordIrLoading(System.nanoTime() - irStart);
+        }
 
         if (classes.isEmpty()) {
             System.out.println("No classes found in: " + classDir);
@@ -95,7 +112,7 @@ public class PurityAnalysisRunner {
             }
         }
 
-        
+
 
         // Print graphs if requested
         if (config.showGraph) {
@@ -139,6 +156,10 @@ public class PurityAnalysisRunner {
                     .map(t -> { int dot = t.lastIndexOf('.'); return dot >= 0 ? t.substring(dot + 1) : t; })
                     .toList();
 
+                // --- Dataflow timing ---
+                long dataflowStart = 0;
+                if (config.timing) dataflowStart = System.nanoTime();
+
                 // Run the forward flow analysis
                 PurityFlowAnalysis analysis = new PurityFlowAnalysis(
                     cfg, body, config, method.isStatic(), debugWriter, paramTypeNames);
@@ -146,9 +167,28 @@ public class PurityAnalysisRunner {
                 // Get the exit graph
                 PointsToGraph exitGraph = analysis.getExitGraph();
 
+                long dataflowNs = 0;
+                if (config.timing) dataflowNs = System.nanoTime() - dataflowStart;
+
+                // --- Purity check timing ---
+                long purityStart = 0;
+                if (config.timing) purityStart = System.nanoTime();
+
                 // Check purity
                 boolean isConstructor = "<init>".equals(method.getName());
                 MethodSummary summary = PurityChecker.check(sig, exitGraph, isConstructor, config.debug);
+
+                long purityNs = 0;
+                if (config.timing) purityNs = System.nanoTime() - purityStart;
+
+                // --- Record timing data ---
+                if (config.timing) {
+                    int stmtCount = cfg.getStmts().size();
+                    int nodeCount = exitGraph.getAllNodes().size();
+                    int edgeCount = countEdges(exitGraph);
+                    timer.addMethodTiming(new TimingRecorder.MethodTiming(
+                            sig, dataflowNs, purityNs, stmtCount, nodeCount, edgeCount));
+                }
 
                 // Write debug output
                 if (debugWriter != null) {
@@ -176,6 +216,17 @@ public class PurityAnalysisRunner {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /** Count total edges in a PointsToGraph by iterating the edges map. */
+    private static int countEdges(PointsToGraph graph) {
+        int count = 0;
+        for (var fieldMap : graph.getEdges().values()) {
+            for (var targets : fieldMap.values()) {
+                count += targets.size();
+            }
+        }
+        return count;
     }
 
     /**

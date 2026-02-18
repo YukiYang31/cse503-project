@@ -1,5 +1,7 @@
 package edu.uw.cse.purity;
 
+import edu.uw.cse.purity.util.TimingRecorder;
+
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.List;
  * CLI entry point for the purity analysis tool.
  *
  * Usage:
- *   ./gradlew run --args="MyFile.java [--show-graph] [--no-merge] [--method <name>]"
+ *   ./gradlew run --args="MyFile.java [--show-graph] [--no-merge] [--method <name>] [--timing]"
  */
 public class Main {
 
@@ -23,6 +25,7 @@ public class Main {
         boolean showGraph = false;
         boolean merge = false;
         boolean debug = false;
+        boolean timing = false;
         String methodFilter = null;
 
         for (int i = 0; i < args.length; i++) {
@@ -30,6 +33,7 @@ public class Main {
                 case "--show-graph" -> showGraph = true;
                 case "--merge" -> merge = true;
                 case "--debug" -> debug = true;
+                case "--timing" -> timing = true;
                 case "--method" -> {
                     if (i + 1 < args.length) {
                         methodFilter = args[++i];
@@ -58,18 +62,29 @@ public class Main {
             System.exit(1);
         }
 
-        AnalysisConfig config = new AnalysisConfig(showGraph, merge, methodFilter, debug);
+        AnalysisConfig config = new AnalysisConfig(showGraph, merge, methodFilter, debug, timing);
+
+        TimingRecorder timer = config.timing ? new TimingRecorder() : TimingRecorder.NOOP;
+        timer.setSourceFiles(sourceFiles);
+        timer.startTotal();
 
         try {
             // Step 1: Compile .java to .class
             System.out.println("Compiling source files...");
+            long compileStart = System.nanoTime();
             Path classDir = JavaCompiler.compile(sourceFiles);
+            long compileNs = System.nanoTime() - compileStart;
+            timer.recordCompilation(compileNs);
             System.out.println("Compiled to: " + classDir);
 
             // Step 2: Run purity analysis via SootUp
             List<Path> sourcePaths = sourceFiles.stream().map(Path::of).toList();
-            PurityAnalysisRunner runner = new PurityAnalysisRunner(config, classDir, sourcePaths);
+            PurityAnalysisRunner runner = new PurityAnalysisRunner(config, classDir, sourcePaths, timer);
             runner.run();
+
+            timer.endTotal();
+            timer.printReport();
+            timer.saveJson();
 
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
@@ -88,6 +103,8 @@ public class Main {
         System.out.println("  --merge         Enable node merging (Madhavan et al. 2011 optimization)");
         System.out.println("  --method <name> Analyze only the specified method");
         System.out.println("  --debug         Write per-method HTML debug traces to debug/ directory");
+        System.out.println("                  (implies --show-graph and --timing)");
+        System.out.println("  --timing        Print timing summary and save JSON to timing/ directory");
         System.out.println("  --help, -h      Show this help message");
     }
 }
