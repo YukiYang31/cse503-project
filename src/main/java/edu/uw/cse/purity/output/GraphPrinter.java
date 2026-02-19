@@ -72,9 +72,11 @@ public class GraphPrinter {
         varEntries.sort(Comparator.comparing(e -> e.getKey().getName()));
         for (Map.Entry<Local, Set<Node>> entry : varEntries) {
             Set<Node> targets = entry.getValue();
-            if (!targets.isEmpty()) {
+            String varName = entry.getKey().getName();
+            if (!targets.isEmpty() && !varName.startsWith("$stack")) {
+                String typeName = simpleTypeName(entry.getKey().getType().toString());
                 List<String> ids = targets.stream().map(Node::getId).sorted().toList();
-                System.out.println("  " + entry.getKey().getName() + " -> {" + String.join(", ", ids) + "}");
+                System.out.println("  " + varName + ": " + typeName + " -> {" + String.join(", ", ids) + "}");
             }
         }
         System.out.println();
@@ -160,7 +162,10 @@ public class GraphPrinter {
         for (Map.Entry<Local, Set<Node>> entry : varMap.entrySet()) {
             String varName = entry.getKey().getName();
             if (entry.getValue().isEmpty()) continue;
-            out.println("  \"var_" + escapeDot(varName) + "\" [label=\"" + escapeDot(varName)
+            if (varName.startsWith("$stack")) continue; // skip Jimple temporaries
+            String typeName = simpleTypeName(entry.getKey().getType().toString());
+            String displayLabel = varName + ": " + typeName;
+            out.println("  \"var_" + escapeDot(varName) + "\" [label=\"" + escapeDot(displayLabel)
                 + "\", shape=plaintext, fontcolor=gray40];");
             for (Node target : entry.getValue()) {
                 out.println("  \"var_" + escapeDot(varName) + "\" -> \""
@@ -241,7 +246,7 @@ public class GraphPrinter {
         if (n instanceof InsideNode in) {
             return " " + in.getLabel();
         } else if (n instanceof ParameterNode pn) {
-            return " param " + pn.getParamIndex();
+            return " " + pn.getLabel();
         } else if (n instanceof LoadNode ln) {
             return " " + ln.getLabel();
         } else if (n instanceof GlobalNode) {
@@ -254,17 +259,17 @@ public class GraphPrinter {
         return switch (n.getKind()) {
             case INSIDE -> {
                 String label = n.getId();
-                if (n instanceof InsideNode in) label = n.getId() + "\\n" + in.getLabel();
+                if (n instanceof InsideNode in) label = n.getId() + "\n" + in.getLabel();
                 yield "label=\"" + escapeDot(label) + "\", shape=box, style=filled, fillcolor=palegreen";
             }
             case PARAMETER -> {
                 String label = n.getId();
-                if (n instanceof ParameterNode pn) label = n.getId() + "\\nparam " + pn.getParamIndex();
+                if (n instanceof ParameterNode pn) label = n.getId() + "\n" + pn.getLabel();
                 yield "label=\"" + escapeDot(label) + "\", shape=ellipse, style=filled, fillcolor=lightblue";
             }
             case LOAD -> {
                 String label = n.getId();
-                if (n instanceof LoadNode ln) label = n.getId() + "\\n" + ln.getLabel();
+                if (n instanceof LoadNode ln) label = n.getId() + "\n" + ln.getLabel();
                 yield "label=\"" + escapeDot(label) + "\", shape=diamond, style=filled, fillcolor=lightsalmon";
             }
             case GLOBAL ->
@@ -283,6 +288,11 @@ public class GraphPrinter {
             name = name.substring(0, 80);
         }
         return name;
+    }
+
+    private static String simpleTypeName(String fqn) {
+        int dot = fqn.lastIndexOf('.');
+        return dot >= 0 ? fqn.substring(dot + 1) : fqn;
     }
 
     private static String escapeDot(String s) {

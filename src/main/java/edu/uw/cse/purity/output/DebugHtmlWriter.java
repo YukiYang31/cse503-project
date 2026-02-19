@@ -105,10 +105,12 @@ public class DebugHtmlWriter implements Closeable {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<Local, Set<Node>> entry : entries) {
             Set<Node> targets = entry.getValue();
-            if (!targets.isEmpty()) {
+            String varName = entry.getKey().getName();
+            if (!targets.isEmpty() && !varName.startsWith("$stack")) {
+                String typeName = simpleTypeName(entry.getKey().getType().toString());
                 List<String> ids = targets.stream().map(Node::getId).sorted().toList();
                 if (sb.length() > 0) sb.append("\n");
-                sb.append(entry.getKey().getName()).append(" \u2192 {").append(String.join(", ", ids)).append("}");
+                sb.append(varName).append(": ").append(typeName).append(" \u2192 {").append(String.join(", ", ids)).append("}");
             }
         }
         this.localVariablesText = sb.length() > 0 ? sb.toString() : "(none)";
@@ -266,6 +268,11 @@ public class DebugHtmlWriter implements Closeable {
         String methodName = spaceIdx >= 0 ? beforeParen.substring(spaceIdx + 1) : beforeParen;
         String params = rest.substring(parenIdx);
         return className + "." + methodName + params;
+    }
+
+    private static String simpleTypeName(String fqn) {
+        int dot = fqn.lastIndexOf('.');
+        return dot >= 0 ? fqn.substring(dot + 1) : fqn;
     }
 
     private static String dotEscape(String s) {
