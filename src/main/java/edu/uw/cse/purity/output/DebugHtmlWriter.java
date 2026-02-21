@@ -401,9 +401,9 @@ public class DebugHtmlWriter implements Closeable {
         out.println("<h2>Set W (Mutated Fields)</h2>");
         out.println("<p class=\"data\">" + escapeHtml(mutatedFieldsText != null ? mutatedFieldsText : "{}") + "</p>");
 
-        // Purity Result
-        out.println("<h2>Purity Result</h2>");
-        String resultClass = "PURE".equals(purityResult) ? "pure" : "impure";
+        // Side-Effect Analysis Result
+        out.println("<h2>Side-Effect Analysis Result</h2>");
+        String resultClass = "SIDE_EFFECT_FREE".equals(purityResult) ? "side-effect-free" : "side-effecting";
         String resultText = purityResult != null ? purityResult : "UNKNOWN";
         if (purityReason != null) {
             resultText += " (" + purityReason + ")";
@@ -578,12 +578,12 @@ public class DebugHtmlWriter implements Closeable {
             border-radius: 8px;
             display: inline-block;
         }
-        .pure {
+        .side-effect-free {
             color: #166534;
             background: #dcfce7;
             border: 2px solid #86efac;
         }
-        .impure {
+        .side-effecting {
             color: #991b1b;
             background: #fee2e2;
             border: 2px solid #fca5a5;

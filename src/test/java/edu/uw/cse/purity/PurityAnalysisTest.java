@@ -7,6 +7,8 @@ import edu.uw.cse.purity.analysis.PurityChecker;
 import edu.uw.cse.purity.analysis.PurityFlowAnalysis;
 import edu.uw.cse.purity.analysis.SummaryCache;
 import edu.uw.cse.purity.graph.PointsToGraph;
+import java.nio.file.Path;
+import java.util.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import sootup.core.graph.StmtGraph;
@@ -17,8 +19,6 @@ import sootup.java.core.JavaSootClass;
 import sootup.java.core.JavaSootMethod;
 import sootup.java.core.views.JavaView;
 
-import java.nio.file.Path;
-import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -36,8 +36,8 @@ public class PurityAnalysisTest {
         results = new HashMap<>();
 
         String[] testFiles = {
-            "src/test/resources/testcases/PureMethods.java",
-            "src/test/resources/testcases/ImpureMethods.java",
+            "src/test/resources/testcases/SideEffectFreeMethods.java",
+            "src/test/resources/testcases/SideEffectingMethods.java",
             "src/test/resources/testcases/NewObjectMutation.java",
             "src/test/resources/testcases/StaticFieldEscape.java",
             "src/test/resources/testcases/PaperExample.java"
@@ -126,142 +126,142 @@ public class PurityAnalysisTest {
                 .put(method.getName(), summary.getResult());
     }
 
-    // --- PureMethods ---
+    // --- SideEffectFreeMethods ---
 
     @Test
     public void testPureAdd() {
-        assertEquals(PurityResult.PURE, getResult("PureMethods", "add"));
+        assertEquals(PurityResult.SIDE_EFFECT_FREE, getResult("SideEffectFreeMethods", "add"));
     }
 
     @Test
     public void testPureCreateArray() {
-        assertEquals(PurityResult.PURE, getResult("PureMethods", "createArray"));
+        assertEquals(PurityResult.SIDE_EFFECT_FREE, getResult("SideEffectFreeMethods", "createArray"));
     }
 
-    // --- ImpureMethods ---
+    // --- SideEffectingMethods ---
 
     @Test
-    public void testImpureSetX() {
-        assertEquals(PurityResult.IMPURE, getResult("ImpureMethods", "setX"));
-    }
-
-    @Test
-    public void testImpureIncrement() {
-        assertEquals(PurityResult.IMPURE, getResult("ImpureMethods", "increment"));
+    public void testSideEffectingSetX() {
+        assertEquals(PurityResult.SIDE_EFFECTING, getResult("SideEffectingMethods", "setX"));
     }
 
     @Test
-    public void testImpureGetAndIncrement() {
-        assertEquals(PurityResult.IMPURE, getResult("ImpureMethods", "getAndIncrement"));
+    public void testSideEffectingIncrement() {
+        assertEquals(PurityResult.SIDE_EFFECTING, getResult("SideEffectingMethods", "increment"));
+    }
+
+    @Test
+    public void testSideEffectingGetAndIncrement() {
+        assertEquals(PurityResult.SIDE_EFFECTING, getResult("SideEffectingMethods", "getAndIncrement"));
     }
 
     // --- NewObjectMutation ---
 
     @Test
     public void testPureCopyFirst() {
-        assertEquals(PurityResult.PURE, getResult("NewObjectMutation", "copyFirst"));
+        assertEquals(PurityResult.SIDE_EFFECT_FREE, getResult("NewObjectMutation", "copyFirst"));
     }
 
     // --- StaticFieldEscape ---
 
     @Test
-    public void testImpureSetShared() {
-        assertEquals(PurityResult.IMPURE, getResult("StaticFieldEscape", "setShared"));
+    public void testSideEffectingSetShared() {
+        assertEquals(PurityResult.SIDE_EFFECTING, getResult("StaticFieldEscape", "setShared"));
     }
 
     @Test
-    public void testImpureCreateAndEscape() {
-        assertEquals(PurityResult.IMPURE, getResult("StaticFieldEscape", "createAndEscape"));
+    public void testSideEffectingCreateAndEscape() {
+        assertEquals(PurityResult.SIDE_EFFECTING, getResult("StaticFieldEscape", "createAndEscape"));
     }
 
     @Test
-    public void testGetSharedIsPure() {
-        assertEquals(PurityResult.PURE, getResult("StaticFieldEscape", "getShared"));
+    public void testGetSharedIsSideEffectFree() {
+        assertEquals(PurityResult.SIDE_EFFECT_FREE, getResult("StaticFieldEscape", "getShared"));
     }
 
     // ===================================================================
     // Paper Example Tests (Salcianu & Rinard 2005, Figure 1)
     // ===================================================================
 
-    // --- Constructors should all be PURE (constructor exception for this.f writes) ---
+    // --- Constructors should all be SIDE_EFFECT_FREE (constructor exception for this.f writes) ---
 
     @Test
     public void testPaperPointConstructorPure() {
         // Paper Figure 2.a: Point constructor mutates this.x and this.y
-        // Constructor exception: direct this.f writes are allowed → PURE
-        assertEquals(PurityResult.PURE, getResult("Point", "<init>"));
+        // Constructor exception: direct this.f writes are allowed → SIDE_EFFECT_FREE
+        assertEquals(PurityResult.SIDE_EFFECT_FREE, getResult("Point", "<init>"));
     }
 
     @Test
     public void testPaperCellConstructorPure() {
         // Paper Figure 2.b: Cell constructor mutates this.data and this.next
-        // Constructor exception → PURE
-        assertEquals(PurityResult.PURE, getResult("Cell", "<init>"));
+        // Constructor exception → SIDE_EFFECT_FREE
+        assertEquals(PurityResult.SIDE_EFFECT_FREE, getResult("Cell", "<init>"));
     }
 
     @Test
     public void testPaperListItrConstructorPure() {
         // Paper Figure 3.d: ListItr constructor mutates this.cell
-        // Constructor exception → PURE
-        assertEquals(PurityResult.PURE, getResult("ListItr", "<init>"));
+        // Constructor exception → SIDE_EFFECT_FREE
+        assertEquals(PurityResult.SIDE_EFFECT_FREE, getResult("ListItr", "<init>"));
     }
 
     @Test
     public void testPaperListConstructorPure() {
         // List default constructor initializes this.head = null
-        // Constructor exception → PURE
-        assertEquals(PurityResult.PURE, getResult("List", "<init>"));
+        // Constructor exception → SIDE_EFFECT_FREE
+        assertEquals(PurityResult.SIDE_EFFECT_FREE, getResult("List", "<init>"));
     }
 
-    // --- Pure methods ---
+    // --- Side-effect-free methods ---
 
     @Test
     public void testPaperListItrHasNextPure() {
-        // Paper Figure 3.e: hasNext only reads this.cell, no mutations → PURE
-        assertEquals(PurityResult.PURE, getResult("ListItr", "hasNext"));
+        // Paper Figure 3.e: hasNext only reads this.cell, no mutations → SIDE_EFFECT_FREE
+        assertEquals(PurityResult.SIDE_EFFECT_FREE, getResult("ListItr", "hasNext"));
     }
 
-    // --- Impure methods ---
+    // --- Side-effecting methods ---
 
     @Test
-    public void testPaperPointFlipImpure() {
-        // Paper: Point.flip() mutates this.x and this.y (prestate fields) → IMPURE
-        assertEquals(PurityResult.IMPURE, getResult("Point", "flip"));
-    }
-
-    @Test
-    public void testPaperListItrNextImpure() {
-        // Paper Figure 3.f: ListItr.next() mutates this.cell → IMPURE
-        assertEquals(PurityResult.IMPURE, getResult("ListItr", "next"));
+    public void testPaperPointFlipSideEffecting() {
+        // Paper: Point.flip() mutates this.x and this.y (prestate fields) → SIDE_EFFECTING
+        assertEquals(PurityResult.SIDE_EFFECTING, getResult("Point", "flip"));
     }
 
     @Test
-    public void testPaperListAddImpure() {
+    public void testPaperListItrNextSideEffecting() {
+        // Paper Figure 3.f: ListItr.next() mutates this.cell → SIDE_EFFECTING
+        assertEquals(PurityResult.SIDE_EFFECTING, getResult("ListItr", "next"));
+    }
+
+    @Test
+    public void testPaperListAddSideEffecting() {
         // List.add() mutates this.head (prestate) AND calls unknown Cell constructor
-        // Intra-procedural: conservatively IMPURE
-        assertEquals(PurityResult.IMPURE, getResult("List", "add"));
+        // Intra-procedural: conservatively SIDE_EFFECTING
+        assertEquals(PurityResult.SIDE_EFFECTING, getResult("List", "add"));
     }
 
     @Test
     public void testPaperListIteratorPure() {
-        // List.iterator() calls ListItr constructor which is PURE
-        // Inter-procedural: ListItr.<init> summary shows only InsideNode mutation → PURE
-        assertEquals(PurityResult.PURE, getResult("List", "iterator"));
+        // List.iterator() calls ListItr constructor which is SIDE_EFFECT_FREE
+        // Inter-procedural: ListItr.<init> summary shows only InsideNode mutation → SIDE_EFFECT_FREE
+        assertEquals(PurityResult.SIDE_EFFECT_FREE, getResult("List", "iterator"));
     }
 
     @Test
     public void testPaperSumXPure() {
-        // Paper Section 2.4: sumX is PURE with inter-procedural analysis
+        // Paper Section 2.4: sumX is SIDE_EFFECT_FREE with inter-procedural analysis
         // Inter-procedural: iterator(), hasNext(), next() summaries are instantiated
-        assertEquals(PurityResult.PURE, getResult("PaperMain", "sumX"));
+        assertEquals(PurityResult.SIDE_EFFECT_FREE, getResult("PaperMain", "sumX"));
     }
 
     @Test
-    public void testPaperFlipAllImpure() {
-        // Paper Section 2.4: flipAll is IMPURE (mutates Point.x and Point.y
+    public void testPaperFlipAllSideEffecting() {
+        // Paper Section 2.4: flipAll is SIDE_EFFECTING (mutates Point.x and Point.y
         // reachable from the list parameter)
-        // Our tool: also IMPURE (conservative due to unknown calls)
-        assertEquals(PurityResult.IMPURE, getResult("PaperMain", "flipAll"));
+        // Our tool: also SIDE_EFFECTING (conservative due to unknown calls)
+        assertEquals(PurityResult.SIDE_EFFECTING, getResult("PaperMain", "flipAll"));
     }
 
     // --- Merge equivalence: results should be the same with merging enabled ---
@@ -271,8 +271,8 @@ public class PurityAnalysisTest {
         AnalysisConfig mergeConfig = new AnalysisConfig(false, true, null);
 
         String[] testFiles = {
-            "src/test/resources/testcases/PureMethods.java",
-            "src/test/resources/testcases/ImpureMethods.java"
+            "src/test/resources/testcases/SideEffectFreeMethods.java",
+            "src/test/resources/testcases/SideEffectingMethods.java"
         };
 
         Path classDir = JavaCompiler.compile(Arrays.asList(testFiles));
@@ -376,47 +376,47 @@ public class PurityAnalysisTest {
 
     @Test
     public void testIPReaderGetValuePure() throws Exception {
-        assertEquals(PurityResult.PURE, getIPResult("IPReader", "getValue"));
+        assertEquals(PurityResult.SIDE_EFFECT_FREE, getIPResult("IPReader", "getValue"));
     }
 
     @Test
     public void testIPReaderReadViaHelperPure() throws Exception {
-        assertEquals(PurityResult.PURE, getIPResult("IPReader", "readViaHelper"));
+        assertEquals(PurityResult.SIDE_EFFECT_FREE, getIPResult("IPReader", "readViaHelper"));
     }
 
     @Test
     public void testIPFactoryCreatePure() throws Exception {
-        assertEquals(PurityResult.PURE, getIPResult("IPFactory", "create"));
+        assertEquals(PurityResult.SIDE_EFFECT_FREE, getIPResult("IPFactory", "create"));
     }
 
     @Test
     public void testIPConsumerMakeAndReadPure() throws Exception {
-        assertEquals(PurityResult.PURE, getIPResult("IPConsumer", "makeAndRead"));
+        assertEquals(PurityResult.SIDE_EFFECT_FREE, getIPResult("IPConsumer", "makeAndRead"));
     }
 
     @Test
-    public void testIPMutatorModifyImpure() throws Exception {
-        assertEquals(PurityResult.IMPURE, getIPResult("IPMutator", "modify"));
+    public void testIPMutatorModifySideEffecting() throws Exception {
+        assertEquals(PurityResult.SIDE_EFFECTING, getIPResult("IPMutator", "modify"));
     }
 
     @Test
-    public void testIPImpureCallerDoModifyImpure() throws Exception {
-        assertEquals(PurityResult.IMPURE, getIPResult("IPImpureCaller", "doModify"));
+    public void testIPSideEffectingCallerDoModifySideEffecting() throws Exception {
+        assertEquals(PurityResult.SIDE_EFFECTING, getIPResult("IPSideEffectingCaller", "doModify"));
     }
 
     @Test
     public void testIPIterHasNextPure() throws Exception {
-        assertEquals(PurityResult.PURE, getIPResult("IPIter", "hasNext"));
+        assertEquals(PurityResult.SIDE_EFFECT_FREE, getIPResult("IPIter", "hasNext"));
     }
 
     @Test
     public void testIPLinkedListIteratorPure() throws Exception {
-        assertEquals(PurityResult.PURE, getIPResult("IPLinkedList", "iterator"));
+        assertEquals(PurityResult.SIDE_EFFECT_FREE, getIPResult("IPLinkedList", "iterator"));
     }
 
     @Test
     public void testIPSumSumPure() throws Exception {
-        assertEquals(PurityResult.PURE, getIPResult("IPSum", "sum"));
+        assertEquals(PurityResult.SIDE_EFFECT_FREE, getIPResult("IPSum", "sum"));
     }
 
     // --- Helper ---

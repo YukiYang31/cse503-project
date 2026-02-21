@@ -1,7 +1,7 @@
 // Inter-procedural purity analysis test cases
 // Exercises Section 5.3 of Salcianu & Rinard (2005)
 
-// --- Pure reader calling another pure reader (constraint 1 only) ---
+// --- Side-effect-free reader calling another side-effect-free reader (constraint 1 only) ---
 
 class IPWrapper {
     int value;
@@ -9,9 +9,9 @@ class IPWrapper {
 }
 
 class IPReader {
-    int getValue(IPWrapper w) { return w.value; }  // PURE
+    int getValue(IPWrapper w) { return w.value; }  // SIDE_EFFECT_FREE
     static int readViaHelper(IPWrapper w, IPReader r) {
-        return r.getValue(w);                       // PURE (inter-proc)
+        return r.getValue(w);                       // SIDE_EFFECT_FREE (inter-proc)
     }
 }
 
@@ -20,26 +20,26 @@ class IPReader {
 class IPFactory {
     static IPWrapper create(int v) {
         IPWrapper w = new IPWrapper(v);  // returns InsideNode
-        return w;                         // PURE
+        return w;                         // SIDE_EFFECT_FREE
     }
 }
 
 class IPConsumer {
     static int makeAndRead() {
         IPWrapper w = IPFactory.create(5); // w is InsideNode
-        return w.value;                     // PURE (reads from InsideNode)
+        return w.value;                     // SIDE_EFFECT_FREE (reads from InsideNode)
     }
 }
 
-// --- Impure callee propagates mutation (Step 4: W update) ---
+// --- Side-effecting callee propagates mutation (Step 4: W update) ---
 
 class IPMutator {
-    static void modify(IPWrapper w) { w.value = 99; }  // IMPURE
+    static void modify(IPWrapper w) { w.value = 99; }  // SIDE_EFFECTING
 }
 
-class IPImpureCaller {
+class IPSideEffectingCaller {
     static void doModify(IPWrapper w) {
-        IPMutator.modify(w);  // IMPURE: callee mutation on param propagates
+        IPMutator.modify(w);  // SIDE_EFFECTING: callee mutation on param propagates
     }
 }
 
@@ -64,7 +64,7 @@ class IPLinkedList {
 }
 
 class IPSum {
-    static int sum(IPLinkedList list) {  // PURE with inter-proc
+    static int sum(IPLinkedList list) {  // SIDE_EFFECT_FREE with inter-proc
         IPIter it = list.iterator();
         int s = 0;
         while (it.hasNext()) { s += it.next(); }

@@ -1,8 +1,8 @@
 package edu.uw.cse.purity.output;
 
 import edu.uw.cse.purity.analysis.MethodSummary;
-
 import java.util.List;
+
 
 /**
  * Formats and prints purity verdicts to stdout.
@@ -16,7 +16,7 @@ public class ResultPrinter {
         }
 
         System.out.println();
-        System.out.println("=== Purity Analysis Results ===");
+        System.out.println("=== Side-Effect Analysis Results ===");
 
         // Compute max signature length for alignment
         int maxLen = 0;
@@ -29,14 +29,14 @@ public class ResultPrinter {
             String padded = String.format("%-" + (maxLen + 2) + "s", sig);
             String verdict;
             switch (s.getResult()) {
-                case PURE:
-                    verdict = "PURE";
+                case SIDE_EFFECT_FREE:
+                    verdict = "SIDE_EFFECT_FREE";
                     break;
                 case GRAPH_VIOLATION:
                     verdict = "\033[31mGRAPH VIOLATION  (" + s.getReason() + ")\033[0m";
                     break;
                 default:
-                    verdict = "IMPURE  (" + s.getReason() + ")";
+                    verdict = "SIDE_EFFECTING  (" + s.getReason() + ")";
                     break;
             }
             System.out.println(padded + ": " + verdict);
@@ -46,7 +46,7 @@ public class ResultPrinter {
 
     /**
      * Simplify the full SootUp method signature for display.
-     * E.g., "<PureMethods: int add(int,int)>" -> "PureMethods.add(int,int)"
+     * E.g., "<SideEffectFreeMethods: int add(int,int)>" -> "SideEffectFreeMethods.add(int,int)"
      */
     private static String formatSignature(String sig) {
         // SootUp signatures look like: <ClassName: ReturnType methodName(ParamTypes)>

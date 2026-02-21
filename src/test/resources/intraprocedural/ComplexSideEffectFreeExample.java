@@ -20,11 +20,11 @@ class Registry {
 }
 
 /**
- * A single PURE method that exercises nearly every transfer-function rule
+ * A single SIDE_EFFECT_FREE method that exercises nearly every transfer-function rule
  * in TransferFunctions.apply(), stress-testing the analysis's precision
- * on complex code that remains pure.
+ * on complex code that remains side-effect-free.
  *
- * Transfer-function rules exercised by complexPure():
+ * Transfer-function rules exercised by complexSideEffectFree():
  *
  *  Rule                          | Jimple pattern        | Line(s)
  *  ----------------------------- | --------------------- | -------
@@ -43,21 +43,21 @@ class Registry {
  *  handleInvoke (safe, ctor)     | new + safe <init>     | new ArrayList<>()
  *  handleReturn                  | return x              | return localArr
  *
- *  NOT exercised (inherently impure):
+ *  NOT exercised (inherently side-effecting):
  *   - handleStaticFieldStore  (writing to a static field escapes objects globally)
  *   - handleInvoke (unknown)  (unknown calls conservatively escape all arguments)
  *
- * Additional rules exercised by instancePure():
+ * Additional rules exercised by instanceSideEffectFree():
  *  handleIdentity (@this)        | r := @this            | (implicit for 'this')
  */
-public class ComplexPureExample {
+public class ComplexSideEffectFreeExample {
     Object tag;
 
-    ComplexPureExample(Object tag) {
+    ComplexSideEffectFreeExample(Object tag) {
         this.tag = tag;
     }
 
-    static Object[] complexPure(Registry registry, DataNode head, Object raw) {
+    static Object[] complexSideEffectFree(Registry registry, DataNode head, Object raw) {
         // --- handleNew ---
         // Allocate local objects. Their constructors are not whitelisted, so the
         // InsideNodes get globally escaped — but InsideNodes are not prestate objects,
@@ -78,7 +78,7 @@ public class ComplexPureExample {
 
         // --- handleFieldStore (on local InsideNode) ---
         // Stores InsideNode_B into InsideNode_A.next via inside edge.
-        // The mutation is recorded on InsideNode_A, which is not a prestate node → pure.
+        // The mutation is recorded on InsideNode_A, which is not a prestate node → side-effect-free.
         localA.next = localB;
 
         // --- handleFieldLoad (InsideNode base → traverses inside edges, no LoadNode) ---
@@ -90,7 +90,7 @@ public class ComplexPureExample {
 
         // --- handleStaticFieldLoad ---
         // Reads a static reference field. Creates an outside edge from GlobalNode and
-        // a LoadNode. No write to the static field → pure.
+        // a LoadNode. No write to the static field → side-effect-free.
         Object defaultVal = Registry.defaultValue;
 
         // --- handleCopy ---
@@ -109,7 +109,7 @@ public class ComplexPureExample {
 
         // --- handleArrayStore (on local InsideNode) ---
         // Writes into the local array. handleArrayStore only records the mutation
-        // on the InsideNode (no inside edges added). The InsideNode is not prestate → pure.
+        // on the InsideNode (no inside edges added). The InsideNode is not prestate → side-effect-free.
         // Stores values of mixed provenance: LoadNode (headValue), LoadNode (defaultVal),
         // LoadNode (firstItem) — but none of this causes impurity because the array
         // InsideNode was never escaped and no edges are added.
@@ -137,9 +137,9 @@ public class ComplexPureExample {
      *
      * In instance methods, Jimple generates `r0 := @this` which maps to
      * ParameterNode(0). Reading this.tag creates a LoadNode via an outside
-     * edge from ParameterNode(0). No mutations → PURE.
+     * edge from ParameterNode(0). No mutations → SIDE_EFFECT_FREE.
      */
-    Object instancePure(DataNode input) {
+    Object instanceSideEffectFree(DataNode input) {
         // --- handleIdentity (@this) ---
         // this → ParameterNode(0), implicit in instance methods
 

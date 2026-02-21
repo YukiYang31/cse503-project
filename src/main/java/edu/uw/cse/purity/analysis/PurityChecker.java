@@ -14,10 +14,10 @@ import java.util.*;
  * 1. Compute set A = prestate nodes (BFS from ParameterNodes via OutsideEdges)
  * 2. Compute set B = globally escaped closure (BFS from E ∪ {nGBL} via all edges)
  * 3. Compute set W = mutated fields
- *    - If ⟨GlobalNode, f⟩ ∈ W → IMPURE (static field write)
+ *    - If ⟨GlobalNode, f⟩ ∈ W → SIDE_EFFECTING (static field write)
  * 4. For each n ∈ A: (a) n ∉ B and (b) no ⟨n,f⟩ ∈ W
  *    - Constructor exception: ignore mutations for P0
- * 5. Otherwise → PURE
+ * 5. Otherwise → SIDE_EFFECT_FREE
  */
 public class PurityChecker {
 
@@ -57,9 +57,9 @@ public class PurityChecker {
         for (MutatedField mf : setW) {
             if (mf.node() instanceof GlobalNode) {
                 String fieldName = mf.field() != null ? mf.field().getName() : "unknown";
-                if (debug) System.out.println("Debug== [purity] GlobalNode mutation in W => IMPURE (writes to static field " + fieldName + ")");
+                if (debug) System.out.println("Debug== [purity] GlobalNode mutation in W => SIDE_EFFECTING (writes to static field " + fieldName + ")");
                 return new MethodSummary(methodSig, exitGraph,
-                    MethodSummary.PurityResult.IMPURE,
+                    MethodSummary.PurityResult.SIDE_EFFECTING,
                     "writes to static field " + fieldName);
             }
         }
@@ -74,9 +74,9 @@ public class PurityChecker {
         for (Node n : setA) {
             // Check (a): n ∉ B
             if (setB.contains(n)) {
-                if (debug) System.out.println("Debug== [purity] prestate node " + n.getId() + " ∈ set B (globally escaped) => IMPURE");
+                if (debug) System.out.println("Debug== [purity] prestate node " + n.getId() + " ∈ set B (globally escaped) => SIDE_EFFECTING");
                 return new MethodSummary(methodSig, exitGraph,
-                    MethodSummary.PurityResult.IMPURE,
+                    MethodSummary.PurityResult.SIDE_EFFECTING,
                     describeNode(n) + " escapes to global scope");
             }
 
@@ -91,22 +91,22 @@ public class PurityChecker {
                     }
 
                     String fieldName = mf.field() != null ? mf.field().getName() : "array element";
-                    if (debug) System.out.println("Debug== [purity] prestate node " + n.getId() + " mutated via " + fieldName + " => IMPURE");
+                    if (debug) System.out.println("Debug== [purity] prestate node " + n.getId() + " mutated via " + fieldName + " => SIDE_EFFECTING");
                     return new MethodSummary(methodSig, exitGraph,
-                        MethodSummary.PurityResult.IMPURE,
+                        MethodSummary.PurityResult.SIDE_EFFECTING,
                         "mutates " + describeNode(n) + " via field " + fieldName);
                 }
             }
         }
 
-        // Step 5: PURE
-        if (debug) System.out.println("Debug== [purity] no prestate mutations, no global escape => PURE");
+        // Step 5: SIDE_EFFECT_FREE
+        if (debug) System.out.println("Debug== [purity] no prestate mutations, no global escape => SIDE_EFFECT_FREE");
         return new MethodSummary(methodSig, exitGraph,
-            MethodSummary.PurityResult.PURE, null);
+            MethodSummary.PurityResult.SIDE_EFFECT_FREE, null);
     }
 
     /**
-     * Produce a human-readable description for a node, used in impurity reason strings.
+     * Produce a human-readable description for a node, used in side-effecting reason strings.
      */
     private static String describeNode(Node n) {
         if (n instanceof ParameterNode pn) return pn.getLabel();

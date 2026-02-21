@@ -1,16 +1,16 @@
 package edu.uw.cse.purity.util;
 
-import sootup.core.signatures.MethodSignature;
-
 import java.util.HashSet;
 import java.util.Set;
+import sootup.core.signatures.MethodSignature;
+
 
 /**
- * Whitelist of methods known to be pure (no side effects on prestate objects).
+ * Whitelist of methods known to be side-effect-free (no side effects on prestate objects).
  * Includes constructors of standard library classes (Critical Fix #1).
  *
  * For intra-procedural analysis, any call not in this list is conservatively
- * treated as impure.
+ * treated as side-effecting.
  */
 public class SafeMethods {
 
@@ -20,7 +20,7 @@ public class SafeMethods {
 
     static {
         // --- Constructors (Critical Fix #1: the <init> trap) ---
-        // Without these, every 'new' allocation would be flagged impure
+        // Without these, every 'new' allocation would be flagged side-effecting
         SAFE_CONSTRUCTOR_CLASSES.add("java.lang.Object");
         SAFE_CONSTRUCTOR_CLASSES.add("java.lang.String");
         SAFE_CONSTRUCTOR_CLASSES.add("java.lang.StringBuilder");
@@ -51,18 +51,18 @@ public class SafeMethods {
         SAFE_CONSTRUCTOR_CLASSES.add("java.io.ByteArrayOutputStream");
         SAFE_CONSTRUCTOR_CLASSES.add("java.io.StringWriter");
 
-        // --- Pure query methods (classes where all methods are pure) ---
+        // --- Side-effect-free query methods (classes where all methods are side-effect-free) ---
         SAFE_CLASS_PREFIXES.add("java.lang.Math");
         SAFE_CLASS_PREFIXES.add("java.lang.StrictMath");
 
-        // --- Individual pure methods ---
+        // --- Individual side-effect-free methods ---
         // Object
         SAFE_METHOD_SIGNATURES.add("java.lang.Object#hashCode");
         SAFE_METHOD_SIGNATURES.add("java.lang.Object#equals");
         SAFE_METHOD_SIGNATURES.add("java.lang.Object#toString");
         SAFE_METHOD_SIGNATURES.add("java.lang.Object#getClass");
 
-        // String (all String methods are pure — String is immutable)
+        // String (all String methods are side-effect-free — String is immutable)
         SAFE_CLASS_PREFIXES.add("java.lang.String");
 
         // Wrapper valueOf methods
@@ -116,7 +116,7 @@ public class SafeMethods {
     }
 
     /**
-     * Check if a method call is known to be safe (pure).
+     * Check if a method call is known to be safe (side-effect-free).
      */
     public static boolean isSafe(MethodSignature methodSig) {
         String className = methodSig.getDeclClassType().getFullyQualifiedName();

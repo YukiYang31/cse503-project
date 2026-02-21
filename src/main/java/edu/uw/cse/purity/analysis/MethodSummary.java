@@ -2,8 +2,8 @@ package edu.uw.cse.purity.analysis;
 
 import edu.uw.cse.purity.graph.Node;
 import edu.uw.cse.purity.graph.PointsToGraph;
-
 import java.util.Set;
+
 
 /**
  * Stores the analysis result for a single method.
@@ -13,15 +13,15 @@ import java.util.Set;
 public class MethodSummary {
 
     public enum PurityResult {
-        PURE,
-        IMPURE,
+        SIDE_EFFECT_FREE,
+        SIDE_EFFECTING,
         GRAPH_VIOLATION
     }
 
     private final String methodSignature;
     private final PointsToGraph exitGraph;
     private final PurityResult result;
-    private final String reason; // null if PURE
+    private final String reason; // null if SIDE_EFFECT_FREE
     private final Set<Node> returnTargets;
 
     public MethodSummary(String methodSignature, PointsToGraph exitGraph,

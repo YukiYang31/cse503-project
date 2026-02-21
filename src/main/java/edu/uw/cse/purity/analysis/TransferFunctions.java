@@ -441,7 +441,7 @@ public class TransferFunctions {
     /**
      * Handle a method invocation.
      * If the method is in SafeMethods → no side effects, return treated as fresh InsideNode.
-     * Otherwise → conservatively mark as impure.
+     * Otherwise → conservatively mark as side-effecting.
      */
     private void handleInvoke(AbstractInvokeExpr invokeExpr, Local returnVar, PointsToGraph graph) {
         MethodSignature methodSig = invokeExpr.getMethodSignature();

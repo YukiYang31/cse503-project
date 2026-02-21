@@ -5,19 +5,19 @@ import edu.uw.cse.purity.analysis.PurityChecker;
 import edu.uw.cse.purity.graph.*;
 import edu.uw.cse.purity.graph.PointsToGraph.EdgeTarget;
 import edu.uw.cse.purity.graph.PointsToGraph.MutatedField;
+import java.io.*;
+import java.util.*;
 import sootup.core.jimple.basic.Local;
 import sootup.core.signatures.FieldSignature;
 
-import java.io.*;
-import java.util.*;
 
 /**
  * Prints points-to graph summaries in text and DOT (Graphviz) format.
  *
  * DOT color scheme:
  *   InsideNode    -> green box       (newly allocated, mutations OK)
- *   ParameterNode -> blue ellipse    (prestate, mutations = impure)
- *   LoadNode      -> red diamond     (external/unknown, mutations = impure)
+ *   ParameterNode -> blue ellipse    (prestate, mutations = side-effecting)
+ *   LoadNode      -> red diamond     (external/unknown, mutations = side-effecting)
  *   GlobalNode    -> orange octagon  (static field escape)
  *   InsideEdge    -> solid arrow
  *   OutsideEdge   -> dashed arrow

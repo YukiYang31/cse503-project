@@ -1,6 +1,6 @@
 # Java Purity Analysis Tool
 
-A static analysis tool that determines whether Java methods are **pure** — that is, whether they avoid mutating any object that existed before the method was called. Built on [SootUp](https://soot-oss.github.io/SootUp/) and the Jimple intermediate representation.
+A static analysis tool that determines whether Java methods are **side-effect-free** — that is, whether they avoid mutating any object that existed before the method was called. Built on [SootUp](https://soot-oss.github.io/SootUp/) and the Jimple intermediate representation.
 
 ## Theoretical Background
 
@@ -9,9 +9,9 @@ This tool implements the purity analysis described by:
 1. **Salcianu & Rinard (2005)** — *Purity and Side Effect Analysis for Java Programs* — defines purity via a pointer/escape analysis using a points-to graph **G = ⟨I, O, L, E⟩** (inside edges, outside edges, local variable state, escaped nodes) with four node types (Inside, Parameter, Load, Global) and two edge types (Inside, Outside).
 2. **Madhavan et al. (2011)** — *Purity Analysis: An Abstract Interpretation Formulation* — provides a lattice-theoretic reformulation with a node merging optimization that bounds graph size.
 
-### What "Pure" Means
+### What "Side-Effect-Free" Means
 
-A method is **pure** if it does not mutate any heap location that existed before the method was called. Specifically:
+A method is **side-effect-free** if it does not mutate any heap location that existed before the method was called. Specifically:
 
 - **Allowed**: Allocating new objects and mutating them (`Point p = new Point(); p.x = 5;`)
 - **Forbidden**: Mutating an object passed as a parameter (`param.x = 5;`)
@@ -58,7 +58,7 @@ Constructors have a special rule: direct field writes to `this` (`this.f = x`) a
 - **`CallGraphBuilder.java`** — Builds an intra-file call graph and computes bottom-up analysis order using Tarjan's SCC algorithm
 - **`DebugHtmlWriter.java`** — Generates per-method HTML debug traces with visual graph renderings via viz.js
 - **`NodeMerger.java`** — Madhavan et al. (2011) optimization: enforces at most one outgoing edge per (node, field, type) triple
-- **`SafeMethods.java`** — Whitelist of known-pure methods and constructors
+- **`SafeMethods.java`** — Whitelist of known-side-effect-free methods and constructors
 
 ## Key Design Choices
 
@@ -83,11 +83,11 @@ Calls to methods outside the analyzed files (e.g., JDK methods) still use the co
 
 ### Constructor Whitelist (the `<init>` Trap)
 
-In Jimple, `new T()` compiles to two statements: `x = new T` followed by `specialinvoke x.<init>()`. Since unknown calls are conservatively impure, every allocation would be flagged impure without whitelisting standard library constructors. `SafeMethods.java` includes constructors for `Object`, `String`, `ArrayList`, `HashMap`, `StringBuilder`, wrapper types, and other common JDK classes.
+In Jimple, `new T()` compiles to two statements: `x = new T` followed by `specialinvoke x.<init>()`. Since unknown calls are conservatively side-effecting, every allocation would be flagged side-effecting without whitelisting standard library constructors. `SafeMethods.java` includes constructors for `Object`, `String`, `ArrayList`, `HashMap`, `StringBuilder`, wrapper types, and other common JDK classes.
 
 ### Constructor `this` Mutation
 
-The constructor exception is precise: only direct `this.f = x` writes (where `this` is `ParameterNode(0)`) are exempt. Writes that traverse through `this` to reach other prestate objects (e.g., `this.list.add(x)` where `this.list` is a prestate object) are still flagged as impure.
+The constructor exception is precise: only direct `this.f = x` writes (where `this` is `ParameterNode(0)`) are exempt. Writes that traverse through `this` to reach other prestate objects (e.g., `this.list.add(x)` where `this.list` is a prestate object) are still flagged as side-effecting.
 
 ### Graph Invariant Validation
 
@@ -96,11 +96,11 @@ Before checking purity, the exit graph is validated against two structural invar
 1. **Rule 1**: An `InsideNode` cannot be the source of an `OUTSIDE` edge. Inside nodes represent objects allocated within the method — they have no pre-existing heap to read from.
 2. **Rule 2**: An `OUTSIDE` edge cannot lead to an `InsideNode`. Outside edges represent reads from the pre-existing heap, which cannot contain freshly allocated objects.
 
-If either rule is violated, the tool prints the violations in **red** (ANSI escape codes) and skips the PURE/IMPURE verdict entirely. This catches bugs in graph construction or node merging that would otherwise produce unsound results.
+If either rule is violated, the tool prints the violations in **red** (ANSI escape codes) and skips the SIDE_EFFECT_FREE/SIDE_EFFECTING verdict entirely. This catches bugs in graph construction or node merging that would otherwise produce unsound results.
 
-### Static Field Writes = Impurity
+### Static Field Writes = Side-Effecting
 
-When a static field is written, the analysis records a mutation on `GlobalNode` with the written field. Since `GlobalNode` is always in the globally escaped set B, any prestate node stored into a static field will appear in B, and the mutation record `⟨GlobalNode, field⟩` in set W triggers an impurity verdict during the standard graph-based purity check.
+When a static field is written, the analysis records a mutation on `GlobalNode` with the written field. Since `GlobalNode` is always in the globally escaped set B, any prestate node stored into a static field will appear in B, and the mutation record `⟨GlobalNode, field⟩` in set W triggers a side-effecting verdict during the standard graph-based purity check.
 
 ### Strong vs Weak Updates
 
@@ -116,7 +116,7 @@ Node merging is applied in three places:
 2. At CFG join points (inside `merge()`)
 3. At method exit before purity checking
 
-Node merging is disabled by default (showing pure 2005-style graphs). Enable with `--merge`.
+Node merging is disabled by default (showing the 2005-style graphs). Enable with `--merge`.
 
 ## How to Build & Run
 
@@ -251,12 +251,12 @@ loop overhead) are not individually timed.
 
 ## Understanding the Output
 
-### Purity Verdicts
+### Side-Effect Analysis Verdicts
 ```
-=== Purity Analysis Results ===
-PureMethods.add(int,int)        : PURE
-ImpureMethods.setX(Point,int)   : IMPURE  (mutates Point parameter via field x)
-ImpureMethods.increment()       : IMPURE  (writes to static field counter)
+=== Side-Effect Analysis Results ===
+SideEffectFreeMethods.add(int,int)        : SIDE_EFFECT_FREE
+SideEffectingMethods.setX(Point,int)   : SIDE_EFFECTING  (mutates Point parameter via field x)
+SideEffectingMethods.increment()       : SIDE_EFFECTING  (writes to static field counter)
 ```
 
 If a graph invariant violation is detected, the verdict is printed in red instead:
@@ -276,12 +276,12 @@ When `--show-graph` is used, each method's exit graph is presented as **G = ⟨I
 
 ### DOT Graph Color Scheme
 - **Green box** (InsideNode): Newly allocated object — mutations are safe
-- **Blue ellipse** (ParameterNode): Pre-existing parameter object — mutations mean impure
-- **Red diamond** (LoadNode): Object loaded from pre-existing heap — mutations mean impure
+- **Blue ellipse** (ParameterNode): Pre-existing parameter object — mutations mean side-effecting
+- **Red diamond** (LoadNode): Object loaded from pre-existing heap — mutations mean side-effecting
 - **Orange octagon** (GlobalNode): Static field namespace
 - **Solid arrow**: InsideEdge (write/mutation)
 - **Dashed arrow**: OutsideEdge (read from pre-existing heap)
-- **Red border**: Prestate node that was mutated (impurity source)
+- **Red border**: Prestate node that was mutated (side-effect source)
 
 ### Debug HTML Traces
 
@@ -302,7 +302,7 @@ When `--debug` is used, the tool writes one self-contained HTML file per method 
 6. **Graph Components G = ⟨I, O, L, E⟩** — textual breakdown of the exit graph into its four formal components
 7. **Prestate Nodes** — The set of nodes representing pre-existing objects
 8. **Set W (Mutated Fields)** — All (node, field) pairs that were written to
-9. **Purity Result** — The final verdict (PURE/IMPURE) with reason
+9. **Side-Effect Analysis Result** — The final verdict (SIDE_EFFECT_FREE/SIDE_EFFECTING) with reason
 
 This gives a complete view of the compilation pipeline: **Java source → JVM bytecode → Jimple IR → analysis**.
 
@@ -314,9 +314,9 @@ Graphs are rendered in the browser using [viz.js](https://github.com/nicknisi/vi
 
 ### Adding Safe Methods
 Edit `SafeMethods.java`. Three categories:
-- `SAFE_CONSTRUCTOR_CLASSES`: Classes whose constructors are known pure
-- `SAFE_CLASS_PREFIXES`: Classes whose instance methods are known pure (e.g., `java.lang.String`)
-- `SAFE_METHOD_SIGNATURES`: Specific method signatures known to be pure
+- `SAFE_CONSTRUCTOR_CLASSES`: Classes whose constructors are known side-effect-free
+- `SAFE_CLASS_PREFIXES`: Classes whose instance methods are known side-effect-free (e.g., `java.lang.String`)
+- `SAFE_METHOD_SIGNATURES`: Specific method signatures known to be side-effect-free
 
 ### Adding Transfer Functions
 Edit `TransferFunctions.java`. The `apply()` method dispatches on `Stmt` type. Add new cases by pattern matching on Jimple statement types.
@@ -352,17 +352,17 @@ For methods that do not involve inter-procedural calls, our tool's exit graphs m
 
 | Method | Paper (inter-procedural) | Our Tool | Notes |
 |---|---|---|---|
-| `Point.<init>` | PURE | PURE | Constructor exception for `this.f` writes |
-| `Cell.<init>` | PURE | PURE | Constructor exception |
-| `ListItr.<init>` | PURE | PURE | Constructor exception |
-| `List.<init>` | PURE | PURE | Constructor exception |
-| `ListItr.hasNext()` | PURE | PURE | Only reads, no mutations |
-| `Point.flip()` | IMPURE | IMPURE | Mutates prestate `this.x`, `this.y` |
-| `ListItr.next()` | IMPURE | IMPURE | Mutates prestate `this.cell` |
-| `List.add()` | IMPURE | IMPURE | Mutates `this.head` |
-| `List.iterator()` | PURE | PURE | Inter-procedural: `ListItr.<init>` summary shows only InsideNode mutation |
-| `Main.sumX()` | PURE | PURE | Inter-procedural: `iterator()`, `hasNext()`, `next()` summaries compose correctly |
-| `Main.flipAll()` | IMPURE | IMPURE | Inter-procedural: `flip()` mutation on prestate objects propagates through |
+| `Point.<init>` | SIDE_EFFECT_FREE | SIDE_EFFECT_FREE | Constructor exception for `this.f` writes |
+| `Cell.<init>` | SIDE_EFFECT_FREE | SIDE_EFFECT_FREE | Constructor exception |
+| `ListItr.<init>` | SIDE_EFFECT_FREE | SIDE_EFFECT_FREE | Constructor exception |
+| `List.<init>` | SIDE_EFFECT_FREE | SIDE_EFFECT_FREE | Constructor exception |
+| `ListItr.hasNext()` | SIDE_EFFECT_FREE | SIDE_EFFECT_FREE | Only reads, no mutations |
+| `Point.flip()` | SIDE_EFFECTING | SIDE_EFFECTING | Mutates prestate `this.x`, `this.y` |
+| `ListItr.next()` | SIDE_EFFECTING | SIDE_EFFECTING | Mutates prestate `this.cell` |
+| `List.add()` | SIDE_EFFECTING | SIDE_EFFECTING | Mutates `this.head` |
+| `List.iterator()` | SIDE_EFFECT_FREE | SIDE_EFFECT_FREE | Inter-procedural: `ListItr.<init>` summary shows only InsideNode mutation |
+| `Main.sumX()` | SIDE_EFFECT_FREE | SIDE_EFFECT_FREE | Inter-procedural: `iterator()`, `hasNext()`, `next()` summaries compose correctly |
+| `Main.flipAll()` | SIDE_EFFECTING | SIDE_EFFECTING | Inter-procedural: `flip()` mutation on prestate objects propagates through |
 
 All results now match the paper's inter-procedural analysis. The key cases are `List.iterator()` and `Main.sumX()`, which require composing method summaries across multiple call sites to determine that the iterator is a fresh InsideNode and all mutations target only that InsideNode (not any prestate object).
 
