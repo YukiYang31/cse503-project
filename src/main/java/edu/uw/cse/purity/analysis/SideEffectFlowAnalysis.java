@@ -4,11 +4,12 @@ import edu.uw.cse.purity.AnalysisConfig;
 import edu.uw.cse.purity.graph.PointsToGraph;
 import edu.uw.cse.purity.output.DebugHtmlWriter;
 import edu.uw.cse.purity.util.NodeMerger;
-import java.util.List;
+import sootup.analysis.intraprocedural.ForwardFlowAnalysis;
 import sootup.core.graph.StmtGraph;
 import sootup.core.jimple.common.stmt.Stmt;
 import sootup.core.model.Body;
 
+import java.util.List;
 
 /**
  * Forward dataflow analysis that builds a PointsToGraph for each program point.

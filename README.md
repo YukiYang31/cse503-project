@@ -1,10 +1,10 @@
-# Java Purity Analysis Tool
+# Java Side-Effect Analysis Tool
 
 A static analysis tool that determines whether Java methods are **side-effect-free** — that is, whether they avoid mutating any object that existed before the method was called. Built on [SootUp](https://soot-oss.github.io/SootUp/) and the Jimple intermediate representation.
 
 ## Theoretical Background
 
-This tool implements the purity analysis described by:
+This tool implements the side-effect analysis described by:
 
 1. **Salcianu & Rinard (2005)** — *Purity and Side Effect Analysis for Java Programs* — defines purity via a pointer/escape analysis using a points-to graph **G = ⟨I, O, L, E⟩** (inside edges, outside edges, local variable state, escaped nodes) with four node types (Inside, Parameter, Load, Global) and two edge types (Inside, Outside).
 2. **Madhavan et al. (2011)** — *Purity Analysis: An Abstract Interpretation Formulation* — provides a lattice-theoretic reformulation with a node merging optimization that bounds graph size.
@@ -31,7 +31,7 @@ Constructors have a special rule: direct field writes to `this` (`this.f = x`) a
                                                     |
                                               PointsToGraph (with inter-procedural summary instantiation)
                                                     |
-                                              PurityChecker --> verdict + MethodSummary (cached)
+                                              SideEffectChecker --> verdict + MethodSummary (cached)
 ```
 
 ### Package Structure
@@ -46,13 +46,13 @@ Constructors have a special rule: direct field writes to `this` (`this.f = x`) a
 
 ### Key Files
 
-- **`Main.java`** — CLI argument parsing, invokes `JavaCompiler` then `PurityAnalysisRunner`
+- **`Main.java`** — CLI argument parsing, invokes `JavaCompiler` then `SideEffectAnalysisRunner`
 - **`JavaCompiler.java`** — Compiles `.java` to `.class` in a temp directory using `javax.tools.JavaCompiler`
-- **`PurityAnalysisRunner.java`** — Creates a SootUp `JavaView`, builds call graph, analyzes methods bottom-up with inter-procedural summary cache
+- **`SideEffectAnalysisRunner.java`** — Creates a SootUp `JavaView`, builds call graph, analyzes methods bottom-up with inter-procedural summary cache
 - **`PointsToGraph.java`** — Core data structure: variable-to-node mappings, heap edges, mutation tracking, global escape tracking
 - **`TransferFunctions.java`** — Maps each Jimple statement type to a graph operation; looks up callee summaries from `SummaryCache` for inter-procedural calls
-- **`PurityFlowAnalysis.java`** — Forward dataflow analysis extending SootUp's `ForwardFlowAnalysis`
-- **`PurityChecker.java`** — Validates graph invariants, then determines purity from the exit graph: checks prestate mutations and global escape
+- **`SideEffectFlowAnalysis.java`** — Forward dataflow analysis extending SootUp's `ForwardFlowAnalysis`
+- **`SideEffectChecker.java`** — Validates graph invariants, then determines purity from the exit graph: checks prestate mutations and global escape
 - **`GraphInstantiator.java`** — Section 5.3 of Salcianu & Rinard: instantiates callee summaries at call sites by computing a node mapping (mu), combining graphs, removing captured load nodes, and propagating mutations
 - **`SummaryCache.java`** — Stores method summaries keyed by full signature and sub-signature (for virtual/interface dispatch resolution)
 - **`CallGraphBuilder.java`** — Builds an intra-file call graph and computes bottom-up analysis order using Tarjan's SCC algorithm
@@ -177,8 +177,8 @@ When `--timing` is enabled, timestamps are recorded around each phase of the pip
 The flowchart below shows exactly where each measurement is taken:
 
 ```
-Main.java                              PurityAnalysisRunner.java
-─────────                              ─────────────────────────
+Main.java                              SideEffectAnalysisRunner.java
+─────────                              ─────────────────────────────
 
 timer.startTotal()                     ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐
     │                                                                        │
@@ -215,14 +215,14 @@ timer.startTotal()                     ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ �
                             ┌─ for each method batch ──────────────────┐     │
                             │                                          │     │
                             │  ┌────────────────────────────────────┐  │     │
-                            │  │  PurityFlowAnalysis(...)           │  │     │
+                            │  │  SideEffectFlowAnalysis(...)      │  │     │
                             │  │  analysis.getExitGraph()           │  │     │
                             │  │  dataflowNs = elapsed              │  │     │
                             │  └────────────────────────────────────┘  │     │
                             │        │              ◀── ⏱ Dataflow     │     │
                             │        ▼                  (per-method)   │     │
                             │  ┌────────────────────────────────────┐  │     │
-                            │  │  PurityChecker.check(...)          │  │     │
+                            │  │  SideEffectChecker.check(...)     │  │     │
                             │  │  purityNs = elapsed                │  │     │
                             │  └────────────────────────────────────┘  │     │
                             │        │              ◀── ⏱ Purity       │     │

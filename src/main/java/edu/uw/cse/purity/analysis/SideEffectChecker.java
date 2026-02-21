@@ -3,9 +3,9 @@ package edu.uw.cse.purity.analysis;
 import edu.uw.cse.purity.graph.*;
 import edu.uw.cse.purity.graph.PointsToGraph.EdgeTarget;
 import edu.uw.cse.purity.graph.PointsToGraph.MutatedField;
-import java.util.*;
 import sootup.core.signatures.FieldSignature;
 
+import java.util.*;
 
 /**
  * Determines method purity from the exit PointsToGraph.

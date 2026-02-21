@@ -3,8 +3,8 @@ package edu.uw.cse.purity;
 import edu.uw.cse.purity.analysis.CallGraphBuilder;
 import edu.uw.cse.purity.analysis.MethodSummary;
 import edu.uw.cse.purity.analysis.MethodSummary.PurityResult;
-import edu.uw.cse.purity.analysis.PurityChecker;
-import edu.uw.cse.purity.analysis.PurityFlowAnalysis;
+import edu.uw.cse.purity.analysis.SideEffectChecker;
+import edu.uw.cse.purity.analysis.SideEffectFlowAnalysis;
 import edu.uw.cse.purity.analysis.SummaryCache;
 import edu.uw.cse.purity.graph.PointsToGraph;
 import java.nio.file.Path;
@@ -101,11 +101,11 @@ public class PurityAnalysisTest {
                     .map(t -> { int dot = t.lastIndexOf('.'); return dot >= 0 ? t.substring(dot + 1) : t; })
                     .toList();
 
-            PurityFlowAnalysis analysis = new PurityFlowAnalysis(
+            SideEffectFlowAnalysis analysis = new SideEffectFlowAnalysis(
                     cfg, body, CONFIG, method.isStatic(), null, paramTypeNames, cache);
             PointsToGraph exitGraph = analysis.getExitGraph();
             boolean isConstructor = "<init>".equals(method.getName());
-            MethodSummary purityResult = PurityChecker.check(
+            MethodSummary purityResult = SideEffectChecker.check(
                     method.getSignature().toString(), exitGraph, isConstructor);
             return new MethodSummary(method.getSignature().toString(), exitGraph,
                     purityResult.getResult(), purityResult.getReason(),
@@ -289,10 +289,10 @@ public class PurityAnalysisTest {
                 StmtGraph<?> cfg = body.getStmtGraph();
                 String methodName = method.getName();
 
-                PurityFlowAnalysis analysis = new PurityFlowAnalysis(cfg, body, mergeConfig, method.isStatic());
+                SideEffectFlowAnalysis analysis = new SideEffectFlowAnalysis(cfg, body, mergeConfig, method.isStatic());
                 PointsToGraph exitGraph = analysis.getExitGraph();
                 boolean isConstructor = "<init>".equals(methodName);
-                MethodSummary summary = PurityChecker.check(
+                MethodSummary summary = SideEffectChecker.check(
                     method.getSignature().toString(), exitGraph, isConstructor);
 
                 PurityResult expected = getResult(className, methodName);

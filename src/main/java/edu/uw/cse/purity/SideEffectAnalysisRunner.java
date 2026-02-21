@@ -10,6 +10,24 @@ import edu.uw.cse.purity.output.DebugHtmlWriter;
 import edu.uw.cse.purity.output.GraphPrinter;
 import edu.uw.cse.purity.output.ResultPrinter;
 import edu.uw.cse.purity.util.TimingRecorder;
+import sootup.core.graph.StmtGraph;
+import sootup.core.jimple.basic.NoPositionInformation;
+import sootup.core.jimple.common.stmt.Stmt;
+import sootup.core.model.Body;
+import sootup.core.model.Position;
+import sootup.java.bytecode.inputlocation.JavaClassPathAnalysisInputLocation;
+import sootup.core.types.Type;
+import sootup.java.core.JavaSootClass;
+import sootup.java.core.JavaSootMethod;
+import sootup.java.core.views.JavaView;
+
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.util.Textifier;
+import org.objectweb.asm.util.TraceMethodVisitor;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -21,22 +39,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.util.Textifier;
-import sootup.core.graph.StmtGraph;
-import sootup.core.jimple.basic.NoPositionInformation;
-import sootup.core.jimple.common.stmt.Stmt;
-import sootup.core.model.Body;
-import sootup.core.model.Position;
-import sootup.core.types.Type;
-import sootup.java.bytecode.inputlocation.JavaClassPathAnalysisInputLocation;
-import sootup.java.core.JavaSootClass;
-import sootup.java.core.JavaSootMethod;
-import sootup.java.core.views.JavaView;
-
-
 
 /**
  * Loads compiled classes via SootUp's JavaView, iterates methods,

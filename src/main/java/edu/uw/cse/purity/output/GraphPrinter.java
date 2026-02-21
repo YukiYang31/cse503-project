@@ -1,7 +1,7 @@
 package edu.uw.cse.purity.output;
 
 import edu.uw.cse.purity.analysis.MethodSummary;
-import edu.uw.cse.purity.analysis.PurityChecker;
+import edu.uw.cse.purity.analysis.SideEffectChecker;
 import edu.uw.cse.purity.graph.*;
 import edu.uw.cse.purity.graph.PointsToGraph.EdgeTarget;
 import edu.uw.cse.purity.graph.PointsToGraph.MutatedField;
@@ -101,7 +101,7 @@ public class GraphPrinter {
         System.out.println("W (Mutated Fields): {" + String.join(", ", mutStrs) + "}");
 
         // Prestate Nodes
-        Set<Node> prestateNodes = PurityChecker.computePrestateNodes(graph);
+        Set<Node> prestateNodes = SideEffectChecker.computePrestateNodes(graph);
         List<String> prestateIds = prestateNodes.stream().map(Node::getId).sorted().toList();
         System.out.println("Prestate Nodes: {" + String.join(", ", prestateIds) + "}");
 
@@ -148,7 +148,7 @@ public class GraphPrinter {
         out.println();
 
         Set<Node> allNodes = graph.getAllNodes();
-        Set<Node> prestateNodes = PurityChecker.computePrestateNodes(graph);
+        Set<Node> prestateNodes = SideEffectChecker.computePrestateNodes(graph);
 
         // Emit nodes
         for (Node n : allNodes) {

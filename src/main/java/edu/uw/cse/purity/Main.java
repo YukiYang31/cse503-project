@@ -1,10 +1,10 @@
 package edu.uw.cse.purity;
 
 import edu.uw.cse.purity.util.TimingRecorder;
-
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * CLI entry point for the purity analysis tool.
@@ -79,7 +79,7 @@ public class Main {
 
             // Step 2: Run purity analysis via SootUp
             List<Path> sourcePaths = sourceFiles.stream().map(Path::of).toList();
-            PurityAnalysisRunner runner = new PurityAnalysisRunner(config, classDir, sourcePaths, timer);
+            SideEffectAnalysisRunner runner = new SideEffectAnalysisRunner(config, classDir, sourcePaths, timer);
             runner.run();
 
             timer.endTotal();
