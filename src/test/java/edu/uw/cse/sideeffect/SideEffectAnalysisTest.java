@@ -129,12 +129,12 @@ public class SideEffectAnalysisTest {
     // --- SideEffectFreeMethods ---
 
     @Test
-    public void testPureAdd() {
+    public void testSideEffectFreeAdd() {
         assertEquals(SideEffectResult.SIDE_EFFECT_FREE, getResult("SideEffectFreeMethods", "add"));
     }
 
     @Test
-    public void testPureCreateArray() {
+    public void testSideEffectFreeCreateArray() {
         assertEquals(SideEffectResult.SIDE_EFFECT_FREE, getResult("SideEffectFreeMethods", "createArray"));
     }
 
@@ -158,7 +158,7 @@ public class SideEffectAnalysisTest {
     // --- NewObjectMutation ---
 
     @Test
-    public void testPureCopyFirst() {
+    public void testSideEffectFreeCopyFirst() {
         assertEquals(SideEffectResult.SIDE_EFFECT_FREE, getResult("NewObjectMutation", "copyFirst"));
     }
 
@@ -186,28 +186,28 @@ public class SideEffectAnalysisTest {
     // --- Constructors should all be SIDE_EFFECT_FREE (constructor exception for this.f writes) ---
 
     @Test
-    public void testPaperPointConstructorPure() {
+    public void testPaperPointConstructorSideEffectFree() {
         // Paper Figure 2.a: Point constructor mutates this.x and this.y
         // Constructor exception: direct this.f writes are allowed → SIDE_EFFECT_FREE
         assertEquals(SideEffectResult.SIDE_EFFECT_FREE, getResult("Point", "<init>"));
     }
 
     @Test
-    public void testPaperCellConstructorPure() {
+    public void testPaperCellConstructorSideEffectFree() {
         // Paper Figure 2.b: Cell constructor mutates this.data and this.next
         // Constructor exception → SIDE_EFFECT_FREE
         assertEquals(SideEffectResult.SIDE_EFFECT_FREE, getResult("Cell", "<init>"));
     }
 
     @Test
-    public void testPaperListItrConstructorPure() {
+    public void testPaperListItrConstructorSideEffectFree() {
         // Paper Figure 3.d: ListItr constructor mutates this.cell
         // Constructor exception → SIDE_EFFECT_FREE
         assertEquals(SideEffectResult.SIDE_EFFECT_FREE, getResult("ListItr", "<init>"));
     }
 
     @Test
-    public void testPaperListConstructorPure() {
+    public void testPaperListConstructorSideEffectFree() {
         // List default constructor initializes this.head = null
         // Constructor exception → SIDE_EFFECT_FREE
         assertEquals(SideEffectResult.SIDE_EFFECT_FREE, getResult("List", "<init>"));
@@ -216,7 +216,7 @@ public class SideEffectAnalysisTest {
     // --- Side-effect-free methods ---
 
     @Test
-    public void testPaperListItrHasNextPure() {
+    public void testPaperListItrHasNextSideEffectFree() {
         // Paper Figure 3.e: hasNext only reads this.cell, no mutations → SIDE_EFFECT_FREE
         assertEquals(SideEffectResult.SIDE_EFFECT_FREE, getResult("ListItr", "hasNext"));
     }
@@ -243,14 +243,14 @@ public class SideEffectAnalysisTest {
     }
 
     @Test
-    public void testPaperListIteratorPure() {
+    public void testPaperListIteratorSideEffectFree() {
         // List.iterator() calls ListItr constructor which is SIDE_EFFECT_FREE
         // Inter-procedural: ListItr.<init> summary shows only InsideNode mutation → SIDE_EFFECT_FREE
         assertEquals(SideEffectResult.SIDE_EFFECT_FREE, getResult("List", "iterator"));
     }
 
     @Test
-    public void testPaperSumXPure() {
+    public void testPaperSumXSideEffectFree() {
         // Paper Section 2.4: sumX is SIDE_EFFECT_FREE with inter-procedural analysis
         // Inter-procedural: iterator(), hasNext(), next() summaries are instantiated
         assertEquals(SideEffectResult.SIDE_EFFECT_FREE, getResult("PaperMain", "sumX"));
@@ -375,22 +375,22 @@ public class SideEffectAnalysisTest {
     }
 
     @Test
-    public void testIPReaderGetValuePure() throws Exception {
+    public void testIPReaderGetValueSideEffectFree() throws Exception {
         assertEquals(SideEffectResult.SIDE_EFFECT_FREE, getIPResult("IPReader", "getValue"));
     }
 
     @Test
-    public void testIPReaderReadViaHelperPure() throws Exception {
+    public void testIPReaderReadViaHelperSideEffectFree() throws Exception {
         assertEquals(SideEffectResult.SIDE_EFFECT_FREE, getIPResult("IPReader", "readViaHelper"));
     }
 
     @Test
-    public void testIPFactoryCreatePure() throws Exception {
+    public void testIPFactoryCreateSideEffectFree() throws Exception {
         assertEquals(SideEffectResult.SIDE_EFFECT_FREE, getIPResult("IPFactory", "create"));
     }
 
     @Test
-    public void testIPConsumerMakeAndReadPure() throws Exception {
+    public void testIPConsumerMakeAndReadSideEffectFree() throws Exception {
         assertEquals(SideEffectResult.SIDE_EFFECT_FREE, getIPResult("IPConsumer", "makeAndRead"));
     }
 
@@ -405,17 +405,17 @@ public class SideEffectAnalysisTest {
     }
 
     @Test
-    public void testIPIterHasNextPure() throws Exception {
+    public void testIPIterHasNextSideEffectFree() throws Exception {
         assertEquals(SideEffectResult.SIDE_EFFECT_FREE, getIPResult("IPIter", "hasNext"));
     }
 
     @Test
-    public void testIPLinkedListIteratorPure() throws Exception {
+    public void testIPLinkedListIteratorSideEffectFree() throws Exception {
         assertEquals(SideEffectResult.SIDE_EFFECT_FREE, getIPResult("IPLinkedList", "iterator"));
     }
 
     @Test
-    public void testIPSumSumPure() throws Exception {
+    public void testIPSumSumSideEffectFree() throws Exception {
         assertEquals(SideEffectResult.SIDE_EFFECT_FREE, getIPResult("IPSum", "sum"));
     }
 
