@@ -1,4 +1,4 @@
-// Inter-procedural purity analysis test cases
+// Inter-procedural side-effect analysis test cases
 // Exercises Section 5.3 of Salcianu & Rinard (2005)
 
 // --- Side-effect-free reader calling another side-effect-free reader (constraint 1 only) ---

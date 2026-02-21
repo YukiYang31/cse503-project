@@ -25,7 +25,7 @@ dependencies {
 }
 
 application {
-    mainClass = 'edu.uw.cse.purity.Main'
+    mainClass = 'edu.uw.cse.sideeffect.Main'
 }
 
 tasks.named('run') {

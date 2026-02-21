@@ -61,7 +61,7 @@ public class ComplexSideEffectFreeExample {
         // --- handleNew ---
         // Allocate local objects. Their constructors are not whitelisted, so the
         // InsideNodes get globally escaped — but InsideNodes are not prestate objects,
-        // so this does NOT cause impurity. Tests the analysis's precision.
+        // so this does NOT cause side-effecting. Tests the analysis's precision.
         DataNode localA = new DataNode(null, null);
         DataNode localB = new DataNode(null, null);
 
@@ -111,7 +111,7 @@ public class ComplexSideEffectFreeExample {
         // Writes into the local array. handleArrayStore only records the mutation
         // on the InsideNode (no inside edges added). The InsideNode is not prestate → side-effect-free.
         // Stores values of mixed provenance: LoadNode (headValue), LoadNode (defaultVal),
-        // LoadNode (firstItem) — but none of this causes impurity because the array
+        // LoadNode (firstItem) — but none of this causes side-effects because the array
         // InsideNode was never escaped and no edges are added.
         localArr[0] = headValue;
         localArr[1] = defaultVal;

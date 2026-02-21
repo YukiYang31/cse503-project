@@ -1,0 +1,603 @@
+package edu.uw.cse.sideeffect.analysis;
+
+import edu.uw.cse.sideeffect.AnalysisConfig;
+import edu.uw.cse.sideeffect.graph.*;
+import edu.uw.cse.sideeffect.util.NodeMerger;
+import edu.uw.cse.sideeffect.util.SafeMethods;
+import sootup.core.jimple.basic.Local;
+import sootup.core.jimple.basic.Value;
+import sootup.core.jimple.common.expr.*;
+import sootup.core.jimple.common.ref.*;
+import sootup.core.jimple.common.stmt.JAssignStmt;
+import sootup.core.jimple.common.stmt.JIdentityStmt;
+import sootup.core.jimple.common.stmt.JInvokeStmt;
+import sootup.core.jimple.common.stmt.JReturnStmt;
+import sootup.core.jimple.common.stmt.Stmt;
+import sootup.core.signatures.FieldSignature;
+import sootup.core.signatures.MethodSignature;
+import sootup.core.types.ReferenceType;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * Maps each Jimple Stmt to the corresponding graph operation.
+ * This is the core of the analysis — it implements the abstract semantics
+ * from Sălcianu & Rinard (2005).
+ */
+public class TransferFunctions {
+
+    private final AnalysisConfig config;
+    private final boolean isStaticMethod;
+    private final List<String> paramTypeNames; // nullable — falls back to index-based labels
+    private final SummaryCache summaryCache; // nullable — null means intra-procedural only
+
+    /**
+     * Per-statement counter snapshots ensure that re-processing the same statement
+     * (during fixed-point iteration in loops) produces deterministic node IDs.
+     * Maps statement identity → [insideCounter, loadCounter] at entry.
+     */
+    private final Map<Stmt, int[]> stmtCounterSnapshot = new IdentityHashMap<>();
+
+    // Special local variable representing the return value
+    public static final String RETURN_VAR_NAME = "$RETURN";
+
+    public TransferFunctions(AnalysisConfig config, boolean isStaticMethod) {
+        this(config, isStaticMethod, null, null);
+    }
+
+    public TransferFunctions(AnalysisConfig config, boolean isStaticMethod, List<String> paramTypeNames) {
+        this(config, isStaticMethod, paramTypeNames, null);
+    }
+
+    public TransferFunctions(AnalysisConfig config, boolean isStaticMethod,
+                              List<String> paramTypeNames, SummaryCache summaryCache) {
+        this.config = config;
+        this.isStaticMethod = isStaticMethod;
+        this.paramTypeNames = paramTypeNames;
+        this.summaryCache = summaryCache;
+    }
+
+
+    /**
+     * Apply the transfer function for the given statement, mutating the graph.
+     */
+    public void apply(Stmt stmt, PointsToGraph graph) {
+        // Restore counter snapshot for this statement (ensures deterministic node IDs
+        // when the same statement is re-processed during fixed-point iteration in loops)
+        int[] snapshot = stmtCounterSnapshot.get(stmt);
+        if (snapshot != null) {
+            graph.setInsideNodeCounter(snapshot[0]);
+            graph.setLoadNodeCounter(snapshot[1]);
+        } else {
+            stmtCounterSnapshot.put(stmt, new int[]{
+                graph.getInsideNodeCounter(), graph.getLoadNodeCounter()
+            });
+        }
+
+        try {
+            if (stmt instanceof JIdentityStmt identityStmt) {
+                handleIdentity(identityStmt, graph);
+            } else if (stmt instanceof JAssignStmt assignStmt) {
+                handleAssign(assignStmt, graph);
+            } else if (stmt instanceof JInvokeStmt invokeStmt) {
+                handleInvokeStmt(invokeStmt, graph);
+            } else if (stmt instanceof JReturnStmt returnStmt) {
+                handleReturn(returnStmt, graph);
+            }
+            // JIfStmt, JGotoStmt, JReturnVoidStmt, JNopStmt, etc. — no graph effect
+        } catch (Exception e) {
+            // Fix #5: Graceful degradation on unresolvable types
+            System.err.println("  Warning: error processing statement: " + stmt + " — " + e.getMessage());
+        }
+    }
+
+    // --- Fix #7: JIdentityStmt handles @this and @parameter ---
+
+    private void handleIdentity(JIdentityStmt stmt, PointsToGraph graph) {
+        Value lhs = stmt.getLeftOp();
+        Value rhs = stmt.getRightOp();
+
+        if (!(lhs instanceof Local local)) {
+            if (config.debug) System.out.println("Debug== skipping identity stmt: lhs is not a local: " + lhs);
+            return;
+        }
+        if (!(lhs.getType() instanceof ReferenceType)) {
+            if (config.debug) System.out.println("Debug== skipping identity stmt: lhs type is not ReferenceType: " + lhs.getType());
+            return;
+        }
+
+        if (rhs instanceof JThisRef) {
+            // r0 := @this → map to ParameterNode(0)
+            graph.strongUpdate(local, Set.of(new ParameterNode(0, "this")));
+            if (config.debug) System.out.println("Debug== @this: " + local.getName() + " -> P0");
+        } else if (rhs instanceof JParameterRef paramRef) {
+            int paramIndex = paramRef.getIndex();
+            // For instance methods, offset by 1 (index 0 is 'this')
+            int nodeIndex = isStaticMethod ? paramIndex : paramIndex + 1;
+            String label;
+            if (paramTypeNames != null && paramIndex < paramTypeNames.size()) {
+                label = paramTypeNames.get(paramIndex) + " parameter";
+            } else {
+                label = "parameter " + paramIndex;
+            }
+            graph.strongUpdate(local, Set.of(new ParameterNode(nodeIndex, label)));
+            if (config.debug) System.out.println("Debug== @parameter[" + paramIndex + "]: " + local.getName() + " -> P" + nodeIndex);
+        }
+        // Skip JCaughtExceptionRef — not relevant for purity
+    }
+
+    // --- JAssignStmt dispatching ---
+
+    private void handleAssign(JAssignStmt stmt, PointsToGraph graph) {
+        Value lhs = stmt.getLeftOp();
+        Value rhs = stmt.getRightOp();
+
+        // Case: x.f = y (field store — weak update)
+        if (lhs instanceof JInstanceFieldRef fieldRef) {
+            handleFieldStore(fieldRef, rhs, graph);
+            return;
+        }
+
+        // Case: staticField = y
+        if (lhs instanceof JStaticFieldRef staticRef) {
+            handleStaticFieldStore(staticRef, rhs, graph);
+            return;
+        }
+
+        // Case: x[i] = y (array store — treat as field store)
+        if (lhs instanceof JArrayRef arrayRef) {
+            handleArrayStore(arrayRef, rhs, graph);
+            return;
+        }
+
+        // LHS must be a Local for remaining cases
+        if (!(lhs instanceof Local lhsLocal)) return;
+
+        // Case: x = new T (allocation)
+        if (rhs instanceof JNewExpr newExpr) {
+            handleNew(lhsLocal, newExpr, graph);
+            return;
+        }
+
+        // Case: x = new T[size] (array allocation)
+        if (rhs instanceof JNewArrayExpr newArrayExpr) {
+            handleNewArray(lhsLocal, graph);
+            return;
+        }
+
+        // Case: x = y (local copy)
+        if (rhs instanceof Local rhsLocal) {
+            handleCopy(lhsLocal, rhsLocal, graph);
+            return;
+        }
+
+        // Case: x = y.f (field load)
+        if (rhs instanceof JInstanceFieldRef fieldRef) {
+            handleFieldLoad(lhsLocal, fieldRef, graph);
+            return;
+        }
+
+        // Case: x = staticField
+        if (rhs instanceof JStaticFieldRef staticRef) {
+            handleStaticFieldLoad(lhsLocal, staticRef, graph);
+            return;
+        }
+
+        // Case: x = (T) y (cast)
+        if (rhs instanceof JCastExpr castExpr) {
+            handleCast(lhsLocal, castExpr, graph);
+            return;
+        }
+
+        // Case: x = y[i] (array load)
+        if (rhs instanceof JArrayRef arrayRef) {
+            handleArrayLoad(lhsLocal, arrayRef, graph);
+            return;
+        }
+
+        // Case: x = foo(args) (invoke with return value)
+        if (rhs instanceof AbstractInvokeExpr invokeExpr) {
+            handleInvokeWithReturn(lhsLocal, invokeExpr, graph);
+            return;
+        }
+
+        // Primitive operations, constants, etc. — no graph effect for reference analysis
+        // But we should still clear the target if it's a reference type being assigned a non-reference
+        if (lhsLocal.getType() instanceof ReferenceType) {
+            graph.strongUpdate(lhsLocal, new HashSet<>());
+        }
+    }
+
+    // --- Node counter helpers: read/write from graph for deterministic fixed-point ---
+
+    private InsideNode nextInsideNode(PointsToGraph graph, String label) {
+        int counter = graph.getInsideNodeCounter();
+        graph.setInsideNodeCounter(counter + 1);
+        return new InsideNode(counter, label);
+    }
+
+    private LoadNode nextLoadNode(PointsToGraph graph, String label) {
+        int counter = graph.getLoadNodeCounter();
+        graph.setLoadNodeCounter(counter + 1);
+        return new LoadNode(counter, label);
+    }
+
+    // --- Individual transfer functions ---
+
+    /** x = new T → create InsideNode, strong update */
+    private void handleNew(Local lhs, JNewExpr newExpr, PointsToGraph graph) {
+        InsideNode node = nextInsideNode(graph, "new " + newExpr.getType().getClassName());
+        graph.strongUpdate(lhs, Set.of(node));
+        if (config.debug) System.out.println("Debug== new " + newExpr.getType().getClassName() + ": " + lhs.getName() + " -> " + node.getId());
+    }
+
+    /** x = new T[size] → create InsideNode for the array */
+    private void handleNewArray(Local lhs, PointsToGraph graph) {
+        InsideNode node = nextInsideNode(graph, "new array");
+        graph.strongUpdate(lhs, Set.of(node));
+        if (config.debug) System.out.println("Debug== new array: " + lhs.getName() + " -> " + node.getId());
+    }
+
+    /** x = y → strong update: copy y's targets to x */
+    private void handleCopy(Local lhs, Local rhs, PointsToGraph graph) {
+        if (!(lhs.getType() instanceof ReferenceType)) return;
+        Set<Node> targets = graph.pointsTo(rhs);
+        graph.strongUpdate(lhs, new HashSet<>(targets));
+        if (config.debug) System.out.println("Debug== copy: " + lhs.getName() + " = " + rhs.getName() + ", targets = " + nodeSetToString(targets));
+    }
+
+    /**
+     * x = y.f → field load.
+     * For each node n that y points to:
+     *   - Collect inside-edge targets (known writes)
+     *   - If n is an escaped node, add outside edge + load node
+     */
+    private void handleFieldLoad(Local lhs, JInstanceFieldRef fieldRef, PointsToGraph graph) {
+        if (!(lhs.getType() instanceof ReferenceType)) return;
+
+        Local base = (Local) fieldRef.getBase();
+        FieldSignature field = fieldRef.getFieldSignature();
+        Set<Node> baseNodes = graph.pointsTo(base);
+        Set<Node> result = new HashSet<>();
+
+        if (config.debug) System.out.println("Debug== field load: " + lhs.getName() + " = " + base.getName() + "." + field.getName() + ", base points to " + nodeSetToString(baseNodes));
+
+        for (Node n : baseNodes) {
+            // Collect existing inside-edge targets
+            result.addAll(graph.getTargets(n, field, EdgeType.INSIDE));
+
+            // Collect existing outside-edge targets
+            result.addAll(graph.getTargets(n, field, EdgeType.OUTSIDE));
+
+            // If n could be a prestate node, add an outside edge + load node
+            if (isPrestateReachable(n)) {
+                // Check if we already have an outside edge for this (n, field)
+                Set<Node> existingOutside = graph.getTargets(n, field, EdgeType.OUTSIDE);
+                if (existingOutside.isEmpty()) {
+                    LoadNode loadNode = nextLoadNode(graph,
+                        "load " + field.getName() + " from " + describeNode(n));
+                    graph.addOutsideEdge(n, field, loadNode);
+                    result.add(loadNode);
+                    if (config.debug) System.out.println("Debug==   created LoadNode " + loadNode.getId() + " for escaped node " + n.getId() + "." + field.getName());
+                }
+                // Otherwise the existing outside targets are already in result
+            }
+        }
+
+        graph.strongUpdate(lhs, result);
+        if (config.debug) System.out.println("Debug==   result: " + lhs.getName() + " -> " + nodeSetToString(result));
+
+        // Apply node merging after field load (if enabled)
+        if (config.merge) {
+            NodeMerger.enforceUniqueness(graph);
+        }
+    }
+
+    /** x.f = y → weak update: add inside edges, record mutation */
+    private void handleFieldStore(JInstanceFieldRef fieldRef, Value rhs, PointsToGraph graph) {
+        Local base = (Local) fieldRef.getBase();
+        FieldSignature field = fieldRef.getFieldSignature();
+        Set<Node> baseNodes = graph.pointsTo(base);
+        Set<Node> rhsNodes = (rhs instanceof Local rhsLocal)
+            ? graph.pointsTo(rhsLocal) : new HashSet<>();
+
+        if (config.debug) System.out.println("Debug== field store: " + base.getName() + "." + field.getName() + " = " + rhs + ", base points to " + nodeSetToString(baseNodes) + ", rhs points to " + nodeSetToString(rhsNodes));
+
+        for (Node baseNode : baseNodes) {
+            for (Node rhsNode : rhsNodes) {
+                graph.addInsideEdge(baseNode, field, rhsNode);
+            }
+            graph.recordMutation(baseNode, field);
+            if (config.debug) System.out.println("Debug==   recorded mutation: (" + baseNode.getId() + ", " + field.getName() + ")");
+        }
+    }
+
+    /** staticField = v → add pointed-to nodes to E, record mutation on field */
+    private void handleStaticFieldStore(JStaticFieldRef staticRef, Value rhs, PointsToGraph graph) {
+        FieldSignature field = staticRef.getFieldSignature();
+        Set<Node> rhsNodes = (rhs instanceof Local rhsLocal)
+            ? graph.pointsTo(rhsLocal) : new HashSet<>();
+
+        if (config.debug) System.out.println("Debug== static field store: " + field.getSubSignature() + " = " + rhs + ", rhs points to " + nodeSetToString(rhsNodes));
+
+        // Paper rule: add all nodes pointed to by v to E
+        for (Node rhsNode : rhsNodes) {
+            graph.markGlobalEscaped(rhsNode);
+            if (config.debug) System.out.println("Debug==   " + rhsNode.getId() + " escapes to global");
+        }
+        // Paper rule: record a mutation on the static field f
+        graph.recordMutation(GlobalNode.INSTANCE, field);
+    }
+
+    /** x = staticField → outside edge from GlobalNode + load node */
+    private void handleStaticFieldLoad(Local lhs, JStaticFieldRef staticRef, PointsToGraph graph) {
+        if (!(lhs.getType() instanceof ReferenceType)) return;
+
+        FieldSignature field = staticRef.getFieldSignature();
+        Set<Node> result = new HashSet<>();
+
+        if (config.debug) System.out.println("Debug== static field load: " + lhs.getName() + " = " + field.getSubSignature());
+
+        // Collect existing targets
+        result.addAll(graph.getTargets(GlobalNode.INSTANCE, field, EdgeType.INSIDE));
+        result.addAll(graph.getTargets(GlobalNode.INSTANCE, field, EdgeType.OUTSIDE));
+
+        // Add outside edge if none exists
+        Set<Node> existingOutside = graph.getTargets(GlobalNode.INSTANCE, field, EdgeType.OUTSIDE);
+        if (existingOutside.isEmpty()) {
+            LoadNode loadNode = nextLoadNode(graph,
+                "load static " + field.getName());
+            graph.addOutsideEdge(GlobalNode.INSTANCE, field, loadNode);
+            result.add(loadNode);
+            if (config.debug) System.out.println("Debug==   created LoadNode " + loadNode.getId() + " for static field " + field.getName());
+        }
+
+        graph.strongUpdate(lhs, result);
+        if (config.debug) System.out.println("Debug==   result: " + lhs.getName() + " -> " + nodeSetToString(result));
+
+        if (config.merge) {
+            NodeMerger.enforceUniqueness(graph);
+        }
+    }
+
+    /** x = (T) y → same as copy */
+    private void handleCast(Local lhs, JCastExpr castExpr, PointsToGraph graph) {
+        if (!(lhs.getType() instanceof ReferenceType)) return;
+        Value op = castExpr.getOp();
+        if (op instanceof Local rhsLocal) {
+            Set<Node> targets = graph.pointsTo(rhsLocal);
+            graph.strongUpdate(lhs, new HashSet<>(targets));
+            if (config.debug) System.out.println("Debug== cast: " + lhs.getName() + " = (" + castExpr.getType() + ") " + rhsLocal.getName() + ", targets = " + nodeSetToString(targets));
+        }
+    }
+
+    /** x = y[i] → treat like field load with synthetic field */
+    private void handleArrayLoad(Local lhs, JArrayRef arrayRef, PointsToGraph graph) {
+        if (!(lhs.getType() instanceof ReferenceType)) return;
+        // We treat array element access as a field access with a null field signature
+        // This is a simplification — we use the base's existing edges
+        Local base = (Local) arrayRef.getBase();
+        Set<Node> baseNodes = graph.pointsTo(base);
+        Set<Node> result = new HashSet<>();
+
+        if (config.debug) System.out.println("Debug== array load: " + lhs.getName() + " = " + base.getName() + "[i], base points to " + nodeSetToString(baseNodes));
+
+        for (Node n : baseNodes) {
+            // For arrays, we model element access: the array node itself "contains" its elements
+            // A simple model: if the array node is prestate, create a load node
+            if (isPrestateReachable(n)) {
+                LoadNode loadNode = nextLoadNode(graph,
+                    "array element from " + describeNode(n));
+                result.add(loadNode);
+                if (config.debug) System.out.println("Debug==   created LoadNode " + loadNode.getId() + " for array element from " + n.getId());
+            }
+            // Also include any InsideNodes that were stored into this array
+            for (var fieldEntry : graph.getEdges().getOrDefault(n, java.util.Map.of()).entrySet()) {
+                for (var et : fieldEntry.getValue()) {
+                    result.add(et.target());
+                }
+            }
+        }
+
+        graph.strongUpdate(lhs, result);
+        if (config.debug) System.out.println("Debug==   result: " + lhs.getName() + " -> " + nodeSetToString(result));
+    }
+
+    /** y[i] = x → treat like field store */
+    private void handleArrayStore(JArrayRef arrayRef, Value rhs, PointsToGraph graph) {
+        Local base = (Local) arrayRef.getBase();
+        Set<Node> baseNodes = graph.pointsTo(base);
+        Set<Node> rhsNodes = (rhs instanceof Local rhsLocal)
+            ? graph.pointsTo(rhsLocal) : new HashSet<>();
+
+        if (config.debug) System.out.println("Debug== array store: " + base.getName() + "[i] = " + rhs + ", base points to " + nodeSetToString(baseNodes));
+
+        for (Node baseNode : baseNodes) {
+            // Record as mutation of the array object
+            // We use null field to represent array element writes
+            graph.recordMutation(baseNode, null);
+            if (config.debug) System.out.println("Debug==   recorded mutation: (" + baseNode.getId() + ", [])");
+            // We don't add specific field edges for arrays (simplification)
+            // The mutation record is sufficient for purity checking
+        }
+    }
+
+    /** foo(args) — invoke without return value */
+    private void handleInvokeStmt(JInvokeStmt stmt, PointsToGraph graph) {
+        AbstractInvokeExpr invokeExpr = stmt.getInvokeExpr();
+        handleInvoke(invokeExpr, null, graph);
+    }
+
+    /** x = foo(args) — invoke with return value */
+    private void handleInvokeWithReturn(Local lhs, AbstractInvokeExpr invokeExpr, PointsToGraph graph) {
+        handleInvoke(invokeExpr, lhs, graph);
+    }
+
+    /**
+     * Handle a method invocation.
+     * If the method is in SafeMethods → no side effects, return treated as fresh InsideNode.
+     * Otherwise → conservatively mark as side-effecting.
+     */
+    private void handleInvoke(AbstractInvokeExpr invokeExpr, Local returnVar, PointsToGraph graph) {
+        MethodSignature methodSig = invokeExpr.getMethodSignature();
+
+        if (SafeMethods.isSafe(methodSig)) {
+            if (config.debug) System.out.println("Debug== safe method call: " + methodSig + ", no side effects");
+            // Safe method: no side effects on the graph
+            // If there's a return value of reference type, treat as fresh node
+            if (returnVar != null && returnVar.getType() instanceof ReferenceType) {
+                InsideNode freshReturn = nextInsideNode(graph,
+                    "return from " + methodSig.getName());
+                graph.strongUpdate(returnVar, Set.of(freshReturn));
+                if (config.debug) System.out.println("Debug==   return value: " + returnVar.getName() + " -> " + freshReturn.getId());
+            }
+            return;
+        }
+
+        // Inter-procedural: check summary cache for callee summary
+        if (summaryCache != null) {
+            String fullSig = methodSig.toString();
+            String subSig = methodSig.getSubSignature().toString();
+            MethodSummary calleeSummary = summaryCache.lookup(fullSig, subSig);
+            if (calleeSummary != null) {
+                if (config.debug) System.out.println("Debug== inter-procedural call: " + methodSig + " (found summary)");
+
+                // Build actual arguments list
+                List<Set<Node>> actualArgs = new ArrayList<>();
+
+                // For instance calls, receiver is arg 0
+                if (invokeExpr instanceof AbstractInstanceInvokeExpr instanceInvoke) {
+                    Local base = instanceInvoke.getBase();
+                    actualArgs.add(new HashSet<>(graph.pointsTo(base)));
+                }
+
+                // Regular arguments
+                for (Value arg : invokeExpr.getArgs()) {
+                    if (arg instanceof Local argLocal && argLocal.getType() instanceof ReferenceType) {
+                        actualArgs.add(new HashSet<>(graph.pointsTo(argLocal)));
+                    } else {
+                        // Primitive arg — add empty set as placeholder
+                        actualArgs.add(new HashSet<>());
+                    }
+                }
+
+                // Determine if callee is static
+                boolean isCalleeStatic = !(invokeExpr instanceof AbstractInstanceInvokeExpr);
+
+                // Instantiate callee summary into caller graph
+                GraphInstantiator.InstantiationResult result = GraphInstantiator.instantiate(
+                        graph,
+                        calleeSummary.getExitGraph(),
+                        calleeSummary.getReturnTargets(),
+                        calleeSummary.getExitGraph().getMutatedFields(),
+                        actualArgs,
+                        returnVar,
+                        isCalleeStatic,
+                        graph.getInsideNodeCounter(), graph.getLoadNodeCounter(),
+                        config.debug);
+
+                graph.setInsideNodeCounter(result.nextInsideCounter());
+                graph.setLoadNodeCounter(result.nextLoadCounter());
+                return;
+            }
+        }
+
+        // Unknown method: conservatively mark all reference-type arguments as globally escaped
+        // and flag the method as having unknown side effects
+        for (Value arg : invokeExpr.getArgs()) {
+            if (arg instanceof Local argLocal && argLocal.getType() instanceof ReferenceType) {
+                Set<Node> argNodes = graph.pointsTo(argLocal);
+                for (Node n : argNodes) {
+                    graph.markGlobalEscaped(n);
+                }
+            }
+        }
+
+        // If it's a virtual/interface call, the receiver is also an argument
+        if (invokeExpr instanceof AbstractInstanceInvokeExpr instanceInvoke) {
+            Local base = instanceInvoke.getBase();
+            Set<Node> baseNodes = graph.pointsTo(base);
+            for (Node n : baseNodes) {
+                graph.markGlobalEscaped(n);
+            }
+        }
+
+        if (config.debug) System.out.println("Debug== see an unknown method invocation, conservatively escaping all arguments.");
+
+        // Return value: point to GlobalNode (could be anything)
+        if (returnVar != null && returnVar.getType() instanceof ReferenceType) {
+            graph.strongUpdate(returnVar, Set.of(GlobalNode.INSTANCE));
+        }
+    }
+
+    /** return x → track return value for inter-procedural analysis */
+    private void handleReturn(JReturnStmt stmt, PointsToGraph graph) {
+        Value retVal = stmt.getOp();
+        if (retVal instanceof Local retLocal && retLocal.getType() instanceof ReferenceType) {
+            if (config.debug) System.out.println("Debug== return: " + retLocal.getName() + " -> " + nodeSetToString(graph.pointsTo(retLocal)));
+            graph.addReturnTargets(graph.pointsTo(retLocal));
+        }
+    }
+
+    // --- Helper: milestone detection for debug tracing ---
+
+    /**
+     * Returns true if this statement type is a "key milestone" that warrants
+     * a debug graph snapshot (identity, field/static/array ops, allocations, invocations).
+     */
+    public static boolean isKeyMilestone(Stmt stmt) {
+        if (stmt instanceof JIdentityStmt) return true;
+        if (stmt instanceof JInvokeStmt) return true;
+        if (stmt instanceof JAssignStmt assignStmt) {
+            Value lhs = assignStmt.getLeftOp();
+            Value rhs = assignStmt.getRightOp();
+            // Field/static/array stores
+            if (lhs instanceof JInstanceFieldRef) return true;
+            if (lhs instanceof JStaticFieldRef) return true;
+            if (lhs instanceof JArrayRef) return true;
+            // Allocations, field/static/array loads, invocations
+            if (rhs instanceof JNewExpr) return true;
+            if (rhs instanceof JNewArrayExpr) return true;
+            if (rhs instanceof JInstanceFieldRef) return true;
+            if (rhs instanceof JStaticFieldRef) return true;
+            if (rhs instanceof JArrayRef) return true;
+            if (rhs instanceof AbstractInvokeExpr) return true;
+        }
+        return false;
+    }
+
+    // --- Helper: check if a node could be a prestate node ---
+
+    /**
+     * A node is "prestate reachable" if it is:
+     * - A ParameterNode
+     * - A LoadNode (created from reading an escaped object's field)
+     * - GlobalNode
+     */
+    private boolean isPrestateReachable(Node n) {
+        return n instanceof ParameterNode
+            || n instanceof LoadNode
+            || n instanceof GlobalNode;
+    }
+
+    /** Return a human-readable description for a node (label if available, otherwise ID) */
+    private static String describeNode(Node n) {
+        if (n instanceof ParameterNode pn) {
+            String label = pn.getLabel();
+            return label.contains("parameter") ? label : "parameter " + label;
+        }
+        if (n instanceof LoadNode ln) return ln.getLabel();
+        return n.getId();
+    }
+
+    /** Format a set of nodes as a readable string for debug output */
+    private static String nodeSetToString(Set<Node> nodes) {
+        List<String> ids = nodes.stream().map(Node::getId).sorted().toList();
+        return "{" + String.join(", ", ids) + "}";
+    }
+}

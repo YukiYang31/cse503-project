@@ -38,11 +38,11 @@ Constructors have a special rule: direct field writes to `this` (`this.f = x`) a
 
 | Package | Role |
 |---|---|
-| `edu.uw.cse.purity` | CLI entry point, configuration, source compilation, analysis orchestration |
-| `edu.uw.cse.purity.graph` | Points-to graph data structures: nodes, edges, the graph itself |
-| `edu.uw.cse.purity.analysis` | Dataflow analysis engine: flow analysis, transfer functions, purity checking, inter-procedural summary instantiation |
-| `edu.uw.cse.purity.output` | Result formatting: text verdicts, DOT graph output, and HTML debug traces |
-| `edu.uw.cse.purity.util` | Utilities: node merging optimization, safe method whitelist |
+| `edu.uw.cse.sideeffect` | CLI entry point, configuration, source compilation, analysis orchestration |
+| `edu.uw.cse.sideeffect.graph` | Points-to graph data structures: nodes, edges, the graph itself |
+| `edu.uw.cse.sideeffect.analysis` | Dataflow analysis engine: flow analysis, transfer functions, side-effect checking, inter-procedural summary instantiation |
+| `edu.uw.cse.sideeffect.output` | Result formatting: text verdicts, DOT graph output, and HTML debug traces |
+| `edu.uw.cse.sideeffect.util` | Utilities: node merging optimization, safe method whitelist |
 
 ### Key Files
 
@@ -52,7 +52,7 @@ Constructors have a special rule: direct field writes to `this` (`this.f = x`) a
 - **`PointsToGraph.java`** — Core data structure: variable-to-node mappings, heap edges, mutation tracking, global escape tracking
 - **`TransferFunctions.java`** — Maps each Jimple statement type to a graph operation; looks up callee summaries from `SummaryCache` for inter-procedural calls
 - **`SideEffectFlowAnalysis.java`** — Forward dataflow analysis extending SootUp's `ForwardFlowAnalysis`
-- **`SideEffectChecker.java`** — Validates graph invariants, then determines purity from the exit graph: checks prestate mutations and global escape
+- **`SideEffectChecker.java`** — Validates graph invariants, then determines side-effectness from the exit graph: checks prestate mutations and global escape
 - **`GraphInstantiator.java`** — Section 5.3 of Salcianu & Rinard: instantiates callee summaries at call sites by computing a node mapping (mu), combining graphs, removing captured load nodes, and propagating mutations
 - **`SummaryCache.java`** — Stores method summaries keyed by full signature and sub-signature (for virtual/interface dispatch resolution)
 - **`CallGraphBuilder.java`** — Builds an intra-file call graph and computes bottom-up analysis order using Tarjan's SCC algorithm
@@ -91,7 +91,7 @@ The constructor exception is precise: only direct `this.f = x` writes (where `th
 
 ### Graph Invariant Validation
 
-Before checking purity, the exit graph is validated against two structural invariants from the Salcianu & Rinard (2005) model:
+Before checking side-effects, the exit graph is validated against two structural invariants from the Salcianu & Rinard (2005) model:
 
 1. **Rule 1**: An `InsideNode` cannot be the source of an `OUTSIDE` edge. Inside nodes represent objects allocated within the method — they have no pre-existing heap to read from.
 2. **Rule 2**: An `OUTSIDE` edge cannot lead to an `InsideNode`. Outside edges represent reads from the pre-existing heap, which cannot contain freshly allocated objects.
@@ -100,7 +100,7 @@ If either rule is violated, the tool prints the violations in **red** (ANSI esca
 
 ### Static Field Writes = Side-Effecting
 
-When a static field is written, the analysis records a mutation on `GlobalNode` with the written field. Since `GlobalNode` is always in the globally escaped set B, any prestate node stored into a static field will appear in B, and the mutation record `⟨GlobalNode, field⟩` in set W triggers a side-effecting verdict during the standard graph-based purity check.
+When a static field is written, the analysis records a mutation on `GlobalNode` with the written field. Since `GlobalNode` is always in the globally escaped set B, any prestate node stored into a static field will appear in B, and the mutation record `⟨GlobalNode, field⟩` in set W triggers a side-effecting verdict during the standard graph-based side-effect check.
 
 ### Strong vs Weak Updates
 
@@ -109,12 +109,12 @@ When a static field is written, the analysis records a mutation on `GlobalNode` 
 
 ### Node Merging (Optional)
 
-The Madhavan et al. (2011) optimization enforces that for any `(node, field, edgeType)` triple, at most one target node exists. When a second target would be added, the two targets are merged (one becomes representative, edges are redirected). This bounds graph size without losing precision for purity analysis.
+The Madhavan et al. (2011) optimization enforces that for any `(node, field, edgeType)` triple, at most one target node exists. When a second target would be added, the two targets are merged (one becomes representative, edges are redirected). This bounds graph size without losing precision for side-effect analysis.
 
 Node merging is applied in three places:
 1. After field-load transfer functions
 2. At CFG join points (inside `merge()`)
-3. At method exit before purity checking
+3. At method exit before side-effect checking
 
 Node merging is disabled by default (showing the 2005-style graphs). Enable with `--merge`.
 
@@ -223,7 +223,7 @@ timer.startTotal()                     ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ �
                             │        ▼                  (per-method)   │     │
                             │  ┌────────────────────────────────────┐  │     │
                             │  │  SideEffectChecker.check(...)     │  │     │
-                            │  │  purityNs = elapsed                │  │     │
+                            │  │  sideeffectNs = elapsed                │  │     │
                             │  └────────────────────────────────────┘  │     │
                             │        │              ◀── ⏱ Purity       │     │
                             │        ▼                  (per-method)   │     │
@@ -245,8 +245,7 @@ timer.printReport()
 timer.saveJson()
 ```
 
-The five timed phases (Compilation → IR Loading → Call Graph → Dataflow → Purity) account for the
-vast majority of wall-clock time. Small gaps between phases (source file reading, result printing,
+The five timed phases (Compilation → IR Loading → Call Graph → Dataflow → Side-effect) account for the vast majority of wall-clock time. Small gaps between phases (source file reading, result printing,
 loop overhead) are not individually timed.
 
 ## Understanding the Output
@@ -263,7 +262,7 @@ If a graph invariant violation is detected, the verdict is printed in red instea
 ```
 BuggyMethod.foo()  : GRAPH VIOLATION  (Rule 1 violated: InsideNode I0 has outside edge --f--> L0)
 ```
-This indicates a bug in graph construction rather than a purity property of the method.
+This indicates a bug in graph construction rather than a side-effect property of the method.
 
 ### Graph Text Summary
 When `--show-graph` is used, each method's exit graph is presented as **G = ⟨I, O, L, E⟩** per the paper's formal definition:
@@ -272,7 +271,7 @@ When `--show-graph` is used, each method's exit graph is presented as **G = ⟨I
 - **O (Outside Edges)** — heap references read from pre-existing objects
 - **L (Local Variables)** — which local variables point to which nodes
 - **E (Globally Escaped)** — nodes whose address is stored in static fields
-- **W (Mutated Fields)** — which (node, field) pairs were written to (purity analysis supplement)
+- **W (Mutated Fields)** — which (node, field) pairs were written to 
 
 ### DOT Graph Color Scheme
 - **Green box** (InsideNode): Newly allocated object — mutations are safe
@@ -306,7 +305,7 @@ When `--debug` is used, the tool writes one self-contained HTML file per method 
 
 This gives a complete view of the compilation pipeline: **Java source → JVM bytecode → Jimple IR → analysis**.
 
-Graphs are rendered in the browser using [viz.js](https://github.com/nicknisi/viz.js) (Graphviz compiled to JavaScript) loaded from a CDN — no Graphviz installation required. The same DOT color scheme described above applies: green boxes for inside nodes, blue ellipses for parameter nodes, red diamonds for load nodes, and red borders for impurity sources.
+Graphs are rendered in the browser using [viz.js](https://github.com/nicknisi/viz.js) (Graphviz compiled to JavaScript) loaded from a CDN — no Graphviz installation required. The same DOT color scheme described above applies: green boxes for inside nodes, blue ellipses for parameter nodes, red diamonds for load nodes, and red borders for side-effecting sources.
 
 `--debug` automatically implies `--show-graph`, so DOT files and text summaries are also generated alongside the HTML traces.
 
@@ -348,7 +347,7 @@ For methods that do not involve inter-procedural calls, our tool's exit graphs m
 | `ListItr.next` | Fig 3.f: outside `P10→L3→L4,L5`; inside `P10→L5` | outside `P0→L0→L1,L2`; inside `P0→L2` | Yes |
 | `Point.flip` | `W = {(P1,x), (P1,y)}` | `W = {(P0,x), (P0,y)}` | Yes |
 
-### Purity Verdict Comparison
+### Side-effect Verdict Comparison
 
 | Method | Paper (inter-procedural) | Our Tool | Notes |
 |---|---|---|---|

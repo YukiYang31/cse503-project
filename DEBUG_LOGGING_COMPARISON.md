@@ -33,7 +33,7 @@ SLF4J 2.0.5 comes transitively from SootUp. That's what produces the `SLF4J: No 
 
 1. **Academic project, not production.** `if (debug) println(...)` is instantly readable — zero config, zero learning curve.
 
-2. **Single on/off is the right granularity.** The `--debug` flag produces a full trace. There's no current use case for "show me only purity checker messages but not transfer functions."
+2. **Single on/off is the right granularity.** The `--debug` flag produces a full trace. There's no current use case for "show me only side-effect checker messages but not transfer functions."
 
 3. **SootUp would pollute the output.** Enabling a logging backend means SootUp's own internal debug messages appear too. Suppressing them requires per-package filtering config — added complexity for no benefit.
 
