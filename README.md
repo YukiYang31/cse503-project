@@ -223,12 +223,12 @@ timer.startTotal()                     ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ �
                             │        ▼                  (per-method)   │     │
                             │  ┌────────────────────────────────────┐  │     │
                             │  │  SideEffectChecker.check(...)     │  │     │
-                            │  │  sideeffectNs = elapsed                │  │     │
+                            │  │  sideEffectNs = elapsed                │  │     │
                             │  └────────────────────────────────────┘  │     │
-                            │        │              ◀── ⏱ Purity       │     │
+                            │        │              ◀── ⏱ Side-effect       │     │
                             │        ▼                  (per-method)   │     │
                             │  timer.addMethodTiming(...)              │     │
-                            │  (accumulates into dataflow/purity       │     │
+                            │  (accumulates into dataflow/side-effect       │     │
                             │   totals)                                │     │
                             └──────────────────────────────────────────┘     │
                                   │                                          │
@@ -253,7 +253,7 @@ loop overhead) are not individually timed.
 ### Side-Effect Analysis Verdicts
 ```
 === Side-Effect Analysis Results ===
-SideEffectFreeMethods.add(int,int)        : SIDE_EFFECT_FREE
+SideEffectFreeMethods.add(int,int)     : SIDE_EFFECT_FREE
 SideEffectingMethods.setX(Point,int)   : SIDE_EFFECTING  (mutates Point parameter via field x)
 SideEffectingMethods.increment()       : SIDE_EFFECTING  (writes to static field counter)
 ```

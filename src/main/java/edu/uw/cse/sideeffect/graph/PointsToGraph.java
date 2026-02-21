@@ -6,7 +6,7 @@ import sootup.core.signatures.FieldSignature;
 import java.util.*;
 
 /**
- * The core data structure for the purity analysis.
+ * The core data structure for the side-effect analysis.
  * Represents a points-to graph G = ⟨I, O, L, E⟩ per Salcianu &amp; Rinard (2005):
  * <ul>
  *   <li><b>I</b> (inside edges) — heap references created by writes ({@link EdgeType#INSIDE} entries in {@link #edges})</li>
@@ -15,7 +15,7 @@ import java.util.*;
  *   <li><b>E</b> (globally escaped) — nodes whose address is stored in static fields ({@link #globalEscaped})</li>
  * </ul>
  *
- * Additional field not in the formal G tuple but needed for purity analysis:
+ * Additional field not in the formal G tuple but needed for side-effect analysis:
  * <ul>
  *   <li><b>W</b> (mutated fields) — tracked in {@link #mutatedFields}</li>
  * </ul>

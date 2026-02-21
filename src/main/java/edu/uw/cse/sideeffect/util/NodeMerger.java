@@ -13,7 +13,7 @@ import java.util.*;
  * target node. If adding N -[f,type]-> B when N -[f,type]-> A already exists,
  * merge A and B into a single representative node.
  *
- * This bounds graph size and ensures termination while preserving purity results.
+ * This bounds graph size and ensures termination while preserving side-effect results.
  */
 public class NodeMerger {
 

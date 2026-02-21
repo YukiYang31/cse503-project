@@ -3,7 +3,7 @@ package edu.uw.cse.sideeffect.graph;
 /**
  * Represents an object passed as a parameter to the analyzed method.
  * For instance methods, index 0 is 'this'.
- * These are prestate nodes — mutations to them indicate impurity.
+ * These are prestate nodes — mutations to them indicate side-effecting.
  */
 public class ParameterNode extends Node {
     private final int paramIndex;

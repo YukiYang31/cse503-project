@@ -8,9 +8,9 @@ import sootup.core.signatures.FieldSignature;
 import java.util.*;
 
 /**
- * Determines method purity from the exit PointsToGraph.
+ * Determines method side-effects from the exit PointsToGraph.
  *
- * Algorithm (Sălcianu &amp; Rinard 2005):
+ * Algorithm (Sălcianu &amp; Rinards 2005):
  * 1. Compute set A = prestate nodes (BFS from ParameterNodes via OutsideEdges)
  * 2. Compute set B = globally escaped closure (BFS from E ∪ {nGBL} via all edges)
  * 3. Compute set W = mutated fields
@@ -22,11 +22,11 @@ import java.util.*;
 public class SideEffectChecker {
 
     /**
-     * Check purity of a method given its exit graph.
+     * Check side-effect of a method given its exit graph.
      *
      * @param exitGraph the points-to graph at method exit
      * @param isConstructor true if the method is a constructor (<init>)
-     * @return a MethodSummary with the purity result and reason
+     * @return a MethodSummary with the side-effect result and reason
      */
     public static MethodSummary check(String methodSig, PointsToGraph exitGraph,
                                        boolean isConstructor) {
@@ -38,9 +38,9 @@ public class SideEffectChecker {
         // Step 0: Validate graph invariants
         List<String> violations = exitGraph.validateInvariants();
         if (!violations.isEmpty()) {
-            if (debug) System.out.println("Debug== [purity] graph invariant violation: " + String.join("; ", violations));
+            if (debug) System.out.println("Debug== [side-effect] graph invariant violation: " + String.join("; ", violations));
             return new MethodSummary(methodSig, exitGraph,
-                MethodSummary.PurityResult.GRAPH_VIOLATION,
+                MethodSummary.SideEffectResult.GRAPH_VIOLATION,
                 String.join("; ", violations));
         }
 
@@ -57,26 +57,26 @@ public class SideEffectChecker {
         for (MutatedField mf : setW) {
             if (mf.node() instanceof GlobalNode) {
                 String fieldName = mf.field() != null ? mf.field().getName() : "unknown";
-                if (debug) System.out.println("Debug== [purity] GlobalNode mutation in W => SIDE_EFFECTING (writes to static field " + fieldName + ")");
+                if (debug) System.out.println("Debug== [side-effect] GlobalNode mutation in W => SIDE_EFFECTING (writes to static field " + fieldName + ")");
                 return new MethodSummary(methodSig, exitGraph,
-                    MethodSummary.PurityResult.SIDE_EFFECTING,
+                    MethodSummary.SideEffectResult.SIDE_EFFECTING,
                     "writes to static field " + fieldName);
             }
         }
 
         if (debug) {
-            System.out.println("Debug== [purity] set A (prestate nodes): " + nodeSetStr(setA));
-            System.out.println("Debug== [purity] set B (globally escaped): " + nodeSetStr(setB));
-            System.out.println("Debug== [purity] set W (mutated fields): " + mutatedFieldsStr(setW));
+            System.out.println("Debug== [side-effect] set A (prestate nodes): " + nodeSetStr(setA));
+            System.out.println("Debug== [side-effect] set B (globally escaped): " + nodeSetStr(setB));
+            System.out.println("Debug== [side-effect] set W (mutated fields): " + mutatedFieldsStr(setW));
         }
 
         // Step 4: For each n ∈ A, check (a) n ∉ B and (b) no ⟨n,f⟩ ∈ W
         for (Node n : setA) {
             // Check (a): n ∉ B
             if (setB.contains(n)) {
-                if (debug) System.out.println("Debug== [purity] prestate node " + n.getId() + " ∈ set B (globally escaped) => SIDE_EFFECTING");
+                if (debug) System.out.println("Debug== [side-effect] prestate node " + n.getId() + " ∈ set B (globally escaped) => SIDE_EFFECTING");
                 return new MethodSummary(methodSig, exitGraph,
-                    MethodSummary.PurityResult.SIDE_EFFECTING,
+                    MethodSummary.SideEffectResult.SIDE_EFFECTING,
                     describeNode(n) + " escapes to global scope");
             }
 
@@ -86,23 +86,23 @@ public class SideEffectChecker {
                     // Constructor exception: allow direct writes to this.f (P0)
                     if (isConstructor && n instanceof ParameterNode pn
                         && pn.getParamIndex() == 0) {
-                        if (debug) System.out.println("Debug== [purity] constructor exception: allowing mutation of P0");
+                        if (debug) System.out.println("Debug== [side-effect] constructor exception: allowing mutation of P0");
                         continue;
                     }
 
                     String fieldName = mf.field() != null ? mf.field().getName() : "array element";
-                    if (debug) System.out.println("Debug== [purity] prestate node " + n.getId() + " mutated via " + fieldName + " => SIDE_EFFECTING");
+                    if (debug) System.out.println("Debug== [side-effect] prestate node " + n.getId() + " mutated via " + fieldName + " => SIDE_EFFECTING");
                     return new MethodSummary(methodSig, exitGraph,
-                        MethodSummary.PurityResult.SIDE_EFFECTING,
+                        MethodSummary.SideEffectResult.SIDE_EFFECTING,
                         "mutates " + describeNode(n) + " via field " + fieldName);
                 }
             }
         }
 
         // Step 5: SIDE_EFFECT_FREE
-        if (debug) System.out.println("Debug== [purity] no prestate mutations, no global escape => SIDE_EFFECT_FREE");
+        if (debug) System.out.println("Debug== [side-effect] no prestate mutations, no global escape => SIDE_EFFECT_FREE");
         return new MethodSummary(methodSig, exitGraph,
-            MethodSummary.PurityResult.SIDE_EFFECT_FREE, null);
+            MethodSummary.SideEffectResult.SIDE_EFFECT_FREE, null);
     }
 
     /**
@@ -119,7 +119,7 @@ public class SideEffectChecker {
      * reachable from them via OutsideEdges (BFS).
      *
      * Prestate nodes represent objects that existed before the method was called.
-     * Mutations to these nodes indicate impurity.
+     * Mutations to these nodes indicate side-effecting.
      */
     public static Set<Node> computePrestateNodes(PointsToGraph graph) {
         Set<Node> prestate = new HashSet<>();

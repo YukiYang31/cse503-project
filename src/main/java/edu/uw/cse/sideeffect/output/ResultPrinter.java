@@ -5,7 +5,7 @@ import java.util.List;
 
 
 /**
- * Formats and prints purity verdicts to stdout.
+ * Formats and prints side-effect verdicts to stdout.
  */
 public class ResultPrinter {
 

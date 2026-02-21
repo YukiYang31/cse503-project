@@ -128,7 +128,7 @@ public class TransferFunctions {
             graph.strongUpdate(local, Set.of(new ParameterNode(nodeIndex, label)));
             if (config.debug) System.out.println("Debug== @parameter[" + paramIndex + "]: " + local.getName() + " -> P" + nodeIndex);
         }
-        // Skip JCaughtExceptionRef — not relevant for purity
+        // Skip JCaughtExceptionRef — not relevant for side-effect analysis
     }
 
     // --- JAssignStmt dispatching ---
@@ -423,7 +423,7 @@ public class TransferFunctions {
             graph.recordMutation(baseNode, null);
             if (config.debug) System.out.println("Debug==   recorded mutation: (" + baseNode.getId() + ", [])");
             // We don't add specific field edges for arrays (simplification)
-            // The mutation record is sufficient for purity checking
+            // The mutation record is sufficient for side-effect checking
         }
     }
 

@@ -37,8 +37,8 @@ public class DebugHtmlWriter implements Closeable {
     private String prestateNodesText;
     private String globallyEscapedNodesText;
     private String mutatedFieldsText;
-    private String purityResult;
-    private String purityReason;
+    private String sideEffectResult;
+    private String sideEffectReason;
     private String callGraphDot;   // DOT source for the dependency graph
 
     private DebugHtmlWriter(String methodSig, Path outputPath) {
@@ -168,9 +168,9 @@ public class DebugHtmlWriter implements Closeable {
         this.mutatedFieldsText = formatMutatedFields(mutations);
     }
 
-    public void setPurityResult(String result, String reason) {
-        this.purityResult = result;
-        this.purityReason = reason;
+    public void setSideEffectResult(String result, String reason) {
+        this.sideEffectResult = result;
+        this.sideEffectReason = reason;
     }
 
     /**
@@ -403,10 +403,10 @@ public class DebugHtmlWriter implements Closeable {
 
         // Side-Effect Analysis Result
         out.println("<h2>Side-Effect Analysis Result</h2>");
-        String resultClass = "SIDE_EFFECT_FREE".equals(purityResult) ? "side-effect-free" : "side-effecting";
-        String resultText = purityResult != null ? purityResult : "UNKNOWN";
-        if (purityReason != null) {
-            resultText += " (" + purityReason + ")";
+        String resultClass = "SIDE_EFFECT_FREE".equals(sideEffectResult) ? "side-effect-free" : "side-effecting";
+        String resultText = sideEffectResult != null ? sideEffectResult : "UNKNOWN";
+        if (sideEffectReason != null) {
+            resultText += " (" + sideEffectReason + ")";
         }
         out.println("<p class=\"verdict " + resultClass + "\">" + escapeHtml(resultText) + "</p>");
 

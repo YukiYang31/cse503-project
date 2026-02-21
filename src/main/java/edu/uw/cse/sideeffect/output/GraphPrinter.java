@@ -87,8 +87,8 @@ public class GraphPrinter {
         System.out.println("E (Globally Escaped): {" + String.join(", ", escapedIds) + "}");
         System.out.println();
 
-        // --- Purity Analysis ---
-        System.out.println("--- Purity Analysis ---");
+        // ---  Side-Effect Analysis ---
+        System.out.println("--- Side-Effect Analysis ---");
 
         // W (Mutated Fields)
         Set<MutatedField> mutations = graph.getMutatedFields();

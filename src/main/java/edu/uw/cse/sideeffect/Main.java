@@ -7,7 +7,7 @@ import java.util.List;
 
 
 /**
- * CLI entry point for the purity analysis tool.
+ * CLI entry point for the side-effect analysis tool.
  *
  * Usage:
  *   ./gradlew run --args="MyFile.java [--show-graph] [--no-merge] [--method <name>] [--timing]"
@@ -77,7 +77,7 @@ public class Main {
             timer.recordCompilation(compileNs);
             System.out.println("Compiled to: " + classDir);
 
-            // Step 2: Run purity analysis via SootUp
+            // Step 2: Run side-effect analysis via SootUp
             List<Path> sourcePaths = sourceFiles.stream().map(Path::of).toList();
             SideEffectAnalysisRunner runner = new SideEffectAnalysisRunner(config, classDir, sourcePaths, timer);
             runner.run();
@@ -94,7 +94,7 @@ public class Main {
     }
 
     private static void printUsage() {
-        System.out.println("Java Purity Analysis Tool");
+        System.out.println("Java Side-Effect Analysis Tool");
         System.out.println();
         System.out.println("Usage: ./gradlew run --args=\"<file.java> [options]\"");
         System.out.println();

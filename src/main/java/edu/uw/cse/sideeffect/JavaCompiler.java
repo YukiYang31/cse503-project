@@ -32,7 +32,7 @@ public class JavaCompiler {
                 "No Java compiler available. Ensure you are running with a JDK (not a JRE).");
         }
 
-        Path outputDir = Files.createTempDirectory("purity-analysis-classes");
+        Path outputDir = Files.createTempDirectory("side-effect-analysis-classes");
 
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
         try (StandardJavaFileManager fileManager =

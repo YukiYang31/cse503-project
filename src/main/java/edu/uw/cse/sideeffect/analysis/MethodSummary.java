@@ -7,12 +7,12 @@ import java.util.Set;
 
 /**
  * Stores the analysis result for a single method.
- * Contains the exit PointsToGraph, the purity verdict, and return targets
+ * Contains the exit PointsToGraph, the side-effect verdict, and return targets
  * for inter-procedural summary instantiation.
  */
 public class MethodSummary {
 
-    public enum PurityResult {
+    public enum SideEffectResult {
         SIDE_EFFECT_FREE,
         SIDE_EFFECTING,
         GRAPH_VIOLATION
@@ -20,12 +20,12 @@ public class MethodSummary {
 
     private final String methodSignature;
     private final PointsToGraph exitGraph;
-    private final PurityResult result;
+    private final SideEffectResult result;
     private final String reason; // null if SIDE_EFFECT_FREE
     private final Set<Node> returnTargets;
 
     public MethodSummary(String methodSignature, PointsToGraph exitGraph,
-                         PurityResult result, String reason, Set<Node> returnTargets) {
+                         SideEffectResult result, String reason, Set<Node> returnTargets) {
         this.methodSignature = methodSignature;
         this.exitGraph = exitGraph;
         this.result = result;
@@ -34,7 +34,7 @@ public class MethodSummary {
     }
 
     public MethodSummary(String methodSignature, PointsToGraph exitGraph,
-                         PurityResult result, String reason) {
+                         SideEffectResult result, String reason) {
         this(methodSignature, exitGraph, result, reason, Set.of());
     }
 
@@ -46,7 +46,7 @@ public class MethodSummary {
         return exitGraph;
     }
 
-    public PurityResult getResult() {
+    public SideEffectResult getResult() {
         return result;
     }
 

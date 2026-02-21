@@ -42,7 +42,7 @@ import java.util.Set;
 
 /**
  * Loads compiled classes via SootUp's JavaView, iterates methods,
- * and runs the purity analysis on each.
+ * and runs the side-effect analysis on each.
  */
 public class SideEffectAnalysisRunner {
 
@@ -236,27 +236,26 @@ public class SideEffectAnalysisRunner {
                 long dataflowNs = 0;
                 if (config.timing) dataflowNs = System.nanoTime() - dataflowStart;
 
-                // --- Purity check timing ---
-                long purityStart = 0;
-                if (config.timing) purityStart = System.nanoTime();
+                // --- side-effect check timing ---
+                long sideEffectStart = 0;
+                if (config.timing) sideEffectStart = System.nanoTime();
 
-                // Check purity (include return targets for inter-procedural summaries)
+                // Check side-effect (include return targets for inter-procedural summaries)
                 boolean isConstructor = "<init>".equals(method.getName());
-                MethodSummary purityResult = SideEffectChecker.check(sig, exitGraph, isConstructor, config.debug);
+                MethodSummary sideEffectResult = SideEffectChecker.check(sig, exitGraph, isConstructor, config.debug);
                 MethodSummary summary = new MethodSummary(sig, exitGraph,
-                        purityResult.getResult(), purityResult.getReason(),
+                        sideEffectResult.getResult(), sideEffectResult.getReason(),
                         exitGraph.getReturnTargets());
 
-                long purityNs = 0;
-                if (config.timing) purityNs = System.nanoTime() - purityStart;
-
+                long sideEffectNs = 0;
+                if (config.timing) sideEffectNs = System.nanoTime() - sideEffectStart;
                 // --- Record timing data ---
                 if (config.timing) {
                     int stmtCount = cfg.getStmts().size();
                     int nodeCount = exitGraph.getAllNodes().size();
                     int edgeCount = countEdges(exitGraph);
                     timer.addMethodTiming(new TimingRecorder.MethodTiming(
-                            sig, dataflowNs, purityNs, stmtCount, nodeCount, edgeCount));
+                            sig, dataflowNs, sideEffectNs, stmtCount, nodeCount, edgeCount));
                 }
 
                 // Write debug output
@@ -269,7 +268,7 @@ public class SideEffectAnalysisRunner {
                     debugWriter.setPrestateNodes(SideEffectChecker.computePrestateNodes(exitGraph));
                     debugWriter.setGloballyEscapedNodes(SideEffectChecker.computeGloballyEscapedNodes(exitGraph));
                     debugWriter.setMutatedFields(exitGraph.getMutatedFields());
-                    debugWriter.setPurityResult(
+                    debugWriter.setSideEffectResult(
                         summary.getResult().name(), summary.getReason());
                 }
 

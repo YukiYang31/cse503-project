@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Records timing data for each phase of the purity analysis pipeline.
+ * Records timing data for each phase of the side-effect analysis pipeline.
  * Uses the Null Object pattern: {@link #NOOP} is a zero-cost singleton
  * whose methods are all empty (no {@code System.nanoTime()}, no allocations).
  */
@@ -22,24 +22,24 @@ public class TimingRecorder {
     public static class MethodTiming {
         public final String methodSignature;
         public final long dataflowNs;
-        public final long purityCheckNs;
+        public final long sideEffectNs;
         public final int jimpleStmtCount;
         public final int exitGraphNodes;
         public final int exitGraphEdges;
 
-        public MethodTiming(String methodSignature, long dataflowNs, long purityCheckNs,
+        public MethodTiming(String methodSignature, long dataflowNs, long sideEffectNs,
                             int jimpleStmtCount, int exitGraphNodes, int exitGraphEdges) {
             this.methodSignature = methodSignature;
             this.dataflowNs = dataflowNs;
-            this.purityCheckNs = purityCheckNs;
+            this.sideEffectNs = sideEffectNs;
             this.jimpleStmtCount = jimpleStmtCount;
             this.exitGraphNodes = exitGraphNodes;
             this.exitGraphEdges = exitGraphEdges;
         }
 
         public double dataflowMs() { return dataflowNs / 1_000_000.0; }
-        public double purityCheckMs() { return purityCheckNs / 1_000_000.0; }
-        public double totalMs() { return (dataflowNs + purityCheckNs) / 1_000_000.0; }
+        public double sideEffectMs() { return sideEffectNs / 1_000_000.0; }
+        public double totalMs() { return (dataflowNs + sideEffectNs) / 1_000_000.0; }
     }
 
     // Phase-level timings (nanoseconds)
@@ -49,10 +49,10 @@ public class TimingRecorder {
     private long irLoadingNs;
     private long callGraphNs;
 
-    // Per-method data (also used to accumulate dataflow/purity totals)
+    // Per-method data (also used to accumulate dataflow/side-effect totals)
     private final List<MethodTiming> methods = new ArrayList<>();
     private long dataflowTotalNs;
-    private long purityCheckTotalNs;
+    private long sideEffectTotalNs;
 
     // Metadata
     private List<String> sourceFiles = List.of();
@@ -80,7 +80,7 @@ public class TimingRecorder {
     public void addMethodTiming(MethodTiming mt) {
         methods.add(mt);
         dataflowTotalNs += mt.dataflowNs;
-        purityCheckTotalNs += mt.purityCheckNs;
+        sideEffectTotalNs += mt.sideEffectNs;
     }
 
     public void setSourceFiles(List<String> sourceFiles) {
@@ -114,9 +114,9 @@ public class TimingRecorder {
                 ms(callGraphNs), pct(callGraphNs, totalNs));
         System.out.printf("  Dataflow analysis (total):   %8.1f ms  (%s)%n",
                 ms(dataflowTotalNs), pct(dataflowTotalNs, totalNs));
-        System.out.printf("  Purity checking (total):     %8.1f ms  (%s)%n",
-                ms(purityCheckTotalNs), pct(purityCheckTotalNs, totalNs));
-        long accountedNs = compilationNs + irLoadingNs + callGraphNs + dataflowTotalNs + purityCheckTotalNs;
+        System.out.printf("  Side-effect checking (total): %8.1f ms  (%s)%n",
+                ms(sideEffectTotalNs), pct(sideEffectTotalNs, totalNs));
+        long accountedNs = compilationNs + irLoadingNs + callGraphNs + dataflowTotalNs + sideEffectTotalNs;
         long overheadNs = totalNs - accountedNs;
         System.out.printf("  Other / overhead:            %8.1f ms  (%s)%n",
                 ms(overheadNs), pct(overheadNs, totalNs));
@@ -139,11 +139,11 @@ public class TimingRecorder {
             String sepMethod = "-".repeat(sigWidth);
             String sep = "  " + sepMethod + "-+-------------+-------------+-------------+-------+------------";
 
-            System.out.printf(headerFmt, "Method", "Dataflow", "Purity", "Total", "Stmts", "Graph (N+E)");
+            System.out.printf(headerFmt, "Method", "Dataflow", "Side-effect", "Total", "Stmts", "Graph (N+E)");
             System.out.println(sep);
             for (MethodTiming mt : methods) {
                 System.out.printf(rowFmt, mt.methodSignature,
-                        mt.dataflowMs(), mt.purityCheckMs(), mt.totalMs(),
+                        mt.dataflowMs(), mt.sideEffectMs(), mt.totalMs(),
                         mt.jimpleStmtCount, mt.exitGraphNodes, mt.exitGraphEdges);
             }
         }
@@ -152,7 +152,7 @@ public class TimingRecorder {
         int methodCount = methods.size();
         int totalStmts = methods.stream().mapToInt(m -> m.jimpleStmtCount).sum();
         double avgMs = methodCount > 0
-                ? ms(dataflowTotalNs + purityCheckTotalNs) / methodCount
+                ? ms(dataflowTotalNs + sideEffectTotalNs) / methodCount
                 : 0.0;
 
         System.out.println();
@@ -194,8 +194,8 @@ public class TimingRecorder {
             sb.append("    \"irLoadingMs\": ").append(roundMs(irLoadingNs)).append(",\n");
             sb.append("    \"callGraphMs\": ").append(roundMs(callGraphNs)).append(",\n");
             sb.append("    \"dataflowTotalMs\": ").append(roundMs(dataflowTotalNs)).append(",\n");
-            sb.append("    \"purityCheckTotalMs\": ").append(roundMs(purityCheckTotalNs)).append(",\n");
-            long accountedNs = compilationNs + irLoadingNs + callGraphNs + dataflowTotalNs + purityCheckTotalNs;
+            sb.append("    \"sideEffectTotalMs\": ").append(roundMs(sideEffectTotalNs)).append(",\n");
+            long accountedNs = compilationNs + irLoadingNs + callGraphNs + dataflowTotalNs + sideEffectTotalNs;
             long overheadNs = totalNs - accountedNs;
             sb.append("    \"overheadMs\": ").append(roundMs(overheadNs)).append("\n");
             sb.append("  },\n");
@@ -207,8 +207,8 @@ public class TimingRecorder {
                 sb.append("    {\n");
                 sb.append("      \"signature\": \"").append(escapeJson(mt.methodSignature)).append("\",\n");
                 sb.append("      \"dataflowMs\": ").append(roundMs(mt.dataflowNs)).append(",\n");
-                sb.append("      \"purityCheckMs\": ").append(roundMs(mt.purityCheckNs)).append(",\n");
-                sb.append("      \"totalMs\": ").append(roundMs(mt.dataflowNs + mt.purityCheckNs)).append(",\n");
+                sb.append("      \"sideEffectMs\": ").append(roundMs(mt.sideEffectNs)).append(",\n");
+                sb.append("      \"totalMs\": ").append(roundMs(mt.dataflowNs + mt.sideEffectNs)).append(",\n");
                 sb.append("      \"jimpleStmtCount\": ").append(mt.jimpleStmtCount).append(",\n");
                 sb.append("      \"graphNodes\": ").append(mt.exitGraphNodes).append(",\n");
                 sb.append("      \"graphEdges\": ").append(mt.exitGraphEdges).append("\n");
@@ -222,7 +222,7 @@ public class TimingRecorder {
             int methodCount = methods.size();
             int totalStmts = methods.stream().mapToInt(m -> m.jimpleStmtCount).sum();
             double avgMs = methodCount > 0
-                    ? ms(dataflowTotalNs + purityCheckTotalNs) / methodCount
+                    ? ms(dataflowTotalNs + sideEffectTotalNs) / methodCount
                     : 0.0;
 
             sb.append("  \"statistics\": {\n");
