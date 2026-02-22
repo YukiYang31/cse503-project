@@ -513,7 +513,8 @@ public class TransferFunctions {
                         returnVar,
                         isCalleeStatic,
                         graph.getInsideNodeCounter(), graph.getLoadNodeCounter(),
-                        config.debug);
+                        config.debug,
+                        debugWriter);
 
                 graph.setInsideNodeCounter(result.nextInsideCounter());
                 graph.setLoadNodeCounter(result.nextLoadCounter());

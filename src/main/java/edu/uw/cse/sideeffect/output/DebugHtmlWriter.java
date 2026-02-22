@@ -3,13 +3,13 @@ package edu.uw.cse.sideeffect.output;
 import edu.uw.cse.sideeffect.graph.Node;
 import edu.uw.cse.sideeffect.graph.PointsToGraph;
 import edu.uw.cse.sideeffect.graph.PointsToGraph.MutatedField;
-import sootup.core.jimple.basic.Local;
-import sootup.core.signatures.FieldSignature;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import sootup.core.jimple.basic.Local;
+import sootup.core.signatures.FieldSignature;
+
 
 /**
  * Accumulates debug data for a single method and writes a self-contained HTML file
@@ -19,7 +19,8 @@ public class DebugHtmlWriter implements Closeable {
 
     public record SourceFile(String fileName, String content) {}
     private record TraceEntry(int stepNumber, String stmtText, String dotSource, String mutatedFieldsText,
-                               String calleeGraphDot, String calleeSig, String muPrimeText) {}
+                               String calleeGraphDot, String calleeSig, String muPrimeText,
+                               String preSimplificationDot) {}
 
     private final String methodSig;
     private final Path outputPath;
@@ -34,6 +35,7 @@ public class DebugHtmlWriter implements Closeable {
     private String pendingCalleeGraphDot;
     private String pendingCalleeSig;
     private String pendingMuPrimeText;
+    private String pendingPreSimplificationDot;
 
     private String exitGraphDot;
     private String insideEdgesText;     // I
@@ -98,6 +100,16 @@ public class DebugHtmlWriter implements Closeable {
     }
 
     /**
+     * Buffer the combined (pre-simplification) graph to be included in the next trace entry.
+     * Call this after graph combination (Step 2) but before simplification (Step 3).
+     *
+     * @param graph the caller graph after combining callee edges but before removing captured nodes
+     */
+    public void setNextPreSimplificationGraph(PointsToGraph graph) {
+        this.pendingPreSimplificationDot = GraphPrinter.generateDotString(graph, "Combined Graph (before simplification)");
+    }
+
+    /**
      * Record a trace entry: generates a DOT string from the current graph state.
      * If a pending callee graph was set via {@link #setNextCalleeGraph}, it is
      * included in this entry and then cleared.
@@ -110,10 +122,12 @@ public class DebugHtmlWriter implements Closeable {
         String calleeDot = pendingCalleeGraphDot;
         String calleeSig = pendingCalleeSig;
         String muPrime = pendingMuPrimeText;
+        String preSimplDot = pendingPreSimplificationDot;
         pendingCalleeGraphDot = null;
         pendingCalleeSig = null;
         pendingMuPrimeText = null;
-        traceEntries.add(new TraceEntry(stepCounter, stmtText, dotSource, wText, calleeDot, calleeSig, muPrime));
+        pendingPreSimplificationDot = null;
+        traceEntries.add(new TraceEntry(stepCounter, stmtText, dotSource, wText, calleeDot, calleeSig, muPrime, preSimplDot));
     }
 
     public void setExitGraph(PointsToGraph graph) {
@@ -404,7 +418,13 @@ public class DebugHtmlWriter implements Closeable {
                     out.println("<h4 style=\"color:#7c3aed;margin-top:12px;\">\u03BC\u2032 (Node Mapping)</h4>");
                     out.println("<pre class=\"data\" style=\"border-left:4px solid #7c3aed;\">" + escapeHtml(entry.muPrimeText) + "</pre>");
                 }
-                out.println("<h4 style=\"color:#16a34a;margin-top:12px;\">\u2B07 Caller Graph (after merge)</h4>");
+                if (entry.preSimplificationDot != null) {
+                    out.println("<h4 style=\"color:#d97706;margin-top:12px;\">\u2B07 Combined Graph (before simplification)</h4>");
+                    out.println("<div class=\"graph-container\" id=\"pre-simpl-graph-" + entry.stepNumber + "\"  style=\"border-left:4px solid #d97706;\">");
+                    out.println("<p class=\"loading\">Rendering pre-simplification graph...</p>");
+                    out.println("</div>");
+                }
+                out.println("<h4 style=\"color:#16a34a;margin-top:12px;\">\u2B07 Caller Graph (after merge, after node simplification)</h4>");
             }
             out.println("<div class=\"graph-container\" id=\"graph-" + entry.stepNumber + "\">");
             out.println("<p class=\"loading\">Rendering graph...</p>");
@@ -465,6 +485,9 @@ public class DebugHtmlWriter implements Closeable {
         for (TraceEntry entry : traceEntries) {
             if (entry.calleeGraphDot != null) {
                 out.println("  \"callee-graph-" + entry.stepNumber + "\": " + jsStringLiteral(entry.calleeGraphDot) + ",");
+            }
+            if (entry.preSimplificationDot != null) {
+                out.println("  \"pre-simpl-graph-" + entry.stepNumber + "\": " + jsStringLiteral(entry.preSimplificationDot) + ",");
             }
             out.println("  \"graph-" + entry.stepNumber + "\": " + jsStringLiteral(entry.dotSource) + ",");
         }

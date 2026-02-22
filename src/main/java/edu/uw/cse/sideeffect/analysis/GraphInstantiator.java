@@ -3,9 +3,9 @@ package edu.uw.cse.sideeffect.analysis;
 import edu.uw.cse.sideeffect.graph.*;
 import edu.uw.cse.sideeffect.graph.PointsToGraph.EdgeTarget;
 import edu.uw.cse.sideeffect.graph.PointsToGraph.MutatedField;
+import edu.uw.cse.sideeffect.output.DebugHtmlWriter;
 import sootup.core.jimple.basic.Local;
 import sootup.core.signatures.FieldSignature;
-
 import java.util.*;
 
 /**
@@ -37,6 +37,7 @@ public class GraphInstantiator {
      * @param insideCounter     current inside node counter in the caller
      * @param loadCounter       current load node counter in the caller
      * @param debug             whether to print debug output
+     * @param debugWriter       optional HTML debug writer (null to skip HTML debug)
      * @return the updated counters after remapping
      */
     public static InstantiationResult instantiate(
@@ -48,7 +49,8 @@ public class GraphInstantiator {
             Local returnVar,
             boolean isCalleeStatic,
             int insideCounter, int loadCounter,
-            boolean debug) {
+            boolean debug,
+            DebugHtmlWriter debugWriter) {
 
         // --- Step 0: Remap callee nodes to fresh IDs in the caller's namespace ---
         Map<Node, Node> remapTable = new HashMap<>();
@@ -309,6 +311,11 @@ public class GraphInstantiator {
             for (Node m : mapped) {
                 callerGraph.markGlobalEscaped(m);
             }
+        }
+
+        // --- Debug: Record combined graph before simplification ---
+        if (debugWriter != null) {
+            debugWriter.setNextPreSimplificationGraph(callerGraph);
         }
 
         // --- Step 3: Simplify — remove captured load nodes ---
