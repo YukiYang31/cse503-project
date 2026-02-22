@@ -18,7 +18,8 @@ import java.util.*;
 public class DebugHtmlWriter implements Closeable {
 
     public record SourceFile(String fileName, String content) {}
-    private record TraceEntry(int stepNumber, String stmtText, String dotSource, String mutatedFieldsText) {}
+    private record TraceEntry(int stepNumber, String stmtText, String dotSource, String mutatedFieldsText,
+                               String calleeGraphDot, String calleeSig, String muPrimeText) {}
 
     private final String methodSig;
     private final Path outputPath;
@@ -28,6 +29,11 @@ public class DebugHtmlWriter implements Closeable {
     private final List<String> jimpleStatements = new ArrayList<>();
     private final List<TraceEntry> traceEntries = new ArrayList<>();
     private int stepCounter = 0;
+
+    // Pending callee graph info (set before addTraceEntry, consumed by addTraceEntry)
+    private String pendingCalleeGraphDot;
+    private String pendingCalleeSig;
+    private String pendingMuPrimeText;
 
     private String exitGraphDot;
     private String insideEdgesText;     // I
@@ -70,13 +76,44 @@ public class DebugHtmlWriter implements Closeable {
     }
 
     /**
+     * Buffer a callee's exit graph to be included in the next trace entry.
+     * Call this before the trace entry is recorded (i.e., before the call to addTraceEntry).
+     *
+     * @param calleeExitGraph the callee's exit graph (before instantiation)
+     * @param calleeSig       the callee method signature
+     */
+    public void setNextCalleeGraph(PointsToGraph calleeExitGraph, String calleeSig) {
+        this.pendingCalleeGraphDot = GraphPrinter.generateDotString(calleeExitGraph, "Callee: " + calleeSig);
+        this.pendingCalleeSig = calleeSig;
+    }
+
+    /**
+     * Buffer the mu' (extended node mapping) text to be included in the next trace entry.
+     * Call this after instantiation but before the trace entry is recorded.
+     *
+     * @param muPrimeText the formatted mu' mapping string
+     */
+    public void setNextMuPrime(String muPrimeText) {
+        this.pendingMuPrimeText = muPrimeText;
+    }
+
+    /**
      * Record a trace entry: generates a DOT string from the current graph state.
+     * If a pending callee graph was set via {@link #setNextCalleeGraph}, it is
+     * included in this entry and then cleared.
      */
     public void addTraceEntry(String stmtText, PointsToGraph graph) {
         stepCounter++;
         String dotSource = GraphPrinter.generateDotString(graph, "Step " + stepCounter);
         String wText = formatMutatedFields(graph.getMutatedFields());
-        traceEntries.add(new TraceEntry(stepCounter, stmtText, dotSource, wText));
+        // Consume pending callee graph if present
+        String calleeDot = pendingCalleeGraphDot;
+        String calleeSig = pendingCalleeSig;
+        String muPrime = pendingMuPrimeText;
+        pendingCalleeGraphDot = null;
+        pendingCalleeSig = null;
+        pendingMuPrimeText = null;
+        traceEntries.add(new TraceEntry(stepCounter, stmtText, dotSource, wText, calleeDot, calleeSig, muPrime));
     }
 
     public void setExitGraph(PointsToGraph graph) {
@@ -357,6 +394,18 @@ public class DebugHtmlWriter implements Closeable {
             out.println("<div class=\"step\">");
             out.println("<h3>Step " + entry.stepNumber + "</h3>");
             out.println("<pre class=\"jimple\">" + escapeHtml(entry.stmtText) + "</pre>");
+            // If this step involved a callee graph merge, show the callee exit graph and mu'
+            if (entry.calleeGraphDot != null) {
+                out.println("<h4 style=\"color:#2563eb;margin-top:12px;\">\u2B07 Callee Exit Graph: " + escapeHtml(entry.calleeSig) + "</h4>");
+                out.println("<div class=\"graph-container\" id=\"callee-graph-" + entry.stepNumber + "\"  style=\"border-left:4px solid #2563eb;\">");
+                out.println("<p class=\"loading\">Rendering callee graph...</p>");
+                out.println("</div>");
+                if (entry.muPrimeText != null) {
+                    out.println("<h4 style=\"color:#7c3aed;margin-top:12px;\">\u03BC\u2032 (Node Mapping)</h4>");
+                    out.println("<pre class=\"data\" style=\"border-left:4px solid #7c3aed;\">" + escapeHtml(entry.muPrimeText) + "</pre>");
+                }
+                out.println("<h4 style=\"color:#16a34a;margin-top:12px;\">\u2B07 Caller Graph (after merge)</h4>");
+            }
             out.println("<div class=\"graph-container\" id=\"graph-" + entry.stepNumber + "\">");
             out.println("<p class=\"loading\">Rendering graph...</p>");
             out.println("</div>");
@@ -414,6 +463,9 @@ public class DebugHtmlWriter implements Closeable {
         out.println("<script>");
         out.println("const graphs = {");
         for (TraceEntry entry : traceEntries) {
+            if (entry.calleeGraphDot != null) {
+                out.println("  \"callee-graph-" + entry.stepNumber + "\": " + jsStringLiteral(entry.calleeGraphDot) + ",");
+            }
             out.println("  \"graph-" + entry.stepNumber + "\": " + jsStringLiteral(entry.dotSource) + ",");
         }
         if (exitGraphDot != null) {

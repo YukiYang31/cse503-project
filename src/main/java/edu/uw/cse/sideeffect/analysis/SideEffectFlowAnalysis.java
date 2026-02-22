@@ -47,7 +47,7 @@ public class SideEffectFlowAnalysis extends ForwardFlowAnalysis<PointsToGraph> {
         this.body = body;
         this.isStatic = isStatic;
         this.debugWriter = debugWriter;
-        this.transfer = new TransferFunctions(config, isStatic, paramTypeNames, summaryCache);
+        this.transfer = new TransferFunctions(config, isStatic, paramTypeNames, summaryCache, debugWriter);
         execute();
     }
 

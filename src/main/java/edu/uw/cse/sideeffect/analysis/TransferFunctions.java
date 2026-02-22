@@ -4,6 +4,7 @@ import edu.uw.cse.sideeffect.AnalysisConfig;
 import edu.uw.cse.sideeffect.graph.*;
 import edu.uw.cse.sideeffect.util.NodeMerger;
 import edu.uw.cse.sideeffect.util.SafeMethods;
+import edu.uw.cse.sideeffect.output.DebugHtmlWriter;
 import sootup.core.jimple.basic.Local;
 import sootup.core.jimple.basic.Value;
 import sootup.core.jimple.common.expr.*;
@@ -35,6 +36,7 @@ public class TransferFunctions {
     private final boolean isStaticMethod;
     private final List<String> paramTypeNames; // nullable — falls back to index-based labels
     private final SummaryCache summaryCache; // nullable — null means intra-procedural only
+    private final DebugHtmlWriter debugWriter; // nullable — null means no debug output
 
     /**
      * Per-statement counter snapshots ensure that re-processing the same statement
@@ -47,19 +49,26 @@ public class TransferFunctions {
     public static final String RETURN_VAR_NAME = "$RETURN";
 
     public TransferFunctions(AnalysisConfig config, boolean isStaticMethod) {
-        this(config, isStaticMethod, null, null);
+        this(config, isStaticMethod, null, null, null);
     }
 
     public TransferFunctions(AnalysisConfig config, boolean isStaticMethod, List<String> paramTypeNames) {
-        this(config, isStaticMethod, paramTypeNames, null);
+        this(config, isStaticMethod, paramTypeNames, null, null);
     }
 
     public TransferFunctions(AnalysisConfig config, boolean isStaticMethod,
                               List<String> paramTypeNames, SummaryCache summaryCache) {
+        this(config, isStaticMethod, paramTypeNames, summaryCache, null);
+    }
+
+    public TransferFunctions(AnalysisConfig config, boolean isStaticMethod,
+                              List<String> paramTypeNames, SummaryCache summaryCache,
+                              DebugHtmlWriter debugWriter) {
         this.config = config;
         this.isStaticMethod = isStaticMethod;
         this.paramTypeNames = paramTypeNames;
         this.summaryCache = summaryCache;
+        this.debugWriter = debugWriter;
     }
 
 
@@ -489,6 +498,11 @@ public class TransferFunctions {
                 // Determine if callee is static
                 boolean isCalleeStatic = !(invokeExpr instanceof AbstractInstanceInvokeExpr);
 
+                // Record callee exit graph for debug HTML output
+                if (debugWriter != null) {
+                    debugWriter.setNextCalleeGraph(calleeSummary.getExitGraph(), methodSig.toString());
+                }
+
                 // Instantiate callee summary into caller graph
                 GraphInstantiator.InstantiationResult result = GraphInstantiator.instantiate(
                         graph,
@@ -503,6 +517,12 @@ public class TransferFunctions {
 
                 graph.setInsideNodeCounter(result.nextInsideCounter());
                 graph.setLoadNodeCounter(result.nextLoadCounter());
+
+                // Record mu' for debug HTML output
+                if (debugWriter != null && result.muPrimeText() != null) {
+                    debugWriter.setNextMuPrime(result.muPrimeText());
+                }
+
                 return;
             }
         }

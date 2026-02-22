@@ -22,7 +22,7 @@ import java.util.*;
  */
 public class GraphInstantiator {
 
-    public record InstantiationResult(int nextInsideCounter, int nextLoadCounter) {}
+    public record InstantiationResult(int nextInsideCounter, int nextLoadCounter, String muPrimeText) {}
 
     /**
      * Instantiate a callee summary at a call site in the caller.
@@ -354,7 +354,7 @@ public class GraphInstantiator {
             }
         }
 
-        return new InstantiationResult(ic, lc);
+        return new InstantiationResult(ic, lc, muToString(muPrime));
     }
 
     /**
