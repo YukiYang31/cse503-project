@@ -46,9 +46,9 @@ Constructors have a special rule: direct field writes to `this` (`this.f = x`) a
 
 ### Key Files
 
-- **`Main.java`** — CLI argument parsing, invokes `JavaCompiler` then `SideEffectAnalysisRunner`
+- **`Main.java`** — CLI argument parsing; detects JDK source files and routes to either compilation or JRT mode, then invokes `SideEffectAnalysisRunner`
 - **`JavaCompiler.java`** — Compiles `.java` to `.class` in a temp directory using `javax.tools.JavaCompiler`
-- **`SideEffectAnalysisRunner.java`** — Creates a SootUp `JavaView`, builds call graph, analyzes methods bottom-up with inter-procedural summary cache
+- **`SideEffectAnalysisRunner.java`** — Creates a SootUp `JavaView` (from compiled classes or the JDK runtime via `JrtFileSystemAnalysisInputLocation`), builds call graph, analyzes methods bottom-up with inter-procedural summary cache
 - **`PointsToGraph.java`** — Core data structure: variable-to-node mappings, heap edges, mutation tracking, global escape tracking
 - **`TransferFunctions.java`** — Maps each Jimple statement type to a graph operation; looks up callee summaries from `SummaryCache` for inter-procedural calls
 - **`SideEffectFlowAnalysis.java`** — Forward dataflow analysis extending SootUp's `ForwardFlowAnalysis`
@@ -149,6 +149,15 @@ Node merging is disabled by default (showing the 2005-style graphs). Enable with
 # Generate HTML debug traces with visual graphs (opens in browser)
 ./gradlew run --args="MyFile.java --debug"
 
+# Analyze JDK source files (loaded from JDK runtime bytecode, no compilation needed)
+./gradlew run --args="jdk/src/java.base/share/classes/java/io/File.java"
+
+# Analyze a specific method in a JDK class
+./gradlew run --args="jdk/src/java.base/share/classes/java/lang/String.java --method indexOf"
+
+# JDK analysis with timing
+./gradlew run --args="jdk/src/java.base/share/classes/java/lang/Long.java --timing"
+
 # Debug a specific method
 ./gradlew run --args="MyFile.java --debug --method myMethod"
 
@@ -247,6 +256,8 @@ timer.saveJson()
 
 The five timed phases (Compilation → IR Loading → Call Graph → Dataflow → Side-effect) account for the vast majority of wall-clock time. Small gaps between phases (source file reading, result printing,
 loop overhead) are not individually timed.
+
+> **JDK source files**: When analyzing JDK sources (paths matching `jdk/src/<module>/share/classes/...`), the Compilation phase is skipped entirely. Instead, the IR Loading phase uses `JrtFileSystemAnalysisInputLocation` to load pre-compiled classes directly from the running JDK's module image (`jrt:/` filesystem). This avoids the impossible task of compiling JDK internals standalone.
 
 ## Understanding the Output
 
@@ -367,6 +378,7 @@ All results now match the paper's inter-procedural analysis. The key cases are `
 
 ## Known Limitations
 
+- **JDK analysis uses runtime bytecode**: When analyzing JDK source files, classes are loaded from the JDK runtime image rather than compiling from source. The analysis results reflect the compiled bytecode, which may differ slightly from source-level expectations (e.g., compiler-generated bridge methods, synthetic fields).
 - **Inter-procedural scope is same-file only**: The bottom-up analysis covers methods defined in the analyzed source files. Calls to external methods (libraries, JDK) not in `SafeMethods` are still treated conservatively.
 - **Recursive call chains use bounded iteration**: Mutually recursive methods (SCCs in the call graph) are analyzed by iterating up to 5 times. If summaries do not stabilize, the last computed summary is used. The paper suggests iterating to a true fixed point; we cap at 5 for practical reasons.
 - **No exception-path precision**: Exception control flow is handled by SootUp's CFG but not modeled with special precision.
