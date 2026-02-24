@@ -166,10 +166,10 @@ public class GraphPrinter {
             String typeName = simpleTypeName(entry.getKey().getType().toString());
             String displayLabel = varName + ": " + typeName;
             out.println("  \"var_" + escapeDot(varName) + "\" [label=\"" + escapeDot(displayLabel)
-                + "\", shape=plaintext, fontcolor=gray40];");
+                + "\", shape=plaintext, fontcolor=gray75];");
             for (Node target : entry.getValue()) {
                 out.println("  \"var_" + escapeDot(varName) + "\" -> \""
-                    + escapeDot(target.getId()) + "\" [style=dotted, color=gray60];");
+                    + escapeDot(target.getId()) + "\" [style=solid, color=gray75];");
             }
         }
         out.println();
@@ -183,7 +183,7 @@ public class GraphPrinter {
                 for (EdgeTarget et : fe.getValue()) {
                     String style = et.type() == EdgeType.INSIDE
                         ? "style=solid, color=black"
-                        : "style=dashed, color=gray30";
+                        : "style=dashed, color=gray60";
                     out.println("  \"" + escapeDot(source.getId()) + "\" -> \""
                         + escapeDot(et.target().getId()) + "\" [label=\"" + escapeDot(fieldName)
                         + "\", " + style + "];");

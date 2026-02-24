@@ -1,10 +1,12 @@
 package edu.uw.cse.sideeffect.analysis;
 
 import edu.uw.cse.sideeffect.graph.*;
+import edu.uw.cse.sideeffect.graph.PointsToGraph.EdgeTarget;
 import edu.uw.cse.sideeffect.graph.PointsToGraph.MutatedField;
 import edu.uw.cse.sideeffect.output.DebugHtmlWriter;
-import java.util.*;
+import sootup.core.jimple.basic.Local;
 import sootup.core.signatures.FieldSignature;
+import java.util.*;
 
 /**
  * Implements Section 5.3 of Salcianu &amp; Rinard (2005): inter-procedural

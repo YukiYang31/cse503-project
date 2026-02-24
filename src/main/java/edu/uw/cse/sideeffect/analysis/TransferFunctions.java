@@ -2,16 +2,16 @@ package edu.uw.cse.sideeffect.analysis;
 
 import edu.uw.cse.sideeffect.AnalysisConfig;
 import edu.uw.cse.sideeffect.graph.*;
-import edu.uw.cse.sideeffect.output.DebugHtmlWriter;
+
 import edu.uw.cse.sideeffect.util.NodeMerger;
 import edu.uw.cse.sideeffect.util.SafeMethods;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.IdentityHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import sootup.core.jimple.common.expr.AbstractInvokeExpr;
+import edu.uw.cse.sideeffect.output.DebugHtmlWriter;
+import sootup.core.jimple.basic.Local;
+import sootup.core.jimple.basic.Value;
+import sootup.core.jimple.common.expr.*;
+import sootup.core.jimple.common.ref.*;
+
+
 import sootup.core.jimple.common.stmt.JAssignStmt;
 import sootup.core.jimple.common.stmt.JIdentityStmt;
 import sootup.core.jimple.common.stmt.JInvokeStmt;
@@ -19,6 +19,14 @@ import sootup.core.jimple.common.stmt.JReturnStmt;
 import sootup.core.jimple.common.stmt.Stmt;
 import sootup.core.signatures.FieldSignature;
 import sootup.core.signatures.MethodSignature;
+import sootup.core.types.ReferenceType;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
