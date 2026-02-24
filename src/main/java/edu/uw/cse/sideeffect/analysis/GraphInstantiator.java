@@ -1,12 +1,10 @@
 package edu.uw.cse.sideeffect.analysis;
 
 import edu.uw.cse.sideeffect.graph.*;
-import edu.uw.cse.sideeffect.graph.PointsToGraph.EdgeTarget;
 import edu.uw.cse.sideeffect.graph.PointsToGraph.MutatedField;
 import edu.uw.cse.sideeffect.output.DebugHtmlWriter;
-import sootup.core.jimple.basic.Local;
-import sootup.core.signatures.FieldSignature;
 import java.util.*;
+import sootup.core.signatures.FieldSignature;
 
 /**
  * Implements Section 5.3 of Salcianu &amp; Rinard (2005): inter-procedural
@@ -50,7 +48,8 @@ public class GraphInstantiator {
             boolean isCalleeStatic,
             int insideCounter, int loadCounter,
             boolean debug,
-            DebugHtmlWriter debugWriter) {
+            DebugHtmlWriter debugWriter,
+            String calleeSig) {
 
         // --- Step 0: Remap callee nodes to fresh IDs in the caller's namespace ---
         Map<Node, Node> remapTable = new HashMap<>();
@@ -148,6 +147,24 @@ public class GraphInstantiator {
         Set<MutatedField> remappedW = new HashSet<>();
         for (MutatedField mf : calleeW) {
             remappedW.add(new MutatedField(remapNode(mf.node(), remapTable), mf.field()));
+        }
+
+        // --- Debug: record remapped callee graph (after Step 0 renaming) ---
+        if (debugWriter != null && calleeSig != null) {
+            PointsToGraph remappedCalleeGraph = new PointsToGraph();
+            for (Edge e : remappedInsideEdges) {
+                remappedCalleeGraph.addInsideEdge(e.src, e.field, e.tgt);
+            }
+            for (Edge e : remappedOutsideEdges) {
+                remappedCalleeGraph.addOutsideEdge(e.src, e.field, e.tgt);
+            }
+            for (Node n : remappedEscaped) {
+                remappedCalleeGraph.markGlobalEscaped(n);
+            }
+            for (MutatedField mf : remappedW) {
+                remappedCalleeGraph.recordMutation(mf.node(), mf.field());
+            }
+            debugWriter.setNextCalleeGraph(remappedCalleeGraph, calleeSig);
         }
 
         // --- Step 1: Compute core mapping mu (least fixed point) ---

@@ -7,7 +7,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
-import sootup.core.jimple.basic.Local;
 import sootup.core.signatures.FieldSignature;
 
 
@@ -410,7 +409,7 @@ public class DebugHtmlWriter implements Closeable {
             out.println("<pre class=\"jimple\">" + escapeHtml(entry.stmtText) + "</pre>");
             // If this step involved a callee graph merge, show the callee exit graph and mu'
             if (entry.calleeGraphDot != null) {
-                out.println("<h4 style=\"color:#2563eb;margin-top:12px;\">\u2B07 Callee Exit Graph: " + escapeHtml(entry.calleeSig) + "</h4>");
+                out.println("<h4 style=\"color:#2563eb;margin-top:12px;\">\u2B07 Callee Exit Graph (after node renaming): " + escapeHtml(entry.calleeSig) + "</h4>");
                 out.println("<div class=\"graph-container\" id=\"callee-graph-" + entry.stepNumber + "\"  style=\"border-left:4px solid #2563eb;\">");
                 out.println("<p class=\"loading\">Rendering callee graph...</p>");
                 out.println("</div>");
