@@ -3,7 +3,11 @@ package edu.uw.cse.sideeffect;
 import edu.uw.cse.sideeffect.util.TimingRecorder;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -69,17 +73,28 @@ public class Main {
         timer.startTotal();
 
         try {
-            // Step 1: Compile .java to .class
-            System.out.println("Compiling source files...");
-            long compileStart = System.nanoTime();
-            Path classDir = JavaCompiler.compile(sourceFiles);
-            long compileNs = System.nanoTime() - compileStart;
-            timer.recordCompilation(compileNs);
-            System.out.println("Compiled to: " + classDir);
+            // Detect if source files are JDK sources (can't compile standalone)
+            Set<String> jrtClassNames = detectJdkClasses(sourceFiles);
+            List<Path> sourcePaths = sourceFiles.stream().map(Path::of).toList();
+            SideEffectAnalysisRunner runner;
+
+            if (!jrtClassNames.isEmpty()) {
+                // JDK source: load pre-compiled classes from JDK runtime (jrt:/ filesystem)
+                System.out.println("Detected JDK source file(s). Using JRT runtime classes (skipping compilation).");
+                System.out.println("Target classes: " + jrtClassNames);
+                runner = SideEffectAnalysisRunner.forJrt(config, jrtClassNames, sourcePaths, timer);
+            } else {
+                // Normal source: compile first
+                System.out.println("Compiling source files...");
+                long compileStart = System.nanoTime();
+                Path classDir = JavaCompiler.compile(sourceFiles);
+                long compileNs = System.nanoTime() - compileStart;
+                timer.recordCompilation(compileNs);
+                System.out.println("Compiled to: " + classDir);
+                runner = new SideEffectAnalysisRunner(config, classDir, sourcePaths, timer);
+            }
 
             // Step 2: Run side-effect analysis via SootUp
-            List<Path> sourcePaths = sourceFiles.stream().map(Path::of).toList();
-            SideEffectAnalysisRunner runner = new SideEffectAnalysisRunner(config, classDir, sourcePaths, timer);
             runner.run();
 
             timer.endTotal();
@@ -93,10 +108,37 @@ public class Main {
         }
     }
 
+    /**
+     * Detect JDK source files and extract their fully qualified class names.
+     * JDK sources match the pattern: jdk/src/<module>/share/classes/<package/path>/Class.java
+     * These cannot be compiled standalone, so we load from the JRT filesystem instead.
+     *
+     * @return set of FQCNs for JDK classes, or empty set if none are JDK sources
+     */
+    private static Set<String> detectJdkClasses(List<String> sourceFiles) {
+        // Pattern: jdk/src/<module>/share/classes/<path>.java
+        Pattern jdkPattern = Pattern.compile(
+            "jdk/src/[^/]+/share/classes/(.+)\\.java$");
+        Set<String> classNames = new HashSet<>();
+        for (String file : sourceFiles) {
+            // Normalize to forward slashes for matching
+            String normalized = file.replace('\\', '/');
+            Matcher m = jdkPattern.matcher(normalized);
+            if (m.find()) {
+                // Convert path separators to dots: java/io/File -> java.io.File
+                classNames.add(m.group(1).replace('/', '.'));
+            }
+        }
+        return classNames;
+    }
+
     private static void printUsage() {
         System.out.println("Java Side-Effect Analysis Tool");
         System.out.println();
         System.out.println("Usage: ./gradlew run --args=\"<file.java> [options]\"");
+        System.out.println();
+        System.out.println("  Supports both user source files and JDK source files.");
+        System.out.println("  JDK files (under jdk/src/) are loaded from runtime bytecode.");
         System.out.println();
         System.out.println("Options:");
         System.out.println("  --show-graph    Print points-to graphs and generate DOT files");

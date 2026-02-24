@@ -16,6 +16,8 @@ import sootup.core.jimple.common.stmt.Stmt;
 import sootup.core.model.Body;
 import sootup.core.model.Position;
 import sootup.java.bytecode.inputlocation.JavaClassPathAnalysisInputLocation;
+import sootup.java.bytecode.inputlocation.JrtFileSystemAnalysisInputLocation;
+import sootup.core.types.ClassType;
 import sootup.core.types.Type;
 import sootup.java.core.JavaSootClass;
 import sootup.java.core.JavaSootMethod;
@@ -29,16 +31,22 @@ import org.objectweb.asm.util.Textifier;
 import org.objectweb.asm.util.TraceMethodVisitor;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.URI;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Loads compiled classes via SootUp's JavaView, iterates methods,
@@ -47,9 +55,10 @@ import java.util.Set;
 public class SideEffectAnalysisRunner {
 
     private final AnalysisConfig config;
-    private final Path classDir;
+    private final Path classDir;          // null when using JRT mode
     private final List<Path> sourceFiles;
     private final TimingRecorder timer;
+    private final Set<String> jrtClassNames;  // non-empty = JRT mode
 
     public SideEffectAnalysisRunner(AnalysisConfig config, Path classDir, List<Path> sourceFiles,
                                 TimingRecorder timer) {
@@ -57,6 +66,22 @@ public class SideEffectAnalysisRunner {
         this.classDir = classDir;
         this.sourceFiles = sourceFiles;
         this.timer = timer;
+        this.jrtClassNames = Set.of();
+    }
+
+    private SideEffectAnalysisRunner(AnalysisConfig config, Set<String> jrtClassNames,
+                                     List<Path> sourceFiles, TimingRecorder timer) {
+        this.config = config;
+        this.classDir = null;
+        this.sourceFiles = sourceFiles;
+        this.timer = timer;
+        this.jrtClassNames = jrtClassNames;
+    }
+
+    /** Create a runner that loads classes from the JDK runtime (jrt:/ filesystem). */
+    public static SideEffectAnalysisRunner forJrt(AnalysisConfig config, Set<String> classNames,
+                                                   List<Path> sourceFiles, TimingRecorder timer) {
+        return new SideEffectAnalysisRunner(config, classNames, sourceFiles, timer);
     }
 
     public SideEffectAnalysisRunner(AnalysisConfig config, Path classDir, List<Path> sourceFiles) {
@@ -68,23 +93,46 @@ public class SideEffectAnalysisRunner {
     }
 
     public void run() {
-        // Create SootUp view pointing at compiled classes
+        // Create SootUp view pointing at compiled classes (or JDK runtime)
         long irStart = 0;
         if (config.timing) irStart = System.nanoTime();
 
-        JavaClassPathAnalysisInputLocation inputLocation =
-            new JavaClassPathAnalysisInputLocation(classDir.toString());
-        JavaView view = new JavaView(inputLocation);
+        JavaView view;
+        if (!jrtClassNames.isEmpty()) {
+            // JRT mode: load from the running JDK's module image
+            JrtFileSystemAnalysisInputLocation jrtInput = new JrtFileSystemAnalysisInputLocation();
+            view = new JavaView(jrtInput);
+        } else {
+            JavaClassPathAnalysisInputLocation inputLocation =
+                new JavaClassPathAnalysisInputLocation(classDir.toString());
+            view = new JavaView(inputLocation);
+        }
 
-        // Get all classes from the input location
-        Collection<JavaSootClass> classes = view.getClasses();
+        // Get classes — filter to targets when using JRT mode
+        Collection<JavaSootClass> classes;
+        if (!jrtClassNames.isEmpty()) {
+            // Resolve only the requested classes from the huge JRT class set
+            classes = new ArrayList<>();
+            for (String fqcn : jrtClassNames) {
+                ClassType classType = view.getIdentifierFactory().getClassType(fqcn);
+                view.getClass(classType).ifPresent(classes::add);
+            }
+            if (classes.isEmpty()) {
+                System.out.println("Could not resolve JDK classes: " + jrtClassNames);
+                return;
+            }
+            System.out.println("Loaded " + classes.size() + " class(es) from JDK runtime.");
+        } else {
+            classes = view.getClasses();
+        }
 
         if (config.timing) {
             timer.recordIrLoading(System.nanoTime() - irStart);
         }
 
         if (classes.isEmpty()) {
-            System.out.println("No classes found in: " + classDir);
+            System.out.println("No classes found" +
+                (classDir != null ? " in: " + classDir : " via JRT"));
             return;
         }
 
@@ -346,17 +394,47 @@ public class SideEffectAnalysisRunner {
 
     /**
      * Use ASM to extract disassembled bytecode for a specific method from its .class file.
+     * Supports both classpath mode (classDir) and JRT mode (jrt:/ filesystem).
      */
     private List<String> extractBytecode(JavaSootMethod method) {
         try {
-            // Resolve .class file path from classDir + fully qualified class name
             String className = method.getDeclaringClassType().getFullyQualifiedName();
-            Path classFile = classDir.resolve(className.replace('.', '/') + ".class");
-            if (!Files.exists(classFile)) {
-                return List.of("// .class file not found: " + classFile);
-            }
+            byte[] classBytes;
 
-            byte[] classBytes = Files.readAllBytes(classFile);
+            if (classDir != null) {
+                // Normal mode: read from compiled class directory
+                Path classFile = classDir.resolve(className.replace('.', '/') + ".class");
+                if (!Files.exists(classFile)) {
+                    return List.of("// .class file not found: " + classFile);
+                }
+                classBytes = Files.readAllBytes(classFile);
+            } else {
+                // JRT mode: read from the JDK runtime image
+                try {
+                    FileSystem jrtFs = FileSystems.getFileSystem(URI.create("jrt:/"));
+                    // JRT class files are at /modules/<module>/<package>/<Class>.class
+                    // Try to find the class in any module
+                    String classPath = className.replace('.', '/') + ".class";
+                    Path jrtPath = jrtFs.getPath("/modules/java.base/" + classPath);
+                    if (!Files.exists(jrtPath)) {
+                        // Search across all modules
+                        jrtPath = null;
+                        for (Path moduleRoot : Files.list(jrtFs.getPath("/modules")).toList()) {
+                            Path candidate = moduleRoot.resolve(classPath);
+                            if (Files.exists(candidate)) {
+                                jrtPath = candidate;
+                                break;
+                            }
+                        }
+                    }
+                    if (jrtPath == null) {
+                        return List.of("// .class file not found in JRT for: " + className);
+                    }
+                    classBytes = Files.readAllBytes(jrtPath);
+                } catch (Exception e) {
+                    return List.of("// Error reading from JRT: " + e.getMessage());
+                }
+            }
 
             // Build JVM method descriptor from SootUp types
             String methodName = method.getName();
