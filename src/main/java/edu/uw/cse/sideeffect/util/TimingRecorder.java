@@ -21,15 +21,20 @@ public class TimingRecorder {
     /** Per-method timing record. */
     public static class MethodTiming {
         public final String methodSignature;
+        public final String verdict;
+        public final String reason;
         public final long dataflowNs;
         public final long sideEffectNs;
         public final int jimpleStmtCount;
         public final int exitGraphNodes;
         public final int exitGraphEdges;
 
-        public MethodTiming(String methodSignature, long dataflowNs, long sideEffectNs,
+        public MethodTiming(String methodSignature, String verdict, String reason,
+                            long dataflowNs, long sideEffectNs,
                             int jimpleStmtCount, int exitGraphNodes, int exitGraphEdges) {
             this.methodSignature = methodSignature;
+            this.verdict = verdict;
+            this.reason = reason;
             this.dataflowNs = dataflowNs;
             this.sideEffectNs = sideEffectNs;
             this.jimpleStmtCount = jimpleStmtCount;
@@ -206,6 +211,12 @@ public class TimingRecorder {
                 MethodTiming mt = methods.get(i);
                 sb.append("    {\n");
                 sb.append("      \"signature\": \"").append(escapeJson(mt.methodSignature)).append("\",\n");
+                sb.append("      \"verdict\": \"").append(escapeJson(mt.verdict)).append("\",\n");
+                if (mt.reason != null) {
+                    sb.append("      \"reason\": \"").append(escapeJson(mt.reason)).append("\",\n");
+                } else {
+                    sb.append("      \"reason\": null,\n");
+                }
                 sb.append("      \"dataflowMs\": ").append(roundMs(mt.dataflowNs)).append(",\n");
                 sb.append("      \"sideEffectMs\": ").append(roundMs(mt.sideEffectNs)).append(",\n");
                 sb.append("      \"totalMs\": ").append(roundMs(mt.dataflowNs + mt.sideEffectNs)).append(",\n");

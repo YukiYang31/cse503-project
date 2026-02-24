@@ -303,7 +303,8 @@ public class SideEffectAnalysisRunner {
                     int nodeCount = exitGraph.getAllNodes().size();
                     int edgeCount = countEdges(exitGraph);
                     timer.addMethodTiming(new TimingRecorder.MethodTiming(
-                            sig, dataflowNs, sideEffectNs, stmtCount, nodeCount, edgeCount));
+                            sig, summary.getResult().name(), summary.getReason(),
+                            dataflowNs, sideEffectNs, stmtCount, nodeCount, edgeCount));
                 }
 
                 // Write debug output

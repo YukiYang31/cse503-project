@@ -376,6 +376,59 @@ For methods that do not involve inter-procedural calls, our tool's exit graphs m
 
 All results now match the paper's inter-procedural analysis. The key cases are `List.iterator()` and `Main.sumX()`, which require composing method summaries across multiple call sites to determine that the iterator is a fresh InsideNode and all mutations target only that InsideNode (not any prestate object).
 
+## JDK Experiment
+
+The `experiment/` directory contains scripts to evaluate the tool against the Checker Framework's manual `@Pure` and `@SideEffectFree` annotations in the JDK's `java.util` package (~870 annotated methods across 67 files).
+
+### Running the Experiment
+
+```bash
+# Full run: analyze all java/util files and produce results CSV
+# Automatically resumes from where it left off if interrupted
+python3 experiment/run_experiment.py
+
+# Re-run a single file (always re-runs, ignores cache; merges into full CSV)
+python3 experiment/run_experiment.py Objects.java
+
+# Re-generate CSV from previously saved results (no tool re-run)
+python3 experiment/run_experiment.py --skip-run
+
+# Force re-run all files from scratch (ignore cached results)
+python3 experiment/run_experiment.py --force
+
+# Skip specific files that are too slow or hang
+python3 experiment/run_experiment.py --skip TreeMap.java
+python3 experiment/run_experiment.py --skip TreeMap.java,HashMap.java
+```
+
+The script saves per-file results to `experiment/tool_results/` as it goes. On re-run, it detects which files already have cached results and skips them, so you can safely `Ctrl+C` and resume later without losing progress.
+
+### What It Does
+
+1. **Extract ground truth** (`extract_annotations.py`): Parses `@Pure`/`@SideEffectFree` annotations from JDK source files, handling inner classes, receiver parameters, generic erasure, and abstract methods. Outputs `experiment/ground_truth.json`.
+
+2. **Run the tool**: Executes the side-effect analysis on each `.java` file one at a time via `./gradlew run --args="<file> --timing"`. Tool results (timing JSON with verdicts) are saved to `experiment/tool_results/` for reproducibility.
+
+3. **Produce CSV** (`experiment/results.csv`): Each row is one method with columns for JDK annotation, tool verdict, match category, per-method timing, and per-file pipeline timing.
+
+### Match Categories
+
+| Category | Meaning |
+|---|---|
+| Match | JDK annotated + tool says SIDE_EFFECT_FREE |
+| Tool False Positive | JDK annotated + tool says SIDE_EFFECTING/GRAPH_VIOLATION |
+| Annotation Deficit | Not annotated + tool says SIDE_EFFECT_FREE |
+| Both Side-Effecting | Not annotated + tool says SIDE_EFFECTING |
+| Not Analyzed | Annotated but tool didn't analyze (abstract method, error) |
+
+### Output Files
+
+| File | Description |
+|---|---|
+| `experiment/ground_truth.json` | Parsed annotations from JDK source |
+| `experiment/tool_results/*.json` | Per-file timing JSON with verdicts |
+| `experiment/results.csv` | Combined results CSV |
+
 ## Known Limitations
 
 - **JDK analysis uses runtime bytecode**: When analyzing JDK source files, classes are loaded from the JDK runtime image rather than compiling from source. The analysis results reflect the compiled bytecode, which may differ slightly from source-level expectations (e.g., compiler-generated bridge methods, synthetic fields).
