@@ -1,5 +1,9 @@
 package edu.uw.cse.sideeffect;
 
+import java.util.HashSet;
+import java.util.Deque;
+import java.util.ArrayDeque;
+
 import edu.uw.cse.sideeffect.analysis.CallGraphBuilder;
 import edu.uw.cse.sideeffect.analysis.MethodSummary;
 import edu.uw.cse.sideeffect.analysis.SideEffectChecker;
@@ -155,41 +159,73 @@ public class SideEffectAnalysisRunner {
             timer.recordCallGraph(System.nanoTime() - cgStart);
         }
 
-        // Analyze methods bottom-up with inter-procedural summary cache
+        // Analyze only methods reachable from the target (if methodFilter is set)
         SummaryCache cache = new SummaryCache();
         List<MethodSummary> summaries = new ArrayList<>();
 
-        for (List<JavaSootMethod> batch : batches) {
-            if (batch.size() == 1) {
-                // Single method (non-recursive): analyze once with cache
-                JavaSootMethod method = batch.get(0);
-                if (!method.isConcrete()) continue;
-                if (config.methodFilter != null && !method.getName().equals(config.methodFilter)) continue;
+        Set<String> reachable = null;
+        if (config.methodFilter != null) {
+            // Find all signatures matching the filter
+            Set<String> startMethods = new HashSet<>();
+            for (List<JavaSootMethod> batch : batches) {
+                for (JavaSootMethod m : batch) {
+                    if (m.getName().equals(config.methodFilter)) {
+                        startMethods.add(m.getSignature().toString());
+                    }
+                }
+            }
+            // Compute transitive closure
+            reachable = new HashSet<>();
+            Deque<String> work = new ArrayDeque<>(startMethods);
+            while (!work.isEmpty()) {
+                String sig = work.pop();
+                if (!reachable.add(sig)) continue;
+                for (String callee : callGraph.getOrDefault(sig, Set.of())) {
+                    if (!reachable.contains(callee)) {
+                        work.add(callee);
+                    }
+                }
+            }
+        }
 
+        for (List<JavaSootMethod> batch : batches) {
+            // Only analyze methods in reachable set (if filter is set)
+            List<JavaSootMethod> filteredBatch = batch;
+            if (reachable != null) {
+                final Set<String> reachableFinal = reachable;
+                filteredBatch = batch.stream()
+                    .filter(m -> reachableFinal.contains(m.getSignature().toString()))
+                    .toList();
+            }
+            if (filteredBatch.isEmpty()) continue;
+
+            if (filteredBatch.size() == 1) {
+                JavaSootMethod method = filteredBatch.get(0);
+                if (!method.isConcrete()) continue;
                 MethodSummary summary = analyzeMethod(method, sourceContents, cache, callGraph);
                 if (summary != null) {
                     storeSummary(method, summary, cache);
-                    summaries.add(summary);
+                    // Only include in output if it matches the filter (or no filter)
+                    if (config.methodFilter == null || method.getName().equals(config.methodFilter)) {
+                        summaries.add(summary);
+                    }
                 }
             } else {
                 // SCC (mutually recursive methods): iterate until summaries stabilize
                 if (config.debug) {
-                    List<String> names = batch.stream()
+                    List<String> names = filteredBatch.stream()
                             .map(m -> m.getDeclaringClassType().getClassName() + "." + m.getName())
                             .toList();
                     System.out.println("Debug== Analyzing SCC: " + names);
                 }
-
                 int maxIterations = 5;
                 for (int iter = 0; iter < maxIterations; iter++) {
                     boolean anyChanged = false;
-                    for (JavaSootMethod method : batch) {
+                    for (JavaSootMethod method : filteredBatch) {
                         if (!method.isConcrete()) continue;
-
                         MethodSummary oldSummary = cache.lookup(
                                 method.getSignature().toString(),
                                 method.getSignature().getSubSignature().toString());
-
                         MethodSummary newSummary = analyzeMethod(method, sourceContents, cache, callGraph);
                         if (newSummary != null) {
                             storeSummary(method, newSummary, cache);
@@ -203,9 +239,8 @@ public class SideEffectAnalysisRunner {
                         break;
                     }
                 }
-
                 // Collect final summaries for the SCC methods
-                for (JavaSootMethod method : batch) {
+                for (JavaSootMethod method : filteredBatch) {
                     if (!method.isConcrete()) continue;
                     if (config.methodFilter != null && !method.getName().equals(config.methodFilter)) continue;
                     MethodSummary summary = cache.lookup(
