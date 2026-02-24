@@ -1,6 +1,7 @@
 debug/
 dot-graph/
 .gradle/
+.claude/
 build/
 bin/
 *.class
