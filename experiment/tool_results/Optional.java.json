@@ -1,0 +1,262 @@
+{
+  "timestamp": "2026-02-23T21:22:00",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Optional.java"],
+  "phaseTimings": {
+    "totalMs": 3511.5,
+    "compilationMs": 0.0,
+    "irLoadingMs": 120.9,
+    "callGraphMs": 3286.3,
+    "dataflowTotalMs": 56.1,
+    "sideEffectTotalMs": 4.6,
+    "overheadMs": 43.5
+  },
+  "methods": [
+    {
+      "signature": "<java.util.Optional: boolean equals(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'load value from parameter this' escapes to global scope",
+      "dataflowMs": 34.1,
+      "sideEffectMs": 3.9,
+      "totalMs": 38.0,
+      "jimpleStmtCount": 15,
+      "graphNodes": 4,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.Optional: boolean isEmpty()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 7,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Optional: java.util.stream.Stream stream()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'callee: load value from parameter this' escapes to global scope",
+      "dataflowMs": 10.0,
+      "sideEffectMs": 0.0,
+      "totalMs": 10.1,
+      "jimpleStmtCount": 8,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Optional: void ifPresentOrElse(java.util.function.Consumer,java.lang.Runnable)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Consumer parameter escapes to global scope",
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.5,
+      "jimpleStmtCount": 10,
+      "graphNodes": 4,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Optional: void <init>(java.lang.Object)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 1.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 1.1,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Optional: java.util.Optional of(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object parameter escapes to global scope",
+      "dataflowMs": 0.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Optional: java.lang.Object get()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 8,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Optional: java.lang.Object orElseThrow()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 8,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Optional: java.lang.Object orElse(java.lang.Object)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 8,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Optional: java.lang.String toString()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'load value from parameter this' escapes to global scope",
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 13,
+      "graphNodes": 4,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Optional: boolean isPresent()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 7,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Optional: java.util.Optional empty()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 2,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Optional: java.util.Optional filter(java.util.function.Predicate)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Predicate parameter escapes to global scope",
+      "dataflowMs": 0.7,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.7,
+      "jimpleStmtCount": 13,
+      "graphNodes": 5,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.Optional: java.util.Optional ofNullable(java.lang.Object)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 7,
+      "graphNodes": 4,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.Optional: java.util.Optional map(java.util.function.Function)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Function parameter escapes to global scope",
+      "dataflowMs": 4.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 4.1,
+      "jimpleStmtCount": 11,
+      "graphNodes": 6,
+      "graphEdges": 3
+    },
+    {
+      "signature": "<java.util.Optional: java.lang.Object orElseGet(java.util.function.Supplier)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.7,
+      "jimpleStmtCount": 8,
+      "graphNodes": 5,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.Optional: java.util.Optional or(java.util.function.Supplier)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Supplier parameter escapes to global scope",
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 11,
+      "graphNodes": 6,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.Optional: void ifPresent(java.util.function.Consumer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Consumer parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 7,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Optional: void <clinit>()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "writes to static field EMPTY",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Optional: java.util.Optional flatMap(java.util.function.Function)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Function parameter escapes to global scope",
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 13,
+      "graphNodes": 5,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.Optional: int hashCode()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'load value from parameter this' escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Optional: java.lang.Object orElseThrow(java.util.function.Supplier)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 9,
+      "graphNodes": 5,
+      "graphEdges": 2
+    }
+  ],
+  "statistics": {
+    "methodCount": 22,
+    "avgTimePerMethodMs": 2.8,
+    "totalJimpleStmts": 183
+  }
+}

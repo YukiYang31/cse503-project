@@ -1,0 +1,174 @@
+{
+  "timestamp": "2026-02-23T21:24:35",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Set.java"],
+  "phaseTimings": {
+    "totalMs": 2989.2,
+    "compilationMs": 0.0,
+    "irLoadingMs": 127.3,
+    "callGraphMs": 2779.5,
+    "dataflowTotalMs": 37.3,
+    "sideEffectTotalMs": 2.0,
+    "overheadMs": 43.0
+  },
+  "methods": [
+    {
+      "signature": "<java.util.Set: java.util.Set of(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 23.8,
+      "sideEffectMs": 1.5,
+      "totalMs": 25.3,
+      "jimpleStmtCount": 22,
+      "graphNodes": 11,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Set: java.util.Set of()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 1.8,
+      "sideEffectMs": 0.0,
+      "totalMs": 1.8,
+      "jimpleStmtCount": 2,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Set: java.util.Set of(java.lang.Object[])>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object[] parameter escapes to global scope",
+      "dataflowMs": 1.0,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.1,
+      "jimpleStmtCount": 17,
+      "graphNodes": 5,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Set: java.util.Set copyOf(java.util.Collection)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 7.7,
+      "sideEffectMs": 0.0,
+      "totalMs": 7.8,
+      "jimpleStmtCount": 14,
+      "graphNodes": 6,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Set: java.util.Set of(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 24,
+      "graphNodes": 12,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Set: java.util.Set of(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 20,
+      "graphNodes": 10,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Set: java.util.Set of(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 16,
+      "graphNodes": 8,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Set: java.util.Set of(java.lang.Object,java.lang.Object,java.lang.Object)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.5,
+      "jimpleStmtCount": 10,
+      "graphNodes": 5,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Set: java.util.Set of(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 18,
+      "graphNodes": 9,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Set: java.util.Set of(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Set: java.util.Set of(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 12,
+      "graphNodes": 6,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Set: java.util.Set of(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 14,
+      "graphNodes": 7,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Set: java.util.Spliterator spliterator()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Set: java.util.Set of(java.lang.Object,java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 14,
+    "avgTimePerMethodMs": 2.8,
+    "totalJimpleStmts": 181
+  }
+}

@@ -1,0 +1,372 @@
+{
+  "timestamp": "2026-02-23T21:23:09",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/ReverseOrderSortedSetView.java"],
+  "phaseTimings": {
+    "totalMs": 3461.0,
+    "compilationMs": 0.0,
+    "irLoadingMs": 126.2,
+    "callGraphMs": 3218.9,
+    "dataflowTotalMs": 67.2,
+    "sideEffectTotalMs": 6.1,
+    "overheadMs": 42.6
+  },
+  "methods": [
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: boolean add(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object parameter escapes to global scope",
+      "dataflowMs": 43.7,
+      "sideEffectMs": 2.0,
+      "totalMs": 45.7,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: boolean addAll(java.util.Collection)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Collection parameter escapes to global scope",
+      "dataflowMs": 0.5,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: int size()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'load base from parameter this' escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 2.8,
+      "totalMs": 3.0,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: java.util.Comparator comparator()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: void <init>(java.util.SortedSet)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'callee: load comp from parameter this' escapes to global scope",
+      "dataflowMs": 8.0,
+      "sideEffectMs": 0.1,
+      "totalMs": 8.0,
+      "jimpleStmtCount": 8,
+      "graphNodes": 4,
+      "graphEdges": 3
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: java.util.SortedSet of(java.util.SortedSet)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'load base from SortedSet parameter' escapes to global scope",
+      "dataflowMs": 2.0,
+      "sideEffectMs": 0.1,
+      "totalMs": 2.0,
+      "jimpleStmtCount": 9,
+      "graphNodes": 4,
+      "graphEdges": 4
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: java.lang.Object first()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'load base from parameter this' escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 4,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: java.lang.Object last()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'callee: load base from parameter this' escapes to global scope",
+      "dataflowMs": 0.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 4,
+      "graphNodes": 4,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: java.lang.Object first()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'callee: callee: load base from parameter this' escapes to global scope",
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 4,
+      "graphNodes": 5,
+      "graphEdges": 3
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: java.lang.Object last()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'callee: callee: callee: load base from parameter this' escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 4,
+      "graphNodes": 6,
+      "graphEdges": 4
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: java.util.Iterator descendingIterator(java.util.SortedSet)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'callee: callee: load comp from parameter this' escapes to global scope",
+      "dataflowMs": 0.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 4,
+      "graphNodes": 4,
+      "graphEdges": 3
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: java.util.SortedSet subSet(java.lang.Object,java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 6,
+      "graphNodes": 4,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: java.lang.Object[] toArray(java.lang.Object[])>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object[] parameter escapes to global scope",
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 5,
+      "graphNodes": 4,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: void clear()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'load base from parameter this' escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: boolean isEmpty()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'load base from parameter this' escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: java.util.SortedSet tailSet(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: boolean containsAll(java.util.Collection)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Collection parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: boolean remove(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: java.util.Spliterator spliterator()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: java.util.stream.Stream stream()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: java.util.Iterator iterator()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'callee: callee: callee: load comp from parameter this' escapes to global scope",
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 4,
+      "graphNodes": 5,
+      "graphEdges": 4
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: boolean equals(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object parameter escapes to global scope",
+      "dataflowMs": 2.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 2.2,
+      "jimpleStmtCount": 17,
+      "graphNodes": 4,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: java.util.stream.Stream parallelStream()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: java.lang.Object[] toArray()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'load base from parameter this' escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: void forEach(java.util.function.Consumer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Consumer parameter escapes to global scope",
+      "dataflowMs": 1.0,
+      "sideEffectMs": 0.0,
+      "totalMs": 1.1,
+      "jimpleStmtCount": 9,
+      "graphNodes": 6,
+      "graphEdges": 4
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: java.lang.String toString()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'callee: load base from parameter this' escapes to global scope",
+      "dataflowMs": 1.7,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.8,
+      "jimpleStmtCount": 23,
+      "graphNodes": 6,
+      "graphEdges": 4
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: java.util.SortedSet headSet(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: boolean retainAll(java.util.Collection)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Collection parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: boolean contains(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: boolean removeAll(java.util.Collection)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Collection parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: java.lang.Object[] toArray(java.util.function.IntFunction)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "IntFunction parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 6,
+      "graphNodes": 4,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.ReverseOrderSortedSetView: int hashCode()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'callee: load base from parameter this' escapes to global scope",
+      "dataflowMs": 1.0,
+      "sideEffectMs": 0.0,
+      "totalMs": 1.0,
+      "jimpleStmtCount": 11,
+      "graphNodes": 5,
+      "graphEdges": 4
+    }
+  ],
+  "statistics": {
+    "methodCount": 32,
+    "avgTimePerMethodMs": 2.3,
+    "totalJimpleStmts": 194
+  }
+}

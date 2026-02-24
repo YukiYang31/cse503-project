@@ -1,0 +1,108 @@
+{
+  "timestamp": "2026-02-23T21:13:51",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/FormatItem.java"],
+  "phaseTimings": {
+    "totalMs": 2834.3,
+    "compilationMs": 0.0,
+    "irLoadingMs": 99.3,
+    "callGraphMs": 2661.2,
+    "dataflowTotalMs": 38.0,
+    "sideEffectTotalMs": 2.0,
+    "overheadMs": 33.8
+  },
+  "methods": [
+    {
+      "signature": "<java.util.FormatItem: long charMix(long,char)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 27.4,
+      "sideEffectMs": 1.5,
+      "totalMs": 28.9,
+      "jimpleStmtCount": 13,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.FormatItem: java.lang.invoke.MethodHandle selectGetChar(long)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.FormatItem: void putByte(byte[],int,int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "mutates byte[] parameter via field array element",
+      "dataflowMs": 1.2,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.3,
+      "jimpleStmtCount": 6,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.FormatItem: java.lang.invoke.MethodHandle selectPutChar(long)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.FormatItem: long stringPrepend(long,byte[],java.lang.String)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "byte[] parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 7,
+      "graphNodes": 4,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.FormatItem: void <clinit>()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "writes to static field SELECT_PUTCHAR_MH",
+      "dataflowMs": 8.4,
+      "sideEffectMs": 0.2,
+      "totalMs": 8.6,
+      "jimpleStmtCount": 48,
+      "graphNodes": 9,
+      "graphEdges": 5
+    },
+    {
+      "signature": "<java.util.FormatItem: long stringMix(long,java.lang.String)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "String parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.FormatItem: void <init>()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 8,
+    "avgTimePerMethodMs": 5.0,
+    "totalJimpleStmts": 92
+  }
+}

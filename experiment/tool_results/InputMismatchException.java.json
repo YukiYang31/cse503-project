@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-02-23T21:19:28",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/InputMismatchException.java"],
+  "phaseTimings": {
+    "totalMs": 2722.5,
+    "compilationMs": 0.0,
+    "irLoadingMs": 134.4,
+    "callGraphMs": 2526.9,
+    "dataflowTotalMs": 11.9,
+    "sideEffectTotalMs": 1.7,
+    "overheadMs": 47.6
+  },
+  "methods": [
+    {
+      "signature": "<java.util.InputMismatchException: void <init>(java.lang.String)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 11.6,
+      "sideEffectMs": 1.7,
+      "totalMs": 13.3,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.InputMismatchException: void <init>()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 2,
+    "avgTimePerMethodMs": 6.8,
+    "totalJimpleStmts": 7
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-02-23T21:13:13",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Deque.java"],
+  "phaseTimings": {
+    "totalMs": 2006.5,
+    "compilationMs": 0.0,
+    "irLoadingMs": 96.1,
+    "callGraphMs": 1874.5,
+    "dataflowTotalMs": 8.9,
+    "sideEffectTotalMs": 0.7,
+    "overheadMs": 26.3
+  },
+  "methods": [
+    {
+      "signature": "<java.util.Deque: java.util.Deque reversed()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 7.4,
+      "sideEffectMs": 0.7,
+      "totalMs": 8.1,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Deque: java.util.SequencedCollection reversed()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 1.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 1.5,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 2,
+    "avgTimePerMethodMs": 4.8,
+    "totalJimpleStmts": 6
+  }
+}

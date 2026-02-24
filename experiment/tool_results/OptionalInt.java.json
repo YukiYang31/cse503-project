@@ -1,0 +1,218 @@
+{
+  "timestamp": "2026-02-23T21:22:09",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/OptionalInt.java"],
+  "phaseTimings": {
+    "totalMs": 3301.0,
+    "compilationMs": 0.0,
+    "irLoadingMs": 142.6,
+    "callGraphMs": 3077.7,
+    "dataflowTotalMs": 29.9,
+    "sideEffectTotalMs": 1.2,
+    "overheadMs": 49.7
+  },
+  "methods": [
+    {
+      "signature": "<java.util.OptionalInt: int orElseThrow()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 9.1,
+      "sideEffectMs": 0.7,
+      "totalMs": 9.8,
+      "jimpleStmtCount": 8,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.OptionalInt: void ifPresentOrElse(java.util.function.IntConsumer,java.lang.Runnable)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "IntConsumer parameter escapes to global scope",
+      "dataflowMs": 5.2,
+      "sideEffectMs": 0.1,
+      "totalMs": 5.3,
+      "jimpleStmtCount": 10,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.OptionalInt: void <init>()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 9.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 9.5,
+      "jimpleStmtCount": 5,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.OptionalInt: void <init>(int)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 6,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.OptionalInt: boolean isPresent()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.OptionalInt: java.util.OptionalInt of(int)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 2.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 2.6,
+      "jimpleStmtCount": 4,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.OptionalInt: boolean isEmpty()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 7,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.OptionalInt: boolean equals(java.lang.Object)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.5,
+      "jimpleStmtCount": 22,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.OptionalInt: java.util.OptionalInt empty()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.9,
+      "sideEffectMs": 0.0,
+      "totalMs": 1.0,
+      "jimpleStmtCount": 2,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.OptionalInt: int getAsInt()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 8,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.OptionalInt: void ifPresent(java.util.function.IntConsumer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "IntConsumer parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 7,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.OptionalInt: int orElseGet(java.util.function.IntSupplier)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 8,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.OptionalInt: int orElseThrow(java.util.function.Supplier)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Supplier parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 9,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.OptionalInt: java.lang.String toString()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 13,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.OptionalInt: int orElse(int)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 8,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.OptionalInt: java.util.stream.IntStream stream()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 8,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.OptionalInt: int hashCode()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 8,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.OptionalInt: void <clinit>()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "writes to static field EMPTY",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 18,
+    "avgTimePerMethodMs": 1.7,
+    "totalJimpleStmts": 140
+  }
+}

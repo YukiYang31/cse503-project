@@ -1,0 +1,295 @@
+{
+  "timestamp": "2026-02-23T21:24:30",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/ServiceLoader.java"],
+  "phaseTimings": {
+    "totalMs": 3632.6,
+    "compilationMs": 0.0,
+    "irLoadingMs": 167.0,
+    "callGraphMs": 3336.3,
+    "dataflowTotalMs": 78.5,
+    "sideEffectTotalMs": 5.2,
+    "overheadMs": 45.6
+  },
+  "methods": [
+    {
+      "signature": "<java.util.ServiceLoader: java.lang.String toString()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'load service from parameter this' escapes to global scope",
+      "dataflowMs": 31.7,
+      "sideEffectMs": 3.4,
+      "totalMs": 35.1,
+      "jimpleStmtCount": 10,
+      "graphNodes": 4,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.ServiceLoader: void fail(java.lang.Class,java.lang.String)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Class parameter escapes to global scope",
+      "dataflowMs": 4.5,
+      "sideEffectMs": 0.1,
+      "totalMs": 4.6,
+      "jimpleStmtCount": 12,
+      "graphNodes": 7,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.ServiceLoader: void checkCaller(java.lang.Class,java.lang.Class)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Class parameter escapes to global scope",
+      "dataflowMs": 8.2,
+      "sideEffectMs": 0.1,
+      "totalMs": 8.2,
+      "jimpleStmtCount": 23,
+      "graphNodes": 21,
+      "graphEdges": 5
+    },
+    {
+      "signature": "<java.util.ServiceLoader: void <init>(java.lang.Class,java.lang.Class,java.lang.ClassLoader)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Class parameter escapes to global scope",
+      "dataflowMs": 8.0,
+      "sideEffectMs": 0.2,
+      "totalMs": 8.2,
+      "jimpleStmtCount": 44,
+      "graphNodes": 25,
+      "graphEdges": 12
+    },
+    {
+      "signature": "<java.util.ServiceLoader: void <init>(java.lang.Class,java.lang.ModuleLayer,java.lang.Class)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Class parameter escapes to global scope",
+      "dataflowMs": 1.2,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.3,
+      "jimpleStmtCount": 27,
+      "graphNodes": 25,
+      "graphEdges": 11
+    },
+    {
+      "signature": "<java.util.ServiceLoader: boolean inExplicitModule(java.lang.Class)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Class parameter escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 12,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.ServiceLoader: java.util.Iterator newLookupIterator()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.8,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.9,
+      "jimpleStmtCount": 24,
+      "graphNodes": 6,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.ServiceLoader: java.util.Iterator iterator()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.7,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.7,
+      "jimpleStmtCount": 8,
+      "graphNodes": 8,
+      "graphEdges": 5
+    },
+    {
+      "signature": "<java.util.ServiceLoader: void fail(java.lang.Class,java.lang.String,java.lang.Throwable)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Class parameter escapes to global scope",
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.7,
+      "jimpleStmtCount": 13,
+      "graphNodes": 8,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.ServiceLoader: java.lang.reflect.Method findStaticProviderMethod(java.lang.Class)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "writes to static field lookupIterator1",
+      "dataflowMs": 4.7,
+      "sideEffectMs": 0.1,
+      "totalMs": 4.9,
+      "jimpleStmtCount": 44,
+      "graphNodes": 22,
+      "graphEdges": 10
+    },
+    {
+      "signature": "<java.util.ServiceLoader: java.lang.reflect.Constructor getConstructor(java.lang.Class)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 1.0,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.1,
+      "jimpleStmtCount": 22,
+      "graphNodes": 10,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.ServiceLoader: java.util.ServiceLoader$Provider loadProvider(jdk.internal.module.ServicesCatalog$ServiceProvider)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "writes to static field lookupIterator1",
+      "dataflowMs": 9.1,
+      "sideEffectMs": 0.2,
+      "totalMs": 9.2,
+      "jimpleStmtCount": 99,
+      "graphNodes": 58,
+      "graphEdges": 22
+    },
+    {
+      "signature": "<java.util.ServiceLoader: java.lang.Void lambda$findStaticProviderMethod$0(java.lang.reflect.Method)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Method parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.ServiceLoader: void reload()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "mutates this via field reloadCount",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.2,
+      "totalMs": 0.5,
+      "jimpleStmtCount": 12,
+      "graphNodes": 3,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.ServiceLoader: java.util.stream.Stream stream()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 15,
+      "graphNodes": 9,
+      "graphEdges": 6
+    },
+    {
+      "signature": "<java.util.ServiceLoader: void <init>(java.lang.Module,java.lang.Class,java.lang.ClassLoader)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Module parameter escapes to global scope",
+      "dataflowMs": 1.3,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.3,
+      "jimpleStmtCount": 33,
+      "graphNodes": 14,
+      "graphEdges": 8
+    },
+    {
+      "signature": "<java.util.ServiceLoader: void fail(java.lang.Class,java.net.URL,int,java.lang.String)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Class parameter escapes to global scope",
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.7,
+      "jimpleStmtCount": 14,
+      "graphNodes": 11,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.ServiceLoader: java.util.ServiceLoader load(java.lang.Class,java.lang.ClassLoader)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Class parameter escapes to global scope",
+      "dataflowMs": 0.7,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.8,
+      "jimpleStmtCount": 6,
+      "graphNodes": 24,
+      "graphEdges": 12
+    },
+    {
+      "signature": "<java.util.ServiceLoader: java.util.ServiceLoader load(java.lang.ModuleLayer,java.lang.Class)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "ModuleLayer parameter escapes to global scope",
+      "dataflowMs": 0.8,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.9,
+      "jimpleStmtCount": 6,
+      "graphNodes": 24,
+      "graphEdges": 11
+    },
+    {
+      "signature": "<java.util.ServiceLoader: java.util.ServiceLoader load(java.lang.Class)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Class parameter escapes to global scope",
+      "dataflowMs": 0.8,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.9,
+      "jimpleStmtCount": 7,
+      "graphNodes": 23,
+      "graphEdges": 11
+    },
+    {
+      "signature": "<java.util.ServiceLoader: java.util.ServiceLoader loadInstalled(java.lang.Class)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Class parameter escapes to global scope",
+      "dataflowMs": 1.0,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.1,
+      "jimpleStmtCount": 6,
+      "graphNodes": 23,
+      "graphEdges": 11
+    },
+    {
+      "signature": "<java.util.ServiceLoader: java.lang.Class lambda$loadProvider$1(java.lang.Module,java.lang.String)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Module parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 4,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.ServiceLoader: java.util.ServiceLoader load(java.lang.Class,java.lang.ClassLoader,java.lang.Module)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Class parameter escapes to global scope",
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 6,
+      "graphNodes": 14,
+      "graphEdges": 8
+    },
+    {
+      "signature": "<java.util.ServiceLoader: void <clinit>()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "writes to static field $assertionsDisabled",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 10,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.ServiceLoader: java.util.Optional findFirst()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.5,
+      "jimpleStmtCount": 9,
+      "graphNodes": 9,
+      "graphEdges": 5
+    }
+  ],
+  "statistics": {
+    "methodCount": 25,
+    "avgTimePerMethodMs": 3.3,
+    "totalJimpleStmts": 469
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "timestamp": "2026-02-23T21:25:33",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/TimerTask.java"],
+  "phaseTimings": {
+    "totalMs": 360.1,
+    "compilationMs": 0.0,
+    "irLoadingMs": 155.9,
+    "callGraphMs": 85.3,
+    "dataflowTotalMs": 30.0,
+    "sideEffectTotalMs": 1.3,
+    "overheadMs": 87.4
+  },
+  "methods": [
+    {
+      "signature": "<java.util.TimerTask: long scheduledExecutionTime()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 27.1,
+      "sideEffectMs": 1.1,
+      "totalMs": 28.2,
+      "jimpleStmtCount": 19,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.TimerTask: boolean cancel()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "mutates this via field state",
+      "dataflowMs": 1.5,
+      "sideEffectMs": 0.2,
+      "totalMs": 1.7,
+      "jimpleStmtCount": 16,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.TimerTask: void <init>()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 1.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 1.5,
+      "jimpleStmtCount": 8,
+      "graphNodes": 2,
+      "graphEdges": 1
+    }
+  ],
+  "statistics": {
+    "methodCount": 3,
+    "avgTimePerMethodMs": 10.5,
+    "totalJimpleStmts": 43
+  }
+}

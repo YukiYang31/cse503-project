@@ -1,0 +1,53 @@
+{
+  "timestamp": "2026-02-23T21:19:15",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/IllegalFormatWidthException.java"],
+  "phaseTimings": {
+    "totalMs": 3350.2,
+    "compilationMs": 0.0,
+    "irLoadingMs": 147.0,
+    "callGraphMs": 3127.6,
+    "dataflowTotalMs": 28.4,
+    "sideEffectTotalMs": 1.6,
+    "overheadMs": 45.7
+  },
+  "methods": [
+    {
+      "signature": "<java.util.IllegalFormatWidthException: int getWidth()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 10.8,
+      "sideEffectMs": 1.4,
+      "totalMs": 12.2,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.IllegalFormatWidthException: java.lang.String getMessage()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 7.0,
+      "sideEffectMs": 0.0,
+      "totalMs": 7.0,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.IllegalFormatWidthException: void <init>(int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 10.6,
+      "sideEffectMs": 0.1,
+      "totalMs": 10.7,
+      "jimpleStmtCount": 5,
+      "graphNodes": 1,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 3,
+    "avgTimePerMethodMs": 10.0,
+    "totalJimpleStmts": 12
+  }
+}

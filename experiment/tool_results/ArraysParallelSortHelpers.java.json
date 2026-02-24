@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-02-23T21:12:32",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/ArraysParallelSortHelpers.java"],
+  "phaseTimings": {
+    "totalMs": 148.0,
+    "compilationMs": 0.0,
+    "irLoadingMs": 85.5,
+    "callGraphMs": 27.3,
+    "dataflowTotalMs": 4.6,
+    "sideEffectTotalMs": 0.5,
+    "overheadMs": 30.2
+  },
+  "methods": [
+    {
+      "signature": "<java.util.ArraysParallelSortHelpers: void <init>()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 4.6,
+      "sideEffectMs": 0.5,
+      "totalMs": 5.1,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 1,
+    "avgTimePerMethodMs": 5.1,
+    "totalJimpleStmts": 3
+  }
+}

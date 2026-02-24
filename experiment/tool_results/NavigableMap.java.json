@@ -1,0 +1,53 @@
+{
+  "timestamp": "2026-02-23T21:21:36",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/NavigableMap.java"],
+  "phaseTimings": {
+    "totalMs": 3340.7,
+    "compilationMs": 0.0,
+    "irLoadingMs": 166.2,
+    "callGraphMs": 3113.3,
+    "dataflowTotalMs": 22.3,
+    "sideEffectTotalMs": 1.6,
+    "overheadMs": 37.3
+  },
+  "methods": [
+    {
+      "signature": "<java.util.NavigableMap: java.util.NavigableMap reversed()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 17.0,
+      "sideEffectMs": 1.5,
+      "totalMs": 18.5,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.NavigableMap: java.util.SequencedMap reversed()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 4.9,
+      "sideEffectMs": 0.1,
+      "totalMs": 5.0,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.NavigableMap: java.util.SortedMap reversed()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 3,
+    "avgTimePerMethodMs": 7.9,
+    "totalJimpleStmts": 9
+  }
+}

@@ -1,0 +1,229 @@
+{
+  "timestamp": "2026-02-23T21:12:08",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/AbstractList.java"],
+  "phaseTimings": {
+    "totalMs": 2296.1,
+    "compilationMs": 0.0,
+    "irLoadingMs": 67.4,
+    "callGraphMs": 2170.5,
+    "dataflowTotalMs": 32.6,
+    "sideEffectTotalMs": 1.8,
+    "overheadMs": 23.9
+  },
+  "methods": [
+    {
+      "signature": "<java.util.AbstractList: void <init>()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 18.2,
+      "sideEffectMs": 1.4,
+      "totalMs": 19.6,
+      "jimpleStmtCount": 4,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractList: java.lang.Object set(int,java.lang.Object)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 7.0,
+      "sideEffectMs": 0.0,
+      "totalMs": 7.0,
+      "jimpleStmtCount": 6,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractList: java.lang.String outOfBoundsMsg(int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 11,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractList: void rangeCheckForAdd(int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.7,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.8,
+      "jimpleStmtCount": 10,
+      "graphNodes": 4,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractList: java.util.ListIterator listIterator(int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 6,
+      "graphNodes": 5,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractList: java.util.ListIterator listIterator()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 3,
+      "graphNodes": 5,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractList: void subListRangeCheck(int,int,int)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 34,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractList: java.util.List subList(int,int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.5,
+      "jimpleStmtCount": 14,
+      "graphNodes": 5,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractList: boolean equals(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.9,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.9,
+      "jimpleStmtCount": 31,
+      "graphNodes": 9,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractList: int lastIndexOf(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.7,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.7,
+      "jimpleStmtCount": 19,
+      "graphNodes": 6,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractList: java.lang.Object remove(int)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractList: java.util.Iterator iterator()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractList: int hashCode()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 14,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractList: void removeRange(int,int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 12,
+      "graphNodes": 5,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractList: void clear()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 4,
+      "graphNodes": 5,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractList: void add(int,java.lang.Object)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 6,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractList: boolean add(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractList: boolean addAll(int,java.util.Collection)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 1.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 1.1,
+      "jimpleStmtCount": 15,
+      "graphNodes": 7,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractList: int indexOf(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.7,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.7,
+      "jimpleStmtCount": 18,
+      "graphNodes": 6,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 19,
+    "avgTimePerMethodMs": 1.8,
+    "totalJimpleStmts": 221
+  }
+}

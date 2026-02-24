@@ -1,0 +1,53 @@
+{
+  "timestamp": "2026-02-23T21:29:30",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/UnknownFormatConversionException.java"],
+  "phaseTimings": {
+    "totalMs": 3652.6,
+    "compilationMs": 0.0,
+    "irLoadingMs": 132.4,
+    "callGraphMs": 3448.1,
+    "dataflowTotalMs": 27.2,
+    "sideEffectTotalMs": 1.2,
+    "overheadMs": 43.7
+  },
+  "methods": [
+    {
+      "signature": "<java.util.UnknownFormatConversionException: java.lang.String getConversion()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 24.5,
+      "sideEffectMs": 1.0,
+      "totalMs": 25.5,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.UnknownFormatConversionException: void <init>(java.lang.String)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 2.3,
+      "sideEffectMs": 0.1,
+      "totalMs": 2.4,
+      "jimpleStmtCount": 9,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.UnknownFormatConversionException: java.lang.String getMessage()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 6,
+      "graphNodes": 4,
+      "graphEdges": 1
+    }
+  ],
+  "statistics": {
+    "methodCount": 3,
+    "avgTimePerMethodMs": 9.4,
+    "totalJimpleStmts": 18
+  }
+}

@@ -1,0 +1,328 @@
+{
+  "timestamp": "2026-02-23T21:24:59",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Spliterators.java"],
+  "phaseTimings": {
+    "totalMs": 4254.5,
+    "compilationMs": 0.0,
+    "irLoadingMs": 121.9,
+    "callGraphMs": 4060.9,
+    "dataflowTotalMs": 30.6,
+    "sideEffectTotalMs": 1.7,
+    "overheadMs": 39.4
+  },
+  "methods": [
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator emptySpliterator()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 17.9,
+      "sideEffectMs": 1.1,
+      "totalMs": 19.0,
+      "jimpleStmtCount": 2,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator$OfInt emptyIntSpliterator()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 2,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.PrimitiveIterator$OfDouble iterator(java.util.Spliterator$OfDouble)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Spliterator$OfDouble parameter escapes to global scope",
+      "dataflowMs": 3.9,
+      "sideEffectMs": 0.1,
+      "totalMs": 4.0,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: void <init>()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: void checkFromToBounds(int,int,int)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.8,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.9,
+      "jimpleStmtCount": 24,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator$OfDouble spliterator(double[],int,int,int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "double[] parameter escapes to global scope",
+      "dataflowMs": 3.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 3.3,
+      "jimpleStmtCount": 11,
+      "graphNodes": 5,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator$OfInt spliteratorUnknownSize(java.util.PrimitiveIterator$OfInt,int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "PrimitiveIterator$OfInt parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 7,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator spliteratorUnknownSize(java.util.Iterator,int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Iterator parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 7,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator$OfInt spliterator(java.util.PrimitiveIterator$OfInt,long,int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "PrimitiveIterator$OfInt parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 8,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator$OfDouble spliteratorUnknownSize(java.util.PrimitiveIterator$OfDouble,int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "PrimitiveIterator$OfDouble parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 7,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator$OfLong emptyLongSpliterator()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 2,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator$OfDouble spliterator(double[],int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "double[] parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 7,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: void <clinit>()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "writes to static field EMPTY_INT_SPLITERATOR",
+      "dataflowMs": 1.1,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.1,
+      "jimpleStmtCount": 13,
+      "graphNodes": 5,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator$OfInt spliterator(int[],int,int,int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "int[] parameter escapes to global scope",
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 11,
+      "graphNodes": 5,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.PrimitiveIterator$OfInt iterator(java.util.Spliterator$OfInt)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Spliterator$OfInt parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator$OfInt spliterator(int[],int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "int[] parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 7,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator spliterator(java.lang.Object[],int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object[] parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 7,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator$OfLong spliterator(long[],int,int,int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "long[] parameter escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 11,
+      "graphNodes": 5,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator spliterator(java.util.Collection,int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Collection parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 7,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator$OfLong spliterator(long[],int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "long[] parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 7,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Iterator iterator(java.util.Spliterator)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Spliterator parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator spliterator(java.lang.Object[],int,int,int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object[] parameter escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 11,
+      "graphNodes": 5,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator$OfDouble emptyDoubleSpliterator()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 2,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator$OfLong spliterator(java.util.PrimitiveIterator$OfLong,long,int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "PrimitiveIterator$OfLong parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 8,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator spliterator(java.util.Iterator,long,int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Iterator parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 8,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator$OfLong spliteratorUnknownSize(java.util.PrimitiveIterator$OfLong,int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "PrimitiveIterator$OfLong parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 7,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.Spliterator$OfDouble spliterator(java.util.PrimitiveIterator$OfDouble,long,int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "PrimitiveIterator$OfDouble parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 8,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterators: java.util.PrimitiveIterator$OfLong iterator(java.util.Spliterator$OfLong)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Spliterator$OfLong parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 28,
+    "avgTimePerMethodMs": 1.2,
+    "totalJimpleStmts": 207
+  }
+}

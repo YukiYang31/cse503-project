@@ -1,0 +1,64 @@
+{
+  "timestamp": "2026-02-23T21:13:47",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/FormatFlagsConversionMismatchException.java"],
+  "phaseTimings": {
+    "totalMs": 2520.4,
+    "compilationMs": 0.0,
+    "irLoadingMs": 98.2,
+    "callGraphMs": 2363.1,
+    "dataflowTotalMs": 27.4,
+    "sideEffectTotalMs": 2.3,
+    "overheadMs": 29.4
+  },
+  "methods": [
+    {
+      "signature": "<java.util.FormatFlagsConversionMismatchException: char getConversion()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 7.1,
+      "sideEffectMs": 0.6,
+      "totalMs": 7.7,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.FormatFlagsConversionMismatchException: void <init>(java.lang.String,char)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 15.0,
+      "sideEffectMs": 0.1,
+      "totalMs": 15.1,
+      "jimpleStmtCount": 11,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.FormatFlagsConversionMismatchException: java.lang.String getFlags()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 4.9,
+      "sideEffectMs": 0.0,
+      "totalMs": 4.9,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.FormatFlagsConversionMismatchException: java.lang.String getMessage()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'load f from parameter this' escapes to global scope",
+      "dataflowMs": 0.5,
+      "sideEffectMs": 1.4,
+      "totalMs": 2.0,
+      "jimpleStmtCount": 11,
+      "graphNodes": 4,
+      "graphEdges": 1
+    }
+  ],
+  "statistics": {
+    "methodCount": 4,
+    "avgTimePerMethodMs": 7.4,
+    "totalJimpleStmts": 28
+  }
+}

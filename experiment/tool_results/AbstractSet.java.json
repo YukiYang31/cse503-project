@@ -1,0 +1,64 @@
+{
+  "timestamp": "2026-02-23T21:12:20",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/AbstractSet.java"],
+  "phaseTimings": {
+    "totalMs": 1963.9,
+    "compilationMs": 0.0,
+    "irLoadingMs": 100.3,
+    "callGraphMs": 1827.5,
+    "dataflowTotalMs": 10.7,
+    "sideEffectTotalMs": 0.6,
+    "overheadMs": 24.8
+  },
+  "methods": [
+    {
+      "signature": "<java.util.AbstractSet: boolean removeAll(java.util.Collection)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 9.8,
+      "sideEffectMs": 0.5,
+      "totalMs": 10.3,
+      "jimpleStmtCount": 25,
+      "graphNodes": 4,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractSet: boolean equals(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 17,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractSet: int hashCode()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 11,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.AbstractSet: void <init>()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 4,
+    "avgTimePerMethodMs": 2.8,
+    "totalJimpleStmts": 56
+  }
+}

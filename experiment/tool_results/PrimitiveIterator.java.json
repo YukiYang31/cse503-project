@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-02-23T21:22:15",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/PrimitiveIterator.java"],
+  "phaseTimings": {
+    "totalMs": 167.8,
+    "compilationMs": 0.0,
+    "irLoadingMs": 125.9,
+    "callGraphMs": 11.3,
+    "dataflowTotalMs": 0.0,
+    "sideEffectTotalMs": 0.0,
+    "overheadMs": 30.6
+  },
+  "methods": [
+  ],
+  "statistics": {
+    "methodCount": 0,
+    "avgTimePerMethodMs": 0.0,
+    "totalJimpleStmts": 0
+  }
+}

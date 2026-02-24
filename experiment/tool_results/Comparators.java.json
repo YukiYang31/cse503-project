@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-02-23T21:12:56",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Comparators.java"],
+  "phaseTimings": {
+    "totalMs": 2250.5,
+    "compilationMs": 0.0,
+    "irLoadingMs": 107.4,
+    "callGraphMs": 2103.5,
+    "dataflowTotalMs": 6.7,
+    "sideEffectTotalMs": 0.6,
+    "overheadMs": 32.3
+  },
+  "methods": [
+    {
+      "signature": "<java.util.Comparators: void <init>()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 6.7,
+      "sideEffectMs": 0.6,
+      "totalMs": 7.3,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 1,
+    "avgTimePerMethodMs": 7.3,
+    "totalJimpleStmts": 5
+  }
+}

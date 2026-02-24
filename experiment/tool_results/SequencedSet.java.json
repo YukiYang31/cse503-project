@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-02-23T21:24:20",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/SequencedSet.java"],
+  "phaseTimings": {
+    "totalMs": 3603.6,
+    "compilationMs": 0.0,
+    "irLoadingMs": 127.1,
+    "callGraphMs": 3419.0,
+    "dataflowTotalMs": 17.8,
+    "sideEffectTotalMs": 1.5,
+    "overheadMs": 38.2
+  },
+  "methods": [
+    {
+      "signature": "<java.util.SequencedSet: java.util.SequencedCollection reversed()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 17.8,
+      "sideEffectMs": 1.5,
+      "totalMs": 19.3,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 1,
+    "avgTimePerMethodMs": 19.3,
+    "totalJimpleStmts": 3
+  }
+}

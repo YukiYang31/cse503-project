@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-02-23T21:13:38",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Enumeration.java"],
+  "phaseTimings": {
+    "totalMs": 2921.1,
+    "compilationMs": 0.0,
+    "irLoadingMs": 103.3,
+    "callGraphMs": 2771.0,
+    "dataflowTotalMs": 11.6,
+    "sideEffectTotalMs": 0.7,
+    "overheadMs": 34.4
+  },
+  "methods": [
+    {
+      "signature": "<java.util.Enumeration: java.util.Iterator asIterator()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 11.6,
+      "sideEffectMs": 0.7,
+      "totalMs": 12.3,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 1,
+    "avgTimePerMethodMs": 12.3,
+    "totalJimpleStmts": 4
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "timestamp": "2026-02-23T21:19:24",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/ImmutableCollections.java"],
+  "phaseTimings": {
+    "totalMs": 3199.8,
+    "compilationMs": 0.0,
+    "irLoadingMs": 116.5,
+    "callGraphMs": 3016.7,
+    "dataflowTotalMs": 29.2,
+    "sideEffectTotalMs": 0.9,
+    "overheadMs": 36.5
+  },
+  "methods": [
+    {
+      "signature": "<java.util.ImmutableCollections: void <init>()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 6.1,
+      "sideEffectMs": 0.6,
+      "totalMs": 6.8,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.ImmutableCollections: java.util.List listFromTrustedArray(java.lang.Object[])>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object[] parameter escapes to global scope",
+      "dataflowMs": 16.8,
+      "sideEffectMs": 0.1,
+      "totalMs": 16.9,
+      "jimpleStmtCount": 35,
+      "graphNodes": 6,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.ImmutableCollections: java.util.List listFromArray(java.lang.Object[])>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 3.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 3.6,
+      "jimpleStmtCount": 14,
+      "graphNodes": 5,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.ImmutableCollections: void <clinit>()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "writes to static field EMPTY_LIST",
+      "dataflowMs": 2.0,
+      "sideEffectMs": 0.1,
+      "totalMs": 2.1,
+      "jimpleStmtCount": 81,
+      "graphNodes": 17,
+      "graphEdges": 6
+    },
+    {
+      "signature": "<java.util.ImmutableCollections: java.util.List listCopy(java.util.Collection)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Collection parameter escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 17,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.ImmutableCollections: java.lang.UnsupportedOperationException uoe()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.ImmutableCollections: java.util.List listFromTrustedArrayNullsAllowed(java.lang.Object[])>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object[] parameter escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 15,
+      "graphNodes": 5,
+      "graphEdges": 1
+    }
+  ],
+  "statistics": {
+    "methodCount": 7,
+    "avgTimePerMethodMs": 4.3,
+    "totalJimpleStmts": 168
+  }
+}

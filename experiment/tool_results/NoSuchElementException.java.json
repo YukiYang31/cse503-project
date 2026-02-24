@@ -1,0 +1,64 @@
+{
+  "timestamp": "2026-02-23T21:21:44",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/NoSuchElementException.java"],
+  "phaseTimings": {
+    "totalMs": 2856.3,
+    "compilationMs": 0.0,
+    "irLoadingMs": 130.7,
+    "callGraphMs": 2668.2,
+    "dataflowTotalMs": 10.0,
+    "sideEffectTotalMs": 1.1,
+    "overheadMs": 46.2
+  },
+  "methods": [
+    {
+      "signature": "<java.util.NoSuchElementException: void <init>()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 9.4,
+      "sideEffectMs": 1.0,
+      "totalMs": 10.4,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.NoSuchElementException: void <init>(java.lang.Throwable)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.NoSuchElementException: void <init>(java.lang.String,java.lang.Throwable)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.NoSuchElementException: void <init>(java.lang.String)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 4,
+    "avgTimePerMethodMs": 2.8,
+    "totalJimpleStmts": 16
+  }
+}

@@ -1,0 +1,273 @@
+{
+  "timestamp": "2026-02-23T21:12:53",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Comparator.java"],
+  "phaseTimings": {
+    "totalMs": 2695.1,
+    "compilationMs": 0.0,
+    "irLoadingMs": 120.4,
+    "callGraphMs": 2490.6,
+    "dataflowTotalMs": 39.5,
+    "sideEffectTotalMs": 2.0,
+    "overheadMs": 42.7
+  },
+  "methods": [
+    {
+      "signature": "<java.util.Comparator: java.util.Comparator nullsFirst(java.util.Comparator)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Comparator parameter escapes to global scope",
+      "dataflowMs": 10.3,
+      "sideEffectMs": 1.1,
+      "totalMs": 11.4,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: java.util.Comparator thenComparing(java.util.Comparator)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 4.3,
+      "sideEffectMs": 0.2,
+      "totalMs": 4.5,
+      "jimpleStmtCount": 7,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: java.util.Comparator comparing(java.util.function.Function)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Function parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 6,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: java.util.Comparator thenComparing(java.util.function.Function)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 4.0,
+      "sideEffectMs": 0.0,
+      "totalMs": 4.0,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: int lambda$comparingDouble$8dcf42ea$1(java.util.function.ToDoubleFunction,java.lang.Object,java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "ToDoubleFunction parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 7,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: java.util.Comparator comparing(java.util.function.Function,java.util.Comparator)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Function parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 8,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: java.lang.Object $deserializeLambda$(java.lang.invoke.SerializedLambda)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "SerializedLambda parameter escapes to global scope",
+      "dataflowMs": 4.9,
+      "sideEffectMs": 0.0,
+      "totalMs": 4.9,
+      "jimpleStmtCount": 162,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: int lambda$thenComparing$36697e65$1(java.util.Comparator,java.lang.Object,java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 10,
+      "graphNodes": 4,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: java.util.Comparator reversed()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: java.util.Comparator comparingLong(java.util.function.ToLongFunction)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "ToLongFunction parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 6,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: java.util.Comparator thenComparingLong(java.util.function.ToLongFunction)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: java.util.Comparator naturalOrder()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 12.0,
+      "sideEffectMs": 0.1,
+      "totalMs": 12.0,
+      "jimpleStmtCount": 2,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Comparator: java.util.Comparator nullsLast(java.util.Comparator)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Comparator parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: java.util.Comparator comparingInt(java.util.function.ToIntFunction)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "ToIntFunction parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 6,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: java.util.Comparator thenComparingInt(java.util.function.ToIntFunction)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: java.util.Comparator reverseOrder()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 2,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: int lambda$comparing$ea9a8b3a$1(java.util.Comparator,java.util.function.Function,java.lang.Object,java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Comparator parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 8,
+      "graphNodes": 5,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: int lambda$comparingLong$6043328a$1(java.util.function.ToLongFunction,java.lang.Object,java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "ToLongFunction parameter escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 7,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: java.util.Comparator comparingDouble(java.util.function.ToDoubleFunction)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "ToDoubleFunction parameter escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 6,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: int lambda$comparingInt$7b0bb60$1(java.util.function.ToIntFunction,java.lang.Object,java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "ToIntFunction parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 7,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: java.util.Comparator thenComparing(java.util.function.Function,java.util.Comparator)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 6,
+      "graphNodes": 4,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: java.util.Comparator thenComparingDouble(java.util.function.ToDoubleFunction)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparator: int lambda$comparing$77a9974f$1(java.util.function.Function,java.lang.Object,java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Function parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 8,
+      "graphNodes": 4,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 23,
+    "avgTimePerMethodMs": 1.8,
+    "totalJimpleStmts": 289
+  }
+}

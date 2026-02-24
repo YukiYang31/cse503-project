@@ -1,0 +1,64 @@
+{
+  "timestamp": "2026-02-23T21:19:36",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/InvalidPropertiesFormatException.java"],
+  "phaseTimings": {
+    "totalMs": 2550.0,
+    "compilationMs": 0.0,
+    "irLoadingMs": 107.4,
+    "callGraphMs": 2386.3,
+    "dataflowTotalMs": 16.9,
+    "sideEffectTotalMs": 1.5,
+    "overheadMs": 37.9
+  },
+  "methods": [
+    {
+      "signature": "<java.util.InvalidPropertiesFormatException: void <init>(java.lang.String)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 8.0,
+      "sideEffectMs": 1.3,
+      "totalMs": 9.3,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.InvalidPropertiesFormatException: void writeObject(java.io.ObjectOutputStream)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 6.5,
+      "sideEffectMs": 0.1,
+      "totalMs": 6.6,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.InvalidPropertiesFormatException: void <init>(java.lang.Throwable)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 2.0,
+      "sideEffectMs": 0.0,
+      "totalMs": 2.1,
+      "jimpleStmtCount": 9,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.InvalidPropertiesFormatException: void readObject(java.io.ObjectInputStream)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 4,
+    "avgTimePerMethodMs": 4.6,
+    "totalJimpleStmts": 23
+  }
+}

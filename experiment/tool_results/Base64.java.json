@@ -1,0 +1,108 @@
+{
+  "timestamp": "2026-02-23T21:12:35",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Base64.java"],
+  "phaseTimings": {
+    "totalMs": 2221.0,
+    "compilationMs": 0.0,
+    "irLoadingMs": 76.8,
+    "callGraphMs": 2083.6,
+    "dataflowTotalMs": 33.0,
+    "sideEffectTotalMs": 1.7,
+    "overheadMs": 25.9
+  },
+  "methods": [
+    {
+      "signature": "<java.util.Base64: java.util.Base64$Encoder getEncoder()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 26.4,
+      "sideEffectMs": 1.3,
+      "totalMs": 27.7,
+      "jimpleStmtCount": 2,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Base64: java.util.Base64$Encoder getUrlEncoder()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 2,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Base64: java.util.Base64$Decoder getDecoder()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 2,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Base64: java.util.Base64$Encoder getMimeEncoder()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 2,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Base64: java.util.Base64$Decoder getUrlDecoder()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 2,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Base64: java.util.Base64$Decoder getMimeDecoder()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 2,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Base64: void <init>()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Base64: java.util.Base64$Encoder getMimeEncoder(int,byte[])>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "byte[] parameter escapes to global scope",
+      "dataflowMs": 5.6,
+      "sideEffectMs": 0.3,
+      "totalMs": 5.9,
+      "jimpleStmtCount": 30,
+      "graphNodes": 6,
+      "graphEdges": 2
+    }
+  ],
+  "statistics": {
+    "methodCount": 8,
+    "avgTimePerMethodMs": 4.3,
+    "totalJimpleStmts": 45
+  }
+}

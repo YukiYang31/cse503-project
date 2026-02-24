@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-02-23T21:19:39",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Iterator.java"],
+  "phaseTimings": {
+    "totalMs": 2866.3,
+    "compilationMs": 0.0,
+    "irLoadingMs": 131.9,
+    "callGraphMs": 2685.5,
+    "dataflowTotalMs": 11.9,
+    "sideEffectTotalMs": 0.7,
+    "overheadMs": 36.3
+  },
+  "methods": [
+    {
+      "signature": "<java.util.Iterator: void remove()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 6.5,
+      "sideEffectMs": 0.6,
+      "totalMs": 7.1,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Iterator: void forEachRemaining(java.util.function.Consumer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 5.4,
+      "sideEffectMs": 0.1,
+      "totalMs": 5.5,
+      "jimpleStmtCount": 9,
+      "graphNodes": 3,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 2,
+    "avgTimePerMethodMs": 6.3,
+    "totalJimpleStmts": 13
+  }
+}

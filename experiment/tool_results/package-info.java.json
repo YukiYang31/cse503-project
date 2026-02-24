@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-02-23T21:29:43",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/package-info.java"],
+  "phaseTimings": {
+    "totalMs": 134.2,
+    "compilationMs": 0.0,
+    "irLoadingMs": 0.0,
+    "callGraphMs": 0.0,
+    "dataflowTotalMs": 0.0,
+    "sideEffectTotalMs": 0.0,
+    "overheadMs": 134.2
+  },
+  "methods": [
+  ],
+  "statistics": {
+    "methodCount": 0,
+    "avgTimePerMethodMs": 0.0,
+    "totalJimpleStmts": 0
+  }
+}

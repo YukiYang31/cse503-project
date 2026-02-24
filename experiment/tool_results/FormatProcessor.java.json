@@ -1,0 +1,108 @@
+{
+  "timestamp": "2026-02-23T21:13:55",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/FormatProcessor.java"],
+  "phaseTimings": {
+    "totalMs": 2876.3,
+    "compilationMs": 0.0,
+    "irLoadingMs": 105.1,
+    "callGraphMs": 2704.3,
+    "dataflowTotalMs": 32.0,
+    "sideEffectTotalMs": 1.0,
+    "overheadMs": 34.0
+  },
+  "methods": [
+    {
+      "signature": "<java.util.FormatProcessor: void <init>(java.util.Locale)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 16.1,
+      "sideEffectMs": 0.7,
+      "totalMs": 16.8,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.FormatProcessor: boolean findFormat(java.lang.String,boolean)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "String parameter escapes to global scope",
+      "dataflowMs": 4.9,
+      "sideEffectMs": 0.1,
+      "totalMs": 5.0,
+      "jimpleStmtCount": 25,
+      "graphNodes": 5,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.FormatProcessor: java.lang.String stringTemplateFormat(java.util.List)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "List parameter escapes to global scope",
+      "dataflowMs": 8.7,
+      "sideEffectMs": 0.0,
+      "totalMs": 8.8,
+      "jimpleStmtCount": 26,
+      "graphNodes": 7,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.FormatProcessor: java.lang.String process(java.lang.StringTemplate)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "StringTemplate parameter escapes to global scope",
+      "dataflowMs": 0.8,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.9,
+      "jimpleStmtCount": 13,
+      "graphNodes": 10,
+      "graphEdges": 3
+    },
+    {
+      "signature": "<java.util.FormatProcessor: java.lang.Object process(java.lang.StringTemplate)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "StringTemplate parameter escapes to global scope",
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 4,
+      "graphNodes": 10,
+      "graphEdges": 3
+    },
+    {
+      "signature": "<java.util.FormatProcessor: java.util.FormatProcessor create(java.util.Locale)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Locale parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.FormatProcessor: void <clinit>()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "writes to static field FMT",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 4,
+      "graphNodes": 3,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.FormatProcessor: java.lang.invoke.MethodHandle linkage(java.util.List,java.lang.invoke.MethodType)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "List parameter escapes to global scope",
+      "dataflowMs": 0.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.5,
+      "jimpleStmtCount": 17,
+      "graphNodes": 12,
+      "graphEdges": 2
+    }
+  ],
+  "statistics": {
+    "methodCount": 8,
+    "avgTimePerMethodMs": 4.1,
+    "totalJimpleStmts": 99
+  }
+}

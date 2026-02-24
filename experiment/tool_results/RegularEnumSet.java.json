@@ -1,0 +1,207 @@
+{
+  "timestamp": "2026-02-23T21:22:45",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/RegularEnumSet.java"],
+  "phaseTimings": {
+    "totalMs": 2932.1,
+    "compilationMs": 0.0,
+    "irLoadingMs": 130.2,
+    "callGraphMs": 2720.9,
+    "dataflowTotalMs": 39.1,
+    "sideEffectTotalMs": 1.8,
+    "overheadMs": 40.0
+  },
+  "methods": [
+    {
+      "signature": "<java.util.RegularEnumSet: void addRange(java.lang.Enum,java.lang.Enum)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "mutates this via field elements",
+      "dataflowMs": 24.2,
+      "sideEffectMs": 1.1,
+      "totalMs": 25.3,
+      "jimpleStmtCount": 12,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.RegularEnumSet: boolean removeAll(java.util.Collection)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 2.9,
+      "sideEffectMs": 0.2,
+      "totalMs": 3.1,
+      "jimpleStmtCount": 25,
+      "graphNodes": 4,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.RegularEnumSet: void addAll()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "mutates this via field elements",
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 10,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.RegularEnumSet: boolean equals(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.9,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.0,
+      "jimpleStmtCount": 29,
+      "graphNodes": 4,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.RegularEnumSet: void <init>(java.lang.Class,java.lang.Enum[])>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 6,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.RegularEnumSet: boolean isEmpty()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 8,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.RegularEnumSet: boolean containsAll(java.util.Collection)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 2.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 2.5,
+      "jimpleStmtCount": 23,
+      "graphNodes": 4,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.RegularEnumSet: int size()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 4,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.RegularEnumSet: java.util.Iterator iterator()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.RegularEnumSet: boolean remove(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "mutates this via field elements",
+      "dataflowMs": 1.0,
+      "sideEffectMs": 0.0,
+      "totalMs": 1.0,
+      "jimpleStmtCount": 26,
+      "graphNodes": 5,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.RegularEnumSet: void clear()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "mutates this via field elements",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.RegularEnumSet: boolean addAll(java.util.Collection)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 1.0,
+      "sideEffectMs": 0.0,
+      "totalMs": 1.0,
+      "jimpleStmtCount": 37,
+      "graphNodes": 7,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.RegularEnumSet: boolean contains(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object parameter escapes to global scope",
+      "dataflowMs": 0.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.5,
+      "jimpleStmtCount": 22,
+      "graphNodes": 5,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.RegularEnumSet: boolean retainAll(java.util.Collection)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 4.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 4.1,
+      "jimpleStmtCount": 31,
+      "graphNodes": 4,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.RegularEnumSet: boolean add(java.lang.Enum)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 16,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.RegularEnumSet: void complement()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "mutates this via field elements",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 15,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.RegularEnumSet: boolean add(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 17,
+    "avgTimePerMethodMs": 2.4,
+    "totalJimpleStmts": 276
+  }
+}

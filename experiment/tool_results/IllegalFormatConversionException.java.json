@@ -1,0 +1,64 @@
+{
+  "timestamp": "2026-02-23T21:18:59",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/IllegalFormatConversionException.java"],
+  "phaseTimings": {
+    "totalMs": 3318.8,
+    "compilationMs": 0.0,
+    "irLoadingMs": 132.9,
+    "callGraphMs": 3106.9,
+    "dataflowTotalMs": 38.5,
+    "sideEffectTotalMs": 2.2,
+    "overheadMs": 38.2
+  },
+  "methods": [
+    {
+      "signature": "<java.util.IllegalFormatConversionException: void <init>(char,java.lang.Class)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 27.6,
+      "sideEffectMs": 0.9,
+      "totalMs": 28.5,
+      "jimpleStmtCount": 11,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.IllegalFormatConversionException: char getConversion()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.IllegalFormatConversionException: java.lang.String getMessage()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'load arg from parameter this' escapes to global scope",
+      "dataflowMs": 10.4,
+      "sideEffectMs": 1.3,
+      "totalMs": 11.6,
+      "jimpleStmtCount": 10,
+      "graphNodes": 6,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.IllegalFormatConversionException: java.lang.Class getArgumentClass()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 1
+    }
+  ],
+  "statistics": {
+    "methodCount": 4,
+    "avgTimePerMethodMs": 10.2,
+    "totalJimpleStmts": 27
+  }
+}

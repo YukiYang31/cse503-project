@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-02-23T21:13:14",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Dictionary.java"],
+  "phaseTimings": {
+    "totalMs": 159.5,
+    "compilationMs": 0.0,
+    "irLoadingMs": 91.2,
+    "callGraphMs": 31.4,
+    "dataflowTotalMs": 5.2,
+    "sideEffectTotalMs": 0.5,
+    "overheadMs": 31.3
+  },
+  "methods": [
+    {
+      "signature": "<java.util.Dictionary: void <init>()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 5.2,
+      "sideEffectMs": 0.5,
+      "totalMs": 5.7,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 1,
+    "avgTimePerMethodMs": 5.7,
+    "totalJimpleStmts": 3
+  }
+}

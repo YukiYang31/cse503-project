@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-02-23T21:22:41",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/RandomAccess.java"],
+  "phaseTimings": {
+    "totalMs": 154.2,
+    "compilationMs": 0.0,
+    "irLoadingMs": 110.3,
+    "callGraphMs": 5.6,
+    "dataflowTotalMs": 0.0,
+    "sideEffectTotalMs": 0.0,
+    "overheadMs": 38.3
+  },
+  "methods": [
+  ],
+  "statistics": {
+    "methodCount": 0,
+    "avgTimePerMethodMs": 0.0,
+    "totalJimpleStmts": 0
+  }
+}

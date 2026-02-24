@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-02-23T21:21:50",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Observer.java"],
+  "phaseTimings": {
+    "totalMs": 168.9,
+    "compilationMs": 0.0,
+    "irLoadingMs": 124.6,
+    "callGraphMs": 11.2,
+    "dataflowTotalMs": 0.0,
+    "sideEffectTotalMs": 0.0,
+    "overheadMs": 33.2
+  },
+  "methods": [
+  ],
+  "statistics": {
+    "methodCount": 0,
+    "avgTimePerMethodMs": 0.0,
+    "totalJimpleStmts": 0
+  }
+}

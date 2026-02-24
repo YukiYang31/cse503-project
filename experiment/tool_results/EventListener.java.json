@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-02-23T21:13:39",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/EventListener.java"],
+  "phaseTimings": {
+    "totalMs": 115.5,
+    "compilationMs": 0.0,
+    "irLoadingMs": 87.8,
+    "callGraphMs": 3.0,
+    "dataflowTotalMs": 0.0,
+    "sideEffectTotalMs": 0.0,
+    "overheadMs": 24.6
+  },
+  "methods": [
+  ],
+  "statistics": {
+    "methodCount": 0,
+    "avgTimePerMethodMs": 0.0,
+    "totalJimpleStmts": 0
+  }
+}

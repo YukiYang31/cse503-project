@@ -1,0 +1,64 @@
+{
+  "timestamp": "2026-02-23T21:19:20",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/IllformedLocaleException.java"],
+  "phaseTimings": {
+    "totalMs": 3129.5,
+    "compilationMs": 0.0,
+    "irLoadingMs": 124.3,
+    "callGraphMs": 2909.1,
+    "dataflowTotalMs": 50.1,
+    "sideEffectTotalMs": 1.2,
+    "overheadMs": 44.9
+  },
+  "methods": [
+    {
+      "signature": "<java.util.IllformedLocaleException: int getErrorIndex()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 18.7,
+      "sideEffectMs": 0.8,
+      "totalMs": 19.6,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.IllformedLocaleException: void <init>()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 13.5,
+      "sideEffectMs": 0.2,
+      "totalMs": 13.7,
+      "jimpleStmtCount": 4,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.IllformedLocaleException: void <init>(java.lang.String)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.IllformedLocaleException: void <init>(java.lang.String,int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 17.4,
+      "sideEffectMs": 0.1,
+      "totalMs": 17.5,
+      "jimpleStmtCount": 21,
+      "graphNodes": 5,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 4,
+    "avgTimePerMethodMs": 12.8,
+    "totalJimpleStmts": 33
+  }
+}

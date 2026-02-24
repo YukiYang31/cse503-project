@@ -1,0 +1,75 @@
+{
+  "timestamp": "2026-02-23T21:12:43",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Collection.java"],
+  "phaseTimings": {
+    "totalMs": 162.9,
+    "compilationMs": 0.0,
+    "irLoadingMs": 80.2,
+    "callGraphMs": 46.6,
+    "dataflowTotalMs": 10.0,
+    "sideEffectTotalMs": 0.7,
+    "overheadMs": 25.3
+  },
+  "methods": [
+    {
+      "signature": "<java.util.Collection: java.util.Spliterator spliterator()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 7.2,
+      "sideEffectMs": 0.6,
+      "totalMs": 7.9,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Collection: java.util.stream.Stream stream()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 1.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 1.5,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Collection: java.util.stream.Stream parallelStream()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Collection: java.lang.Object[] toArray(java.util.function.IntFunction)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 6,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Collection: boolean removeIf(java.util.function.Predicate)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Predicate parameter escapes to global scope",
+      "dataflowMs": 0.9,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.9,
+      "jimpleStmtCount": 14,
+      "graphNodes": 4,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 5,
+    "avgTimePerMethodMs": 2.2,
+    "totalJimpleStmts": 31
+  }
+}

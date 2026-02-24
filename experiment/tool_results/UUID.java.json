@@ -1,0 +1,240 @@
+{
+  "timestamp": "2026-02-23T21:29:25",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/UUID.java"],
+  "phaseTimings": {
+    "totalMs": 2993.0,
+    "compilationMs": 0.0,
+    "irLoadingMs": 99.7,
+    "callGraphMs": 2793.5,
+    "dataflowTotalMs": 59.6,
+    "sideEffectTotalMs": 1.7,
+    "overheadMs": 38.5
+  },
+  "methods": [
+    {
+      "signature": "<java.util.UUID: void <init>(byte[])>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 24.6,
+      "sideEffectMs": 1.1,
+      "totalMs": 25.7,
+      "jimpleStmtCount": 33,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.UUID: java.util.UUID nameUUIDFromBytes(byte[])>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "writes to static field unknown",
+      "dataflowMs": 18.6,
+      "sideEffectMs": 0.2,
+      "totalMs": 18.8,
+      "jimpleStmtCount": 28,
+      "graphNodes": 4,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.UUID: int hashCode()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 6,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.UUID: void <init>(long,long)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 7,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.UUID: java.util.UUID randomUUID()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 5.1,
+      "sideEffectMs": 0.1,
+      "totalMs": 5.1,
+      "jimpleStmtCount": 22,
+      "graphNodes": 5,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.UUID: int version()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 6,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.UUID: long node()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 9,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.UUID: java.lang.String toString()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 6,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.UUID: int compareTo(java.util.UUID)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 12,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.UUID: long timestamp()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 18,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.UUID: int variant()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 12,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.UUID: int clockSequence()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 11,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.UUID: java.util.UUID fromString1(java.lang.String)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "String parameter escapes to global scope",
+      "dataflowMs": 2.4,
+      "sideEffectMs": 0.1,
+      "totalMs": 2.5,
+      "jimpleStmtCount": 48,
+      "graphNodes": 5,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.UUID: long parse4Nibbles(java.lang.String,int)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.5,
+      "jimpleStmtCount": 28,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.UUID: java.util.UUID fromString(java.lang.String)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "String parameter escapes to global scope",
+      "dataflowMs": 3.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 3.4,
+      "jimpleStmtCount": 45,
+      "graphNodes": 13,
+      "graphEdges": 9
+    },
+    {
+      "signature": "<java.util.UUID: int compareTo(java.lang.Object)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.UUID: boolean equals(java.lang.Object)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 19,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.UUID: void <clinit>()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "writes to static field jla",
+      "dataflowMs": 1.8,
+      "sideEffectMs": 0.0,
+      "totalMs": 1.8,
+      "jimpleStmtCount": 35,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.UUID: long getLeastSignificantBits()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.UUID: long getMostSignificantBits()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 20,
+    "avgTimePerMethodMs": 3.1,
+    "totalJimpleStmts": 356
+  }
+}

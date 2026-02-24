@@ -1,0 +1,64 @@
+{
+  "timestamp": "2026-02-23T21:13:10",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/DecimalDigits.java"],
+  "phaseTimings": {
+    "totalMs": 2452.7,
+    "compilationMs": 0.0,
+    "irLoadingMs": 102.0,
+    "callGraphMs": 2276.4,
+    "dataflowTotalMs": 36.4,
+    "sideEffectTotalMs": 1.9,
+    "overheadMs": 36.1
+  },
+  "methods": [
+    {
+      "signature": "<java.util.DecimalDigits: int size(long)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 9.0,
+      "sideEffectMs": 1.0,
+      "totalMs": 10.1,
+      "jimpleStmtCount": 25,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.DecimalDigits: int digits(long,byte[],int,java.lang.invoke.MethodHandle)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "byte[] parameter escapes to global scope",
+      "dataflowMs": 21.8,
+      "sideEffectMs": 0.7,
+      "totalMs": 22.5,
+      "jimpleStmtCount": 58,
+      "graphNodes": 5,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.DecimalDigits: void <init>()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.DecimalDigits: void <clinit>()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "writes to static field INSTANCE",
+      "dataflowMs": 5.2,
+      "sideEffectMs": 0.1,
+      "totalMs": 5.3,
+      "jimpleStmtCount": 24,
+      "graphNodes": 3,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 4,
+    "avgTimePerMethodMs": 9.6,
+    "totalJimpleStmts": 110
+  }
+}

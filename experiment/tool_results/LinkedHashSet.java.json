@@ -1,0 +1,185 @@
+{
+  "timestamp": "2026-02-23T21:20:02",
+  "sourceFiles": ["jdk/src/java.base/share/classes/java/util/LinkedHashSet.java"],
+  "phaseTimings": {
+    "totalMs": 3639.3,
+    "compilationMs": 0.0,
+    "irLoadingMs": 125.5,
+    "callGraphMs": 3430.8,
+    "dataflowTotalMs": 37.7,
+    "sideEffectTotalMs": 2.9,
+    "overheadMs": 42.3
+  },
+  "methods": [
+    {
+      "signature": "<java.util.LinkedHashSet: void <init>(int,float)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 11.1,
+      "sideEffectMs": 0.9,
+      "totalMs": 12.1,
+      "jimpleStmtCount": 5,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.LinkedHashSet: void <init>(int)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 4,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.LinkedHashSet: void <init>()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.LinkedHashSet: java.util.LinkedHashSet newLinkedHashSet(int)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 6.4,
+      "sideEffectMs": 0.1,
+      "totalMs": 6.5,
+      "jimpleStmtCount": 14,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.LinkedHashSet: java.util.SequencedSet reversed()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.LinkedHashSet: java.util.LinkedHashMap map()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 13.0,
+      "sideEffectMs": 0.1,
+      "totalMs": 13.1,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.LinkedHashSet: java.lang.Object removeFirst()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'callee: load map from parameter this' escapes to global scope",
+      "dataflowMs": 4.1,
+      "sideEffectMs": 1.4,
+      "totalMs": 5.5,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.LinkedHashSet: java.lang.Object removeLast()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'callee: load map from parameter this' escapes to global scope",
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.LinkedHashSet: java.util.Spliterator spliterator()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.LinkedHashSet: java.lang.Object getFirst()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'callee: load map from parameter this' escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.LinkedHashSet: void addLast(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object parameter escapes to global scope",
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.7,
+      "jimpleStmtCount": 6,
+      "graphNodes": 5,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.LinkedHashSet: java.lang.Object getLast()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'callee: load map from parameter this' escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.LinkedHashSet: java.util.SequencedCollection reversed()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.LinkedHashSet: void addFirst(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object parameter escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 6,
+      "graphNodes": 5,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.LinkedHashSet: void <init>(java.util.Collection)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 8,
+      "graphNodes": 2,
+      "graphEdges": 0
+    }
+  ],
+  "statistics": {
+    "methodCount": 15,
+    "avgTimePerMethodMs": 2.7,
+    "totalJimpleStmts": 80
+  }
+}
