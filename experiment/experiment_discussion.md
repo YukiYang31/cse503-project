@@ -65,7 +65,7 @@ This is the **primary cause** of the `not in tool output` entries in the CSV. Fo
 If `analyzeSCC()` throws an exception (e.g., SootUp fails to retrieve the method body, encounters unsupported bytecode), the method is caught and logged to stderr, but `null` is returned. The method silently disappears from the output with no timing entry.
 
 ```java
-} catch (Exception e) {
+catch (Exception e) {
     System.err.println("Error analyzing " + method.getName() + ": " + e.getMessage());
     e.printStackTrace();
     return null;

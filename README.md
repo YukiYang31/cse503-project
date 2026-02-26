@@ -417,7 +417,8 @@ The script saves per-file results to `experiment/tool_results/` as it goes. On r
 |---|---|
 | Match | JDK annotated + tool says SIDE_EFFECT_FREE |
 | Tool False Positive | JDK annotated + tool says SIDE_EFFECTING/GRAPH_VIOLATION |
-| Annotation Deficit | Not annotated + tool says SIDE_EFFECT_FREE |
+| Annotation Deficit | Not annotated + tool says SIDE_EFFECT_FREE (in a file that has other annotations) |
+| File Not Annotated | Tool says SIDE_EFFECT_FREE but the entire file has no annotations |
 | Both Side-Effecting | Not annotated + tool says SIDE_EFFECTING |
 | Not Analyzed | Annotated but tool didn't analyze (abstract method, error) |
 

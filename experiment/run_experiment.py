@@ -136,15 +136,12 @@ def extract_ground_truth():
         return json.load(f)
 
 
-def categorize(jdk_annotation, our_verdict):
+def categorize(jdk_annotation, our_verdict, file_has_annotations):
     """Determine the match category between JDK annotation and tool verdict."""
     has_annotation = jdk_annotation in ('Pure', 'SideEffectFree')
 
     if our_verdict == 'NOT_ANALYZED':
-        if has_annotation:
-            return 'Not Analyzed'
-        else:
-            return 'Not Analyzed'
+        return 'Not Analyzed'
 
     if has_annotation and our_verdict == 'SIDE_EFFECT_FREE':
         return 'Match'
@@ -153,7 +150,10 @@ def categorize(jdk_annotation, our_verdict):
         return 'Tool False Positive'
 
     if not has_annotation and our_verdict == 'SIDE_EFFECT_FREE':
-        return 'Annotation Deficit'
+        if file_has_annotations:
+            return 'Annotation Deficit'
+        else:
+            return 'File Not Annotated'
 
     if not has_annotation and our_verdict in ('SIDE_EFFECTING', 'GRAPH_VIOLATION'):
         return 'Both Side-Effecting'
@@ -172,6 +172,9 @@ def build_csv(ground_truth, tool_results_by_file):
     for entry in ground_truth:
         key = entry['canonical_key']
         annotation_map[key] = entry
+
+    # Track which files have ANY annotations (vs entirely unannotated files)
+    files_with_annotations = set(entry['file'] for entry in ground_truth)
 
     rows = []
 
@@ -217,7 +220,7 @@ def build_csv(ground_truth, tool_results_by_file):
                     space = before.rfind(' ')
                     method_name = before[space + 1:] if space >= 0 else before
 
-            cat = categorize(jdk_annotation, verdict)
+            cat = categorize(jdk_annotation, verdict, filename in files_with_annotations)
 
             rows.append({
                 'file': filename,
@@ -336,7 +339,7 @@ def print_summary(rows):
     print(f"\nTotal methods in CSV: {len(rows)}")
     print("\nCategory Breakdown:")
     for cat in ['Match', 'Tool False Positive', 'Annotation Deficit',
-                'Both Side-Effecting', 'Not Analyzed', 'Unknown']:
+                'File Not Annotated', 'Both Side-Effecting', 'Not Analyzed', 'Unknown']:
         count = categories.get(cat, 0)
         if count > 0:
             print(f"  {cat:25s}: {count:5d}")
