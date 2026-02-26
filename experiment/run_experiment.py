@@ -304,7 +304,7 @@ def build_csv(ground_truth, tool_results_by_file):
     return rows
 
 
-def write_csv(rows):
+def write_csv(rows, path):
     """Write rows to the results CSV."""
     fieldnames = [
         'file', 'class', 'method', 'signature', 'jdk_annotation',
@@ -315,12 +315,12 @@ def write_csv(rows):
         'file_dataflow_total_ms', 'file_check_total_ms', 'file_methods_count',
     ]
 
-    with open(RESULTS_CSV_PATH, 'w', newline='') as f:
+    with open(path, 'w', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
 
-    print(f"\nResults written to: {RESULTS_CSV_PATH}")
+    print(f"\nResults written to: {path}")
     print(f"Total rows: {len(rows)}")
 
 
@@ -503,7 +503,12 @@ def main():
 
     # Step 3: Build and write CSV
     rows = build_csv(ground_truth, tool_results_by_file)
-    write_csv(rows)
+    if force_run:
+        ts = time.strftime("%Y%m%d_%H%M%S")
+        csv_path = EXPERIMENT_DIR / f"results_{ts}.csv"
+    else:
+        csv_path = RESULTS_CSV_PATH
+    write_csv(rows, csv_path)
     print_summary(rows)
 
 

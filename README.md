@@ -394,6 +394,7 @@ python3 experiment/run_experiment.py Objects.java
 python3 experiment/run_experiment.py --skip-run
 
 # Force re-run all files from scratch (ignore cached results)
+# Saves to a timestamped CSV (e.g. results_20260226_143022.csv) to preserve the existing results.csv
 python3 experiment/run_experiment.py --force
 
 # Skip specific files that are too slow or hang
@@ -409,7 +410,7 @@ The script saves per-file results to `experiment/tool_results/` as it goes. On r
 
 2. **Run the tool**: Executes the side-effect analysis on each `.java` file one at a time via `./gradlew run --args="<file> --timing"`. Tool results (timing JSON with verdicts) are saved to `experiment/tool_results/` for reproducibility.
 
-3. **Produce CSV** (`experiment/results.csv`): Each row is one method with columns for JDK annotation, tool verdict, match category, per-method timing, and per-file pipeline timing.
+3. **Produce CSV**: Each row is one method with columns for JDK annotation, tool verdict, match category, per-method timing, and per-file pipeline timing. Written to `experiment/results.csv` by default; when `--force` is used, written to a timestamped file (e.g. `experiment/results_20260226_143022.csv`) so the existing `results.csv` is not overwritten.
 
 ### Match Categories
 
@@ -428,7 +429,8 @@ The script saves per-file results to `experiment/tool_results/` as it goes. On r
 |---|---|
 | `experiment/ground_truth.json` | Parsed annotations from JDK source |
 | `experiment/tool_results/*.json` | Per-file timing JSON with verdicts |
-| `experiment/results.csv` | Combined results CSV |
+| `experiment/results.csv` | Combined results CSV (default output) |
+| `experiment/results_<timestamp>.csv` | Timestamped results CSV produced when `--force` is used |
 
 ## Known Limitations
 
