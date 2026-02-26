@@ -1,3 +1,5 @@
+package interprocedural;
+
 // Inter-procedural side-effect analysis test cases
 // Exercises Section 5.3 of Salcianu & Rinard (2005)
 

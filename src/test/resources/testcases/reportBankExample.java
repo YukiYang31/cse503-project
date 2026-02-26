@@ -1,3 +1,5 @@
+package testcases;
+
 class BankAccount {
     int balance;
 

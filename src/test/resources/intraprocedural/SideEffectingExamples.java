@@ -1,3 +1,5 @@
+package intraprocedural;
+
 class Counter {
     int count;
 

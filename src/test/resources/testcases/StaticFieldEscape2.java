@@ -1,3 +1,4 @@
+package testcases;
 public class StaticFieldEscape2 {
     // This is a "Global Node" (reachable from n_GBL -> Set B)
     public static int counter = 0;

@@ -1,3 +1,5 @@
+package testcases;
+
 // Example from Salcianu & Rinard (2005), Figure 1
 // MIT-CSAIL-TR-949, Section 2
 

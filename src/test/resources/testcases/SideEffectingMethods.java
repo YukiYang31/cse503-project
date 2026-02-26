@@ -1,3 +1,4 @@
+package testcases;
 public class SideEffectingMethods {
     static int counter = 0;
 

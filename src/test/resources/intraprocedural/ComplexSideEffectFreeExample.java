@@ -1,3 +1,5 @@
+package intraprocedural;
+
 import java.util.ArrayList;
 
 class DataNode {

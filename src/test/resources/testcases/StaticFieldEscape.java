@@ -1,3 +1,5 @@
+package testcases;
+
 public class StaticFieldEscape {
     static Object shared;
 

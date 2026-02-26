@@ -1,3 +1,5 @@
+package intraprocedural;
+
 class Point {
     int x;
     int y;

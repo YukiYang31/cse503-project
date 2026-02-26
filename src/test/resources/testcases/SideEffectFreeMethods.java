@@ -1,3 +1,4 @@
+package testcases;
 public class SideEffectFreeMethods {
     // Side-effect-free: no heap writes at all
     static int add(int a, int b) {

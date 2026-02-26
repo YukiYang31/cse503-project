@@ -1,3 +1,5 @@
+package intraprocedural;
+
 class Vec2 {
     double x;
     double y;
