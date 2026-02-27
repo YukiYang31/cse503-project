@@ -1,20 +1,185 @@
 {
-  "timestamp": "2026-02-23T21:22:15",
+  "timestamp": "2026-02-26T14:52:35",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/PrimitiveIterator.java"],
   "phaseTimings": {
-    "totalMs": 167.8,
+    "totalMs": 170.0,
     "compilationMs": 0.0,
-    "irLoadingMs": 125.9,
-    "callGraphMs": 11.3,
-    "dataflowTotalMs": 0.0,
-    "sideEffectTotalMs": 0.0,
-    "overheadMs": 30.6
+    "irLoadingMs": 56.6,
+    "callGraphMs": 46.0,
+    "dataflowTotalMs": 9.3,
+    "sideEffectTotalMs": 0.6,
+    "overheadMs": 57.5
   },
   "methods": [
+    {
+      "signature": "<java.util.PrimitiveIterator$OfInt: void forEachRemaining(java.util.function.IntConsumer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 4.0,
+      "sideEffectMs": 0.4,
+      "totalMs": 4.4,
+      "jimpleStmtCount": 9,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.PrimitiveIterator$OfInt: java.lang.Integer next()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.5,
+      "jimpleStmtCount": 8,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.PrimitiveIterator$OfInt: void forEachRemaining(java.util.function.Consumer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 2.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 2.4,
+      "jimpleStmtCount": 16,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.PrimitiveIterator$OfInt: java.lang.Object next()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 3,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.PrimitiveIterator$OfInt: void forEachRemaining(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.PrimitiveIterator$OfDouble: void forEachRemaining(java.util.function.DoubleConsumer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 9,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.PrimitiveIterator$OfDouble: void forEachRemaining(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.PrimitiveIterator$OfDouble: java.lang.Double next()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 8,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.PrimitiveIterator$OfDouble: java.lang.Object next()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 3,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.PrimitiveIterator$OfDouble: void forEachRemaining(java.util.function.Consumer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 16,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.PrimitiveIterator$OfLong: void forEachRemaining(java.util.function.LongConsumer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 9,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.PrimitiveIterator$OfLong: void forEachRemaining(java.util.function.Consumer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 16,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.PrimitiveIterator$OfLong: void forEachRemaining(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.PrimitiveIterator$OfLong: java.lang.Long next()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 8,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.PrimitiveIterator$OfLong: java.lang.Object next()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 3,
+      "graphNodes": 3,
+      "graphEdges": 0
+    }
   ],
   "statistics": {
-    "methodCount": 0,
-    "avgTimePerMethodMs": 0.0,
-    "totalJimpleStmts": 0
+    "methodCount": 15,
+    "avgTimePerMethodMs": 0.7,
+    "totalJimpleStmts": 123
   }
 }

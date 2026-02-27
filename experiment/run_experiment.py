@@ -88,7 +88,7 @@ def run_tool_on_file(java_file_path):
             cmd,
             capture_output=True,
             text=True,
-            timeout=300,  # 5 minute timeout per file
+            timeout=120,  # 2 minute timeout per file
         )
         elapsed = time.time() - start_time
         print(f"  Completed in {elapsed:.1f}s (exit code {result.returncode})")
@@ -138,24 +138,26 @@ def extract_ground_truth():
 
 def categorize(jdk_annotation, our_verdict, file_has_annotations):
     """Determine the match category between JDK annotation and tool verdict."""
-    has_annotation = jdk_annotation in ('Pure', 'SideEffectFree')
+
+    if not file_has_annotations:
+        return 'File Not Annotated'
+   
+    annotated_side-effect-free = jdk_annotation in ('Pure', 'SideEffectFree')
 
     if our_verdict == 'NOT_ANALYZED':
         return 'Not Analyzed'
 
-    if has_annotation and our_verdict == 'SIDE_EFFECT_FREE':
+    if annotated_side-effect-free and our_verdict == 'SIDE_EFFECT_FREE':
         return 'Match'
 
-    if has_annotation and our_verdict in ('SIDE_EFFECTING', 'GRAPH_VIOLATION'):
+    if annotated_side-effect-free and our_verdict in ('SIDE_EFFECTING', 'GRAPH_VIOLATION'):
         return 'Tool False Positive'
 
-    if not has_annotation and our_verdict == 'SIDE_EFFECT_FREE':
-        if file_has_annotations:
-            return 'Annotation Deficit'
-        else:
-            return 'File Not Annotated'
+    if not annotated_side-effect-free and our_verdict == 'SIDE_EFFECT_FREE':
+        return 'Annotation Deficit'
+      
 
-    if not has_annotation and our_verdict in ('SIDE_EFFECTING', 'GRAPH_VIOLATION'):
+    if not annotated_side-effect-free and our_verdict in ('SIDE_EFFECTING', 'GRAPH_VIOLATION'):
         return 'Both Side-Effecting'
 
     return 'Unknown'
@@ -304,7 +306,7 @@ def build_csv(ground_truth, tool_results_by_file):
     return rows
 
 
-def write_csv(rows):
+def write_csv(rows, path):
     """Write rows to the results CSV."""
     fieldnames = [
         'file', 'class', 'method', 'signature', 'jdk_annotation',
@@ -315,12 +317,12 @@ def write_csv(rows):
         'file_dataflow_total_ms', 'file_check_total_ms', 'file_methods_count',
     ]
 
-    with open(RESULTS_CSV_PATH, 'w', newline='') as f:
+    with open(path, 'w', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
 
-    print(f"\nResults written to: {RESULTS_CSV_PATH}")
+    print(f"\nResults written to: {path}")
     print(f"Total rows: {len(rows)}")
 
 
@@ -503,7 +505,12 @@ def main():
 
     # Step 3: Build and write CSV
     rows = build_csv(ground_truth, tool_results_by_file)
-    write_csv(rows)
+    if force_run:
+        ts = time.strftime("%Y%m%d_%H%M%S")
+        csv_path = EXPERIMENT_DIR / f"results_{ts}.csv"
+    else:
+        csv_path = RESULTS_CSV_PATH
+    write_csv(rows, csv_path)
     print_summary(rows)
 
 

@@ -1,24 +1,266 @@
 {
-  "timestamp": "2026-02-23T21:24:53",
+  "timestamp": "2026-02-26T14:53:58",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Spliterator.java"],
   "phaseTimings": {
-    "totalMs": 3352.0,
+    "totalMs": 2216.8,
     "compilationMs": 0.0,
-    "irLoadingMs": 131.8,
-    "callGraphMs": 3151.8,
-    "dataflowTotalMs": 19.5,
-    "sideEffectTotalMs": 1.5,
-    "overheadMs": 47.4
+    "irLoadingMs": 66.6,
+    "callGraphMs": 2060.4,
+    "dataflowTotalMs": 18.2,
+    "sideEffectTotalMs": 1.6,
+    "overheadMs": 70.2
   },
   "methods": [
     {
-      "signature": "<java.util.Spliterator: java.util.Comparator getComparator()>",
-      "verdict": "SIDE_EFFECT_FREE",
-      "reason": null,
-      "dataflowMs": 13.0,
-      "sideEffectMs": 1.3,
-      "totalMs": 14.3,
-      "jimpleStmtCount": 4,
+      "signature": "<java.util.Spliterator$OfInt: boolean tryAdvance(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 7.6,
+      "sideEffectMs": 1.0,
+      "totalMs": 8.6,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfInt: java.util.Spliterator$OfPrimitive trySplit()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfInt: boolean tryAdvance(java.util.function.Consumer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.9,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.9,
+      "jimpleStmtCount": 15,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfInt: void forEachRemaining(java.util.function.IntConsumer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfInt: void forEachRemaining(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 3.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 3.3,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfInt: java.util.Spliterator trySplit()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfInt: void forEachRemaining(java.util.function.Consumer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 15,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfLong: void forEachRemaining(java.util.function.LongConsumer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfLong: void forEachRemaining(java.util.function.Consumer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.7,
+      "jimpleStmtCount": 15,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfLong: boolean tryAdvance(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfLong: boolean tryAdvance(java.util.function.Consumer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 15,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfLong: java.util.Spliterator$OfPrimitive trySplit()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfLong: java.util.Spliterator trySplit()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfLong: void forEachRemaining(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfDouble: void forEachRemaining(java.util.function.DoubleConsumer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfDouble: void forEachRemaining(java.util.function.Consumer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 15,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfDouble: java.util.Spliterator$OfPrimitive trySplit()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfDouble: void forEachRemaining(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfDouble: java.util.Spliterator trySplit()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfDouble: boolean tryAdvance(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfDouble: boolean tryAdvance(java.util.function.Consumer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 15,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfPrimitive: void forEachRemaining(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.5,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator$OfPrimitive: java.util.Spliterator trySplit()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 3,
       "graphNodes": 2,
       "graphEdges": 0
     },
@@ -26,9 +268,9 @@
       "signature": "<java.util.Spliterator: long getExactSizeIfKnown()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 5.6,
-      "sideEffectMs": 0.1,
-      "totalMs": 5.8,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
       "jimpleStmtCount": 8,
       "graphNodes": 1,
       "graphEdges": 0
@@ -37,11 +279,11 @@
       "signature": "<java.util.Spliterator: void forEachRemaining(java.util.function.Consumer)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.6,
+      "dataflowMs": 0.4,
       "sideEffectMs": 0.0,
-      "totalMs": 0.6,
+      "totalMs": 0.5,
       "jimpleStmtCount": 5,
-      "graphNodes": 2,
+      "graphNodes": 3,
       "graphEdges": 0
     },
     {
@@ -54,11 +296,22 @@
       "jimpleStmtCount": 9,
       "graphNodes": 1,
       "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Spliterator: java.util.Comparator getComparator()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.7,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.7,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
     }
   ],
   "statistics": {
-    "methodCount": 4,
-    "avgTimePerMethodMs": 5.2,
-    "totalJimpleStmts": 26
+    "methodCount": 27,
+    "avgTimePerMethodMs": 0.7,
+    "totalJimpleStmts": 187
   }
 }

@@ -1,23 +1,67 @@
 {
-  "timestamp": "2026-02-23T21:25:22",
+  "timestamp": "2026-02-26T14:54:17",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/TimSort.java"],
   "phaseTimings": {
-    "totalMs": 4166.9,
+    "totalMs": 2997.6,
     "compilationMs": 0.0,
-    "irLoadingMs": 145.3,
-    "callGraphMs": 3805.5,
-    "dataflowTotalMs": 168.9,
-    "sideEffectTotalMs": 3.1,
-    "overheadMs": 44.1
+    "irLoadingMs": 60.2,
+    "callGraphMs": 2820.1,
+    "dataflowTotalMs": 53.3,
+    "sideEffectTotalMs": 1.2,
+    "overheadMs": 62.7
   },
   "methods": [
+    {
+      "signature": "<java.util.TimSort: java.lang.Object[] ensureCapacity(int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "mutates this via field tmpLen",
+      "dataflowMs": 22.5,
+      "sideEffectMs": 0.7,
+      "totalMs": 23.2,
+      "jimpleStmtCount": 24,
+      "graphNodes": 5,
+      "graphEdges": 3
+    },
+    {
+      "signature": "<java.util.TimSort: void <clinit>()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "writes to static field $assertionsDisabled",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 8,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.TimSort: int minRunLength(int)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 15,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.TimSort: void <init>(java.lang.Object[],java.util.Comparator,java.lang.Object[],int,int)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 3.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 3.4,
+      "jimpleStmtCount": 47,
+      "graphNodes": 8,
+      "graphEdges": 6
+    },
     {
       "signature": "<java.util.TimSort: int gallopLeft(java.lang.Object,java.lang.Object[],int,int,int,java.util.Comparator)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Object parameter escapes to global scope",
-      "dataflowMs": 21.7,
-      "sideEffectMs": 2.1,
-      "totalMs": 23.8,
+      "dataflowMs": 1.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 1.7,
       "jimpleStmtCount": 83,
       "graphNodes": 7,
       "graphEdges": 0
@@ -26,31 +70,20 @@
       "signature": "<java.util.TimSort: int gallopRight(java.lang.Object,java.lang.Object[],int,int,int,java.util.Comparator)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Object parameter escapes to global scope",
-      "dataflowMs": 3.3,
+      "dataflowMs": 1.3,
       "sideEffectMs": 0.0,
-      "totalMs": 3.4,
+      "totalMs": 1.4,
       "jimpleStmtCount": 83,
       "graphNodes": 7,
       "graphEdges": 0
     },
     {
-      "signature": "<java.util.TimSort: java.lang.Object[] ensureCapacity(int)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "mutates this via field tmp",
-      "dataflowMs": 14.1,
-      "sideEffectMs": 0.2,
-      "totalMs": 14.4,
-      "jimpleStmtCount": 24,
-      "graphNodes": 5,
-      "graphEdges": 3
-    },
-    {
       "signature": "<java.util.TimSort: void mergeLo(int,int,int,int)>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "mutates this via field minGallop",
-      "dataflowMs": 16.9,
+      "reason": "mutates this via field tmpLen",
+      "dataflowMs": 6.7,
       "sideEffectMs": 0.1,
-      "totalMs": 17.0,
+      "totalMs": 6.7,
       "jimpleStmtCount": 167,
       "graphNodes": 30,
       "graphEdges": 5
@@ -58,10 +91,10 @@
     {
       "signature": "<java.util.TimSort: void mergeHi(int,int,int,int)>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "mutates this via field minGallop",
-      "dataflowMs": 7.5,
-      "sideEffectMs": 0.1,
-      "totalMs": 7.6,
+      "reason": "mutates this via field tmpLen",
+      "dataflowMs": 5.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 5.2,
       "jimpleStmtCount": 189,
       "graphNodes": 30,
       "graphEdges": 5
@@ -69,10 +102,10 @@
     {
       "signature": "<java.util.TimSort: void mergeAt(int)>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "mutates this via field minGallop",
-      "dataflowMs": 3.4,
+      "reason": "mutates this via field tmpLen",
+      "dataflowMs": 2.7,
       "sideEffectMs": 0.1,
-      "totalMs": 3.5,
+      "totalMs": 2.8,
       "jimpleStmtCount": 107,
       "graphNodes": 38,
       "graphEdges": 9
@@ -80,10 +113,10 @@
     {
       "signature": "<java.util.TimSort: void mergeCollapse()>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "mutates this via field minGallop",
-      "dataflowMs": 92.2,
-      "sideEffectMs": 0.1,
-      "totalMs": 92.3,
+      "reason": "mutates this via field tmpLen",
+      "dataflowMs": 3.7,
+      "sideEffectMs": 0.0,
+      "totalMs": 3.7,
       "jimpleStmtCount": 47,
       "graphNodes": 39,
       "graphEdges": 10
@@ -94,7 +127,7 @@
       "reason": "mutates Object[] parameter via field array element",
       "dataflowMs": 0.2,
       "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "totalMs": 0.2,
       "jimpleStmtCount": 15,
       "graphNodes": 3,
       "graphEdges": 0
@@ -103,23 +136,12 @@
       "signature": "<java.util.TimSort: int countRunAndMakeAscending(java.lang.Object[],int,int,java.util.Comparator)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates Object[] parameter via field array element",
-      "dataflowMs": 0.8,
+      "dataflowMs": 0.4,
       "sideEffectMs": 0.0,
-      "totalMs": 0.8,
+      "totalMs": 0.5,
       "jimpleStmtCount": 38,
       "graphNodes": 7,
       "graphEdges": 0
-    },
-    {
-      "signature": "<java.util.TimSort: void <init>(java.lang.Object[],java.util.Comparator,java.lang.Object[],int,int)>",
-      "verdict": "SIDE_EFFECT_FREE",
-      "reason": null,
-      "dataflowMs": 0.6,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.6,
-      "jimpleStmtCount": 47,
-      "graphNodes": 8,
-      "graphEdges": 6
     },
     {
       "signature": "<java.util.TimSort: void pushRun(int,int)>",
@@ -136,9 +158,9 @@
       "signature": "<java.util.TimSort: void binarySort(java.lang.Object[],int,int,int,java.util.Comparator)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Object[] parameter escapes to global scope",
-      "dataflowMs": 0.9,
+      "dataflowMs": 0.7,
       "sideEffectMs": 0.0,
-      "totalMs": 0.9,
+      "totalMs": 0.7,
       "jimpleStmtCount": 56,
       "graphNodes": 6,
       "graphEdges": 0
@@ -146,51 +168,29 @@
     {
       "signature": "<java.util.TimSort: void mergeForceCollapse()>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "mutates this via field minGallop",
-      "dataflowMs": 2.6,
-      "sideEffectMs": 0.1,
-      "totalMs": 2.7,
+      "reason": "mutates this via field tmpLen",
+      "dataflowMs": 1.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 1.6,
       "jimpleStmtCount": 17,
       "graphNodes": 39,
       "graphEdges": 10
     },
     {
-      "signature": "<java.util.TimSort: int minRunLength(int)>",
-      "verdict": "SIDE_EFFECT_FREE",
-      "reason": null,
-      "dataflowMs": 0.2,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.2,
-      "jimpleStmtCount": 15,
-      "graphNodes": 1,
-      "graphEdges": 0
-    },
-    {
       "signature": "<java.util.TimSort: void sort(java.lang.Object[],int,int,java.util.Comparator,java.lang.Object[],int,int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Object[] parameter escapes to global scope",
-      "dataflowMs": 4.0,
+      "dataflowMs": 3.0,
       "sideEffectMs": 0.1,
-      "totalMs": 4.1,
+      "totalMs": 3.0,
       "jimpleStmtCount": 60,
       "graphNodes": 82,
       "graphEdges": 6
-    },
-    {
-      "signature": "<java.util.TimSort: void <clinit>()>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "writes to static field $assertionsDisabled",
-      "dataflowMs": 0.1,
-      "sideEffectMs": 0.1,
-      "totalMs": 0.2,
-      "jimpleStmtCount": 8,
-      "graphNodes": 1,
-      "graphEdges": 0
     }
   ],
   "statistics": {
     "methodCount": 16,
-    "avgTimePerMethodMs": 10.7,
+    "avgTimePerMethodMs": 3.4,
     "totalJimpleStmts": 969
   }
 }

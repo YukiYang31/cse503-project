@@ -1,53 +1,53 @@
 {
-  "timestamp": "2026-02-23T21:18:54",
+  "timestamp": "2026-02-26T14:39:05",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/IllegalFormatCodePointException.java"],
   "phaseTimings": {
-    "totalMs": 3399.7,
+    "totalMs": 2839.2,
     "compilationMs": 0.0,
-    "irLoadingMs": 124.4,
-    "callGraphMs": 3203.2,
-    "dataflowTotalMs": 28.1,
-    "sideEffectTotalMs": 1.6,
-    "overheadMs": 42.4
+    "irLoadingMs": 99.5,
+    "callGraphMs": 2606.9,
+    "dataflowTotalMs": 23.2,
+    "sideEffectTotalMs": 2.3,
+    "overheadMs": 107.3
   },
   "methods": [
     {
-      "signature": "<java.util.IllegalFormatCodePointException: void <init>(int)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 22.7,
-      "sideEffectMs": 1.5,
-      "totalMs": 24.2,
-      "jimpleStmtCount": 5,
-      "graphNodes": 1,
+      "signature": "<java.util.IllegalFormatCodePointException: java.lang.String getMessage()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 22.8,
+      "sideEffectMs": 2.1,
+      "totalMs": 25.0,
+      "jimpleStmtCount": 7,
+      "graphNodes": 4,
       "graphEdges": 0
     },
     {
       "signature": "<java.util.IllegalFormatCodePointException: int getCodePoint()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.5,
-      "sideEffectMs": 0.1,
-      "totalMs": 0.5,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
     },
     {
-      "signature": "<java.util.IllegalFormatCodePointException: java.lang.String getMessage()>",
-      "verdict": "SIDE_EFFECT_FREE",
-      "reason": null,
-      "dataflowMs": 4.9,
-      "sideEffectMs": 0.1,
-      "totalMs": 5.0,
-      "jimpleStmtCount": 7,
-      "graphNodes": 4,
+      "signature": "<java.util.IllegalFormatCodePointException: void <init>(int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.2,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 5,
+      "graphNodes": 1,
       "graphEdges": 0
     }
   ],
   "statistics": {
     "methodCount": 3,
-    "avgTimePerMethodMs": 9.9,
+    "avgTimePerMethodMs": 8.5,
     "totalJimpleStmts": 15
   }
 }

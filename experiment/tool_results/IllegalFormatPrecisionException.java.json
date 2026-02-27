@@ -1,45 +1,45 @@
 {
-  "timestamp": "2026-02-23T21:19:11",
+  "timestamp": "2026-02-26T14:39:23",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/IllegalFormatPrecisionException.java"],
   "phaseTimings": {
-    "totalMs": 2697.1,
+    "totalMs": 3296.7,
     "compilationMs": 0.0,
-    "irLoadingMs": 111.1,
-    "callGraphMs": 2510.5,
-    "dataflowTotalMs": 29.2,
-    "sideEffectTotalMs": 1.5,
-    "overheadMs": 44.8
+    "irLoadingMs": 83.5,
+    "callGraphMs": 2989.7,
+    "dataflowTotalMs": 124.7,
+    "sideEffectTotalMs": 3.4,
+    "overheadMs": 95.3
   },
   "methods": [
-    {
-      "signature": "<java.util.IllegalFormatPrecisionException: java.lang.String getMessage()>",
-      "verdict": "SIDE_EFFECT_FREE",
-      "reason": null,
-      "dataflowMs": 15.3,
-      "sideEffectMs": 1.2,
-      "totalMs": 16.6,
-      "jimpleStmtCount": 4,
-      "graphNodes": 2,
-      "graphEdges": 0
-    },
     {
       "signature": "<java.util.IllegalFormatPrecisionException: void <init>(int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 13.7,
-      "sideEffectMs": 0.2,
-      "totalMs": 14.0,
+      "dataflowMs": 122.9,
+      "sideEffectMs": 3.3,
+      "totalMs": 126.1,
       "jimpleStmtCount": 5,
       "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.IllegalFormatPrecisionException: java.lang.String getMessage()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 1.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 1.7,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
       "graphEdges": 0
     },
     {
       "signature": "<java.util.IllegalFormatPrecisionException: int getPrecision()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.2,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.4,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
@@ -47,7 +47,7 @@
   ],
   "statistics": {
     "methodCount": 3,
-    "avgTimePerMethodMs": 10.2,
+    "avgTimePerMethodMs": 42.7,
     "totalJimpleStmts": 12
   }
 }

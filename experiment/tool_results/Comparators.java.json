@@ -1,31 +1,163 @@
 {
-  "timestamp": "2026-02-23T21:12:56",
+  "timestamp": "2026-02-26T14:33:24",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Comparators.java"],
   "phaseTimings": {
-    "totalMs": 2250.5,
+    "totalMs": 2079.0,
     "compilationMs": 0.0,
-    "irLoadingMs": 107.4,
-    "callGraphMs": 2103.5,
-    "dataflowTotalMs": 6.7,
-    "sideEffectTotalMs": 0.6,
-    "overheadMs": 32.3
+    "irLoadingMs": 60.5,
+    "callGraphMs": 1932.4,
+    "dataflowTotalMs": 26.6,
+    "sideEffectTotalMs": 1.3,
+    "overheadMs": 58.3
   },
   "methods": [
     {
       "signature": "<java.util.Comparators: void <init>()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 6.7,
-      "sideEffectMs": 0.6,
-      "totalMs": 7.3,
+      "dataflowMs": 7.6,
+      "sideEffectMs": 0.8,
+      "totalMs": 8.4,
       "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparators$NullComparator: void <init>(boolean,java.util.Comparator)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 10.3,
+      "sideEffectMs": 0.1,
+      "totalMs": 10.3,
+      "jimpleStmtCount": 7,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Comparators$NullComparator: java.util.Comparator thenComparing(java.util.Comparator)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Comparator parameter escapes to global scope",
+      "dataflowMs": 5.6,
+      "sideEffectMs": 0.1,
+      "totalMs": 5.7,
+      "jimpleStmtCount": 13,
+      "graphNodes": 5,
+      "graphEdges": 3
+    },
+    {
+      "signature": "<java.util.Comparators$NaturalOrderComparator: int compare(java.lang.Comparable,java.lang.Comparable)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Comparable parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparators$NaturalOrderComparator: int compare(java.lang.Object,java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object parameter escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 7,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparators$NullComparator: int compare(java.lang.Object,java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object parameter escapes to global scope",
+      "dataflowMs": 0.8,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.8,
+      "jimpleStmtCount": 27,
+      "graphNodes": 4,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Comparators$NaturalOrderComparator: java.util.Comparator reversed()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparators$NullComparator: java.util.Comparator reversed()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 15,
+      "graphNodes": 4,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.Comparators$NaturalOrderComparator: java.util.Comparators$NaturalOrderComparator[] values()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Comparators$NaturalOrderComparator: java.util.Comparators$NaturalOrderComparator[] $values()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 4,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Comparators$NaturalOrderComparator: void <init>(java.lang.String,int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 5,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Comparators$NaturalOrderComparator: void <clinit>()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "writes to static field INSTANCE",
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 6,
+      "graphNodes": 4,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Comparators$NaturalOrderComparator: java.util.Comparators$NaturalOrderComparator valueOf(java.lang.String)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "String parameter escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 4,
       "graphNodes": 2,
       "graphEdges": 0
     }
   ],
   "statistics": {
-    "methodCount": 1,
-    "avgTimePerMethodMs": 7.3,
-    "totalJimpleStmts": 5
+    "methodCount": 13,
+    "avgTimePerMethodMs": 2.1,
+    "totalJimpleStmts": 105
   }
 }

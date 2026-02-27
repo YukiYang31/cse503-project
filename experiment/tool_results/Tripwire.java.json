@@ -1,34 +1,23 @@
 {
-  "timestamp": "2026-02-23T21:29:21",
+  "timestamp": "2026-02-26T14:56:33",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Tripwire.java"],
   "phaseTimings": {
-    "totalMs": 213.5,
+    "totalMs": 229.2,
     "compilationMs": 0.0,
-    "irLoadingMs": 112.6,
-    "callGraphMs": 47.4,
-    "dataflowTotalMs": 17.3,
-    "sideEffectTotalMs": 0.7,
-    "overheadMs": 35.4
+    "irLoadingMs": 82.7,
+    "callGraphMs": 50.1,
+    "dataflowTotalMs": 14.5,
+    "sideEffectTotalMs": 1.1,
+    "overheadMs": 80.9
   },
   "methods": [
-    {
-      "signature": "<java.util.Tripwire: void <init>()>",
-      "verdict": "SIDE_EFFECT_FREE",
-      "reason": null,
-      "dataflowMs": 5.1,
-      "sideEffectMs": 0.5,
-      "totalMs": 5.6,
-      "jimpleStmtCount": 3,
-      "graphNodes": 1,
-      "graphEdges": 0
-    },
     {
       "signature": "<java.util.Tripwire: void <clinit>()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field ENABLED",
-      "dataflowMs": 11.2,
-      "sideEffectMs": 0.1,
-      "totalMs": 11.3,
+      "dataflowMs": 13.1,
+      "sideEffectMs": 0.9,
+      "totalMs": 14.0,
       "jimpleStmtCount": 6,
       "graphNodes": 1,
       "graphEdges": 0
@@ -37,9 +26,20 @@
       "signature": "<java.util.Tripwire: java.lang.Boolean lambda$static$0()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.7,
+      "dataflowMs": 0.5,
       "sideEffectMs": 0.0,
-      "totalMs": 0.7,
+      "totalMs": 0.6,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.Tripwire: void <init>()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
@@ -48,9 +48,9 @@
       "signature": "<java.util.Tripwire: void trip(java.lang.Class,java.lang.String)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Class parameter escapes to global scope",
-      "dataflowMs": 0.4,
+      "dataflowMs": 0.7,
       "sideEffectMs": 0.1,
-      "totalMs": 0.5,
+      "totalMs": 0.7,
       "jimpleStmtCount": 9,
       "graphNodes": 4,
       "graphEdges": 0
@@ -58,7 +58,7 @@
   ],
   "statistics": {
     "methodCount": 4,
-    "avgTimePerMethodMs": 4.5,
+    "avgTimePerMethodMs": 3.9,
     "totalJimpleStmts": 21
   }
 }

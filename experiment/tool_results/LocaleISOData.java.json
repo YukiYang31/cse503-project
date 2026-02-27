@@ -1,53 +1,53 @@
 {
-  "timestamp": "2026-02-23T21:21:09",
+  "timestamp": "2026-02-26T14:42:49",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/LocaleISOData.java"],
   "phaseTimings": {
-    "totalMs": 262.5,
+    "totalMs": 282.1,
     "compilationMs": 0.0,
-    "irLoadingMs": 126.6,
-    "callGraphMs": 63.3,
-    "dataflowTotalMs": 24.1,
-    "sideEffectTotalMs": 1.6,
-    "overheadMs": 46.9
+    "irLoadingMs": 98.0,
+    "callGraphMs": 67.9,
+    "dataflowTotalMs": 23.6,
+    "sideEffectTotalMs": 0.8,
+    "overheadMs": 91.8
   },
   "methods": [
     {
       "signature": "<java.util.LocaleISOData: void <clinit>()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field ISO3166_3",
-      "dataflowMs": 19.3,
-      "sideEffectMs": 1.6,
-      "totalMs": 20.8,
+      "dataflowMs": 19.4,
+      "sideEffectMs": 0.8,
+      "totalMs": 20.2,
       "jimpleStmtCount": 34,
       "graphNodes": 2,
-      "graphEdges": 0
-    },
-    {
-      "signature": "<java.util.LocaleISOData: void <init>()>",
-      "verdict": "SIDE_EFFECT_FREE",
-      "reason": null,
-      "dataflowMs": 0.6,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.6,
-      "jimpleStmtCount": 3,
-      "graphNodes": 1,
       "graphEdges": 0
     },
     {
       "signature": "<java.util.LocaleISOData: java.util.Set computeISO3166_1Alpha3Countries()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 4.3,
+      "dataflowMs": 3.8,
       "sideEffectMs": 0.0,
-      "totalMs": 4.3,
+      "totalMs": 3.8,
       "jimpleStmtCount": 17,
       "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.LocaleISOData: void <init>()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
       "graphEdges": 0
     }
   ],
   "statistics": {
     "methodCount": 3,
-    "avgTimePerMethodMs": 8.6,
+    "avgTimePerMethodMs": 8.1,
     "totalJimpleStmts": 54
   }
 }

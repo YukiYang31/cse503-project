@@ -1,14 +1,14 @@
 {
-  "timestamp": "2026-02-23T21:21:50",
+  "timestamp": "2026-02-26T14:52:18",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Observer.java"],
   "phaseTimings": {
-    "totalMs": 168.9,
+    "totalMs": 154.1,
     "compilationMs": 0.0,
-    "irLoadingMs": 124.6,
-    "callGraphMs": 11.2,
+    "irLoadingMs": 73.2,
+    "callGraphMs": 8.0,
     "dataflowTotalMs": 0.0,
     "sideEffectTotalMs": 0.0,
-    "overheadMs": 33.2
+    "overheadMs": 72.9
   },
   "methods": [
   ],

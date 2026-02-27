@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-02-23T21:18:27",
+  "timestamp": "2026-02-26T14:36:42",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/HashSet.java"],
   "phaseTimings": {
-    "totalMs": 3203.2,
+    "totalMs": 2566.2,
     "compilationMs": 0.0,
-    "irLoadingMs": 120.5,
-    "callGraphMs": 2989.1,
-    "dataflowTotalMs": 47.6,
-    "sideEffectTotalMs": 4.7,
-    "overheadMs": 41.3
+    "irLoadingMs": 78.0,
+    "callGraphMs": 2357.2,
+    "dataflowTotalMs": 38.6,
+    "sideEffectTotalMs": 3.6,
+    "overheadMs": 88.8
   },
   "methods": [
     {
-      "signature": "<java.util.HashSet: boolean isEmpty()>",
+      "signature": "<java.util.HashSet: int size()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "loaded object 'load map from parameter this' escapes to global scope",
-      "dataflowMs": 28.3,
-      "sideEffectMs": 3.6,
-      "totalMs": 31.9,
+      "dataflowMs": 23.0,
+      "sideEffectMs": 2.7,
+      "totalMs": 25.6,
       "jimpleStmtCount": 4,
       "graphNodes": 2,
       "graphEdges": 1
@@ -26,12 +26,111 @@
       "signature": "<java.util.HashSet: java.util.Iterator iterator()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "loaded object 'load map from parameter this' escapes to global scope",
-      "dataflowMs": 0.4,
-      "sideEffectMs": 0.1,
-      "totalMs": 0.5,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
       "jimpleStmtCount": 5,
       "graphNodes": 3,
       "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.HashSet: void writeObject(java.io.ObjectOutputStream)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "ObjectOutputStream parameter escapes to global scope",
+      "dataflowMs": 4.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 4.5,
+      "jimpleStmtCount": 21,
+      "graphNodes": 6,
+      "graphEdges": 3
+    },
+    {
+      "signature": "<java.util.HashSet: boolean contains(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object parameter escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.HashSet: boolean add(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object parameter escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 10,
+      "graphNodes": 5,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.HashSet: java.util.Spliterator spliterator()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'load map from parameter this' escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.HashSet: boolean remove(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Object parameter escapes to global scope",
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.5,
+      "jimpleStmtCount": 10,
+      "graphNodes": 5,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.HashSet: void <init>()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 1.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 1.3,
+      "jimpleStmtCount": 6,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.HashSet: void <clinit>()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "writes to static field PRESENT",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.HashSet: boolean isEmpty()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'load map from parameter this' escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.HashSet: void <init>(java.util.Collection)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 4.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 4.1,
+      "jimpleStmtCount": 9,
+      "graphNodes": 4,
+      "graphEdges": 2
     },
     {
       "signature": "<java.util.HashSet: void clear()>",
@@ -39,107 +138,30 @@
       "reason": "loaded object 'load map from parameter this' escapes to global scope",
       "dataflowMs": 0.2,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
-      "jimpleStmtCount": 4,
-      "graphNodes": 2,
-      "graphEdges": 1
-    },
-    {
-      "signature": "<java.util.HashSet: void <init>()>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 2.1,
-      "sideEffectMs": 0.1,
-      "totalMs": 2.2,
-      "jimpleStmtCount": 6,
-      "graphNodes": 2,
-      "graphEdges": 1
-    },
-    {
-      "signature": "<java.util.HashSet: int size()>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "loaded object 'load map from parameter this' escapes to global scope",
-      "dataflowMs": 0.2,
-      "sideEffectMs": 0.0,
       "totalMs": 0.3,
       "jimpleStmtCount": 4,
       "graphNodes": 2,
-      "graphEdges": 1
-    },
-    {
-      "signature": "<java.util.HashSet: void <init>(int)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 6.7,
-      "sideEffectMs": 0.1,
-      "totalMs": 6.7,
-      "jimpleStmtCount": 7,
-      "graphNodes": 3,
-      "graphEdges": 2
-    },
-    {
-      "signature": "<java.util.HashSet: void <clinit>()>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "writes to static field PRESENT",
-      "dataflowMs": 0.2,
-      "sideEffectMs": 0.1,
-      "totalMs": 0.3,
-      "jimpleStmtCount": 4,
-      "graphNodes": 2,
-      "graphEdges": 0
-    },
-    {
-      "signature": "<java.util.HashSet: boolean contains(java.lang.Object)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "Object parameter escapes to global scope",
-      "dataflowMs": 0.3,
-      "sideEffectMs": 0.1,
-      "totalMs": 0.4,
-      "jimpleStmtCount": 5,
-      "graphNodes": 3,
-      "graphEdges": 1
-    },
-    {
-      "signature": "<java.util.HashSet: void <init>(java.util.Collection)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 0.5,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.6,
-      "jimpleStmtCount": 9,
-      "graphNodes": 4,
-      "graphEdges": 2
-    },
-    {
-      "signature": "<java.util.HashSet: void writeObject(java.io.ObjectOutputStream)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "ObjectOutputStream parameter escapes to global scope",
-      "dataflowMs": 3.2,
-      "sideEffectMs": 0.1,
-      "totalMs": 3.3,
-      "jimpleStmtCount": 21,
-      "graphNodes": 6,
-      "graphEdges": 3
-    },
-    {
-      "signature": "<java.util.HashSet: java.util.Spliterator spliterator()>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "loaded object 'load map from parameter this' escapes to global scope",
-      "dataflowMs": 0.4,
-      "sideEffectMs": 0.1,
-      "totalMs": 0.5,
-      "jimpleStmtCount": 5,
-      "graphNodes": 3,
       "graphEdges": 1
     },
     {
       "signature": "<java.util.HashSet: void <init>(int,float)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.4,
+      "dataflowMs": 0.3,
       "sideEffectMs": 0.0,
-      "totalMs": 0.4,
+      "totalMs": 0.3,
       "jimpleStmtCount": 8,
+      "graphNodes": 3,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.HashSet: void <init>(int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 7,
       "graphNodes": 3,
       "graphEdges": 2
     },
@@ -147,40 +169,29 @@
       "signature": "<java.util.HashSet: void <init>(int,float,boolean)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.7,
+      "dataflowMs": 0.3,
       "sideEffectMs": 0.0,
-      "totalMs": 0.7,
+      "totalMs": 0.3,
       "jimpleStmtCount": 9,
       "graphNodes": 3,
       "graphEdges": 2
     },
     {
-      "signature": "<java.util.HashSet: java.lang.Object clone()>",
+      "signature": "<java.util.HashSet: void readObject(java.io.ObjectInputStream)>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "writes to static field map",
-      "dataflowMs": 0.5,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.5,
-      "jimpleStmtCount": 14,
-      "graphNodes": 4,
-      "graphEdges": 2
-    },
-    {
-      "signature": "<java.util.HashSet: java.lang.Object[] toArray(java.lang.Object[])>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "Object[] parameter escapes to global scope",
-      "dataflowMs": 0.2,
-      "sideEffectMs": 0.1,
-      "totalMs": 0.3,
-      "jimpleStmtCount": 7,
-      "graphNodes": 4,
-      "graphEdges": 1
+      "reason": "mutates this via field map",
+      "dataflowMs": 1.8,
+      "sideEffectMs": 0.3,
+      "totalMs": 2.1,
+      "jimpleStmtCount": 64,
+      "graphNodes": 7,
+      "graphEdges": 3
     },
     {
       "signature": "<java.util.HashSet: java.util.HashSet newHashSet(int)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.4,
+      "dataflowMs": 0.3,
       "sideEffectMs": 0.0,
       "totalMs": 0.4,
       "jimpleStmtCount": 14,
@@ -188,26 +199,15 @@
       "graphEdges": 0
     },
     {
-      "signature": "<java.util.HashSet: boolean remove(java.lang.Object)>",
+      "signature": "<java.util.HashSet: java.lang.Object clone()>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "Object parameter escapes to global scope",
-      "dataflowMs": 0.6,
+      "reason": "writes to static field map",
+      "dataflowMs": 0.4,
       "sideEffectMs": 0.0,
-      "totalMs": 0.6,
-      "jimpleStmtCount": 10,
-      "graphNodes": 5,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 14,
+      "graphNodes": 4,
       "graphEdges": 2
-    },
-    {
-      "signature": "<java.util.HashSet: void readObject(java.io.ObjectInputStream)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "mutates this via field map",
-      "dataflowMs": 1.7,
-      "sideEffectMs": 0.2,
-      "totalMs": 1.9,
-      "jimpleStmtCount": 64,
-      "graphNodes": 7,
-      "graphEdges": 3
     },
     {
       "signature": "<java.util.HashSet: java.lang.Object[] toArray()>",
@@ -221,20 +221,20 @@
       "graphEdges": 2
     },
     {
-      "signature": "<java.util.HashSet: boolean add(java.lang.Object)>",
+      "signature": "<java.util.HashSet: java.lang.Object[] toArray(java.lang.Object[])>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "Object parameter escapes to global scope",
+      "reason": "Object[] parameter escapes to global scope",
       "dataflowMs": 0.2,
-      "sideEffectMs": 0.0,
+      "sideEffectMs": 0.1,
       "totalMs": 0.3,
-      "jimpleStmtCount": 10,
-      "graphNodes": 5,
-      "graphEdges": 2
+      "jimpleStmtCount": 7,
+      "graphNodes": 4,
+      "graphEdges": 1
     }
   ],
   "statistics": {
     "methodCount": 20,
-    "avgTimePerMethodMs": 2.6,
+    "avgTimePerMethodMs": 2.1,
     "totalJimpleStmts": 217
   }
 }

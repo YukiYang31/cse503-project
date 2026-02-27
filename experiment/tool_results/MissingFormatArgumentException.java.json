@@ -1,53 +1,53 @@
 {
-  "timestamp": "2026-02-23T21:21:23",
+  "timestamp": "2026-02-26T14:44:39",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/MissingFormatArgumentException.java"],
   "phaseTimings": {
-    "totalMs": 3132.8,
+    "totalMs": 3795.1,
     "compilationMs": 0.0,
-    "irLoadingMs": 120.6,
-    "callGraphMs": 2952.2,
-    "dataflowTotalMs": 21.7,
-    "sideEffectTotalMs": 2.0,
-    "overheadMs": 36.2
+    "irLoadingMs": 110.6,
+    "callGraphMs": 3533.4,
+    "dataflowTotalMs": 34.0,
+    "sideEffectTotalMs": 3.6,
+    "overheadMs": 113.4
   },
   "methods": [
     {
       "signature": "<java.util.MissingFormatArgumentException: void <init>(java.lang.String)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 17.3,
-      "sideEffectMs": 0.8,
-      "totalMs": 18.1,
+      "dataflowMs": 31.6,
+      "sideEffectMs": 1.8,
+      "totalMs": 33.4,
       "jimpleStmtCount": 9,
       "graphNodes": 3,
-      "graphEdges": 1
-    },
-    {
-      "signature": "<java.util.MissingFormatArgumentException: java.lang.String getFormatSpecifier()>",
-      "verdict": "SIDE_EFFECT_FREE",
-      "reason": null,
-      "dataflowMs": 3.9,
-      "sideEffectMs": 0.0,
-      "totalMs": 3.9,
-      "jimpleStmtCount": 3,
-      "graphNodes": 2,
       "graphEdges": 1
     },
     {
       "signature": "<java.util.MissingFormatArgumentException: java.lang.String getMessage()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "loaded object 'load s from parameter this' escapes to global scope",
-      "dataflowMs": 0.5,
-      "sideEffectMs": 1.1,
-      "totalMs": 1.7,
+      "dataflowMs": 2.2,
+      "sideEffectMs": 1.8,
+      "totalMs": 4.0,
       "jimpleStmtCount": 9,
       "graphNodes": 4,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.MissingFormatArgumentException: java.lang.String getFormatSpecifier()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 3,
+      "graphNodes": 2,
       "graphEdges": 1
     }
   ],
   "statistics": {
     "methodCount": 3,
-    "avgTimePerMethodMs": 7.9,
+    "avgTimePerMethodMs": 12.6,
     "totalJimpleStmts": 21
   }
 }

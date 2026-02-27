@@ -1,14 +1,14 @@
 {
-  "timestamp": "2026-02-23T21:13:39",
+  "timestamp": "2026-02-26T14:34:03",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/EventListener.java"],
   "phaseTimings": {
-    "totalMs": 115.5,
+    "totalMs": 90.5,
     "compilationMs": 0.0,
-    "irLoadingMs": 87.8,
-    "callGraphMs": 3.0,
+    "irLoadingMs": 45.4,
+    "callGraphMs": 2.7,
     "dataflowTotalMs": 0.0,
     "sideEffectTotalMs": 0.0,
-    "overheadMs": 24.6
+    "overheadMs": 42.4
   },
   "methods": [
   ],

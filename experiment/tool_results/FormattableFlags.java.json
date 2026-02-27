@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-02-23T21:13:57",
+  "timestamp": "2026-02-26T14:34:20",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/FormattableFlags.java"],
   "phaseTimings": {
-    "totalMs": 185.5,
+    "totalMs": 141.1,
     "compilationMs": 0.0,
-    "irLoadingMs": 105.6,
-    "callGraphMs": 35.1,
-    "dataflowTotalMs": 5.9,
-    "sideEffectTotalMs": 0.7,
-    "overheadMs": 38.3
+    "irLoadingMs": 57.4,
+    "callGraphMs": 24.4,
+    "dataflowTotalMs": 4.4,
+    "sideEffectTotalMs": 0.5,
+    "overheadMs": 54.4
   },
   "methods": [
     {
       "signature": "<java.util.FormattableFlags: void <init>()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 5.9,
-      "sideEffectMs": 0.7,
-      "totalMs": 6.6,
+      "dataflowMs": 4.4,
+      "sideEffectMs": 0.5,
+      "totalMs": 4.9,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
@@ -25,7 +25,7 @@
   ],
   "statistics": {
     "methodCount": 1,
-    "avgTimePerMethodMs": 6.6,
+    "avgTimePerMethodMs": 4.9,
     "totalJimpleStmts": 3
   }
 }

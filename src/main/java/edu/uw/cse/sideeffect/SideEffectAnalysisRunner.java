@@ -188,6 +188,23 @@ public class SideEffectAnalysisRunner {
             }
         }
 
+        // Pre-count total concrete methods to analyze (for progress bar)
+        int totalMethods = 0;
+        for (List<JavaSootMethod> batch : batches) {
+            List<JavaSootMethod> fb = batch;
+            if (reachable != null) {
+                final Set<String> r = reachable;
+                fb = batch.stream().filter(m -> r.contains(m.getSignature().toString())).toList();
+            }
+            if (fb.size() == 1) {
+                if (fb.get(0).isConcrete()) totalMethods++;
+            } else {
+                for (JavaSootMethod m : fb) { if (m.isConcrete()) totalMethods++; }
+            }
+        }
+        int methodsDone = 0;
+        if (totalMethods > 0) printProgress(methodsDone, totalMethods);
+
         for (List<JavaSootMethod> batch : batches) {
             // Only analyze methods in reachable set (if filter is set)
             List<JavaSootMethod> filteredBatch = batch;
@@ -203,6 +220,8 @@ public class SideEffectAnalysisRunner {
                 JavaSootMethod method = filteredBatch.get(0);
                 if (!method.isConcrete()) continue;
                 MethodSummary summary = analyzeMethod(method, sourceContents, cache, callGraph);
+                methodsDone++;
+                printProgress(methodsDone, totalMethods);
                 if (summary != null) {
                     storeSummary(method, summary, cache);
                     // Only include in output if it matches the filter (or no filter)
@@ -242,6 +261,7 @@ public class SideEffectAnalysisRunner {
                 // Collect final summaries for the SCC methods
                 for (JavaSootMethod method : filteredBatch) {
                     if (!method.isConcrete()) continue;
+                    methodsDone++;
                     if (config.methodFilter != null && !method.getName().equals(config.methodFilter)) continue;
                     MethodSummary summary = cache.lookup(
                             method.getSignature().toString(),
@@ -250,6 +270,7 @@ public class SideEffectAnalysisRunner {
                         summaries.add(summary);
                     }
                 }
+                printProgress(methodsDone, totalMethods);
             }
         }
 
@@ -263,6 +284,17 @@ public class SideEffectAnalysisRunner {
 
         // Print results
         ResultPrinter.print(summaries);
+    }
+
+    /** Print an in-place progress bar to stderr: [####----] done/total methods */
+    private static void printProgress(int done, int total) {
+        int barWidth = 30;
+        double frac = total > 0 ? (double) done / total : 0.0;
+        int filled = (int) (barWidth * frac);
+        String bar = "#".repeat(filled) + "-".repeat(barWidth - filled);
+        System.err.printf("\r  Analyzing: [%s] %d/%d methods", bar, done, total);
+        System.err.flush();
+        if (done >= total) System.err.println();
     }
 
     /** Store a summary in the cache, keyed by both full and sub signature */

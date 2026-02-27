@@ -1,36 +1,36 @@
 {
-  "timestamp": "2026-02-23T21:12:59",
+  "timestamp": "2026-02-26T14:33:26",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/ConcurrentModificationException.java"],
   "phaseTimings": {
-    "totalMs": 2206.3,
+    "totalMs": 1816.7,
     "compilationMs": 0.0,
-    "irLoadingMs": 119.5,
-    "callGraphMs": 2043.4,
-    "dataflowTotalMs": 7.6,
+    "irLoadingMs": 48.5,
+    "callGraphMs": 1712.9,
+    "dataflowTotalMs": 4.7,
     "sideEffectTotalMs": 0.7,
-    "overheadMs": 35.2
+    "overheadMs": 49.8
   },
   "methods": [
-    {
-      "signature": "<java.util.ConcurrentModificationException: void <init>(java.lang.String)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 7.2,
-      "sideEffectMs": 0.7,
-      "totalMs": 7.9,
-      "jimpleStmtCount": 4,
-      "graphNodes": 2,
-      "graphEdges": 0
-    },
     {
       "signature": "<java.util.ConcurrentModificationException: void <init>()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.1,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.1,
+      "dataflowMs": 4.2,
+      "sideEffectMs": 0.6,
+      "totalMs": 4.8,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.ConcurrentModificationException: void <init>(java.lang.String,java.lang.Throwable)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
       "graphEdges": 0
     },
     {
@@ -38,27 +38,27 @@
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
       "dataflowMs": 0.1,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.1,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.2,
       "jimpleStmtCount": 4,
       "graphNodes": 2,
       "graphEdges": 0
     },
     {
-      "signature": "<java.util.ConcurrentModificationException: void <init>(java.lang.String,java.lang.Throwable)>",
+      "signature": "<java.util.ConcurrentModificationException: void <init>(java.lang.String)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.1,
+      "dataflowMs": 0.2,
       "sideEffectMs": 0.0,
-      "totalMs": 0.1,
-      "jimpleStmtCount": 5,
-      "graphNodes": 3,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
       "graphEdges": 0
     }
   ],
   "statistics": {
     "methodCount": 4,
-    "avgTimePerMethodMs": 2.1,
+    "avgTimePerMethodMs": 1.4,
     "totalJimpleStmts": 16
   }
 }

@@ -1,14 +1,14 @@
 {
-  "timestamp": "2026-02-23T21:22:35",
+  "timestamp": "2026-02-26T14:52:47",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Queue.java"],
   "phaseTimings": {
-    "totalMs": 153.4,
+    "totalMs": 119.2,
     "compilationMs": 0.0,
-    "irLoadingMs": 115.4,
-    "callGraphMs": 11.6,
+    "irLoadingMs": 58.3,
+    "callGraphMs": 7.7,
     "dataflowTotalMs": 0.0,
     "sideEffectTotalMs": 0.0,
-    "overheadMs": 26.3
+    "overheadMs": 53.3
   },
   "methods": [
   ],

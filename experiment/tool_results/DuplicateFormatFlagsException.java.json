@@ -1,36 +1,36 @@
 {
-  "timestamp": "2026-02-23T21:13:23",
+  "timestamp": "2026-02-26T14:33:50",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/DuplicateFormatFlagsException.java"],
   "phaseTimings": {
-    "totalMs": 2284.9,
+    "totalMs": 2431.4,
     "compilationMs": 0.0,
-    "irLoadingMs": 91.7,
-    "callGraphMs": 2139.7,
-    "dataflowTotalMs": 22.4,
-    "sideEffectTotalMs": 1.2,
-    "overheadMs": 29.9
+    "irLoadingMs": 58.8,
+    "callGraphMs": 2283.1,
+    "dataflowTotalMs": 20.3,
+    "sideEffectTotalMs": 1.0,
+    "overheadMs": 68.2
   },
   "methods": [
-    {
-      "signature": "<java.util.DuplicateFormatFlagsException: void <init>(java.lang.String)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 18.1,
-      "sideEffectMs": 1.2,
-      "totalMs": 19.2,
-      "jimpleStmtCount": 9,
-      "graphNodes": 3,
-      "graphEdges": 1
-    },
     {
       "signature": "<java.util.DuplicateFormatFlagsException: java.lang.String getMessage()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 4.1,
-      "sideEffectMs": 0.1,
-      "totalMs": 4.2,
+      "dataflowMs": 19.0,
+      "sideEffectMs": 0.8,
+      "totalMs": 19.8,
       "jimpleStmtCount": 6,
       "graphNodes": 4,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.DuplicateFormatFlagsException: void <init>(java.lang.String)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 1.2,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.3,
+      "jimpleStmtCount": 9,
+      "graphNodes": 3,
       "graphEdges": 1
     },
     {
@@ -47,7 +47,7 @@
   ],
   "statistics": {
     "methodCount": 3,
-    "avgTimePerMethodMs": 7.9,
+    "avgTimePerMethodMs": 7.1,
     "totalJimpleStmts": 18
   }
 }

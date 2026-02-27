@@ -1,47 +1,25 @@
 {
-  "timestamp": "2026-02-23T21:23:20",
+  "timestamp": "2026-02-26T14:53:18",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/SequencedCollection.java"],
   "phaseTimings": {
-    "totalMs": 3890.6,
+    "totalMs": 3086.4,
     "compilationMs": 0.0,
-    "irLoadingMs": 145.6,
-    "callGraphMs": 3651.9,
-    "dataflowTotalMs": 20.2,
-    "sideEffectTotalMs": 2.1,
-    "overheadMs": 70.8
+    "irLoadingMs": 70.2,
+    "callGraphMs": 2923.1,
+    "dataflowTotalMs": 11.9,
+    "sideEffectTotalMs": 1.4,
+    "overheadMs": 79.9
   },
   "methods": [
     {
-      "signature": "<java.util.SequencedCollection: java.lang.Object getFirst()>",
+      "signature": "<java.util.SequencedCollection: java.lang.Object getLast()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 18.2,
-      "sideEffectMs": 2.0,
-      "totalMs": 20.2,
-      "jimpleStmtCount": 4,
+      "dataflowMs": 11.0,
+      "sideEffectMs": 1.3,
+      "totalMs": 12.2,
+      "jimpleStmtCount": 5,
       "graphNodes": 2,
-      "graphEdges": 0
-    },
-    {
-      "signature": "<java.util.SequencedCollection: void addFirst(java.lang.Object)>",
-      "verdict": "SIDE_EFFECT_FREE",
-      "reason": null,
-      "dataflowMs": 1.1,
-      "sideEffectMs": 0.0,
-      "totalMs": 1.2,
-      "jimpleStmtCount": 5,
-      "graphNodes": 3,
-      "graphEdges": 0
-    },
-    {
-      "signature": "<java.util.SequencedCollection: void addLast(java.lang.Object)>",
-      "verdict": "SIDE_EFFECT_FREE",
-      "reason": null,
-      "dataflowMs": 0.2,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.2,
-      "jimpleStmtCount": 5,
-      "graphNodes": 3,
       "graphEdges": 0
     },
     {
@@ -56,31 +34,53 @@
       "graphEdges": 0
     },
     {
-      "signature": "<java.util.SequencedCollection: java.lang.Object getLast()>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 0.2,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.2,
-      "jimpleStmtCount": 5,
-      "graphNodes": 2,
-      "graphEdges": 0
-    },
-    {
       "signature": "<java.util.SequencedCollection: java.lang.Object removeLast()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.2,
+      "dataflowMs": 0.1,
       "sideEffectMs": 0.0,
       "totalMs": 0.2,
       "jimpleStmtCount": 6,
       "graphNodes": 2,
       "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.SequencedCollection: void addFirst(java.lang.Object)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.SequencedCollection: java.lang.Object getFirst()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.SequencedCollection: void addLast(java.lang.Object)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 5,
+      "graphNodes": 3,
+      "graphEdges": 0
     }
   ],
   "statistics": {
     "methodCount": 6,
-    "avgTimePerMethodMs": 3.7,
+    "avgTimePerMethodMs": 2.2,
     "totalJimpleStmts": 30
   }
 }
