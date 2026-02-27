@@ -1,35 +1,24 @@
 {
-  "timestamp": "2026-02-23T21:18:36",
+  "timestamp": "2026-02-26T14:36:49",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/HexDigits.java"],
   "phaseTimings": {
-    "totalMs": 3089.1,
+    "totalMs": 2248.6,
     "compilationMs": 0.0,
-    "irLoadingMs": 125.5,
-    "callGraphMs": 2877.6,
-    "dataflowTotalMs": 41.1,
-    "sideEffectTotalMs": 2.6,
-    "overheadMs": 42.4
+    "irLoadingMs": 68.4,
+    "callGraphMs": 2084.6,
+    "dataflowTotalMs": 27.7,
+    "sideEffectTotalMs": 1.5,
+    "overheadMs": 66.3
   },
   "methods": [
     {
       "signature": "<java.util.HexDigits: void <init>()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 10.2,
-      "sideEffectMs": 1.8,
-      "totalMs": 11.9,
+      "dataflowMs": 7.9,
+      "sideEffectMs": 1.0,
+      "totalMs": 8.9,
       "jimpleStmtCount": 3,
-      "graphNodes": 1,
-      "graphEdges": 0
-    },
-    {
-      "signature": "<java.util.HexDigits: int size(long)>",
-      "verdict": "SIDE_EFFECT_FREE",
-      "reason": null,
-      "dataflowMs": 6.5,
-      "sideEffectMs": 0.1,
-      "totalMs": 6.6,
-      "jimpleStmtCount": 10,
       "graphNodes": 1,
       "graphEdges": 0
     },
@@ -37,9 +26,9 @@
       "signature": "<java.util.HexDigits: int digits(long,byte[],int,java.lang.invoke.MethodHandle)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "byte[] parameter escapes to global scope",
-      "dataflowMs": 15.3,
-      "sideEffectMs": 0.6,
-      "totalMs": 16.0,
+      "dataflowMs": 13.2,
+      "sideEffectMs": 0.4,
+      "totalMs": 13.7,
       "jimpleStmtCount": 33,
       "graphNodes": 5,
       "graphEdges": 1
@@ -48,17 +37,28 @@
       "signature": "<java.util.HexDigits: void <clinit>()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field INSTANCE",
-      "dataflowMs": 9.1,
+      "dataflowMs": 6.4,
       "sideEffectMs": 0.1,
-      "totalMs": 9.2,
+      "totalMs": 6.5,
       "jimpleStmtCount": 32,
       "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.HexDigits: int size(long)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
+      "jimpleStmtCount": 10,
+      "graphNodes": 1,
       "graphEdges": 0
     }
   ],
   "statistics": {
     "methodCount": 4,
-    "avgTimePerMethodMs": 10.9,
+    "avgTimePerMethodMs": 7.3,
     "totalJimpleStmts": 78
   }
 }

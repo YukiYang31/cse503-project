@@ -1,64 +1,64 @@
 {
-  "timestamp": "2026-02-23T21:21:55",
+  "timestamp": "2026-02-26T14:52:21",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/OctalDigits.java"],
   "phaseTimings": {
-    "totalMs": 3537.2,
+    "totalMs": 1938.8,
     "compilationMs": 0.0,
-    "irLoadingMs": 125.0,
-    "callGraphMs": 3321.1,
-    "dataflowTotalMs": 43.2,
-    "sideEffectTotalMs": 3.7,
-    "overheadMs": 44.2
+    "irLoadingMs": 53.7,
+    "callGraphMs": 1795.8,
+    "dataflowTotalMs": 30.0,
+    "sideEffectTotalMs": 1.6,
+    "overheadMs": 57.7
   },
   "methods": [
     {
       "signature": "<java.util.OctalDigits: void <init>()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 10.3,
-      "sideEffectMs": 3.0,
-      "totalMs": 13.2,
+      "dataflowMs": 8.2,
+      "sideEffectMs": 1.1,
+      "totalMs": 9.3,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
-      "graphEdges": 0
-    },
-    {
-      "signature": "<java.util.OctalDigits: int digits(long,byte[],int,java.lang.invoke.MethodHandle)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "byte[] parameter escapes to global scope",
-      "dataflowMs": 23.1,
-      "sideEffectMs": 0.6,
-      "totalMs": 23.7,
-      "jimpleStmtCount": 33,
-      "graphNodes": 5,
-      "graphEdges": 1
-    },
-    {
-      "signature": "<java.util.OctalDigits: void <clinit>()>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "writes to static field INSTANCE",
-      "dataflowMs": 9.6,
-      "sideEffectMs": 0.1,
-      "totalMs": 9.7,
-      "jimpleStmtCount": 24,
-      "graphNodes": 3,
       "graphEdges": 0
     },
     {
       "signature": "<java.util.OctalDigits: int size(long)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.2,
+      "dataflowMs": 0.3,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 0.3,
       "jimpleStmtCount": 6,
       "graphNodes": 1,
       "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.OctalDigits: void <clinit>()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "writes to static field INSTANCE",
+      "dataflowMs": 17.6,
+      "sideEffectMs": 0.4,
+      "totalMs": 18.0,
+      "jimpleStmtCount": 24,
+      "graphNodes": 3,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.OctalDigits: int digits(long,byte[],int,java.lang.invoke.MethodHandle)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "byte[] parameter escapes to global scope",
+      "dataflowMs": 3.9,
+      "sideEffectMs": 0.1,
+      "totalMs": 4.0,
+      "jimpleStmtCount": 33,
+      "graphNodes": 5,
+      "graphEdges": 1
     }
   ],
   "statistics": {
     "methodCount": 4,
-    "avgTimePerMethodMs": 11.7,
+    "avgTimePerMethodMs": 7.9,
     "totalJimpleStmts": 66
   }
 }

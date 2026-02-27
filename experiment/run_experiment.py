@@ -88,7 +88,7 @@ def run_tool_on_file(java_file_path):
             cmd,
             capture_output=True,
             text=True,
-            timeout=300,  # 5 minute timeout per file
+            timeout=120,  # 2 minute timeout per file
         )
         elapsed = time.time() - start_time
         print(f"  Completed in {elapsed:.1f}s (exit code {result.returncode})")
@@ -138,24 +138,26 @@ def extract_ground_truth():
 
 def categorize(jdk_annotation, our_verdict, file_has_annotations):
     """Determine the match category between JDK annotation and tool verdict."""
-    has_annotation = jdk_annotation in ('Pure', 'SideEffectFree')
+
+    if not file_has_annotations:
+        return 'File Not Annotated'
+   
+    annotated_side-effect-free = jdk_annotation in ('Pure', 'SideEffectFree')
 
     if our_verdict == 'NOT_ANALYZED':
         return 'Not Analyzed'
 
-    if has_annotation and our_verdict == 'SIDE_EFFECT_FREE':
+    if annotated_side-effect-free and our_verdict == 'SIDE_EFFECT_FREE':
         return 'Match'
 
-    if has_annotation and our_verdict in ('SIDE_EFFECTING', 'GRAPH_VIOLATION'):
+    if annotated_side-effect-free and our_verdict in ('SIDE_EFFECTING', 'GRAPH_VIOLATION'):
         return 'Tool False Positive'
 
-    if not has_annotation and our_verdict == 'SIDE_EFFECT_FREE':
-        if file_has_annotations:
-            return 'Annotation Deficit'
-        else:
-            return 'File Not Annotated'
+    if not annotated_side-effect-free and our_verdict == 'SIDE_EFFECT_FREE':
+        return 'Annotation Deficit'
+      
 
-    if not has_annotation and our_verdict in ('SIDE_EFFECTING', 'GRAPH_VIOLATION'):
+    if not annotated_side-effect-free and our_verdict in ('SIDE_EFFECTING', 'GRAPH_VIOLATION'):
         return 'Both Side-Effecting'
 
     return 'Unknown'

@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-02-23T21:29:34",
+  "timestamp": "2026-02-26T14:56:44",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/UnknownFormatFlagsException.java"],
   "phaseTimings": {
-    "totalMs": 3300.8,
+    "totalMs": 2658.3,
     "compilationMs": 0.0,
-    "irLoadingMs": 132.1,
-    "callGraphMs": 3110.2,
-    "dataflowTotalMs": 20.2,
-    "sideEffectTotalMs": 2.3,
-    "overheadMs": 36.0
+    "irLoadingMs": 72.1,
+    "callGraphMs": 2493.0,
+    "dataflowTotalMs": 21.1,
+    "sideEffectTotalMs": 3.0,
+    "overheadMs": 69.0
   },
   "methods": [
     {
       "signature": "<java.util.UnknownFormatFlagsException: java.lang.String getMessage()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "loaded object 'load flags from parameter this' escapes to global scope",
-      "dataflowMs": 18.8,
-      "sideEffectMs": 2.3,
-      "totalMs": 21.0,
+      "dataflowMs": 19.3,
+      "sideEffectMs": 3.0,
+      "totalMs": 22.3,
       "jimpleStmtCount": 8,
       "graphNodes": 4,
       "graphEdges": 1
@@ -26,9 +26,9 @@
       "signature": "<java.util.UnknownFormatFlagsException: void <init>(java.lang.String)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 1.3,
+      "dataflowMs": 1.6,
       "sideEffectMs": 0.0,
-      "totalMs": 1.3,
+      "totalMs": 1.7,
       "jimpleStmtCount": 9,
       "graphNodes": 3,
       "graphEdges": 1
@@ -47,7 +47,7 @@
   ],
   "statistics": {
     "methodCount": 3,
-    "avgTimePerMethodMs": 7.5,
+    "avgTimePerMethodMs": 8.1,
     "totalJimpleStmts": 20
   }
 }

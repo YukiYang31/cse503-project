@@ -1,114 +1,48 @@
 {
-  "timestamp": "2026-02-23T21:22:29",
+  "timestamp": "2026-02-26T14:52:43",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/PropertyPermission.java"],
   "phaseTimings": {
-    "totalMs": 3572.5,
+    "totalMs": 1712.5,
     "compilationMs": 0.0,
-    "irLoadingMs": 117.5,
-    "callGraphMs": 3358.4,
-    "dataflowTotalMs": 52.7,
-    "sideEffectTotalMs": 2.0,
-    "overheadMs": 41.8
+    "irLoadingMs": 53.3,
+    "callGraphMs": 1581.6,
+    "dataflowTotalMs": 22.9,
+    "sideEffectTotalMs": 0.8,
+    "overheadMs": 53.8
   },
   "methods": [
     {
       "signature": "<java.util.PropertyPermission: void init(int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 33.1,
-      "sideEffectMs": 1.5,
-      "totalMs": 34.6,
+      "dataflowMs": 12.7,
+      "sideEffectMs": 0.5,
+      "totalMs": 13.2,
       "jimpleStmtCount": 18,
       "graphNodes": 3,
-      "graphEdges": 0
-    },
-    {
-      "signature": "<java.util.PropertyPermission: java.lang.String getActions(int)>",
-      "verdict": "SIDE_EFFECT_FREE",
-      "reason": null,
-      "dataflowMs": 0.4,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.4,
-      "jimpleStmtCount": 11,
-      "graphNodes": 0,
       "graphEdges": 0
     },
     {
       "signature": "<java.util.PropertyPermission: int getMask(java.lang.String)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "String parameter escapes to global scope",
-      "dataflowMs": 3.1,
+      "dataflowMs": 2.1,
       "sideEffectMs": 0.0,
-      "totalMs": 3.1,
+      "totalMs": 2.1,
       "jimpleStmtCount": 113,
       "graphNodes": 5,
       "graphEdges": 0
     },
     {
-      "signature": "<java.util.PropertyPermission: void <init>(java.lang.String,java.lang.String)>",
+      "signature": "<java.util.PropertyPermission: void readObject(java.io.ObjectInputStream)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 4.9,
+      "dataflowMs": 2.8,
       "sideEffectMs": 0.0,
-      "totalMs": 4.9,
+      "totalMs": 2.8,
       "jimpleStmtCount": 7,
       "graphNodes": 7,
-      "graphEdges": 0
-    },
-    {
-      "signature": "<java.util.PropertyPermission: void <init>(java.lang.String,int)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 4.2,
-      "sideEffectMs": 0.1,
-      "totalMs": 4.3,
-      "jimpleStmtCount": 7,
-      "graphNodes": 6,
-      "graphEdges": 0
-    },
-    {
-      "signature": "<java.util.PropertyPermission: boolean equals(java.lang.Object)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 0.6,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.7,
-      "jimpleStmtCount": 18,
-      "graphNodes": 3,
-      "graphEdges": 0
-    },
-    {
-      "signature": "<java.util.PropertyPermission: int hashCode()>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 0.2,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.2,
-      "jimpleStmtCount": 4,
-      "graphNodes": 2,
-      "graphEdges": 0
-    },
-    {
-      "signature": "<java.util.PropertyPermission: java.lang.String getActions()>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "mutates this via field actions",
-      "dataflowMs": 3.2,
-      "sideEffectMs": 0.2,
-      "totalMs": 3.3,
-      "jimpleStmtCount": 8,
-      "graphNodes": 2,
       "graphEdges": 1
-    },
-    {
-      "signature": "<java.util.PropertyPermission: void writeObject(java.io.ObjectOutputStream)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "mutates this via field actions",
-      "dataflowMs": 1.6,
-      "sideEffectMs": 0.0,
-      "totalMs": 1.6,
-      "jimpleStmtCount": 7,
-      "graphNodes": 4,
-      "graphEdges": 2
     },
     {
       "signature": "<java.util.PropertyPermission: int getMask()>",
@@ -122,42 +56,108 @@
       "graphEdges": 0
     },
     {
-      "signature": "<java.util.PropertyPermission: java.security.PermissionCollection newPermissionCollection()>",
-      "verdict": "SIDE_EFFECT_FREE",
-      "reason": null,
-      "dataflowMs": 0.2,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.3,
-      "jimpleStmtCount": 4,
-      "graphNodes": 2,
-      "graphEdges": 0
-    },
-    {
       "signature": "<java.util.PropertyPermission: boolean implies(java.security.Permission)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.4,
+      "dataflowMs": 0.2,
       "sideEffectMs": 0.0,
-      "totalMs": 0.5,
+      "totalMs": 0.2,
       "jimpleStmtCount": 16,
       "graphNodes": 2,
       "graphEdges": 0
     },
     {
-      "signature": "<java.util.PropertyPermission: void readObject(java.io.ObjectInputStream)>",
+      "signature": "<java.util.PropertyPermission: java.lang.String getActions(int)>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 11,
+      "graphNodes": 0,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.PropertyPermission: java.lang.String getActions()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "mutates this via field actions",
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.5,
+      "jimpleStmtCount": 8,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.PropertyPermission: void writeObject(java.io.ObjectOutputStream)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "mutates this via field actions",
+      "dataflowMs": 0.8,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.9,
+      "jimpleStmtCount": 7,
+      "graphNodes": 4,
+      "graphEdges": 2
+    },
+    {
+      "signature": "<java.util.PropertyPermission: int hashCode()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.7,
+      "dataflowMs": 0.1,
       "sideEffectMs": 0.0,
-      "totalMs": 0.7,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.PropertyPermission: void <init>(java.lang.String,java.lang.String)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.4,
       "jimpleStmtCount": 7,
       "graphNodes": 7,
-      "graphEdges": 1
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.PropertyPermission: void <init>(java.lang.String,int)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 2.9,
+      "sideEffectMs": 0.0,
+      "totalMs": 3.0,
+      "jimpleStmtCount": 7,
+      "graphNodes": 6,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.PropertyPermission: java.security.PermissionCollection newPermissionCollection()>",
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.PropertyPermission: boolean equals(java.lang.Object)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
+      "jimpleStmtCount": 18,
+      "graphNodes": 3,
+      "graphEdges": 0
     }
   ],
   "statistics": {
     "methodCount": 13,
-    "avgTimePerMethodMs": 4.2,
+    "avgTimePerMethodMs": 1.8,
     "totalJimpleStmts": 223
   }
 }

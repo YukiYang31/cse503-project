@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-02-23T21:19:36",
+  "timestamp": "2026-02-26T14:39:54",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/InvalidPropertiesFormatException.java"],
   "phaseTimings": {
-    "totalMs": 2550.0,
+    "totalMs": 3768.0,
     "compilationMs": 0.0,
-    "irLoadingMs": 107.4,
-    "callGraphMs": 2386.3,
-    "dataflowTotalMs": 16.9,
-    "sideEffectTotalMs": 1.5,
-    "overheadMs": 37.9
+    "irLoadingMs": 104.6,
+    "callGraphMs": 3528.2,
+    "dataflowTotalMs": 20.6,
+    "sideEffectTotalMs": 2.2,
+    "overheadMs": 112.4
   },
   "methods": [
     {
       "signature": "<java.util.InvalidPropertiesFormatException: void <init>(java.lang.String)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 8.0,
-      "sideEffectMs": 1.3,
-      "totalMs": 9.3,
+      "dataflowMs": 12.1,
+      "sideEffectMs": 2.0,
+      "totalMs": 14.1,
       "jimpleStmtCount": 4,
       "graphNodes": 2,
       "graphEdges": 0
@@ -26,9 +26,9 @@
       "signature": "<java.util.InvalidPropertiesFormatException: void writeObject(java.io.ObjectOutputStream)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 6.5,
+      "dataflowMs": 5.4,
       "sideEffectMs": 0.1,
-      "totalMs": 6.6,
+      "totalMs": 5.5,
       "jimpleStmtCount": 5,
       "graphNodes": 3,
       "graphEdges": 0
@@ -37,9 +37,9 @@
       "signature": "<java.util.InvalidPropertiesFormatException: void <init>(java.lang.Throwable)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 2.0,
+      "dataflowMs": 2.3,
       "sideEffectMs": 0.0,
-      "totalMs": 2.1,
+      "totalMs": 2.3,
       "jimpleStmtCount": 9,
       "graphNodes": 3,
       "graphEdges": 0
@@ -48,9 +48,9 @@
       "signature": "<java.util.InvalidPropertiesFormatException: void readObject(java.io.ObjectInputStream)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.4,
+      "dataflowMs": 0.8,
       "sideEffectMs": 0.0,
-      "totalMs": 0.4,
+      "totalMs": 0.8,
       "jimpleStmtCount": 5,
       "graphNodes": 3,
       "graphEdges": 0
@@ -58,7 +58,7 @@
   ],
   "statistics": {
     "methodCount": 4,
-    "avgTimePerMethodMs": 4.6,
+    "avgTimePerMethodMs": 5.7,
     "totalJimpleStmts": 23
   }
 }

@@ -1,14 +1,14 @@
 {
-  "timestamp": "2026-02-23T21:29:43",
+  "timestamp": "2026-02-26T14:56:54",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/package-info.java"],
   "phaseTimings": {
-    "totalMs": 134.2,
+    "totalMs": 138.9,
     "compilationMs": 0.0,
     "irLoadingMs": 0.0,
     "callGraphMs": 0.0,
     "dataflowTotalMs": 0.0,
     "sideEffectTotalMs": 0.0,
-    "overheadMs": 134.2
+    "overheadMs": 138.9
   },
   "methods": [
   ],

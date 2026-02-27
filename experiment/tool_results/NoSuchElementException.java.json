@@ -1,33 +1,33 @@
 {
-  "timestamp": "2026-02-23T21:21:44",
+  "timestamp": "2026-02-26T14:45:13",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/NoSuchElementException.java"],
   "phaseTimings": {
-    "totalMs": 2856.3,
+    "totalMs": 4287.6,
     "compilationMs": 0.0,
-    "irLoadingMs": 130.7,
-    "callGraphMs": 2668.2,
-    "dataflowTotalMs": 10.0,
-    "sideEffectTotalMs": 1.1,
-    "overheadMs": 46.2
+    "irLoadingMs": 120.9,
+    "callGraphMs": 4022.4,
+    "dataflowTotalMs": 14.5,
+    "sideEffectTotalMs": 1.7,
+    "overheadMs": 128.0
   },
   "methods": [
-    {
-      "signature": "<java.util.NoSuchElementException: void <init>()>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 9.4,
-      "sideEffectMs": 1.0,
-      "totalMs": 10.4,
-      "jimpleStmtCount": 3,
-      "graphNodes": 1,
-      "graphEdges": 0
-    },
     {
       "signature": "<java.util.NoSuchElementException: void <init>(java.lang.Throwable)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
+      "dataflowMs": 13.7,
+      "sideEffectMs": 1.6,
+      "totalMs": 15.3,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 0
+    },
+    {
+      "signature": "<java.util.NoSuchElementException: void <init>(java.lang.String)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
       "dataflowMs": 0.3,
-      "sideEffectMs": 0.0,
+      "sideEffectMs": 0.1,
       "totalMs": 0.4,
       "jimpleStmtCount": 4,
       "graphNodes": 2,
@@ -37,28 +37,28 @@
       "signature": "<java.util.NoSuchElementException: void <init>(java.lang.String,java.lang.Throwable)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.2,
+      "dataflowMs": 0.3,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 0.3,
       "jimpleStmtCount": 5,
       "graphNodes": 3,
       "graphEdges": 0
     },
     {
-      "signature": "<java.util.NoSuchElementException: void <init>(java.lang.String)>",
+      "signature": "<java.util.NoSuchElementException: void <init>()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
       "dataflowMs": 0.2,
       "sideEffectMs": 0.0,
       "totalMs": 0.2,
-      "jimpleStmtCount": 4,
-      "graphNodes": 2,
+      "jimpleStmtCount": 3,
+      "graphNodes": 1,
       "graphEdges": 0
     }
   ],
   "statistics": {
     "methodCount": 4,
-    "avgTimePerMethodMs": 2.8,
+    "avgTimePerMethodMs": 4.1,
     "totalJimpleStmts": 16
   }
 }

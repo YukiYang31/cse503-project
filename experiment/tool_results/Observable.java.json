@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-02-23T21:21:49",
+  "timestamp": "2026-02-26T14:52:17",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Observable.java"],
   "phaseTimings": {
-    "totalMs": 3362.4,
+    "totalMs": 4939.0,
     "compilationMs": 0.0,
-    "irLoadingMs": 145.6,
-    "callGraphMs": 3130.1,
-    "dataflowTotalMs": 36.1,
-    "sideEffectTotalMs": 8.2,
-    "overheadMs": 42.3
+    "irLoadingMs": 93.9,
+    "callGraphMs": 4723.2,
+    "dataflowTotalMs": 30.3,
+    "sideEffectTotalMs": 1.9,
+    "overheadMs": 89.7
   },
   "methods": [
     {
       "signature": "<java.util.Observable: void <init>()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 21.8,
-      "sideEffectMs": 1.0,
-      "totalMs": 22.8,
+      "dataflowMs": 21.5,
+      "sideEffectMs": 0.9,
+      "totalMs": 22.4,
       "jimpleStmtCount": 7,
       "graphNodes": 2,
       "graphEdges": 1
@@ -26,9 +26,9 @@
       "signature": "<java.util.Observable: void setChanged()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates this via field changed",
-      "dataflowMs": 0.2,
-      "sideEffectMs": 5.0,
-      "totalMs": 5.1,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.2,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
@@ -39,7 +39,7 @@
       "reason": "mutates this via field changed",
       "dataflowMs": 0.1,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 0.1,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
@@ -48,45 +48,12 @@
       "signature": "<java.util.Observable: void notifyObservers(java.lang.Object)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 11.0,
-      "sideEffectMs": 0.1,
-      "totalMs": 11.1,
+      "dataflowMs": 6.7,
+      "sideEffectMs": 0.0,
+      "totalMs": 6.7,
       "jimpleStmtCount": 26,
       "graphNodes": 5,
       "graphEdges": 1
-    },
-    {
-      "signature": "<java.util.Observable: void notifyObservers()>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 1.6,
-      "sideEffectMs": 0.0,
-      "totalMs": 1.6,
-      "jimpleStmtCount": 3,
-      "graphNodes": 3,
-      "graphEdges": 1
-    },
-    {
-      "signature": "<java.util.Observable: int countObservers()>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "loaded object 'load obs from parameter this' escapes to global scope",
-      "dataflowMs": 0.3,
-      "sideEffectMs": 2.0,
-      "totalMs": 2.3,
-      "jimpleStmtCount": 4,
-      "graphNodes": 2,
-      "graphEdges": 1
-    },
-    {
-      "signature": "<java.util.Observable: void addObserver(java.util.Observer)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "Observer parameter escapes to global scope",
-      "dataflowMs": 0.8,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.8,
-      "jimpleStmtCount": 12,
-      "graphNodes": 5,
-      "graphEdges": 2
     },
     {
       "signature": "<java.util.Observable: boolean hasChanged()>",
@@ -100,12 +67,12 @@
       "graphEdges": 0
     },
     {
-      "signature": "<java.util.Observable: void deleteObservers()>",
+      "signature": "<java.util.Observable: int countObservers()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "loaded object 'load obs from parameter this' escapes to global scope",
       "dataflowMs": 0.1,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "sideEffectMs": 0.7,
+      "totalMs": 0.8,
       "jimpleStmtCount": 4,
       "graphNodes": 2,
       "graphEdges": 1
@@ -116,15 +83,48 @@
       "reason": "Observer parameter escapes to global scope",
       "dataflowMs": 0.1,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 0.1,
       "jimpleStmtCount": 5,
       "graphNodes": 3,
       "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Observable: void notifyObservers()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "this escapes to global scope",
+      "dataflowMs": 0.7,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.7,
+      "jimpleStmtCount": 3,
+      "graphNodes": 3,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Observable: void deleteObservers()>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "loaded object 'load obs from parameter this' escapes to global scope",
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.1,
+      "jimpleStmtCount": 4,
+      "graphNodes": 2,
+      "graphEdges": 1
+    },
+    {
+      "signature": "<java.util.Observable: void addObserver(java.util.Observer)>",
+      "verdict": "SIDE_EFFECTING",
+      "reason": "Observer parameter escapes to global scope",
+      "dataflowMs": 1.0,
+      "sideEffectMs": 0.0,
+      "totalMs": 1.0,
+      "jimpleStmtCount": 12,
+      "graphNodes": 5,
+      "graphEdges": 2
     }
   ],
   "statistics": {
     "methodCount": 10,
-    "avgTimePerMethodMs": 4.4,
+    "avgTimePerMethodMs": 3.2,
     "totalJimpleStmts": 70
   }
 }
