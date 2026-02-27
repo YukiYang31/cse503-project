@@ -1,6 +1,10 @@
 package edu.uw.cse.sideeffect;
 
 import edu.uw.cse.sideeffect.util.TimingRecorder;
+import java.net.URI;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -109,24 +113,51 @@ public class Main {
     }
 
     /**
-     * Detect JDK source files and extract their fully qualified class names.
+     * Detect JDK source files and extract their fully qualified class names,
+     * including inner classes discovered from the JRT filesystem.
      * JDK sources match the pattern: jdk/src/<module>/share/classes/<package/path>/Class.java
      * These cannot be compiled standalone, so we load from the JRT filesystem instead.
      *
-     * @return set of FQCNs for JDK classes, or empty set if none are JDK sources
+     * @return set of FQCNs for JDK classes (top-level + inner), or empty set if none are JDK sources
      */
     private static Set<String> detectJdkClasses(List<String> sourceFiles) {
         // Pattern: jdk/src/<module>/share/classes/<path>.java
         Pattern jdkPattern = Pattern.compile(
-            "jdk/src/[^/]+/share/classes/(.+)\\.java$");
+            "jdk/src/([^/]+)/share/classes/(.+)\\.java$");
         Set<String> classNames = new HashSet<>();
         for (String file : sourceFiles) {
             // Normalize to forward slashes for matching
             String normalized = file.replace('\\', '/');
             Matcher m = jdkPattern.matcher(normalized);
             if (m.find()) {
-                // Convert path separators to dots: java/io/File -> java.io.File
-                classNames.add(m.group(1).replace('/', '.'));
+                String module = m.group(1);  // e.g., "java.base"
+                String classPath = m.group(2);  // e.g., "java/util/HashMap"
+                String topLevelFqcn = classPath.replace('/', '.');
+                classNames.add(topLevelFqcn);
+
+                // Discover inner classes from the JRT filesystem
+                // e.g., for HashMap, find HashMap$Node.class, HashMap$KeySet.class, etc.
+                String simpleClassName = classPath.substring(classPath.lastIndexOf('/') + 1);
+                String packageDir = classPath.substring(0, classPath.lastIndexOf('/') + 1);
+                try {
+                    FileSystem jrtFs = FileSystems.getFileSystem(URI.create("jrt:/"));
+                    Path moduleDir = jrtFs.getPath("/modules/" + module + "/" + packageDir);
+                    if (Files.isDirectory(moduleDir)) {
+                        String prefix = simpleClassName + "$";
+                        Files.list(moduleDir)
+                            .map(p -> p.getFileName().toString())
+                            .filter(name -> name.startsWith(prefix) && name.endsWith(".class"))
+                            .forEach(name -> {
+                                // HashMap$Node.class -> java.util.HashMap$Node
+                                String innerFqcn = (packageDir + name.replace(".class", ""))
+                                    .replace('/', '.');
+                                classNames.add(innerFqcn);
+                            });
+                    }
+                } catch (Exception e) {
+                    // JRT not available or scan failed — proceed with top-level only
+                    System.err.println("Warning: could not scan JRT for inner classes: " + e.getMessage());
+                }
             }
         }
         return classNames;
