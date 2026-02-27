@@ -142,22 +142,22 @@ def categorize(jdk_annotation, our_verdict, file_has_annotations):
     if not file_has_annotations:
         return 'File Not Annotated'
    
-    annotated_side-effect-free = jdk_annotation in ('Pure', 'SideEffectFree')
+    has_annotation = jdk_annotation in ('Pure', 'SideEffectFree')
 
     if our_verdict == 'NOT_ANALYZED':
         return 'Not Analyzed'
 
-    if annotated_side-effect-free and our_verdict == 'SIDE_EFFECT_FREE':
+    if has_annotation and our_verdict == 'SIDE_EFFECT_FREE':
         return 'Match'
 
-    if annotated_side-effect-free and our_verdict in ('SIDE_EFFECTING', 'GRAPH_VIOLATION'):
+    if has_annotation and our_verdict in ('SIDE_EFFECTING', 'GRAPH_VIOLATION'):
         return 'Tool False Positive'
 
-    if not annotated_side-effect-free and our_verdict == 'SIDE_EFFECT_FREE':
+    if not has_annotation and our_verdict == 'SIDE_EFFECT_FREE':
         return 'Annotation Deficit'
       
 
-    if not annotated_side-effect-free and our_verdict in ('SIDE_EFFECTING', 'GRAPH_VIOLATION'):
+    if not has_annotation and our_verdict in ('SIDE_EFFECTING', 'GRAPH_VIOLATION'):
         return 'Both Side-Effecting'
 
     return 'Unknown'
