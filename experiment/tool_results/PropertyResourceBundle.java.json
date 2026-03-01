@@ -1,56 +1,56 @@
 {
-  "timestamp": "2026-02-26T14:52:46",
+  "timestamp": "2026-03-01T13:22:55",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/PropertyResourceBundle.java"],
   "phaseTimings": {
-    "totalMs": 2138.8,
+    "totalMs": 8435.2,
     "compilationMs": 0.0,
-    "irLoadingMs": 57.6,
-    "callGraphMs": 1984.2,
-    "dataflowTotalMs": 29.6,
-    "sideEffectTotalMs": 3.3,
-    "overheadMs": 64.1
+    "irLoadingMs": 241.7,
+    "callGraphMs": 7460.8,
+    "dataflowTotalMs": 487.3,
+    "sideEffectTotalMs": 3.8,
+    "overheadMs": 241.7
   },
   "methods": [
     {
       "signature": "<java.util.PropertyResourceBundle: void <clinit>()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field encoding",
-      "dataflowMs": 23.2,
-      "sideEffectMs": 1.0,
-      "totalMs": 24.1,
+      "dataflowMs": 147.5,
+      "sideEffectMs": 0.2,
+      "totalMs": 147.7,
       "jimpleStmtCount": 5,
-      "graphNodes": 3,
-      "graphEdges": 1
+      "graphNodes": 6,
+      "graphEdges": 2
     },
     {
       "signature": "<java.util.PropertyResourceBundle: void <init>(java.io.Reader)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.5,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.5,
+      "dataflowMs": 284.5,
+      "sideEffectMs": 0.1,
+      "totalMs": 284.6,
       "jimpleStmtCount": 11,
-      "graphNodes": 4,
-      "graphEdges": 1
+      "graphNodes": 16,
+      "graphEdges": 5
     },
     {
       "signature": "<java.util.PropertyResourceBundle: void <init>(java.io.InputStream)>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 4.8,
+      "reason": "writes to static field canonicalName",
+      "dataflowMs": 45.9,
       "sideEffectMs": 0.1,
-      "totalMs": 4.8,
+      "totalMs": 46.0,
       "jimpleStmtCount": 19,
-      "graphNodes": 9,
-      "graphEdges": 3
+      "graphNodes": 22,
+      "graphEdges": 10
     },
     {
       "signature": "<java.util.PropertyResourceBundle: java.util.Set handleKeySet()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.4,
+      "dataflowMs": 0.3,
       "sideEffectMs": 0.0,
-      "totalMs": 0.4,
+      "totalMs": 0.3,
       "jimpleStmtCount": 4,
       "graphNodes": 3,
       "graphEdges": 1
@@ -59,9 +59,9 @@
       "signature": "<java.util.PropertyResourceBundle: java.lang.Object handleGetObject(java.lang.String)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.3,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.6,
       "jimpleStmtCount": 9,
       "graphNodes": 4,
       "graphEdges": 1
@@ -70,17 +70,17 @@
       "signature": "<java.util.PropertyResourceBundle: java.util.Enumeration getKeys()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "loaded object 'load parent from parameter this' escapes to global scope",
-      "dataflowMs": 0.6,
-      "sideEffectMs": 2.1,
-      "totalMs": 2.7,
+      "dataflowMs": 8.6,
+      "sideEffectMs": 3.2,
+      "totalMs": 11.8,
       "jimpleStmtCount": 11,
       "graphNodes": 6,
-      "graphEdges": 2
+      "graphEdges": 5
     }
   ],
   "statistics": {
     "methodCount": 6,
-    "avgTimePerMethodMs": 5.5,
+    "avgTimePerMethodMs": 81.8,
     "totalJimpleStmts": 59
   }
 }

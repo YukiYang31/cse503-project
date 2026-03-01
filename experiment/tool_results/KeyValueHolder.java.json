@@ -1,34 +1,34 @@
 {
-  "timestamp": "2026-02-26T14:40:15",
+  "timestamp": "2026-03-01T13:19:32",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/KeyValueHolder.java"],
   "phaseTimings": {
-    "totalMs": 3600.4,
+    "totalMs": 4434.5,
     "compilationMs": 0.0,
-    "irLoadingMs": 95.0,
-    "callGraphMs": 3362.6,
-    "dataflowTotalMs": 41.4,
-    "sideEffectTotalMs": 4.2,
-    "overheadMs": 97.2
+    "irLoadingMs": 108.6,
+    "callGraphMs": 4051.0,
+    "dataflowTotalMs": 150.8,
+    "sideEffectTotalMs": 0.5,
+    "overheadMs": 123.7
   },
   "methods": [
     {
       "signature": "<java.util.KeyValueHolder: void <init>(java.lang.Object,java.lang.Object)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "Object parameter escapes to global scope",
-      "dataflowMs": 27.5,
-      "sideEffectMs": 1.9,
-      "totalMs": 29.4,
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 68.6,
+      "sideEffectMs": 0.1,
+      "totalMs": 68.7,
       "jimpleStmtCount": 9,
-      "graphNodes": 4,
-      "graphEdges": 2
+      "graphNodes": 10,
+      "graphEdges": 12
     },
     {
       "signature": "<java.util.KeyValueHolder: java.lang.Object getValue()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 1.8,
-      "sideEffectMs": 0.4,
-      "totalMs": 2.2,
+      "dataflowMs": 0.5,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.6,
       "jimpleStmtCount": 3,
       "graphNodes": 2,
       "graphEdges": 1
@@ -37,42 +37,42 @@
       "signature": "<java.util.KeyValueHolder: java.lang.Object getKey()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.3,
+      "dataflowMs": 0.2,
       "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "totalMs": 0.2,
       "jimpleStmtCount": 3,
       "graphNodes": 2,
       "graphEdges": 1
     },
     {
       "signature": "<java.util.KeyValueHolder: java.lang.String toString()>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "loaded object 'load key from parameter this' escapes to global scope",
-      "dataflowMs": 1.3,
-      "sideEffectMs": 1.8,
-      "totalMs": 3.1,
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 59.5,
+      "sideEffectMs": 0.1,
+      "totalMs": 59.6,
       "jimpleStmtCount": 10,
-      "graphNodes": 5,
-      "graphEdges": 2
+      "graphNodes": 26,
+      "graphEdges": 23
     },
     {
       "signature": "<java.util.KeyValueHolder: java.lang.Object setValue(java.lang.Object)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.2,
+      "dataflowMs": 20.6,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 20.7,
       "jimpleStmtCount": 5,
-      "graphNodes": 3,
-      "graphEdges": 0
+      "graphNodes": 7,
+      "graphEdges": 7
     },
     {
       "signature": "<java.util.KeyValueHolder: boolean equals(java.lang.Object)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 9.9,
-      "sideEffectMs": 0.0,
-      "totalMs": 10.0,
+      "dataflowMs": 1.2,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.3,
       "jimpleStmtCount": 17,
       "graphNodes": 6,
       "graphEdges": 4
@@ -81,7 +81,7 @@
       "signature": "<java.util.KeyValueHolder: int hashCode()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.3,
+      "dataflowMs": 0.2,
       "sideEffectMs": 0.0,
       "totalMs": 0.3,
       "jimpleStmtCount": 7,
@@ -91,7 +91,7 @@
   ],
   "statistics": {
     "methodCount": 7,
-    "avgTimePerMethodMs": 6.5,
+    "avgTimePerMethodMs": 21.6,
     "totalJimpleStmts": 54
   }
 }

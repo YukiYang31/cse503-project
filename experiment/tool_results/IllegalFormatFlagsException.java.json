@@ -1,45 +1,45 @@
 {
-  "timestamp": "2026-02-26T14:39:18",
+  "timestamp": "2026-03-01T12:42:17",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/IllegalFormatFlagsException.java"],
   "phaseTimings": {
-    "totalMs": 3285.4,
+    "totalMs": 4030.6,
     "compilationMs": 0.0,
-    "irLoadingMs": 89.4,
-    "callGraphMs": 3064.4,
-    "dataflowTotalMs": 32.6,
-    "sideEffectTotalMs": 4.2,
-    "overheadMs": 94.9
+    "irLoadingMs": 109.8,
+    "callGraphMs": 3654.8,
+    "dataflowTotalMs": 152.0,
+    "sideEffectTotalMs": 0.3,
+    "overheadMs": 113.7
   },
   "methods": [
     {
       "signature": "<java.util.IllegalFormatFlagsException: java.lang.String getMessage()>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "loaded object 'load flags from parameter this' escapes to global scope",
-      "dataflowMs": 29.6,
-      "sideEffectMs": 4.0,
-      "totalMs": 33.6,
+      "reason": "writes to static field unknown",
+      "dataflowMs": 133.4,
+      "sideEffectMs": 0.2,
+      "totalMs": 133.6,
       "jimpleStmtCount": 9,
-      "graphNodes": 4,
-      "graphEdges": 1
+      "graphNodes": 19,
+      "graphEdges": 5
     },
     {
       "signature": "<java.util.IllegalFormatFlagsException: void <init>(java.lang.String)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 2.7,
+      "dataflowMs": 18.5,
       "sideEffectMs": 0.1,
-      "totalMs": 2.9,
+      "totalMs": 18.5,
       "jimpleStmtCount": 9,
-      "graphNodes": 3,
-      "graphEdges": 1
+      "graphNodes": 8,
+      "graphEdges": 11
     },
     {
       "signature": "<java.util.IllegalFormatFlagsException: java.lang.String getFlags()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.3,
+      "dataflowMs": 0.2,
       "sideEffectMs": 0.0,
-      "totalMs": 0.4,
+      "totalMs": 0.2,
       "jimpleStmtCount": 3,
       "graphNodes": 2,
       "graphEdges": 1
@@ -47,7 +47,7 @@
   ],
   "statistics": {
     "methodCount": 3,
-    "avgTimePerMethodMs": 12.3,
+    "avgTimePerMethodMs": 50.8,
     "totalJimpleStmts": 21
   }
 }

@@ -1,45 +1,45 @@
 {
-  "timestamp": "2026-02-26T14:40:06",
+  "timestamp": "2026-03-01T13:19:20",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/JapaneseImperialCalendar.java"],
   "phaseTimings": {
-    "totalMs": 4367.5,
+    "totalMs": 5643.4,
     "compilationMs": 0.0,
-    "irLoadingMs": 103.1,
-    "callGraphMs": 4016.8,
-    "dataflowTotalMs": 121.7,
-    "sideEffectTotalMs": 4.8,
-    "overheadMs": 121.1
+    "irLoadingMs": 122.9,
+    "callGraphMs": 4593.5,
+    "dataflowTotalMs": 765.8,
+    "sideEffectTotalMs": 8.7,
+    "overheadMs": 152.5
   },
   "methods": [
     {
       "signature": "<java.util.JapaneseImperialCalendar: void <init>(java.util.TimeZone,java.util.Locale)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 22.2,
-      "sideEffectMs": 1.2,
-      "totalMs": 23.3,
+      "dataflowMs": 104.1,
+      "sideEffectMs": 0.1,
+      "totalMs": 104.2,
       "jimpleStmtCount": 11,
-      "graphNodes": 5,
-      "graphEdges": 2
+      "graphNodes": 20,
+      "graphEdges": 12
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: void <init>(java.util.TimeZone,java.util.Locale,boolean)>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 10.9,
+      "reason": "Locale parameter escapes to global scope",
+      "dataflowMs": 5.4,
       "sideEffectMs": 0.1,
-      "totalMs": 11.0,
+      "totalMs": 5.4,
       "jimpleStmtCount": 10,
-      "graphNodes": 5,
-      "graphEdges": 2
+      "graphNodes": 21,
+      "graphEdges": 13
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: int getEraIndex(sun.util.calendar.LocalGregorianCalendar$Date)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "LocalGregorianCalendar$Date parameter escapes to global scope",
-      "dataflowMs": 1.4,
+      "dataflowMs": 0.6,
       "sideEffectMs": 0.0,
-      "totalMs": 1.5,
+      "totalMs": 0.6,
       "jimpleStmtCount": 13,
       "graphNodes": 4,
       "graphEdges": 1
@@ -48,56 +48,56 @@
       "signature": "<java.util.JapaneseImperialCalendar: long getFixedDateJan1(sun.util.calendar.LocalGregorianCalendar$Date,long)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "LocalGregorianCalendar$Date parameter escapes to global scope",
-      "dataflowMs": 1.7,
+      "dataflowMs": 7.8,
       "sideEffectMs": 0.0,
-      "totalMs": 1.7,
+      "totalMs": 7.8,
       "jimpleStmtCount": 28,
-      "graphNodes": 6,
-      "graphEdges": 3
+      "graphNodes": 8,
+      "graphEdges": 5
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: sun.util.calendar.LocalGregorianCalendar$Date getCalendarDate(long)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.2,
+      "dataflowMs": 40.5,
       "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "totalMs": 40.5,
       "jimpleStmtCount": 7,
-      "graphNodes": 3,
-      "graphEdges": 2
+      "graphNodes": 9,
+      "graphEdges": 5
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: int getTransitionEraIndex(sun.util.calendar.LocalGregorianCalendar$Date)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "LocalGregorianCalendar$Date parameter escapes to global scope",
-      "dataflowMs": 1.4,
+      "dataflowMs": 2.6,
       "sideEffectMs": 0.0,
-      "totalMs": 1.5,
+      "totalMs": 2.7,
       "jimpleStmtCount": 28,
-      "graphNodes": 5,
-      "graphEdges": 1
+      "graphNodes": 7,
+      "graphEdges": 3
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: long getFixedDateMonth1(sun.util.calendar.LocalGregorianCalendar$Date,long)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "LocalGregorianCalendar$Date parameter escapes to global scope",
       "dataflowMs": 1.1,
-      "sideEffectMs": 0.1,
+      "sideEffectMs": 0.2,
       "totalMs": 1.2,
       "jimpleStmtCount": 15,
-      "graphNodes": 7,
+      "graphNodes": 5,
       "graphEdges": 2
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: java.lang.Object clone()>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "writes to static field jdate",
-      "dataflowMs": 0.8,
-      "sideEffectMs": 0.1,
-      "totalMs": 0.9,
+      "reason": "writes to static field stamp",
+      "dataflowMs": 25.2,
+      "sideEffectMs": 0.2,
+      "totalMs": 25.4,
       "jimpleStmtCount": 10,
-      "graphNodes": 3,
-      "graphEdges": 2
+      "graphNodes": 25,
+      "graphEdges": 47
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: boolean isTransitionYear(int)>",
@@ -107,60 +107,60 @@
       "sideEffectMs": 0.0,
       "totalMs": 0.8,
       "jimpleStmtCount": 17,
-      "graphNodes": 4,
-      "graphEdges": 1
+      "graphNodes": 5,
+      "graphEdges": 2
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: int getWeekNumber(long,long)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.8,
+      "dataflowMs": 6.8,
       "sideEffectMs": 0.0,
-      "totalMs": 0.8,
+      "totalMs": 6.9,
       "jimpleStmtCount": 26,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 6,
+      "graphEdges": 7
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: int computeFields(int,int)>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "writes to static field jdate",
-      "dataflowMs": 12.1,
-      "sideEffectMs": 0.1,
-      "totalMs": 12.2,
+      "reason": "writes to static field lastRule",
+      "dataflowMs": 63.4,
+      "sideEffectMs": 0.2,
+      "totalMs": 63.6,
       "jimpleStmtCount": 290,
-      "graphNodes": 32,
-      "graphEdges": 19
+      "graphNodes": 71,
+      "graphEdges": 112
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: void computeFields()>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "writes to static field jdate",
-      "dataflowMs": 1.9,
-      "sideEffectMs": 0.1,
-      "totalMs": 2.0,
+      "reason": "writes to static field lastRule",
+      "dataflowMs": 14.3,
+      "sideEffectMs": 0.4,
+      "totalMs": 14.7,
       "jimpleStmtCount": 25,
-      "graphNodes": 33,
-      "graphEdges": 19
+      "graphNodes": 73,
+      "graphEdges": 117
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: int actualMonthLength()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "loaded object 'load jdate from parameter this' escapes to global scope",
-      "dataflowMs": 0.5,
-      "sideEffectMs": 1.7,
-      "totalMs": 2.2,
+      "dataflowMs": 2.1,
+      "sideEffectMs": 1.8,
+      "totalMs": 3.9,
       "jimpleStmtCount": 22,
-      "graphNodes": 9,
-      "graphEdges": 4
+      "graphNodes": 8,
+      "graphEdges": 5
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: boolean equals(java.lang.Object)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.2,
+      "dataflowMs": 13.3,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 13.3,
       "jimpleStmtCount": 10,
       "graphNodes": 2,
       "graphEdges": 0
@@ -168,24 +168,24 @@
     {
       "signature": "<java.util.JapaneseImperialCalendar: void setTimeZone(java.util.TimeZone)>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 0.1,
+      "reason": "mutates this via field areFieldsSet",
+      "dataflowMs": 0.6,
       "sideEffectMs": 0.0,
-      "totalMs": 0.1,
+      "totalMs": 0.6,
       "jimpleStmtCount": 6,
       "graphNodes": 3,
-      "graphEdges": 1
+      "graphEdges": 2
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: int getMaximum(int)>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 0.2,
+      "reason": "writes to static field year",
+      "dataflowMs": 8.2,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 8.3,
       "jimpleStmtCount": 14,
-      "graphNodes": 4,
-      "graphEdges": 3
+      "graphNodes": 9,
+      "graphEdges": 6
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: int getMinimum(int)>",
@@ -202,9 +202,9 @@
       "signature": "<java.util.JapaneseImperialCalendar: int monthLength(int,int)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.4,
+      "dataflowMs": 3.0,
       "sideEffectMs": 0.0,
-      "totalMs": 0.4,
+      "totalMs": 3.0,
       "jimpleStmtCount": 11,
       "graphNodes": 3,
       "graphEdges": 2
@@ -212,32 +212,32 @@
     {
       "signature": "<java.util.JapaneseImperialCalendar: long getFixedDate(int,int,int)>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 4.1,
-      "sideEffectMs": 0.0,
-      "totalMs": 4.1,
+      "reason": "writes to static field year",
+      "dataflowMs": 38.1,
+      "sideEffectMs": 0.1,
+      "totalMs": 38.2,
       "jimpleStmtCount": 148,
-      "graphNodes": 14,
-      "graphEdges": 10
+      "graphNodes": 34,
+      "graphEdges": 25
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: void computeTime()>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "writes to static field jdate",
-      "dataflowMs": 12.7,
-      "sideEffectMs": 0.2,
-      "totalMs": 12.9,
+      "reason": "writes to static field lastRule",
+      "dataflowMs": 42.3,
+      "sideEffectMs": 0.3,
+      "totalMs": 42.6,
       "jimpleStmtCount": 156,
-      "graphNodes": 51,
-      "graphEdges": 38
+      "graphNodes": 133,
+      "graphEdges": 169
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: long getYearOffsetInMillis(sun.util.calendar.CalendarDate)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "CalendarDate parameter escapes to global scope",
-      "dataflowMs": 0.3,
+      "dataflowMs": 1.7,
       "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "totalMs": 1.7,
       "jimpleStmtCount": 12,
       "graphNodes": 4,
       "graphEdges": 1
@@ -245,57 +245,57 @@
     {
       "signature": "<java.util.JapaneseImperialCalendar: void pinDayOfMonth(sun.util.calendar.LocalGregorianCalendar$Date)>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 1.0,
-      "sideEffectMs": 0.0,
-      "totalMs": 1.0,
+      "reason": "writes to static field month",
+      "dataflowMs": 3.7,
+      "sideEffectMs": 0.1,
+      "totalMs": 3.8,
       "jimpleStmtCount": 56,
-      "graphNodes": 5,
-      "graphEdges": 2
+      "graphNodes": 31,
+      "graphEdges": 34
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: void add(int,int)>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "writes to static field jdate",
-      "dataflowMs": 2.7,
-      "sideEffectMs": 0.0,
-      "totalMs": 2.7,
+      "reason": "writes to static field month",
+      "dataflowMs": 4.7,
+      "sideEffectMs": 0.2,
+      "totalMs": 4.9,
       "jimpleStmtCount": 133,
-      "graphNodes": 8,
-      "graphEdges": 7
+      "graphNodes": 55,
+      "graphEdges": 90
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: java.util.JapaneseImperialCalendar getNormalizedCalendar()>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "writes to static field jdate",
-      "dataflowMs": 0.8,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.9,
+      "reason": "writes to static field stamp",
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.7,
       "jimpleStmtCount": 10,
-      "graphNodes": 3,
-      "graphEdges": 2
+      "graphNodes": 25,
+      "graphEdges": 47
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: int getActualMaximum(int)>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "writes to static field jdate",
-      "dataflowMs": 9.7,
-      "sideEffectMs": 0.1,
-      "totalMs": 9.8,
+      "reason": "writes to static field fields",
+      "dataflowMs": 80.6,
+      "sideEffectMs": 0.7,
+      "totalMs": 81.3,
       "jimpleStmtCount": 313,
-      "graphNodes": 15,
-      "graphEdges": 42
+      "graphNodes": 105,
+      "graphEdges": 457
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: int getRolledValue(int,int,int,int)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.3,
+      "dataflowMs": 0.9,
       "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "totalMs": 0.9,
       "jimpleStmtCount": 28,
-      "graphNodes": 1,
-      "graphEdges": 0
+      "graphNodes": 5,
+      "graphEdges": 7
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: java.lang.String getCalendarType()>",
@@ -303,7 +303,7 @@
       "reason": null,
       "dataflowMs": 0.1,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 0.1,
       "jimpleStmtCount": 2,
       "graphNodes": 1,
       "graphEdges": 0
@@ -311,46 +311,46 @@
     {
       "signature": "<java.util.JapaneseImperialCalendar: java.util.TimeZone getTimeZone()>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
+      "reason": "mutates this via field sharedZone",
       "dataflowMs": 0.2,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "sideEffectMs": 0.2,
+      "totalMs": 0.4,
       "jimpleStmtCount": 5,
-      "graphNodes": 3,
-      "graphEdges": 1
+      "graphNodes": 8,
+      "graphEdges": 9
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: void readObject(java.io.ObjectInputStream)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.1,
+      "dataflowMs": 39.5,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 39.6,
       "jimpleStmtCount": 11,
-      "graphNodes": 5,
-      "graphEdges": 3
+      "graphNodes": 16,
+      "graphEdges": 10
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: void <clinit>()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field MIN_VALUES",
-      "dataflowMs": 7.8,
-      "sideEffectMs": 0.0,
-      "totalMs": 7.8,
+      "dataflowMs": 45.5,
+      "sideEffectMs": 0.1,
+      "totalMs": 45.6,
       "jimpleStmtCount": 173,
-      "graphNodes": 18,
-      "graphEdges": 11
+      "graphNodes": 31,
+      "graphEdges": 37
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: int hashCode()>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 0.2,
+      "reason": "writes to static field fields",
+      "dataflowMs": 3.0,
       "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "totalMs": 3.0,
       "jimpleStmtCount": 6,
-      "graphNodes": 2,
-      "graphEdges": 1
+      "graphNodes": 27,
+      "graphEdges": 48
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: int getGreatestMinimum(int)>",
@@ -367,64 +367,64 @@
       "signature": "<java.util.JapaneseImperialCalendar: java.util.Map getDisplayNames(int,int,java.util.Locale)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 2.3,
+      "dataflowMs": 27.6,
       "sideEffectMs": 0.0,
-      "totalMs": 2.3,
+      "totalMs": 27.6,
       "jimpleStmtCount": 55,
-      "graphNodes": 11,
-      "graphEdges": 1
+      "graphNodes": 20,
+      "graphEdges": 12
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: java.lang.String getDisplayName(int,int,java.util.Locale)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.6,
+      "dataflowMs": 3.1,
       "sideEffectMs": 0.0,
-      "totalMs": 0.6,
+      "totalMs": 3.1,
       "jimpleStmtCount": 31,
-      "graphNodes": 5,
-      "graphEdges": 1
+      "graphNodes": 14,
+      "graphEdges": 13
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: int monthLength(int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "loaded object 'load jdate from parameter this' escapes to global scope",
-      "dataflowMs": 0.2,
+      "dataflowMs": 0.3,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 0.3,
       "jimpleStmtCount": 19,
-      "graphNodes": 5,
-      "graphEdges": 3
+      "graphNodes": 7,
+      "graphEdges": 10
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: int getLeastMaximum(int)>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
+      "reason": "writes to static field year",
       "dataflowMs": 0.2,
       "sideEffectMs": 0.0,
       "totalMs": 0.2,
       "jimpleStmtCount": 11,
-      "graphNodes": 5,
-      "graphEdges": 4
+      "graphNodes": 10,
+      "graphEdges": 7
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: int getActualMinimum(int)>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "writes to static field jdate",
-      "dataflowMs": 1.8,
-      "sideEffectMs": 0.0,
-      "totalMs": 1.8,
+      "reason": "writes to static field month",
+      "dataflowMs": 12.1,
+      "sideEffectMs": 0.1,
+      "totalMs": 12.2,
       "jimpleStmtCount": 106,
-      "graphNodes": 9,
-      "graphEdges": 8
+      "graphNodes": 68,
+      "graphEdges": 102
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: int internalGetEra()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.1,
+      "dataflowMs": 0.2,
       "sideEffectMs": 0.0,
-      "totalMs": 0.1,
+      "totalMs": 0.2,
       "jimpleStmtCount": 7,
       "graphNodes": 1,
       "graphEdges": 0
@@ -432,29 +432,29 @@
     {
       "signature": "<java.util.JapaneseImperialCalendar: void roll(int,int)>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "writes to static field jdate",
-      "dataflowMs": 18.7,
-      "sideEffectMs": 0.2,
-      "totalMs": 18.9,
+      "reason": "writes to static field month",
+      "dataflowMs": 104.8,
+      "sideEffectMs": 2.0,
+      "totalMs": 106.8,
       "jimpleStmtCount": 543,
-      "graphNodes": 46,
-      "graphEdges": 226
+      "graphNodes": 304,
+      "graphEdges": 2626
     },
     {
       "signature": "<java.util.JapaneseImperialCalendar: void roll(int,boolean)>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "writes to static field jdate",
-      "dataflowMs": 1.0,
-      "sideEffectMs": 0.2,
-      "totalMs": 1.1,
+      "reason": "writes to static field month",
+      "dataflowMs": 56.8,
+      "sideEffectMs": 1.3,
+      "totalMs": 58.1,
       "jimpleStmtCount": 9,
-      "graphNodes": 46,
-      "graphEdges": 226
+      "graphNodes": 304,
+      "graphEdges": 2626
     }
   ],
   "statistics": {
     "methodCount": 40,
-    "avgTimePerMethodMs": 3.2,
+    "avgTimePerMethodMs": 19.4,
     "totalJimpleStmts": 2390
   }
 }

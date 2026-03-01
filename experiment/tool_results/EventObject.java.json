@@ -1,34 +1,34 @@
 {
-  "timestamp": "2026-02-26T14:34:08",
+  "timestamp": "2026-03-01T12:16:56",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/EventObject.java"],
   "phaseTimings": {
-    "totalMs": 2827.3,
+    "totalMs": 5940.0,
     "compilationMs": 0.0,
-    "irLoadingMs": 51.1,
-    "callGraphMs": 2684.4,
-    "dataflowTotalMs": 27.6,
-    "sideEffectTotalMs": 3.1,
-    "overheadMs": 61.1
+    "irLoadingMs": 134.1,
+    "callGraphMs": 5521.6,
+    "dataflowTotalMs": 158.5,
+    "sideEffectTotalMs": 0.3,
+    "overheadMs": 125.5
   },
   "methods": [
     {
       "signature": "<java.util.EventObject: void <init>(java.lang.Object)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 25.2,
-      "sideEffectMs": 1.0,
-      "totalMs": 26.3,
+      "dataflowMs": 75.3,
+      "sideEffectMs": 0.1,
+      "totalMs": 75.4,
       "jimpleStmtCount": 9,
-      "graphNodes": 3,
-      "graphEdges": 1
+      "graphNodes": 7,
+      "graphEdges": 8
     },
     {
       "signature": "<java.util.EventObject: java.lang.Object getSource()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 1.5,
+      "dataflowMs": 0.3,
       "sideEffectMs": 0.0,
-      "totalMs": 1.5,
+      "totalMs": 0.3,
       "jimpleStmtCount": 3,
       "graphNodes": 2,
       "graphEdges": 1
@@ -36,18 +36,18 @@
     {
       "signature": "<java.util.EventObject: java.lang.String toString()>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "loaded object 'load source from parameter this' escapes to global scope",
-      "dataflowMs": 0.9,
-      "sideEffectMs": 2.0,
-      "totalMs": 2.9,
+      "reason": "writes to static field value",
+      "dataflowMs": 82.9,
+      "sideEffectMs": 0.2,
+      "totalMs": 83.1,
       "jimpleStmtCount": 12,
-      "graphNodes": 5,
-      "graphEdges": 1
+      "graphNodes": 30,
+      "graphEdges": 30
     }
   ],
   "statistics": {
     "methodCount": 3,
-    "avgTimePerMethodMs": 10.2,
+    "avgTimePerMethodMs": 52.9,
     "totalJimpleStmts": 24
   }
 }

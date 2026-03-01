@@ -1,34 +1,34 @@
 {
-  "timestamp": "2026-02-26T14:53:55",
+  "timestamp": "2026-03-01T13:48:51",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/SortedSet.java"],
   "phaseTimings": {
-    "totalMs": 2210.3,
+    "totalMs": 9167.6,
     "compilationMs": 0.0,
-    "irLoadingMs": 65.3,
-    "callGraphMs": 2051.7,
-    "dataflowTotalMs": 22.0,
-    "sideEffectTotalMs": 2.0,
-    "overheadMs": 69.3
+    "irLoadingMs": 347.9,
+    "callGraphMs": 8248.3,
+    "dataflowTotalMs": 260.2,
+    "sideEffectTotalMs": 1.2,
+    "overheadMs": 310.0
   },
   "methods": [
     {
       "signature": "<java.util.SortedSet: void addLast(java.lang.Object)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 7.1,
-      "sideEffectMs": 0.5,
-      "totalMs": 7.6,
+      "dataflowMs": 168.6,
+      "sideEffectMs": 0.2,
+      "totalMs": 168.7,
       "jimpleStmtCount": 5,
-      "graphNodes": 3,
-      "graphEdges": 0
+      "graphNodes": 7,
+      "graphEdges": 7
     },
     {
       "signature": "<java.util.SortedSet: java.lang.Object getLast()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.3,
+      "dataflowMs": 0.6,
       "sideEffectMs": 0.1,
-      "totalMs": 0.3,
+      "totalMs": 0.7,
       "jimpleStmtCount": 3,
       "graphNodes": 2,
       "graphEdges": 0
@@ -37,42 +37,42 @@
       "signature": "<java.util.SortedSet: java.util.SortedSet reversed()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.1,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.1,
+      "dataflowMs": 67.1,
+      "sideEffectMs": 0.2,
+      "totalMs": 67.3,
       "jimpleStmtCount": 3,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 10,
+      "graphEdges": 17
     },
     {
       "signature": "<java.util.SortedSet$1: void <init>(java.util.SortedSet,java.util.Collection,int)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 9.7,
-      "sideEffectMs": 0.0,
-      "totalMs": 9.7,
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 15.5,
+      "sideEffectMs": 0.1,
+      "totalMs": 15.6,
       "jimpleStmtCount": 7,
       "graphNodes": 3,
-      "graphEdges": 1
+      "graphEdges": 2
     },
     {
       "signature": "<java.util.SortedSet: java.util.Spliterator spliterator()>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 2.1,
-      "sideEffectMs": 0.0,
-      "totalMs": 2.1,
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 1.3,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.3,
       "jimpleStmtCount": 4,
       "graphNodes": 2,
-      "graphEdges": 1
+      "graphEdges": 2
     },
     {
       "signature": "<java.util.SortedSet: java.lang.Object removeFirst()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.1,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.1,
+      "dataflowMs": 1.3,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.4,
       "jimpleStmtCount": 4,
       "graphNodes": 2,
       "graphEdges": 0
@@ -81,9 +81,9 @@
       "signature": "<java.util.SortedSet: java.lang.Object getFirst()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.1,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.1,
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.6,
       "jimpleStmtCount": 3,
       "graphNodes": 2,
       "graphEdges": 0
@@ -92,31 +92,31 @@
       "signature": "<java.util.SortedSet: void addFirst(java.lang.Object)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.2,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "dataflowMs": 1.6,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.7,
       "jimpleStmtCount": 5,
-      "graphNodes": 3,
-      "graphEdges": 0
+      "graphNodes": 7,
+      "graphEdges": 7
     },
     {
       "signature": "<java.util.SortedSet: java.util.SequencedCollection reversed()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.7,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.7,
+      "dataflowMs": 1.4,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.5,
       "jimpleStmtCount": 3,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 10,
+      "graphEdges": 17
     },
     {
       "signature": "<java.util.SortedSet: java.lang.Object removeLast()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.2,
+      "dataflowMs": 0.5,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 0.6,
       "jimpleStmtCount": 4,
       "graphNodes": 2,
       "graphEdges": 0
@@ -125,20 +125,20 @@
       "signature": "<java.util.SortedSet: java.util.SequencedSet reversed()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.5,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.5,
+      "dataflowMs": 1.2,
+      "sideEffectMs": 0.2,
+      "totalMs": 1.4,
       "jimpleStmtCount": 3,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 10,
+      "graphEdges": 17
     },
     {
       "signature": "<java.util.SortedSet$1: java.util.Comparator getComparator()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "loaded object 'load this$0 from parameter this' escapes to global scope",
-      "dataflowMs": 1.1,
-      "sideEffectMs": 1.4,
-      "totalMs": 2.4,
+      "dataflowMs": 0.5,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.6,
       "jimpleStmtCount": 4,
       "graphNodes": 3,
       "graphEdges": 1
@@ -146,7 +146,7 @@
   ],
   "statistics": {
     "methodCount": 12,
-    "avgTimePerMethodMs": 2.0,
+    "avgTimePerMethodMs": 21.8,
     "totalJimpleStmts": 48
   }
 }

@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-02-26T14:33:17",
+  "timestamp": "2026-03-01T12:14:58",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/ComparableTimSort.java"],
   "phaseTimings": {
-    "totalMs": 2489.0,
+    "totalMs": 6977.8,
     "compilationMs": 0.0,
-    "irLoadingMs": 55.2,
-    "callGraphMs": 2302.1,
-    "dataflowTotalMs": 68.5,
-    "sideEffectTotalMs": 1.9,
-    "overheadMs": 61.4
+    "irLoadingMs": 165.2,
+    "callGraphMs": 6399.8,
+    "dataflowTotalMs": 245.4,
+    "sideEffectTotalMs": 4.0,
+    "overheadMs": 163.4
   },
   "methods": [
     {
       "signature": "<java.util.ComparableTimSort: void <init>(java.lang.Object[],java.lang.Object[],int,int)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 24.5,
-      "sideEffectMs": 1.2,
-      "totalMs": 25.7,
+      "dataflowMs": 49.7,
+      "sideEffectMs": 2.4,
+      "totalMs": 52.0,
       "jimpleStmtCount": 42,
       "graphNodes": 6,
       "graphEdges": 5
@@ -26,31 +26,31 @@
       "signature": "<java.util.ComparableTimSort: int gallopLeft(java.lang.Comparable,java.lang.Object[],int,int,int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Comparable parameter escapes to global scope",
-      "dataflowMs": 4.3,
-      "sideEffectMs": 0.2,
-      "totalMs": 4.5,
+      "dataflowMs": 28.4,
+      "sideEffectMs": 0.1,
+      "totalMs": 28.5,
       "jimpleStmtCount": 82,
-      "graphNodes": 6,
-      "graphEdges": 0
+      "graphNodes": 10,
+      "graphEdges": 13
     },
     {
       "signature": "<java.util.ComparableTimSort: void binarySort(java.lang.Object[],int,int,int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Object[] parameter escapes to global scope",
-      "dataflowMs": 2.6,
-      "sideEffectMs": 0.0,
-      "totalMs": 2.7,
+      "dataflowMs": 10.7,
+      "sideEffectMs": 0.1,
+      "totalMs": 10.8,
       "jimpleStmtCount": 56,
-      "graphNodes": 5,
-      "graphEdges": 0
+      "graphNodes": 8,
+      "graphEdges": 13
     },
     {
       "signature": "<java.util.ComparableTimSort: java.lang.Object[] ensureCapacity(int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates this via field tmpBase",
-      "dataflowMs": 0.9,
-      "sideEffectMs": 0.1,
-      "totalMs": 1.0,
+      "dataflowMs": 7.5,
+      "sideEffectMs": 0.3,
+      "totalMs": 7.8,
       "jimpleStmtCount": 20,
       "graphNodes": 4,
       "graphEdges": 3
@@ -59,31 +59,31 @@
       "signature": "<java.util.ComparableTimSort: int gallopRight(java.lang.Comparable,java.lang.Object[],int,int,int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Comparable parameter escapes to global scope",
-      "dataflowMs": 1.9,
-      "sideEffectMs": 0.0,
-      "totalMs": 1.9,
+      "dataflowMs": 5.7,
+      "sideEffectMs": 0.1,
+      "totalMs": 5.8,
       "jimpleStmtCount": 82,
-      "graphNodes": 6,
-      "graphEdges": 0
+      "graphNodes": 10,
+      "graphEdges": 13
     },
     {
       "signature": "<java.util.ComparableTimSort: void mergeLo(int,int,int,int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates this via field tmpBase",
-      "dataflowMs": 10.4,
+      "dataflowMs": 34.8,
       "sideEffectMs": 0.1,
-      "totalMs": 10.5,
+      "totalMs": 34.9,
       "jimpleStmtCount": 169,
-      "graphNodes": 23,
-      "graphEdges": 4
+      "graphNodes": 32,
+      "graphEdges": 53
     },
     {
       "signature": "<java.util.ComparableTimSort: void reverseRange(java.lang.Object[],int,int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates Object[] parameter via field array element",
-      "dataflowMs": 0.2,
+      "dataflowMs": 0.5,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 0.5,
       "jimpleStmtCount": 15,
       "graphNodes": 3,
       "graphEdges": 0
@@ -92,20 +92,20 @@
       "signature": "<java.util.ComparableTimSort: int countRunAndMakeAscending(java.lang.Object[],int,int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates Object[] parameter via field array element",
-      "dataflowMs": 1.2,
-      "sideEffectMs": 0.0,
-      "totalMs": 1.3,
+      "dataflowMs": 2.3,
+      "sideEffectMs": 0.1,
+      "totalMs": 2.3,
       "jimpleStmtCount": 40,
-      "graphNodes": 6,
-      "graphEdges": 0
+      "graphNodes": 8,
+      "graphEdges": 7
     },
     {
       "signature": "<java.util.ComparableTimSort: void pushRun(int,int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates this via field stackSize",
-      "dataflowMs": 0.2,
+      "dataflowMs": 0.3,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 0.4,
       "jimpleStmtCount": 13,
       "graphNodes": 3,
       "graphEdges": 2
@@ -114,75 +114,75 @@
       "signature": "<java.util.ComparableTimSort: void mergeHi(int,int,int,int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates this via field tmpBase",
-      "dataflowMs": 7.8,
+      "dataflowMs": 22.1,
       "sideEffectMs": 0.1,
-      "totalMs": 7.8,
+      "totalMs": 22.3,
       "jimpleStmtCount": 191,
-      "graphNodes": 23,
-      "graphEdges": 4
+      "graphNodes": 32,
+      "graphEdges": 53
     },
     {
       "signature": "<java.util.ComparableTimSort: void mergeAt(int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates this via field tmpBase",
-      "dataflowMs": 2.3,
-      "sideEffectMs": 0.0,
-      "totalMs": 2.3,
+      "dataflowMs": 8.4,
+      "sideEffectMs": 0.2,
+      "totalMs": 8.6,
       "jimpleStmtCount": 107,
-      "graphNodes": 31,
-      "graphEdges": 7
+      "graphNodes": 47,
+      "graphEdges": 101
     },
     {
       "signature": "<java.util.ComparableTimSort: void mergeForceCollapse()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates this via field tmpBase",
-      "dataflowMs": 4.3,
-      "sideEffectMs": 0.0,
-      "totalMs": 4.3,
+      "dataflowMs": 10.2,
+      "sideEffectMs": 0.1,
+      "totalMs": 10.4,
       "jimpleStmtCount": 17,
-      "graphNodes": 32,
-      "graphEdges": 8
+      "graphNodes": 48,
+      "graphEdges": 102
     },
     {
       "signature": "<java.util.ComparableTimSort: void mergeCollapse()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates this via field tmpBase",
-      "dataflowMs": 4.6,
-      "sideEffectMs": 0.0,
-      "totalMs": 4.6,
+      "dataflowMs": 14.5,
+      "sideEffectMs": 0.1,
+      "totalMs": 14.6,
       "jimpleStmtCount": 47,
-      "graphNodes": 32,
-      "graphEdges": 8
+      "graphNodes": 48,
+      "graphEdges": 102
     },
     {
       "signature": "<java.util.ComparableTimSort: int minRunLength(int)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.1,
+      "dataflowMs": 0.8,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 0.8,
       "jimpleStmtCount": 15,
-      "graphNodes": 1,
-      "graphEdges": 0
+      "graphNodes": 5,
+      "graphEdges": 7
     },
     {
       "signature": "<java.util.ComparableTimSort: void sort(java.lang.Object[],int,int,java.lang.Object[],int,int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Object[] parameter escapes to global scope",
-      "dataflowMs": 3.1,
-      "sideEffectMs": 0.0,
-      "totalMs": 3.1,
+      "dataflowMs": 19.0,
+      "sideEffectMs": 0.3,
+      "totalMs": 19.3,
       "jimpleStmtCount": 58,
-      "graphNodes": 68,
-      "graphEdges": 7
+      "graphNodes": 117,
+      "graphEdges": 259
     },
     {
       "signature": "<java.util.ComparableTimSort: void <clinit>()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field $assertionsDisabled",
-      "dataflowMs": 0.1,
+      "dataflowMs": 30.4,
       "sideEffectMs": 0.1,
-      "totalMs": 0.1,
+      "totalMs": 30.5,
       "jimpleStmtCount": 8,
       "graphNodes": 1,
       "graphEdges": 0
@@ -190,7 +190,7 @@
   ],
   "statistics": {
     "methodCount": 16,
-    "avgTimePerMethodMs": 4.4,
+    "avgTimePerMethodMs": 15.6,
     "totalJimpleStmts": 962
   }
 }

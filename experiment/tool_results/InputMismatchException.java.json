@@ -1,42 +1,42 @@
 {
-  "timestamp": "2026-02-26T14:39:43",
+  "timestamp": "2026-03-01T13:00:07",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/InputMismatchException.java"],
   "phaseTimings": {
-    "totalMs": 3657.6,
+    "totalMs": 3860.9,
     "compilationMs": 0.0,
-    "irLoadingMs": 103.5,
-    "callGraphMs": 3443.5,
-    "dataflowTotalMs": 11.2,
-    "sideEffectTotalMs": 1.2,
-    "overheadMs": 98.1
+    "irLoadingMs": 110.9,
+    "callGraphMs": 3530.2,
+    "dataflowTotalMs": 104.8,
+    "sideEffectTotalMs": 0.1,
+    "overheadMs": 114.9
   },
   "methods": [
     {
       "signature": "<java.util.InputMismatchException: void <init>()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 10.9,
-      "sideEffectMs": 1.1,
-      "totalMs": 12.1,
+      "dataflowMs": 87.9,
+      "sideEffectMs": 0.1,
+      "totalMs": 88.0,
       "jimpleStmtCount": 3,
-      "graphNodes": 1,
-      "graphEdges": 0
+      "graphNodes": 7,
+      "graphEdges": 9
     },
     {
       "signature": "<java.util.InputMismatchException: void <init>(java.lang.String)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.3,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.4,
+      "dataflowMs": 16.9,
+      "sideEffectMs": 0.1,
+      "totalMs": 17.0,
       "jimpleStmtCount": 4,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 8,
+      "graphEdges": 10
     }
   ],
   "statistics": {
     "methodCount": 2,
-    "avgTimePerMethodMs": 6.2,
+    "avgTimePerMethodMs": 52.5,
     "totalJimpleStmts": 7
   }
 }

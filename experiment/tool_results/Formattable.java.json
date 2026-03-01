@@ -1,14 +1,14 @@
 {
-  "timestamp": "2026-02-26T14:34:19",
+  "timestamp": "2026-03-01T12:17:19",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Formattable.java"],
   "phaseTimings": {
-    "totalMs": 116.9,
+    "totalMs": 250.4,
     "compilationMs": 0.0,
-    "irLoadingMs": 60.8,
-    "callGraphMs": 6.4,
+    "irLoadingMs": 129.9,
+    "callGraphMs": 16.2,
     "dataflowTotalMs": 0.0,
     "sideEffectTotalMs": 0.0,
-    "overheadMs": 49.7
+    "overheadMs": 104.3
   },
   "methods": [
   ],

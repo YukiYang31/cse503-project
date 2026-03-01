@@ -1,64 +1,64 @@
 {
-  "timestamp": "2026-02-26T14:45:13",
+  "timestamp": "2026-03-01T13:20:59",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/NoSuchElementException.java"],
   "phaseTimings": {
-    "totalMs": 4287.6,
+    "totalMs": 4183.6,
     "compilationMs": 0.0,
-    "irLoadingMs": 120.9,
-    "callGraphMs": 4022.4,
-    "dataflowTotalMs": 14.5,
-    "sideEffectTotalMs": 1.7,
-    "overheadMs": 128.0
+    "irLoadingMs": 113.9,
+    "callGraphMs": 3800.1,
+    "dataflowTotalMs": 160.3,
+    "sideEffectTotalMs": 0.3,
+    "overheadMs": 109.0
   },
   "methods": [
     {
       "signature": "<java.util.NoSuchElementException: void <init>(java.lang.Throwable)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 13.7,
-      "sideEffectMs": 1.6,
-      "totalMs": 15.3,
+      "dataflowMs": 115.3,
+      "sideEffectMs": 0.1,
+      "totalMs": 115.4,
       "jimpleStmtCount": 4,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 12,
+      "graphEdges": 13
     },
     {
       "signature": "<java.util.NoSuchElementException: void <init>(java.lang.String)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.3,
+      "dataflowMs": 15.6,
       "sideEffectMs": 0.1,
-      "totalMs": 0.4,
+      "totalMs": 15.6,
       "jimpleStmtCount": 4,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 8,
+      "graphEdges": 10
     },
     {
       "signature": "<java.util.NoSuchElementException: void <init>(java.lang.String,java.lang.Throwable)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.3,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "dataflowMs": 15.3,
+      "sideEffectMs": 0.1,
+      "totalMs": 15.4,
       "jimpleStmtCount": 5,
-      "graphNodes": 3,
-      "graphEdges": 0
+      "graphNodes": 9,
+      "graphEdges": 11
     },
     {
       "signature": "<java.util.NoSuchElementException: void <init>()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.2,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "dataflowMs": 14.1,
+      "sideEffectMs": 0.1,
+      "totalMs": 14.2,
       "jimpleStmtCount": 3,
-      "graphNodes": 1,
-      "graphEdges": 0
+      "graphNodes": 7,
+      "graphEdges": 9
     }
   ],
   "statistics": {
     "methodCount": 4,
-    "avgTimePerMethodMs": 4.1,
+    "avgTimePerMethodMs": 40.1,
     "totalJimpleStmts": 16
   }
 }

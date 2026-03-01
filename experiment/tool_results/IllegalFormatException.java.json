@@ -1,31 +1,31 @@
 {
-  "timestamp": "2026-02-26T14:39:14",
+  "timestamp": "2026-03-01T12:42:11",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/IllegalFormatException.java"],
   "phaseTimings": {
-    "totalMs": 2785.9,
+    "totalMs": 4021.6,
     "compilationMs": 0.0,
-    "irLoadingMs": 91.9,
-    "callGraphMs": 2588.4,
-    "dataflowTotalMs": 12.3,
-    "sideEffectTotalMs": 1.3,
-    "overheadMs": 91.9
+    "irLoadingMs": 116.3,
+    "callGraphMs": 3683.0,
+    "dataflowTotalMs": 95.3,
+    "sideEffectTotalMs": 0.1,
+    "overheadMs": 127.0
   },
   "methods": [
     {
       "signature": "<java.util.IllegalFormatException: void <init>()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 12.3,
-      "sideEffectMs": 1.3,
-      "totalMs": 13.7,
+      "dataflowMs": 95.3,
+      "sideEffectMs": 0.1,
+      "totalMs": 95.4,
       "jimpleStmtCount": 3,
-      "graphNodes": 1,
-      "graphEdges": 0
+      "graphNodes": 7,
+      "graphEdges": 9
     }
   ],
   "statistics": {
     "methodCount": 1,
-    "avgTimePerMethodMs": 13.7,
+    "avgTimePerMethodMs": 95.4,
     "totalJimpleStmts": 3
   }
 }

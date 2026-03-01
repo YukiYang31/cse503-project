@@ -1,45 +1,45 @@
 {
-  "timestamp": "2026-02-26T14:56:33",
+  "timestamp": "2026-03-01T14:04:46",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Tripwire.java"],
   "phaseTimings": {
-    "totalMs": 229.2,
+    "totalMs": 5145.9,
     "compilationMs": 0.0,
-    "irLoadingMs": 82.7,
-    "callGraphMs": 50.1,
-    "dataflowTotalMs": 14.5,
-    "sideEffectTotalMs": 1.1,
-    "overheadMs": 80.9
+    "irLoadingMs": 143.2,
+    "callGraphMs": 94.5,
+    "dataflowTotalMs": 4732.8,
+    "sideEffectTotalMs": 0.2,
+    "overheadMs": 175.2
   },
   "methods": [
     {
       "signature": "<java.util.Tripwire: void <clinit>()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field ENABLED",
-      "dataflowMs": 13.1,
-      "sideEffectMs": 0.9,
-      "totalMs": 14.0,
+      "dataflowMs": 4644.7,
+      "sideEffectMs": 0.1,
+      "totalMs": 4644.8,
       "jimpleStmtCount": 6,
-      "graphNodes": 1,
-      "graphEdges": 0
+      "graphNodes": 4,
+      "graphEdges": 5
     },
     {
       "signature": "<java.util.Tripwire: java.lang.Boolean lambda$static$0()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.5,
+      "dataflowMs": 41.3,
       "sideEffectMs": 0.0,
-      "totalMs": 0.6,
+      "totalMs": 41.4,
       "jimpleStmtCount": 3,
-      "graphNodes": 1,
-      "graphEdges": 0
+      "graphNodes": 6,
+      "graphEdges": 2
     },
     {
       "signature": "<java.util.Tripwire: void <init>()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.3,
+      "dataflowMs": 0.2,
       "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "totalMs": 0.2,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
@@ -48,17 +48,17 @@
       "signature": "<java.util.Tripwire: void trip(java.lang.Class,java.lang.String)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Class parameter escapes to global scope",
-      "dataflowMs": 0.7,
+      "dataflowMs": 46.5,
       "sideEffectMs": 0.1,
-      "totalMs": 0.7,
+      "totalMs": 46.6,
       "jimpleStmtCount": 9,
-      "graphNodes": 4,
-      "graphEdges": 0
+      "graphNodes": 21,
+      "graphEdges": 11
     }
   ],
   "statistics": {
     "methodCount": 4,
-    "avgTimePerMethodMs": 3.9,
+    "avgTimePerMethodMs": 1183.3,
     "totalJimpleStmts": 21
   }
 }

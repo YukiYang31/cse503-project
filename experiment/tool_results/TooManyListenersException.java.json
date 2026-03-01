@@ -1,42 +1,42 @@
 {
-  "timestamp": "2026-02-26T14:54:27",
+  "timestamp": "2026-03-01T13:50:42",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/TooManyListenersException.java"],
   "phaseTimings": {
-    "totalMs": 2182.4,
+    "totalMs": 7588.4,
     "compilationMs": 0.0,
-    "irLoadingMs": 58.6,
-    "callGraphMs": 2054.0,
-    "dataflowTotalMs": 5.3,
-    "sideEffectTotalMs": 1.1,
-    "overheadMs": 63.4
+    "irLoadingMs": 233.4,
+    "callGraphMs": 6919.2,
+    "dataflowTotalMs": 198.7,
+    "sideEffectTotalMs": 0.4,
+    "overheadMs": 236.7
   },
   "methods": [
     {
       "signature": "<java.util.TooManyListenersException: void <init>(java.lang.String)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 5.1,
-      "sideEffectMs": 1.1,
-      "totalMs": 6.2,
+      "dataflowMs": 168.6,
+      "sideEffectMs": 0.3,
+      "totalMs": 168.9,
       "jimpleStmtCount": 4,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 8,
+      "graphEdges": 10
     },
     {
       "signature": "<java.util.TooManyListenersException: void <init>()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.2,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "dataflowMs": 30.0,
+      "sideEffectMs": 0.1,
+      "totalMs": 30.2,
       "jimpleStmtCount": 3,
-      "graphNodes": 1,
-      "graphEdges": 0
+      "graphNodes": 7,
+      "graphEdges": 9
     }
   ],
   "statistics": {
     "methodCount": 2,
-    "avgTimePerMethodMs": 3.2,
+    "avgTimePerMethodMs": 99.5,
     "totalJimpleStmts": 7
   }
 }

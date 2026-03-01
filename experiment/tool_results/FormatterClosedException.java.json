@@ -1,31 +1,31 @@
 {
-  "timestamp": "2026-02-26T14:34:32",
+  "timestamp": "2026-03-01T12:18:01",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/FormatterClosedException.java"],
   "phaseTimings": {
-    "totalMs": 3244.4,
+    "totalMs": 5172.8,
     "compilationMs": 0.0,
-    "irLoadingMs": 73.3,
-    "callGraphMs": 3084.9,
-    "dataflowTotalMs": 9.9,
-    "sideEffectTotalMs": 1.4,
-    "overheadMs": 74.9
+    "irLoadingMs": 137.1,
+    "callGraphMs": 4800.2,
+    "dataflowTotalMs": 102.7,
+    "sideEffectTotalMs": 0.1,
+    "overheadMs": 132.6
   },
   "methods": [
     {
       "signature": "<java.util.FormatterClosedException: void <init>()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 9.9,
-      "sideEffectMs": 1.4,
-      "totalMs": 11.4,
+      "dataflowMs": 102.7,
+      "sideEffectMs": 0.1,
+      "totalMs": 102.8,
       "jimpleStmtCount": 3,
-      "graphNodes": 1,
-      "graphEdges": 0
+      "graphNodes": 7,
+      "graphEdges": 9
     }
   ],
   "statistics": {
     "methodCount": 1,
-    "avgTimePerMethodMs": 11.4,
+    "avgTimePerMethodMs": 102.8,
     "totalJimpleStmts": 3
   }
 }

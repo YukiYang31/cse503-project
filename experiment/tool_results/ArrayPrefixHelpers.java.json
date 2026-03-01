@@ -1,163 +1,163 @@
 {
-  "timestamp": "2026-02-26T14:32:55",
+  "timestamp": "2026-03-01T12:13:52",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/ArrayPrefixHelpers.java"],
   "phaseTimings": {
-    "totalMs": 1971.9,
+    "totalMs": 5894.6,
     "compilationMs": 0.0,
-    "irLoadingMs": 64.7,
-    "callGraphMs": 1763.0,
-    "dataflowTotalMs": 83.4,
-    "sideEffectTotalMs": 0.9,
-    "overheadMs": 59.8
+    "irLoadingMs": 167.3,
+    "callGraphMs": 5254.3,
+    "dataflowTotalMs": 292.3,
+    "sideEffectTotalMs": 2.3,
+    "overheadMs": 178.4
   },
   "methods": [
     {
       "signature": "<java.util.ArrayPrefixHelpers: void <init>()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 4.6,
-      "sideEffectMs": 0.4,
-      "totalMs": 5.0,
+      "dataflowMs": 20.1,
+      "sideEffectMs": 1.4,
+      "totalMs": 21.5,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
     },
     {
       "signature": "<java.util.ArrayPrefixHelpers$IntCumulateTask: void <init>(java.util.ArrayPrefixHelpers$IntCumulateTask,java.util.function.IntBinaryOperator,int[],int,int)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 8.6,
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 69.1,
       "sideEffectMs": 0.1,
-      "totalMs": 8.7,
+      "totalMs": 69.1,
       "jimpleStmtCount": 23,
-      "graphNodes": 4,
-      "graphEdges": 2
+      "graphNodes": 7,
+      "graphEdges": 5
     },
     {
       "signature": "<java.util.ArrayPrefixHelpers$IntCumulateTask: void <init>(java.util.ArrayPrefixHelpers$IntCumulateTask,java.util.function.IntBinaryOperator,int[],int,int,int,int,int)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 0.5,
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.9,
       "sideEffectMs": 0.0,
-      "totalMs": 0.6,
+      "totalMs": 1.0,
       "jimpleStmtCount": 18,
       "graphNodes": 4,
-      "graphEdges": 2
+      "graphEdges": 3
     },
     {
       "signature": "<java.util.ArrayPrefixHelpers$IntCumulateTask: void compute()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field out",
-      "dataflowMs": 32.1,
+      "dataflowMs": 66.4,
       "sideEffectMs": 0.2,
-      "totalMs": 32.3,
+      "totalMs": 66.6,
       "jimpleStmtCount": 164,
       "graphNodes": 9,
-      "graphEdges": 28
+      "graphEdges": 40
     },
     {
       "signature": "<java.util.ArrayPrefixHelpers$LongCumulateTask: void <init>(java.util.ArrayPrefixHelpers$LongCumulateTask,java.util.function.LongBinaryOperator,long[],int,int,int,int,int)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 0.3,
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.6,
       "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "totalMs": 0.6,
       "jimpleStmtCount": 18,
       "graphNodes": 4,
-      "graphEdges": 2
+      "graphEdges": 3
     },
     {
       "signature": "<java.util.ArrayPrefixHelpers$LongCumulateTask: void <init>(java.util.ArrayPrefixHelpers$LongCumulateTask,java.util.function.LongBinaryOperator,long[],int,int)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 0.5,
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.7,
       "sideEffectMs": 0.0,
-      "totalMs": 0.5,
+      "totalMs": 0.8,
       "jimpleStmtCount": 23,
-      "graphNodes": 4,
-      "graphEdges": 2
+      "graphNodes": 7,
+      "graphEdges": 5
     },
     {
       "signature": "<java.util.ArrayPrefixHelpers$LongCumulateTask: void compute()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field out",
-      "dataflowMs": 13.7,
-      "sideEffectMs": 0.0,
-      "totalMs": 13.7,
+      "dataflowMs": 36.8,
+      "sideEffectMs": 0.1,
+      "totalMs": 36.9,
       "jimpleStmtCount": 164,
       "graphNodes": 9,
-      "graphEdges": 28
+      "graphEdges": 40
     },
     {
       "signature": "<java.util.ArrayPrefixHelpers$CumulateTask: void <init>(java.util.ArrayPrefixHelpers$CumulateTask,java.util.function.BinaryOperator,java.lang.Object[],int,int,int,int,int)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 0.1,
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.5,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 0.5,
       "jimpleStmtCount": 18,
       "graphNodes": 4,
-      "graphEdges": 2
+      "graphEdges": 3
     },
     {
       "signature": "<java.util.ArrayPrefixHelpers$CumulateTask: void compute()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field out",
-      "dataflowMs": 13.2,
+      "dataflowMs": 57.5,
       "sideEffectMs": 0.1,
-      "totalMs": 13.3,
+      "totalMs": 57.7,
       "jimpleStmtCount": 164,
       "graphNodes": 11,
-      "graphEdges": 85
+      "graphEdges": 97
     },
     {
       "signature": "<java.util.ArrayPrefixHelpers$CumulateTask: void <init>(java.util.ArrayPrefixHelpers$CumulateTask,java.util.function.BinaryOperator,java.lang.Object[],int,int)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 0.1,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.8,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.9,
       "jimpleStmtCount": 23,
-      "graphNodes": 4,
-      "graphEdges": 2
+      "graphNodes": 7,
+      "graphEdges": 5
     },
     {
       "signature": "<java.util.ArrayPrefixHelpers$DoubleCumulateTask: void <init>(java.util.ArrayPrefixHelpers$DoubleCumulateTask,java.util.function.DoubleBinaryOperator,double[],int,int)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 0.1,
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.6,
       "sideEffectMs": 0.0,
-      "totalMs": 0.1,
+      "totalMs": 0.6,
       "jimpleStmtCount": 23,
-      "graphNodes": 4,
-      "graphEdges": 2
+      "graphNodes": 7,
+      "graphEdges": 5
     },
     {
       "signature": "<java.util.ArrayPrefixHelpers$DoubleCumulateTask: void <init>(java.util.ArrayPrefixHelpers$DoubleCumulateTask,java.util.function.DoubleBinaryOperator,double[],int,int,int,int,int)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 0.1,
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.4,
       "sideEffectMs": 0.0,
-      "totalMs": 0.1,
+      "totalMs": 0.5,
       "jimpleStmtCount": 18,
       "graphNodes": 4,
-      "graphEdges": 2
+      "graphEdges": 3
     },
     {
       "signature": "<java.util.ArrayPrefixHelpers$DoubleCumulateTask: void compute()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field out",
-      "dataflowMs": 9.4,
-      "sideEffectMs": 0.0,
-      "totalMs": 9.5,
+      "dataflowMs": 37.8,
+      "sideEffectMs": 0.1,
+      "totalMs": 37.9,
       "jimpleStmtCount": 164,
       "graphNodes": 9,
-      "graphEdges": 28
+      "graphEdges": 40
     }
   ],
   "statistics": {
     "methodCount": 13,
-    "avgTimePerMethodMs": 6.5,
+    "avgTimePerMethodMs": 22.7,
     "totalJimpleStmts": 823
   }
 }

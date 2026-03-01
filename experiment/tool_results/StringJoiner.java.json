@@ -1,45 +1,45 @@
 {
-  "timestamp": "2026-02-26T14:54:10",
+  "timestamp": "2026-03-01T13:49:46",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/StringJoiner.java"],
   "phaseTimings": {
-    "totalMs": 2067.1,
+    "totalMs": 8116.1,
     "compilationMs": 0.0,
-    "irLoadingMs": 59.5,
-    "callGraphMs": 1926.4,
-    "dataflowTotalMs": 22.1,
-    "sideEffectTotalMs": 2.0,
-    "overheadMs": 57.1
+    "irLoadingMs": 228.7,
+    "callGraphMs": 7349.1,
+    "dataflowTotalMs": 297.1,
+    "sideEffectTotalMs": 3.8,
+    "overheadMs": 237.3
   },
   "methods": [
     {
       "signature": "<java.util.StringJoiner: void <clinit>()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field EMPTY_STRING_ARRAY",
-      "dataflowMs": 10.7,
-      "sideEffectMs": 0.6,
-      "totalMs": 11.3,
+      "dataflowMs": 74.2,
+      "sideEffectMs": 0.2,
+      "totalMs": 74.5,
       "jimpleStmtCount": 5,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 3,
+      "graphEdges": 1
     },
     {
       "signature": "<java.util.StringJoiner: void compactElts()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates this via field size",
-      "dataflowMs": 1.9,
+      "dataflowMs": 150.5,
       "sideEffectMs": 0.2,
-      "totalMs": 2.1,
+      "totalMs": 150.6,
       "jimpleStmtCount": 13,
-      "graphNodes": 5,
+      "graphNodes": 10,
       "graphEdges": 3
     },
     {
       "signature": "<java.util.StringJoiner: int length()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.4,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.4,
+      "dataflowMs": 1.9,
+      "sideEffectMs": 0.1,
+      "totalMs": 2.0,
       "jimpleStmtCount": 16,
       "graphNodes": 4,
       "graphEdges": 3
@@ -48,9 +48,9 @@
       "signature": "<java.util.StringJoiner: int checkAddLength(int,int)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.4,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.4,
+      "dataflowMs": 1.8,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.9,
       "jimpleStmtCount": 23,
       "graphNodes": 4,
       "graphEdges": 2
@@ -59,9 +59,9 @@
       "signature": "<java.util.StringJoiner: java.lang.String toString()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "loaded object 'load elts from parameter this' escapes to global scope",
-      "dataflowMs": 0.3,
-      "sideEffectMs": 0.8,
-      "totalMs": 1.2,
+      "dataflowMs": 1.9,
+      "sideEffectMs": 2.5,
+      "totalMs": 4.5,
       "jimpleStmtCount": 15,
       "graphNodes": 9,
       "graphEdges": 7
@@ -69,32 +69,32 @@
     {
       "signature": "<java.util.StringJoiner: void <init>(java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence)>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "CharSequence parameter escapes to global scope",
-      "dataflowMs": 3.5,
-      "sideEffectMs": 0.1,
-      "totalMs": 3.6,
+      "reason": "loaded object 'callee: load elts from parameter this' escapes to global scope",
+      "dataflowMs": 17.5,
+      "sideEffectMs": 0.2,
+      "totalMs": 17.7,
       "jimpleStmtCount": 16,
-      "graphNodes": 29,
+      "graphNodes": 32,
       "graphEdges": 29
     },
     {
       "signature": "<java.util.StringJoiner: void <init>(java.lang.CharSequence)>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "CharSequence parameter escapes to global scope",
-      "dataflowMs": 0.6,
-      "sideEffectMs": 0.1,
-      "totalMs": 0.7,
+      "reason": "loaded object 'callee: callee: load prefix from parameter this' escapes to global scope",
+      "dataflowMs": 1.8,
+      "sideEffectMs": 0.2,
+      "totalMs": 1.9,
       "jimpleStmtCount": 4,
-      "graphNodes": 27,
+      "graphNodes": 30,
       "graphEdges": 19
     },
     {
       "signature": "<java.util.StringJoiner: java.util.StringJoiner add(java.lang.CharSequence)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates this via field size",
-      "dataflowMs": 3.4,
-      "sideEffectMs": 0.0,
-      "totalMs": 3.5,
+      "dataflowMs": 2.5,
+      "sideEffectMs": 0.1,
+      "totalMs": 2.6,
       "jimpleStmtCount": 33,
       "graphNodes": 12,
       "graphEdges": 7
@@ -103,28 +103,28 @@
       "signature": "<java.util.StringJoiner: java.util.StringJoiner setEmptyValue(java.lang.CharSequence)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates this via field emptyValue",
-      "dataflowMs": 0.3,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.4,
+      "dataflowMs": 1.0,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.1,
       "jimpleStmtCount": 7,
-      "graphNodes": 10,
+      "graphNodes": 11,
       "graphEdges": 9
     },
     {
       "signature": "<java.util.StringJoiner: java.util.StringJoiner merge(java.util.StringJoiner)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates this via field size",
-      "dataflowMs": 0.5,
+      "dataflowMs": 44.0,
       "sideEffectMs": 0.1,
-      "totalMs": 0.6,
+      "totalMs": 44.1,
       "jimpleStmtCount": 11,
-      "graphNodes": 16,
-      "graphEdges": 10
+      "graphNodes": 24,
+      "graphEdges": 15
     }
   ],
   "statistics": {
     "methodCount": 10,
-    "avgTimePerMethodMs": 2.4,
+    "avgTimePerMethodMs": 30.1,
     "totalJimpleStmts": 143
   }
 }

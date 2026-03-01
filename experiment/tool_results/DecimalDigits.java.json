@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-02-26T14:33:35",
+  "timestamp": "2026-03-01T12:15:43",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/DecimalDigits.java"],
   "phaseTimings": {
-    "totalMs": 1832.8,
+    "totalMs": 4666.5,
     "compilationMs": 0.0,
-    "irLoadingMs": 55.1,
-    "callGraphMs": 1691.4,
-    "dataflowTotalMs": 24.8,
-    "sideEffectTotalMs": 0.8,
-    "overheadMs": 60.7
+    "irLoadingMs": 136.7,
+    "callGraphMs": 4349.5,
+    "dataflowTotalMs": 51.8,
+    "sideEffectTotalMs": 1.8,
+    "overheadMs": 126.6
   },
   "methods": [
     {
       "signature": "<java.util.DecimalDigits: int size(long)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 6.5,
-      "sideEffectMs": 0.5,
-      "totalMs": 7.0,
+      "dataflowMs": 14.5,
+      "sideEffectMs": 1.4,
+      "totalMs": 15.9,
       "jimpleStmtCount": 25,
       "graphNodes": 1,
       "graphEdges": 0
@@ -26,9 +26,9 @@
       "signature": "<java.util.DecimalDigits: void <init>()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.3,
+      "dataflowMs": 0.8,
       "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "totalMs": 0.8,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
@@ -37,9 +37,9 @@
       "signature": "<java.util.DecimalDigits: void <clinit>()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field INSTANCE",
-      "dataflowMs": 13.5,
+      "dataflowMs": 22.9,
       "sideEffectMs": 0.2,
-      "totalMs": 13.7,
+      "totalMs": 23.1,
       "jimpleStmtCount": 24,
       "graphNodes": 3,
       "graphEdges": 0
@@ -48,9 +48,9 @@
       "signature": "<java.util.DecimalDigits: int digits(long,byte[],int,java.lang.invoke.MethodHandle)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "byte[] parameter escapes to global scope",
-      "dataflowMs": 4.5,
-      "sideEffectMs": 0.1,
-      "totalMs": 4.7,
+      "dataflowMs": 13.6,
+      "sideEffectMs": 0.2,
+      "totalMs": 13.8,
       "jimpleStmtCount": 58,
       "graphNodes": 5,
       "graphEdges": 1
@@ -58,7 +58,7 @@
   ],
   "statistics": {
     "methodCount": 4,
-    "avgTimePerMethodMs": 6.4,
+    "avgTimePerMethodMs": 13.4,
     "totalJimpleStmts": 110
   }
 }

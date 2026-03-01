@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-02-26T14:44:54",
+  "timestamp": "2026-03-01T13:20:44",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/MissingResourceException.java"],
   "phaseTimings": {
-    "totalMs": 7230.0,
+    "totalMs": 4015.9,
     "compilationMs": 0.0,
-    "irLoadingMs": 137.2,
-    "callGraphMs": 6892.5,
-    "dataflowTotalMs": 38.1,
-    "sideEffectTotalMs": 2.3,
-    "overheadMs": 160.0
+    "irLoadingMs": 112.0,
+    "callGraphMs": 3686.6,
+    "dataflowTotalMs": 101.8,
+    "sideEffectTotalMs": 3.0,
+    "overheadMs": 112.5
   },
   "methods": [
     {
       "signature": "<java.util.MissingResourceException: java.lang.String getClassName()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 32.4,
-      "sideEffectMs": 1.8,
-      "totalMs": 34.2,
+      "dataflowMs": 31.4,
+      "sideEffectMs": 2.8,
+      "totalMs": 34.1,
       "jimpleStmtCount": 3,
       "graphNodes": 2,
       "graphEdges": 1
@@ -26,8 +26,8 @@
       "signature": "<java.util.MissingResourceException: java.lang.String getKey()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.3,
-      "sideEffectMs": 0.1,
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
       "totalMs": 0.4,
       "jimpleStmtCount": 3,
       "graphNodes": 2,
@@ -37,28 +37,28 @@
       "signature": "<java.util.MissingResourceException: void <init>(java.lang.String,java.lang.String,java.lang.String)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 4.9,
-      "sideEffectMs": 0.3,
-      "totalMs": 5.3,
+      "dataflowMs": 55.6,
+      "sideEffectMs": 0.1,
+      "totalMs": 55.7,
       "jimpleStmtCount": 8,
-      "graphNodes": 4,
-      "graphEdges": 2
+      "graphNodes": 10,
+      "graphEdges": 12
     },
     {
       "signature": "<java.util.MissingResourceException: void <init>(java.lang.String,java.lang.String,java.lang.String,java.lang.Throwable)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.4,
+      "dataflowMs": 14.4,
       "sideEffectMs": 0.1,
-      "totalMs": 0.5,
+      "totalMs": 14.5,
       "jimpleStmtCount": 9,
-      "graphNodes": 5,
-      "graphEdges": 2
+      "graphNodes": 11,
+      "graphEdges": 13
     }
   ],
   "statistics": {
     "methodCount": 4,
-    "avgTimePerMethodMs": 10.1,
+    "avgTimePerMethodMs": 26.2,
     "totalJimpleStmts": 23
   }
 }

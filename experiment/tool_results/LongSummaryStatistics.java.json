@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-02-26T14:43:43",
+  "timestamp": "2026-03-01T13:20:22",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/LongSummaryStatistics.java"],
   "phaseTimings": {
-    "totalMs": 7868.1,
+    "totalMs": 4303.5,
     "compilationMs": 0.0,
-    "irLoadingMs": 91.2,
-    "callGraphMs": 7627.0,
-    "dataflowTotalMs": 53.3,
-    "sideEffectTotalMs": 2.0,
-    "overheadMs": 94.5
+    "irLoadingMs": 115.9,
+    "callGraphMs": 3962.7,
+    "dataflowTotalMs": 104.3,
+    "sideEffectTotalMs": 2.1,
+    "overheadMs": 118.6
   },
   "methods": [
     {
       "signature": "<java.util.LongSummaryStatistics: long getMax()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 12.2,
-      "sideEffectMs": 1.2,
-      "totalMs": 13.4,
+      "dataflowMs": 13.3,
+      "sideEffectMs": 1.5,
+      "totalMs": 14.8,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
@@ -26,9 +26,9 @@
       "signature": "<java.util.LongSummaryStatistics: void accept(long)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates this via field min",
-      "dataflowMs": 19.1,
-      "sideEffectMs": 0.5,
-      "totalMs": 19.6,
+      "dataflowMs": 15.6,
+      "sideEffectMs": 0.3,
+      "totalMs": 15.9,
       "jimpleStmtCount": 15,
       "graphNodes": 1,
       "graphEdges": 0
@@ -37,9 +37,9 @@
       "signature": "<java.util.LongSummaryStatistics: void accept(int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates this via field min",
-      "dataflowMs": 9.2,
-      "sideEffectMs": 0.1,
-      "totalMs": 9.2,
+      "dataflowMs": 3.7,
+      "sideEffectMs": 0.0,
+      "totalMs": 3.8,
       "jimpleStmtCount": 5,
       "graphNodes": 1,
       "graphEdges": 0
@@ -48,7 +48,7 @@
       "signature": "<java.util.LongSummaryStatistics: long getCount()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.2,
+      "dataflowMs": 0.1,
       "sideEffectMs": 0.0,
       "totalMs": 0.2,
       "jimpleStmtCount": 3,
@@ -61,7 +61,7 @@
       "reason": null,
       "dataflowMs": 0.1,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 0.1,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
@@ -70,9 +70,9 @@
       "signature": "<java.util.LongSummaryStatistics: double getAverage()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 1.3,
+      "dataflowMs": 1.1,
       "sideEffectMs": 0.0,
-      "totalMs": 1.4,
+      "totalMs": 1.1,
       "jimpleStmtCount": 12,
       "graphNodes": 1,
       "graphEdges": 0
@@ -81,23 +81,23 @@
       "signature": "<java.util.LongSummaryStatistics: long getMin()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.2,
+      "dataflowMs": 0.3,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 0.3,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
     },
     {
       "signature": "<java.util.LongSummaryStatistics: java.lang.String toString()>",
-      "verdict": "SIDE_EFFECT_FREE",
-      "reason": null,
-      "dataflowMs": 9.2,
-      "sideEffectMs": 0.1,
-      "totalMs": 9.3,
+      "verdict": "SIDE_EFFECTING",
+      "reason": "writes to static field simpleName",
+      "dataflowMs": 47.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 47.3,
       "jimpleStmtCount": 22,
-      "graphNodes": 10,
-      "graphEdges": 0
+      "graphNodes": 12,
+      "graphEdges": 2
     },
     {
       "signature": "<java.util.LongSummaryStatistics: void <init>()>",
@@ -105,7 +105,7 @@
       "reason": null,
       "dataflowMs": 0.2,
       "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "totalMs": 0.2,
       "jimpleStmtCount": 5,
       "graphNodes": 1,
       "graphEdges": 0
@@ -114,18 +114,18 @@
       "signature": "<java.util.LongSummaryStatistics: void <init>(long,long,long,long)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 1.0,
-      "sideEffectMs": 0.0,
-      "totalMs": 1.0,
+      "dataflowMs": 22.2,
+      "sideEffectMs": 0.1,
+      "totalMs": 22.2,
       "jimpleStmtCount": 25,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 6,
+      "graphEdges": 7
     },
     {
       "signature": "<java.util.LongSummaryStatistics: void combine(java.util.LongSummaryStatistics)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates this via field min",
-      "dataflowMs": 0.5,
+      "dataflowMs": 0.4,
       "sideEffectMs": 0.0,
       "totalMs": 0.5,
       "jimpleStmtCount": 19,
@@ -135,7 +135,7 @@
   ],
   "statistics": {
     "methodCount": 11,
-    "avgTimePerMethodMs": 5.0,
+    "avgTimePerMethodMs": 9.7,
     "totalJimpleStmts": 115
   }
 }

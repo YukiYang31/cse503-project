@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-02-26T14:45:07",
+  "timestamp": "2026-03-01T13:20:54",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/NavigableSet.java"],
   "phaseTimings": {
-    "totalMs": 5420.8,
+    "totalMs": 3750.9,
     "compilationMs": 0.0,
-    "irLoadingMs": 141.6,
-    "callGraphMs": 5105.3,
-    "dataflowTotalMs": 23.3,
-    "sideEffectTotalMs": 1.9,
-    "overheadMs": 148.7
+    "irLoadingMs": 114.5,
+    "callGraphMs": 3456.0,
+    "dataflowTotalMs": 65.7,
+    "sideEffectTotalMs": 1.4,
+    "overheadMs": 113.3
   },
   "methods": [
     {
       "signature": "<java.util.NavigableSet: java.util.NavigableSet reversed()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 13.2,
-      "sideEffectMs": 1.6,
-      "totalMs": 14.8,
+      "dataflowMs": 13.7,
+      "sideEffectMs": 1.2,
+      "totalMs": 14.9,
       "jimpleStmtCount": 3,
       "graphNodes": 2,
       "graphEdges": 0
@@ -26,9 +26,9 @@
       "signature": "<java.util.NavigableSet: java.util.SequencedSet reversed()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 6.7,
+      "dataflowMs": 4.2,
       "sideEffectMs": 0.1,
-      "totalMs": 6.8,
+      "totalMs": 4.2,
       "jimpleStmtCount": 3,
       "graphNodes": 2,
       "graphEdges": 0
@@ -37,9 +37,9 @@
       "signature": "<java.util.NavigableSet: java.util.SortedSet reversed()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.5,
+      "dataflowMs": 0.4,
       "sideEffectMs": 0.0,
-      "totalMs": 0.5,
+      "totalMs": 0.4,
       "jimpleStmtCount": 3,
       "graphNodes": 2,
       "graphEdges": 0
@@ -48,20 +48,20 @@
       "signature": "<java.util.NavigableSet: java.lang.Object removeLast()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 1.9,
-      "sideEffectMs": 0.1,
-      "totalMs": 2.0,
+      "dataflowMs": 46.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 46.4,
       "jimpleStmtCount": 8,
-      "graphNodes": 3,
-      "graphEdges": 0
+      "graphNodes": 6,
+      "graphEdges": 7
     },
     {
       "signature": "<java.util.NavigableSet: java.util.SequencedCollection reversed()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.5,
+      "dataflowMs": 0.3,
       "sideEffectMs": 0.0,
-      "totalMs": 0.5,
+      "totalMs": 0.3,
       "jimpleStmtCount": 3,
       "graphNodes": 2,
       "graphEdges": 0
@@ -70,17 +70,17 @@
       "signature": "<java.util.NavigableSet: java.lang.Object removeFirst()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.5,
-      "sideEffectMs": 0.1,
-      "totalMs": 0.6,
+      "dataflowMs": 0.7,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.8,
       "jimpleStmtCount": 8,
-      "graphNodes": 3,
-      "graphEdges": 0
+      "graphNodes": 6,
+      "graphEdges": 7
     }
   ],
   "statistics": {
     "methodCount": 6,
-    "avgTimePerMethodMs": 4.2,
+    "avgTimePerMethodMs": 11.2,
     "totalJimpleStmts": 28
   }
 }

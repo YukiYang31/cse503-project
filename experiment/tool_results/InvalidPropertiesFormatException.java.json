@@ -1,64 +1,64 @@
 {
-  "timestamp": "2026-02-26T14:39:54",
+  "timestamp": "2026-03-01T13:00:17",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/InvalidPropertiesFormatException.java"],
   "phaseTimings": {
-    "totalMs": 3768.0,
+    "totalMs": 3265.9,
     "compilationMs": 0.0,
-    "irLoadingMs": 104.6,
-    "callGraphMs": 3528.2,
-    "dataflowTotalMs": 20.6,
-    "sideEffectTotalMs": 2.2,
-    "overheadMs": 112.4
+    "irLoadingMs": 102.0,
+    "callGraphMs": 2942.2,
+    "dataflowTotalMs": 119.8,
+    "sideEffectTotalMs": 0.3,
+    "overheadMs": 101.7
   },
   "methods": [
     {
       "signature": "<java.util.InvalidPropertiesFormatException: void <init>(java.lang.String)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 12.1,
-      "sideEffectMs": 2.0,
-      "totalMs": 14.1,
+      "dataflowMs": 59.5,
+      "sideEffectMs": 0.1,
+      "totalMs": 59.6,
       "jimpleStmtCount": 4,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 8,
+      "graphEdges": 10
     },
     {
       "signature": "<java.util.InvalidPropertiesFormatException: void writeObject(java.io.ObjectOutputStream)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 5.4,
+      "dataflowMs": 1.1,
       "sideEffectMs": 0.1,
-      "totalMs": 5.5,
+      "totalMs": 1.1,
       "jimpleStmtCount": 5,
-      "graphNodes": 3,
-      "graphEdges": 0
+      "graphNodes": 7,
+      "graphEdges": 7
     },
     {
       "signature": "<java.util.InvalidPropertiesFormatException: void <init>(java.lang.Throwable)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 2.3,
-      "sideEffectMs": 0.0,
-      "totalMs": 2.3,
+      "dataflowMs": 58.6,
+      "sideEffectMs": 0.1,
+      "totalMs": 58.7,
       "jimpleStmtCount": 9,
-      "graphNodes": 3,
-      "graphEdges": 0
+      "graphNodes": 8,
+      "graphEdges": 10
     },
     {
       "signature": "<java.util.InvalidPropertiesFormatException: void readObject(java.io.ObjectInputStream)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.8,
+      "dataflowMs": 0.6,
       "sideEffectMs": 0.0,
-      "totalMs": 0.8,
+      "totalMs": 0.6,
       "jimpleStmtCount": 5,
-      "graphNodes": 3,
-      "graphEdges": 0
+      "graphNodes": 7,
+      "graphEdges": 7
     }
   ],
   "statistics": {
     "methodCount": 4,
-    "avgTimePerMethodMs": 5.7,
+    "avgTimePerMethodMs": 30.0,
     "totalJimpleStmts": 23
   }
 }

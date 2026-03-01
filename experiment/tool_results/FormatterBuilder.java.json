@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-02-26T14:34:28",
+  "timestamp": "2026-03-01T12:17:54",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/FormatterBuilder.java"],
   "phaseTimings": {
-    "totalMs": 2776.1,
+    "totalMs": 6716.6,
     "compilationMs": 0.0,
-    "irLoadingMs": 110.8,
-    "callGraphMs": 2487.5,
-    "dataflowTotalMs": 86.7,
-    "sideEffectTotalMs": 3.6,
-    "overheadMs": 87.5
+    "irLoadingMs": 157.5,
+    "callGraphMs": 5937.6,
+    "dataflowTotalMs": 459.5,
+    "sideEffectTotalMs": 1.5,
+    "overheadMs": 160.5
   },
   "methods": [
     {
       "signature": "<java.util.FormatterBuilder: boolean isGenericDFS(java.text.DecimalFormatSymbols)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "DecimalFormatSymbols parameter escapes to global scope",
-      "dataflowMs": 12.4,
-      "sideEffectMs": 0.8,
-      "totalMs": 13.2,
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 29.8,
+      "sideEffectMs": 0.0,
+      "totalMs": 29.8,
       "jimpleStmtCount": 13,
       "graphNodes": 1,
       "graphEdges": 0
@@ -26,9 +26,9 @@
       "signature": "<java.util.FormatterBuilder: boolean validFlags(int,int)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.2,
-      "sideEffectMs": 0.1,
-      "totalMs": 0.3,
+      "dataflowMs": 0.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.5,
       "jimpleStmtCount": 9,
       "graphNodes": 0,
       "graphEdges": 0
@@ -37,9 +37,9 @@
       "signature": "<java.util.FormatterBuilder: int groupSize(java.util.Locale,java.text.DecimalFormatSymbols)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Locale parameter escapes to global scope",
-      "dataflowMs": 5.9,
+      "dataflowMs": 93.0,
       "sideEffectMs": 0.0,
-      "totalMs": 6.0,
+      "totalMs": 93.1,
       "jimpleStmtCount": 26,
       "graphNodes": 5,
       "graphEdges": 0
@@ -48,9 +48,9 @@
       "signature": "<java.util.FormatterBuilder: boolean isFlag(int,int)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.4,
+      "dataflowMs": 0.3,
       "sideEffectMs": 0.0,
-      "totalMs": 0.4,
+      "totalMs": 0.3,
       "jimpleStmtCount": 8,
       "graphNodes": 0,
       "graphEdges": 0
@@ -59,9 +59,9 @@
       "signature": "<java.util.FormatterBuilder: java.lang.invoke.MethodHandle formatSpecifier(java.util.Formatter$FormatSpecifier,java.lang.Class)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Class parameter escapes to global scope",
-      "dataflowMs": 37.4,
-      "sideEffectMs": 0.2,
-      "totalMs": 37.5,
+      "dataflowMs": 57.5,
+      "sideEffectMs": 0.1,
+      "totalMs": 57.6,
       "jimpleStmtCount": 248,
       "graphNodes": 25,
       "graphEdges": 22
@@ -69,32 +69,32 @@
     {
       "signature": "<java.util.FormatterBuilder: java.lang.invoke.MethodHandle buildFilters(java.util.List,java.util.List,java.lang.invoke.MethodHandle[])>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "List parameter escapes to global scope",
-      "dataflowMs": 10.1,
-      "sideEffectMs": 0.2,
-      "totalMs": 10.3,
+      "reason": "writes to static field value",
+      "dataflowMs": 50.3,
+      "sideEffectMs": 0.1,
+      "totalMs": 50.4,
       "jimpleStmtCount": 61,
-      "graphNodes": 24,
-      "graphEdges": 23
+      "graphNodes": 38,
+      "graphEdges": 35
     },
     {
       "signature": "<java.util.FormatterBuilder: void <init>(java.lang.String,java.util.Locale,java.lang.Class[])>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Locale parameter escapes to global scope",
-      "dataflowMs": 1.4,
-      "sideEffectMs": 0.1,
-      "totalMs": 1.4,
+      "dataflowMs": 25.8,
+      "sideEffectMs": 0.0,
+      "totalMs": 25.9,
       "jimpleStmtCount": 14,
-      "graphNodes": 6,
-      "graphEdges": 5
+      "graphNodes": 11,
+      "graphEdges": 7
     },
     {
       "signature": "<java.util.FormatterBuilder: java.lang.Class mapType(java.lang.Class)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Class parameter escapes to global scope",
-      "dataflowMs": 0.2,
+      "dataflowMs": 0.4,
       "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "totalMs": 0.4,
       "jimpleStmtCount": 8,
       "graphNodes": 1,
       "graphEdges": 0
@@ -103,42 +103,42 @@
       "signature": "<java.util.FormatterBuilder: java.lang.invoke.MethodHandle findStaticMethod(java.lang.Class,java.lang.String,java.lang.Class,java.lang.Class[])>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Class parameter escapes to global scope",
-      "dataflowMs": 0.7,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.7,
+      "dataflowMs": 36.2,
+      "sideEffectMs": 0.1,
+      "totalMs": 36.3,
       "jimpleStmtCount": 22,
-      "graphNodes": 8,
-      "graphEdges": 1
+      "graphNodes": 26,
+      "graphEdges": 20
     },
     {
       "signature": "<java.util.FormatterBuilder: java.lang.invoke.MethodHandle findStringConcatItemConstructor(java.lang.Class,java.lang.Class[])>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "Class parameter escapes to global scope",
-      "dataflowMs": 0.4,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.4,
+      "reason": "writes to static field simpleName",
+      "dataflowMs": 53.6,
+      "sideEffectMs": 0.1,
+      "totalMs": 53.7,
       "jimpleStmtCount": 22,
-      "graphNodes": 7,
-      "graphEdges": 2
+      "graphNodes": 26,
+      "graphEdges": 29
     },
     {
       "signature": "<java.util.FormatterBuilder: void <clinit>()>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "writes to static field NullCheck_MH",
-      "dataflowMs": 13.6,
-      "sideEffectMs": 0.3,
-      "totalMs": 14.0,
+      "reason": "writes to static field FINull_MH",
+      "dataflowMs": 30.0,
+      "sideEffectMs": 0.8,
+      "totalMs": 30.7,
       "jimpleStmtCount": 106,
-      "graphNodes": 80,
-      "graphEdges": 31
+      "graphNodes": 381,
+      "graphEdges": 427
     },
     {
       "signature": "<java.util.FormatterBuilder: boolean nullCheck(java.lang.Object)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.3,
+      "dataflowMs": 0.2,
       "sideEffectMs": 0.0,
-      "totalMs": 0.4,
+      "totalMs": 0.2,
       "jimpleStmtCount": 6,
       "graphNodes": 1,
       "graphEdges": 0
@@ -157,32 +157,32 @@
     {
       "signature": "<java.util.FormatterBuilder: java.lang.invoke.MethodHandle build()>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "loaded object 'load format from parameter this' escapes to global scope",
-      "dataflowMs": 2.4,
-      "sideEffectMs": 1.8,
-      "totalMs": 4.1,
+      "reason": "writes to static field value",
+      "dataflowMs": 32.6,
+      "sideEffectMs": 0.1,
+      "totalMs": 32.7,
       "jimpleStmtCount": 34,
-      "graphNodes": 28,
-      "graphEdges": 25
+      "graphNodes": 51,
+      "graphEdges": 51
     },
     {
       "signature": "<java.util.FormatterBuilder: java.lang.invoke.MethodHandle findMethod(java.lang.Class,java.lang.String,java.lang.Class,java.lang.Class[])>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Class parameter escapes to global scope",
-      "dataflowMs": 1.0,
+      "dataflowMs": 48.8,
       "sideEffectMs": 0.1,
-      "totalMs": 1.0,
+      "totalMs": 48.9,
       "jimpleStmtCount": 22,
-      "graphNodes": 8,
-      "graphEdges": 1
+      "graphNodes": 26,
+      "graphEdges": 20
     },
     {
       "signature": "<java.util.FormatterBuilder: boolean formattableCheck(java.lang.Object)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.1,
+      "dataflowMs": 0.4,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 0.4,
       "jimpleStmtCount": 5,
       "graphNodes": 2,
       "graphEdges": 0
@@ -190,7 +190,7 @@
   ],
   "statistics": {
     "methodCount": 16,
-    "avgTimePerMethodMs": 5.6,
+    "avgTimePerMethodMs": 28.8,
     "totalJimpleStmts": 608
   }
 }

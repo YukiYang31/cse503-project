@@ -1,67 +1,67 @@
 {
-  "timestamp": "2026-02-26T14:33:11",
+  "timestamp": "2026-03-01T12:14:41",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Collection.java"],
   "phaseTimings": {
-    "totalMs": 185.3,
+    "totalMs": 5634.6,
     "compilationMs": 0.0,
-    "irLoadingMs": 68.2,
-    "callGraphMs": 39.2,
-    "dataflowTotalMs": 6.7,
-    "sideEffectTotalMs": 0.5,
-    "overheadMs": 70.6
+    "irLoadingMs": 133.1,
+    "callGraphMs": 106.8,
+    "dataflowTotalMs": 5253.2,
+    "sideEffectTotalMs": 0.3,
+    "overheadMs": 141.2
   },
   "methods": [
     {
       "signature": "<java.util.Collection: boolean removeIf(java.util.function.Predicate)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Predicate parameter escapes to global scope",
-      "dataflowMs": 5.2,
-      "sideEffectMs": 0.4,
-      "totalMs": 5.6,
+      "dataflowMs": 5213.5,
+      "sideEffectMs": 0.1,
+      "totalMs": 5213.6,
       "jimpleStmtCount": 14,
-      "graphNodes": 4,
-      "graphEdges": 0
+      "graphNodes": 10,
+      "graphEdges": 10
     },
     {
       "signature": "<java.util.Collection: java.util.Spliterator spliterator()>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 0.1,
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 10.4,
       "sideEffectMs": 0.0,
-      "totalMs": 0.1,
+      "totalMs": 10.4,
       "jimpleStmtCount": 3,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 6,
+      "graphEdges": 6
     },
     {
       "signature": "<java.util.Collection: java.util.stream.Stream parallelStream()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 1.1,
-      "sideEffectMs": 0.0,
-      "totalMs": 1.1,
+      "dataflowMs": 27.6,
+      "sideEffectMs": 0.1,
+      "totalMs": 27.7,
       "jimpleStmtCount": 4,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 15,
+      "graphEdges": 23
     },
     {
       "signature": "<java.util.Collection: java.util.stream.Stream stream()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.2,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "dataflowMs": 1.0,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.0,
       "jimpleStmtCount": 4,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 15,
+      "graphEdges": 23
     },
     {
       "signature": "<java.util.Collection: java.lang.Object[] toArray(java.util.function.IntFunction)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.1,
+      "dataflowMs": 0.8,
       "sideEffectMs": 0.0,
-      "totalMs": 0.1,
+      "totalMs": 0.8,
       "jimpleStmtCount": 6,
       "graphNodes": 3,
       "graphEdges": 0
@@ -69,7 +69,7 @@
   ],
   "statistics": {
     "methodCount": 5,
-    "avgTimePerMethodMs": 1.4,
+    "avgTimePerMethodMs": 1050.7,
     "totalJimpleStmts": 31
   }
 }

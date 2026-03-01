@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-02-26T14:33:21",
+  "timestamp": "2026-03-01T12:15:05",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Comparator.java"],
   "phaseTimings": {
-    "totalMs": 2399.8,
+    "totalMs": 5515.5,
     "compilationMs": 0.0,
-    "irLoadingMs": 53.5,
-    "callGraphMs": 2236.1,
-    "dataflowTotalMs": 38.0,
-    "sideEffectTotalMs": 1.1,
-    "overheadMs": 71.0
+    "irLoadingMs": 149.7,
+    "callGraphMs": 5041.8,
+    "dataflowTotalMs": 155.1,
+    "sideEffectTotalMs": 2.8,
+    "overheadMs": 166.2
   },
   "methods": [
     {
       "signature": "<java.util.Comparator: int lambda$comparing$77a9974f$1(java.util.function.Function,java.lang.Object,java.lang.Object)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Function parameter escapes to global scope",
-      "dataflowMs": 10.5,
-      "sideEffectMs": 0.6,
-      "totalMs": 11.1,
+      "dataflowMs": 14.9,
+      "sideEffectMs": 2.0,
+      "totalMs": 16.9,
       "jimpleStmtCount": 8,
       "graphNodes": 4,
       "graphEdges": 0
@@ -26,9 +26,9 @@
       "signature": "<java.util.Comparator: int lambda$thenComparing$36697e65$1(java.util.Comparator,java.lang.Object,java.lang.Object)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.9,
+      "dataflowMs": 1.3,
       "sideEffectMs": 0.0,
-      "totalMs": 0.9,
+      "totalMs": 1.3,
       "jimpleStmtCount": 10,
       "graphNodes": 4,
       "graphEdges": 0
@@ -37,130 +37,130 @@
       "signature": "<java.util.Comparator: java.util.Comparator comparingLong(java.util.function.ToLongFunction)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "ToLongFunction parameter escapes to global scope",
-      "dataflowMs": 0.1,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.1,
+      "dataflowMs": 55.7,
+      "sideEffectMs": 0.1,
+      "totalMs": 55.8,
       "jimpleStmtCount": 6,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 5,
+      "graphEdges": 5
     },
     {
       "signature": "<java.util.Comparator: java.util.Comparator thenComparing(java.util.Comparator)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.2,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "dataflowMs": 2.4,
+      "sideEffectMs": 0.1,
+      "totalMs": 2.4,
       "jimpleStmtCount": 7,
-      "graphNodes": 3,
-      "graphEdges": 0
+      "graphNodes": 6,
+      "graphEdges": 5
     },
     {
       "signature": "<java.util.Comparator: java.util.Comparator thenComparingLong(java.util.function.ToLongFunction)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 3.5,
-      "sideEffectMs": 0.0,
-      "totalMs": 3.5,
+      "dataflowMs": 1.0,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.1,
       "jimpleStmtCount": 5,
-      "graphNodes": 3,
-      "graphEdges": 0
+      "graphNodes": 9,
+      "graphEdges": 10
     },
     {
       "signature": "<java.util.Comparator: java.lang.Object $deserializeLambda$(java.lang.invoke.SerializedLambda)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "SerializedLambda parameter escapes to global scope",
-      "dataflowMs": 6.2,
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 39.5,
       "sideEffectMs": 0.1,
-      "totalMs": 6.2,
+      "totalMs": 39.6,
       "jimpleStmtCount": 162,
-      "graphNodes": 3,
-      "graphEdges": 0
+      "graphNodes": 13,
+      "graphEdges": 8
     },
     {
       "signature": "<java.util.Comparator: java.util.Comparator comparing(java.util.function.Function,java.util.Comparator)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Function parameter escapes to global scope",
-      "dataflowMs": 0.3,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "dataflowMs": 2.2,
+      "sideEffectMs": 0.1,
+      "totalMs": 2.2,
       "jimpleStmtCount": 8,
-      "graphNodes": 3,
-      "graphEdges": 0
+      "graphNodes": 9,
+      "graphEdges": 10
     },
     {
       "signature": "<java.util.Comparator: java.util.Comparator thenComparing(java.util.function.Function,java.util.Comparator)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.6,
-      "sideEffectMs": 0.0,
-      "totalMs": 0.6,
+      "dataflowMs": 0.9,
+      "sideEffectMs": 0.1,
+      "totalMs": 1.0,
       "jimpleStmtCount": 6,
-      "graphNodes": 4,
-      "graphEdges": 0
+      "graphNodes": 13,
+      "graphEdges": 15
     },
     {
       "signature": "<java.util.Comparator: java.util.Comparator comparingDouble(java.util.function.ToDoubleFunction)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "ToDoubleFunction parameter escapes to global scope",
-      "dataflowMs": 0.2,
+      "dataflowMs": 1.7,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 1.7,
       "jimpleStmtCount": 6,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 5,
+      "graphEdges": 5
     },
     {
       "signature": "<java.util.Comparator: java.util.Comparator thenComparingDouble(java.util.function.ToDoubleFunction)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.4,
+      "dataflowMs": 0.7,
       "sideEffectMs": 0.0,
-      "totalMs": 0.4,
+      "totalMs": 0.8,
       "jimpleStmtCount": 5,
-      "graphNodes": 3,
-      "graphEdges": 0
+      "graphNodes": 9,
+      "graphEdges": 10
     },
     {
       "signature": "<java.util.Comparator: java.util.Comparator comparing(java.util.function.Function)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Function parameter escapes to global scope",
-      "dataflowMs": 0.1,
+      "dataflowMs": 2.0,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 2.1,
       "jimpleStmtCount": 6,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 5,
+      "graphEdges": 5
     },
     {
       "signature": "<java.util.Comparator: java.util.Comparator thenComparing(java.util.function.Function)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.3,
+      "dataflowMs": 0.6,
       "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "totalMs": 0.6,
       "jimpleStmtCount": 5,
-      "graphNodes": 3,
-      "graphEdges": 0
+      "graphNodes": 9,
+      "graphEdges": 10
     },
     {
       "signature": "<java.util.Comparator: java.util.Comparator reversed()>",
       "verdict": "SIDE_EFFECTING",
-      "reason": "this escapes to global scope",
-      "dataflowMs": 0.1,
+      "reason": "loaded object 'callee: load cmp from Comparator parameter' escapes to global scope",
+      "dataflowMs": 12.4,
       "sideEffectMs": 0.0,
-      "totalMs": 0.1,
+      "totalMs": 12.4,
       "jimpleStmtCount": 3,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 8,
+      "graphEdges": 9
     },
     {
       "signature": "<java.util.Comparator: java.util.Comparator naturalOrder()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 13.3,
-      "sideEffectMs": 0.1,
-      "totalMs": 13.4,
+      "dataflowMs": 0.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
       "jimpleStmtCount": 2,
       "graphNodes": 2,
       "graphEdges": 1
@@ -169,45 +169,45 @@
       "signature": "<java.util.Comparator: int lambda$comparingLong$6043328a$1(java.util.function.ToLongFunction,java.lang.Object,java.lang.Object)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "ToLongFunction parameter escapes to global scope",
-      "dataflowMs": 0.2,
+      "dataflowMs": 5.0,
       "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "totalMs": 5.0,
       "jimpleStmtCount": 7,
       "graphNodes": 3,
       "graphEdges": 0
     },
     {
       "signature": "<java.util.Comparator: java.util.Comparator nullsFirst(java.util.Comparator)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "Comparator parameter escapes to global scope",
-      "dataflowMs": 0.1,
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 1.4,
       "sideEffectMs": 0.0,
-      "totalMs": 0.1,
+      "totalMs": 1.5,
       "jimpleStmtCount": 4,
       "graphNodes": 2,
-      "graphEdges": 0
+      "graphEdges": 1
     },
     {
       "signature": "<java.util.Comparator: java.util.Comparator nullsLast(java.util.Comparator)>",
-      "verdict": "SIDE_EFFECTING",
-      "reason": "Comparator parameter escapes to global scope",
-      "dataflowMs": 0.1,
+      "verdict": "SIDE_EFFECT_FREE",
+      "reason": null,
+      "dataflowMs": 0.2,
       "sideEffectMs": 0.0,
-      "totalMs": 0.1,
+      "totalMs": 0.2,
       "jimpleStmtCount": 4,
       "graphNodes": 2,
-      "graphEdges": 0
+      "graphEdges": 1
     },
     {
       "signature": "<java.util.Comparator: java.util.Comparator reverseOrder()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.0,
+      "dataflowMs": 1.0,
       "sideEffectMs": 0.0,
-      "totalMs": 0.1,
+      "totalMs": 1.1,
       "jimpleStmtCount": 2,
-      "graphNodes": 1,
-      "graphEdges": 0
+      "graphNodes": 2,
+      "graphEdges": 1
     },
     {
       "signature": "<java.util.Comparator: int lambda$comparing$ea9a8b3a$1(java.util.Comparator,java.util.function.Function,java.lang.Object,java.lang.Object)>",
@@ -215,7 +215,7 @@
       "reason": "Comparator parameter escapes to global scope",
       "dataflowMs": 0.2,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 0.3,
       "jimpleStmtCount": 8,
       "graphNodes": 5,
       "graphEdges": 0
@@ -224,9 +224,9 @@
       "signature": "<java.util.Comparator: int lambda$comparingInt$7b0bb60$1(java.util.function.ToIntFunction,java.lang.Object,java.lang.Object)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "ToIntFunction parameter escapes to global scope",
-      "dataflowMs": 0.2,
+      "dataflowMs": 2.7,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 2.7,
       "jimpleStmtCount": 7,
       "graphNodes": 3,
       "graphEdges": 0
@@ -235,20 +235,20 @@
       "signature": "<java.util.Comparator: java.util.Comparator comparingInt(java.util.function.ToIntFunction)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "ToIntFunction parameter escapes to global scope",
-      "dataflowMs": 0.1,
+      "dataflowMs": 1.8,
       "sideEffectMs": 0.0,
-      "totalMs": 0.1,
+      "totalMs": 1.8,
       "jimpleStmtCount": 6,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 5,
+      "graphEdges": 5
     },
     {
       "signature": "<java.util.Comparator: int lambda$comparingDouble$8dcf42ea$1(java.util.function.ToDoubleFunction,java.lang.Object,java.lang.Object)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "ToDoubleFunction parameter escapes to global scope",
-      "dataflowMs": 0.1,
+      "dataflowMs": 6.7,
       "sideEffectMs": 0.0,
-      "totalMs": 0.1,
+      "totalMs": 6.7,
       "jimpleStmtCount": 7,
       "graphNodes": 3,
       "graphEdges": 0
@@ -257,17 +257,17 @@
       "signature": "<java.util.Comparator: java.util.Comparator thenComparingInt(java.util.function.ToIntFunction)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.3,
+      "dataflowMs": 0.6,
       "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "totalMs": 0.6,
       "jimpleStmtCount": 5,
-      "graphNodes": 3,
-      "graphEdges": 0
+      "graphNodes": 9,
+      "graphEdges": 10
     }
   ],
   "statistics": {
     "methodCount": 23,
-    "avgTimePerMethodMs": 1.7,
+    "avgTimePerMethodMs": 6.9,
     "totalJimpleStmts": 289
   }
 }

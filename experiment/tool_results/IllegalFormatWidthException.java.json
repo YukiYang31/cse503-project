@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-02-26T14:39:28",
+  "timestamp": "2026-03-01T12:59:51",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/IllegalFormatWidthException.java"],
   "phaseTimings": {
-    "totalMs": 3717.4,
+    "totalMs": 8482.6,
     "compilationMs": 0.0,
-    "irLoadingMs": 110.6,
-    "callGraphMs": 3451.0,
-    "dataflowTotalMs": 38.3,
-    "sideEffectTotalMs": 3.5,
-    "overheadMs": 114.0
+    "irLoadingMs": 108.8,
+    "callGraphMs": 8109.3,
+    "dataflowTotalMs": 150.5,
+    "sideEffectTotalMs": 1.7,
+    "overheadMs": 112.3
   },
   "methods": [
     {
       "signature": "<java.util.IllegalFormatWidthException: int getWidth()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 14.9,
-      "sideEffectMs": 3.0,
-      "totalMs": 17.9,
+      "dataflowMs": 12.2,
+      "sideEffectMs": 1.6,
+      "totalMs": 13.7,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
@@ -26,28 +26,28 @@
       "signature": "<java.util.IllegalFormatWidthException: void <init>(int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 22.1,
-      "sideEffectMs": 0.4,
-      "totalMs": 22.5,
+      "dataflowMs": 60.2,
+      "sideEffectMs": 0.1,
+      "totalMs": 60.3,
       "jimpleStmtCount": 5,
-      "graphNodes": 1,
-      "graphEdges": 0
+      "graphNodes": 4,
+      "graphEdges": 5
     },
     {
       "signature": "<java.util.IllegalFormatWidthException: java.lang.String getMessage()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 1.2,
+      "dataflowMs": 78.1,
       "sideEffectMs": 0.0,
-      "totalMs": 1.3,
+      "totalMs": 78.1,
       "jimpleStmtCount": 4,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 11,
+      "graphEdges": 2
     }
   ],
   "statistics": {
     "methodCount": 3,
-    "avgTimePerMethodMs": 13.9,
+    "avgTimePerMethodMs": 50.7,
     "totalJimpleStmts": 12
   }
 }
