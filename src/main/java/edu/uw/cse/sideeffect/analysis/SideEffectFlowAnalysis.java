@@ -8,8 +8,10 @@ import sootup.analysis.intraprocedural.ForwardFlowAnalysis;
 import sootup.core.graph.StmtGraph;
 import sootup.core.jimple.common.stmt.Stmt;
 import sootup.core.model.Body;
+import sootup.java.core.views.JavaView;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Forward dataflow analysis that builds a PointsToGraph for each program point.
@@ -30,24 +32,39 @@ public class SideEffectFlowAnalysis extends ForwardFlowAnalysis<PointsToGraph> {
 
     public SideEffectFlowAnalysis(StmtGraph<?> cfg, Body body, AnalysisConfig config,
                                boolean isStatic, DebugHtmlWriter debugWriter) {
-        this(cfg, body, config, isStatic, debugWriter, null, null);
+        this(cfg, body, config, isStatic, debugWriter, null, null, null, null, null);
     }
 
     public SideEffectFlowAnalysis(StmtGraph<?> cfg, Body body, AnalysisConfig config,
                                boolean isStatic, DebugHtmlWriter debugWriter,
                                List<String> paramTypeNames) {
-        this(cfg, body, config, isStatic, debugWriter, paramTypeNames, null);
+        this(cfg, body, config, isStatic, debugWriter, paramTypeNames, null, null, null, null);
     }
 
     public SideEffectFlowAnalysis(StmtGraph<?> cfg, Body body, AnalysisConfig config,
                                boolean isStatic, DebugHtmlWriter debugWriter,
                                List<String> paramTypeNames, SummaryCache summaryCache) {
+        this(cfg, body, config, isStatic, debugWriter, paramTypeNames, summaryCache, null, null, null);
+    }
+
+    public SideEffectFlowAnalysis(StmtGraph<?> cfg, Body body, AnalysisConfig config,
+                               boolean isStatic, DebugHtmlWriter debugWriter,
+                               List<String> paramTypeNames, SummaryCache summaryCache,
+                               JavaView view, Set<String> analyzing) {
+        this(cfg, body, config, isStatic, debugWriter, paramTypeNames, summaryCache, view, analyzing, null);
+    }
+
+    public SideEffectFlowAnalysis(StmtGraph<?> cfg, Body body, AnalysisConfig config,
+                               boolean isStatic, DebugHtmlWriter debugWriter,
+                               List<String> paramTypeNames, SummaryCache summaryCache,
+                               JavaView view, Set<String> analyzing, int[] onDemandBudget) {
         super(cfg);
         this.config = config;
         this.body = body;
         this.isStatic = isStatic;
         this.debugWriter = debugWriter;
-        this.transfer = new TransferFunctions(config, isStatic, paramTypeNames, summaryCache, debugWriter);
+        this.transfer = new TransferFunctions(config, isStatic, paramTypeNames, summaryCache, debugWriter,
+                                              view, analyzing, onDemandBudget);
         execute();
     }
 

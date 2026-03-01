@@ -281,7 +281,7 @@ public class SideEffectAnalysisTest {
         JavaView view = new JavaView(inputLocation);
 
         for (JavaSootClass sootClass : view.getClasses()) {
-            String className = sootClass.getName();
+            String className = sootClass.getType().getClassName();
             for (JavaSootMethod method : sootClass.getMethods()) {
                 if (!method.isConcrete()) continue;
 

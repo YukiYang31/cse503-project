@@ -63,6 +63,9 @@ public class SideEffectAnalysisRunner {
     private final List<Path> sourceFiles;
     private final TimingRecorder timer;
     private final Set<String> jrtClassNames;  // non-empty = JRT mode
+    private JavaView view;                // set in run(), used by analyzeMethod() for on-demand analysis
+    private Set<String> analyzing;        // shared recursion guard for on-demand analysis
+    private int[] onDemandBudget;         // shared budget counter [remaining] for on-demand analysis
 
     public SideEffectAnalysisRunner(AnalysisConfig config, Path classDir, List<Path> sourceFiles,
                                 TimingRecorder timer) {
@@ -101,16 +104,18 @@ public class SideEffectAnalysisRunner {
         long irStart = 0;
         if (config.timing) irStart = System.nanoTime();
 
-        JavaView view;
         if (!jrtClassNames.isEmpty()) {
             // JRT mode: load from the running JDK's module image
             JrtFileSystemAnalysisInputLocation jrtInput = new JrtFileSystemAnalysisInputLocation();
-            view = new JavaView(jrtInput);
+            this.view = new JavaView(jrtInput);
         } else {
             JavaClassPathAnalysisInputLocation inputLocation =
                 new JavaClassPathAnalysisInputLocation(classDir.toString());
-            view = new JavaView(inputLocation);
+            this.view = new JavaView(inputLocation);
         }
+        // Create shared state for on-demand cross-file analysis
+        this.analyzing = new HashSet<>();
+        this.onDemandBudget = new int[]{10};  // reset per top-level method
 
         // Get classes — filter to targets when using JRT mode
         Collection<JavaSootClass> classes;
@@ -341,9 +346,14 @@ public class SideEffectAnalysisRunner {
                 long dataflowStart = 0;
                 if (config.timing) dataflowStart = System.nanoTime();
 
-                // Run the forward flow analysis (with inter-procedural cache)
+                // Reset on-demand budget for each top-level method so budget exhaustion
+                // from one method (e.g., writeObject) doesn't starve later methods
+                onDemandBudget[0] = 10;
+
+                // Run the forward flow analysis (with inter-procedural cache + on-demand cross-file)
                 SideEffectFlowAnalysis analysis = new SideEffectFlowAnalysis(
-                    cfg, body, config, method.isStatic(), debugWriter, paramTypeNames, cache);
+                    cfg, body, config, method.isStatic(), debugWriter, paramTypeNames, cache,
+                    view, analyzing, onDemandBudget);
 
                 // Get the exit graph
                 PointsToGraph exitGraph = analysis.getExitGraph();

@@ -12,20 +12,28 @@ import sootup.core.jimple.common.expr.*;
 import sootup.core.jimple.common.ref.*;
 
 
+import sootup.core.graph.StmtGraph;
 import sootup.core.jimple.common.stmt.JAssignStmt;
 import sootup.core.jimple.common.stmt.JIdentityStmt;
 import sootup.core.jimple.common.stmt.JInvokeStmt;
 import sootup.core.jimple.common.stmt.JReturnStmt;
 import sootup.core.jimple.common.stmt.Stmt;
+import sootup.core.model.Body;
 import sootup.core.signatures.FieldSignature;
 import sootup.core.signatures.MethodSignature;
+import sootup.core.types.ClassType;
 import sootup.core.types.ReferenceType;
+import sootup.core.types.Type;
+import sootup.java.core.JavaSootClass;
+import sootup.java.core.JavaSootMethod;
+import sootup.java.core.views.JavaView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -41,6 +49,11 @@ public class TransferFunctions {
     private final List<String> paramTypeNames; // nullable — falls back to index-based labels
     private final SummaryCache summaryCache; // nullable — null means intra-procedural only
     private final DebugHtmlWriter debugWriter; // nullable — null means no debug output
+    private final JavaView view;          // nullable — null when on-demand analysis is disabled
+    private final Set<String> analyzing;  // shared recursion guard, nullable
+    private final int[] onDemandBudget;   // shared budget counter [remaining], nullable
+    private static final int MAX_ON_DEMAND_DEPTH = 5;   // max recursive on-demand analysis depth
+    private static final int MAX_ON_DEMAND_TOTAL = 10;   // max on-demand analyses per top-level method
 
     /**
      * Per-statement counter snapshots ensure that re-processing the same statement
@@ -53,26 +66,36 @@ public class TransferFunctions {
     public static final String RETURN_VAR_NAME = "$RETURN";
 
     public TransferFunctions(AnalysisConfig config, boolean isStaticMethod) {
-        this(config, isStaticMethod, null, null, null);
+        this(config, isStaticMethod, null, null, null, null, null, null);
     }
 
     public TransferFunctions(AnalysisConfig config, boolean isStaticMethod, List<String> paramTypeNames) {
-        this(config, isStaticMethod, paramTypeNames, null, null);
+        this(config, isStaticMethod, paramTypeNames, null, null, null, null, null);
     }
 
     public TransferFunctions(AnalysisConfig config, boolean isStaticMethod,
                               List<String> paramTypeNames, SummaryCache summaryCache) {
-        this(config, isStaticMethod, paramTypeNames, summaryCache, null);
+        this(config, isStaticMethod, paramTypeNames, summaryCache, null, null, null, null);
     }
 
     public TransferFunctions(AnalysisConfig config, boolean isStaticMethod,
                               List<String> paramTypeNames, SummaryCache summaryCache,
                               DebugHtmlWriter debugWriter) {
+        this(config, isStaticMethod, paramTypeNames, summaryCache, debugWriter, null, null, null);
+    }
+
+    public TransferFunctions(AnalysisConfig config, boolean isStaticMethod,
+                              List<String> paramTypeNames, SummaryCache summaryCache,
+                              DebugHtmlWriter debugWriter,
+                              JavaView view, Set<String> analyzing, int[] onDemandBudget) {
         this.config = config;
         this.isStaticMethod = isStaticMethod;
         this.paramTypeNames = paramTypeNames;
         this.summaryCache = summaryCache;
         this.debugWriter = debugWriter;
+        this.view = view;
+        this.analyzing = analyzing;
+        this.onDemandBudget = onDemandBudget;
     }
 
 
@@ -472,63 +495,23 @@ public class TransferFunctions {
             return;
         }
 
-        // Inter-procedural: check summary cache for callee summary
-        if (summaryCache != null) {
-            String fullSig = methodSig.toString();
-            String subSig = methodSig.getSubSignature().toString();
-            MethodSummary calleeSummary = summaryCache.lookup(fullSig, subSig);
-            if (calleeSummary != null) {
-                if (config.debug) System.out.println("Debug== inter-procedural call: " + methodSig + " (found summary)");
+        // Tier 2: Inter-procedural — check summary cache for callee summary
+        String fullSig = methodSig.toString();
+        String subSig = methodSig.getSubSignature().toString();
+        MethodSummary calleeSummary = summaryCache != null ? summaryCache.lookup(fullSig, subSig) : null;
 
-                // Build actual arguments list
-                List<Set<Node>> actualArgs = new ArrayList<>();
-
-                // For instance calls, receiver is arg 0
-                if (invokeExpr instanceof AbstractInstanceInvokeExpr instanceInvoke) {
-                    Local base = instanceInvoke.getBase();
-                    actualArgs.add(new HashSet<>(graph.pointsTo(base)));
-                }
-
-                // Regular arguments
-                for (Value arg : invokeExpr.getArgs()) {
-                    if (arg instanceof Local argLocal && argLocal.getType() instanceof ReferenceType) {
-                        actualArgs.add(new HashSet<>(graph.pointsTo(argLocal)));
-                    } else {
-                        // Primitive arg — add empty set as placeholder
-                        actualArgs.add(new HashSet<>());
-                    }
-                }
-
-                // Determine if callee is static
-                boolean isCalleeStatic = !(invokeExpr instanceof AbstractInstanceInvokeExpr);
-
-                // Instantiate callee summary into caller graph
-                GraphInstantiator.InstantiationResult result = GraphInstantiator.instantiate(
-                        graph,
-                        calleeSummary.getExitGraph(),
-                        calleeSummary.getReturnTargets(),
-                        calleeSummary.getExitGraph().getMutatedFields(),
-                        actualArgs,
-                        returnVar,
-                        isCalleeStatic,
-                        graph.getInsideNodeCounter(), graph.getLoadNodeCounter(),
-                        config.debug,
-                        debugWriter,
-                        methodSig.toString());
-
-                graph.setInsideNodeCounter(result.nextInsideCounter());
-                graph.setLoadNodeCounter(result.nextLoadCounter());
-
-                // Record mu' for debug HTML output
-                if (debugWriter != null && result.muPrimeText() != null) {
-                    debugWriter.setNextMuPrime(result.muPrimeText());
-                }
-
-                return;
-            }
+        // Tier 3: On-demand cross-file analysis
+        if (calleeSummary == null && view != null) {
+            calleeSummary = analyzeExternalMethod(methodSig);
         }
 
-        // Unknown method: conservatively mark all reference-type arguments as globally escaped
+        // Apply summary if found (shared by Tier 2 and Tier 3)
+        if (calleeSummary != null) {
+            applySummaryToState(calleeSummary, invokeExpr, returnVar, graph, methodSig);
+            return;
+        }
+
+        // Tier 4: Unknown method — conservatively mark all reference-type arguments as globally escaped
         // and flag the method as having unknown side effects
         for (Value arg : invokeExpr.getArgs()) {
             if (arg instanceof Local argLocal && argLocal.getType() instanceof ReferenceType) {
@@ -562,6 +545,121 @@ public class TransferFunctions {
         if (retVal instanceof Local retLocal && retLocal.getType() instanceof ReferenceType) {
             if (config.debug) System.out.println("Debug== return: " + retLocal.getName() + " -> " + nodeSetToString(graph.pointsTo(retLocal)));
             graph.addReturnTargets(graph.pointsTo(retLocal));
+        }
+    }
+
+    // --- Inter-procedural helpers ---
+
+    /**
+     * Apply a callee summary to the caller's graph at a call site.
+     * Shared by Tier 2 (summary cache hit) and Tier 3 (on-demand analysis).
+     */
+    private void applySummaryToState(MethodSummary calleeSummary,
+                                     AbstractInvokeExpr invokeExpr,
+                                     Local returnVar,
+                                     PointsToGraph graph,
+                                     MethodSignature methodSig) {
+        if (config.debug) System.out.println("Debug== inter-procedural call: " + methodSig + " (found summary)");
+
+        // Build actual arguments list
+        List<Set<Node>> actualArgs = new ArrayList<>();
+
+        // For instance calls, receiver is arg 0
+        if (invokeExpr instanceof AbstractInstanceInvokeExpr instanceInvoke) {
+            Local base = instanceInvoke.getBase();
+            actualArgs.add(new HashSet<>(graph.pointsTo(base)));
+        }
+
+        // Regular arguments
+        for (Value arg : invokeExpr.getArgs()) {
+            if (arg instanceof Local argLocal && argLocal.getType() instanceof ReferenceType) {
+                actualArgs.add(new HashSet<>(graph.pointsTo(argLocal)));
+            } else {
+                // Primitive arg — add empty set as placeholder
+                actualArgs.add(new HashSet<>());
+            }
+        }
+
+        // Determine if callee is static
+        boolean isCalleeStatic = !(invokeExpr instanceof AbstractInstanceInvokeExpr);
+
+        // Instantiate callee summary into caller graph
+        GraphInstantiator.InstantiationResult result = GraphInstantiator.instantiate(
+                graph,
+                calleeSummary.getExitGraph(),
+                calleeSummary.getReturnTargets(),
+                calleeSummary.getExitGraph().getMutatedFields(),
+                actualArgs,
+                returnVar,
+                isCalleeStatic,
+                graph.getInsideNodeCounter(), graph.getLoadNodeCounter(),
+                config.debug,
+                debugWriter,
+                methodSig.toString());
+
+        graph.setInsideNodeCounter(result.nextInsideCounter());
+        graph.setLoadNodeCounter(result.nextLoadCounter());
+
+        // Record mu' for debug HTML output
+        if (debugWriter != null && result.muPrimeText() != null) {
+            debugWriter.setNextMuPrime(result.muPrimeText());
+        }
+    }
+
+    /**
+     * Tier 3: On-demand cross-file analysis.
+     * Resolves a method from the JavaView, analyzes it, caches the result.
+     * Returns null if the method cannot be resolved or analyzed (falls back to conservative).
+     */
+    private MethodSummary analyzeExternalMethod(MethodSignature methodSig) {
+        String sig = methodSig.toString();
+        if (analyzing == null || analyzing.contains(sig)) return null;
+        if (analyzing.size() >= MAX_ON_DEMAND_DEPTH) return null;  // depth limit
+        if (onDemandBudget != null && onDemandBudget[0] <= 0) return null;  // budget exhausted
+
+        ClassType classType = methodSig.getDeclClassType();
+        Optional<JavaSootClass> classOpt = view.getClass(classType);
+        if (classOpt.isEmpty()) return null;
+
+        Optional<? extends JavaSootMethod> methodOpt = classOpt.get().getMethod(methodSig.getSubSignature());
+        if (methodOpt.isEmpty() || !methodOpt.get().isConcrete()) return null;
+
+        JavaSootMethod method = methodOpt.get();
+        analyzing.add(sig);
+        if (onDemandBudget != null) onDemandBudget[0]--;
+        try {
+            Body body = method.getBody();
+            StmtGraph<?> cfg = body.getStmtGraph();
+
+            List<String> paramTypes = method.getSignature().getParameterTypes().stream()
+                .map(Type::toString)
+                .map(t -> { int dot = t.lastIndexOf('.'); return dot >= 0 ? t.substring(dot + 1) : t; })
+                .toList();
+
+            // Lightweight analysis: no debug output, no timing, no call graph
+            AnalysisConfig lightConfig = new AnalysisConfig(false, config.merge, null, false, false);
+            SideEffectFlowAnalysis analysis = new SideEffectFlowAnalysis(
+                cfg, body, lightConfig, method.isStatic(), null, paramTypes,
+                summaryCache, view, analyzing, onDemandBudget);
+
+            PointsToGraph exitGraph = analysis.getExitGraph();
+
+            // Guard: if exit graph is too large, skip caching to avoid
+            // instantiation explosion in the caller (O(nodes^2) edge cross-products)
+            int graphNodes = exitGraph.getAllNodes().size();
+            if (graphNodes > 20) return null;
+
+            boolean isCtor = "<init>".equals(method.getName());
+            MethodSummary result = SideEffectChecker.check(sig, exitGraph, isCtor, false);
+            MethodSummary summary = new MethodSummary(sig, exitGraph,
+                result.getResult(), result.getReason(), exitGraph.getReturnTargets());
+
+            summaryCache.put(sig, methodSig.getSubSignature().toString(), summary);
+            return summary;
+        } catch (Exception e) {
+            return null;  // fall back to conservative
+        } finally {
+            analyzing.remove(sig);
         }
     }
 

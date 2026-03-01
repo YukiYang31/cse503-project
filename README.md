@@ -50,7 +50,7 @@ Constructors have a special rule: direct field writes to `this` (`this.f = x`) a
 - **`JavaCompiler.java`** — Compiles `.java` to `.class` in a temp directory using `javax.tools.JavaCompiler`
 - **`SideEffectAnalysisRunner.java`** — Creates a SootUp `JavaView` (from compiled classes or the JDK runtime via `JrtFileSystemAnalysisInputLocation`), builds call graph, analyzes methods bottom-up with inter-procedural summary cache
 - **`PointsToGraph.java`** — Core data structure: variable-to-node mappings, heap edges, mutation tracking, global escape tracking
-- **`TransferFunctions.java`** — Maps each Jimple statement type to a graph operation; looks up callee summaries from `SummaryCache` for inter-procedural calls
+- **`TransferFunctions.java`** — Maps each Jimple statement type to a graph operation; implements a tiered method resolution strategy: SafeMethods whitelist → SummaryCache lookup → on-demand cross-file analysis → conservative fallback
 - **`SideEffectFlowAnalysis.java`** — Forward dataflow analysis extending SootUp's `ForwardFlowAnalysis`
 - **`SideEffectChecker.java`** — Validates graph invariants, then determines side-effectness from the exit graph: checks prestate mutations and global escape
 - **`GraphInstantiator.java`** — Section 5.3 of Salcianu & Rinard: instantiates callee summaries at call sites by computing a node mapping (mu), combining graphs, removing captured load nodes, and propagating mutations
@@ -70,16 +70,38 @@ SootUp is the modern successor to Soot. Key advantages:
 - Modular architecture, actively maintained
 - Clean Jimple IR with pattern-matchable statement types
 
-### Inter-Procedural Analysis (Section 5.3)
+### Inter-Procedural Analysis
 
-The analysis processes methods bottom-up over an intra-file call graph. When method A calls method B (both in the analyzed files), B's summary is instantiated at A's call site using the algorithm from Section 5.3 of Salcianu & Rinard (2005):
+The analysis processes methods bottom-up over an intra-file call graph. When method A calls method B (both in the analyzed files), B's summary is instantiated at A's call site:
 
 1. **Call graph construction**: `CallGraphBuilder` collects invoke targets from Jimple, resolves virtual/interface calls to concrete implementations within the analyzed classes, and computes a bottom-up order using Tarjan's SCC algorithm.
 2. **Bottom-up analysis**: Methods are analyzed in reverse topological order. Leaf methods (no user-defined callees) are analyzed first; their summaries are cached and used when analyzing their callers.
 3. **Summary instantiation**: At each call site, `GraphInstantiator` maps callee parameter nodes to caller argument nodes (via a least-fixed-point mu mapping), combines inside/outside edges, removes captured load nodes, and propagates callee mutations to the caller's graph.
 4. **SCC handling**: For mutually recursive methods, the analysis iterates within each SCC until summaries stabilize (max 5 iterations).
 
-Calls to methods outside the analyzed files (e.g., JDK methods) still use the conservative fallback unless listed in `SafeMethods`.
+### On-Demand Cross-File Analysis
+
+When a method call cannot be resolved within the analyzed file (SafeMethods miss + SummaryCache miss), the tool resolves the callee from the `JavaView` and analyzes it on the fly, caching the result for future lookups. This enables cross-file inter-procedural analysis without requiring whole-program analysis upfront.
+
+For example, `HashSet.size()` calls `this.map.size()`, which resolves to `HashMap.size()` in bytecode. Without on-demand analysis, the tool would conservatively mark all arguments as globally escaped (false positive). With on-demand analysis, `HashMap.size()` is analyzed, found to be side-effect-free, and its summary is instantiated at the call site — correctly classifying `HashSet.size()` as `SIDE_EFFECT_FREE`.
+
+The `handleInvoke()` resolution follows a four-tier strategy:
+
+```
+Tier 1: SafeMethods.isSafe()?          → YES → treat as safe, return
+Tier 2: SummaryCache.lookup()?         → YES → instantiate summary, return
+Tier 3: On-demand analysis?            → resolve from JavaView, analyze, cache, instantiate
+Tier 4: Conservative fallback          → mark all args escaped (only if tiers 1-3 fail)
+```
+
+Three guards prevent performance blowup from deep or wide JDK call chains:
+
+1. **Recursion guard** (`Set<String> analyzing`): Tracks fully-qualified signatures currently being analyzed. If a method is already in the set (mutual recursion), falls back to conservative. The set is shared across the recursive call chain and cleaned up via `try-finally`.
+2. **Depth limit** (default 5): Caps the depth of recursive on-demand analysis. If the `analyzing` set size reaches the limit, falls back to conservative. Only counts *cross-file* on-demand calls — same-file methods resolved via SummaryCache cost zero depth.
+3. **Per-method budget** (default 10): Limits the total number of on-demand analyses triggered per top-level method. Uses a shared `int[]` counter decremented on each new on-demand analysis. Reset before each top-level method so a greedy method (e.g., `writeObject` pulling in the entire serialization subsystem) does not starve later simple methods.
+4. **Graph size guard** (default 20 nodes): If an on-demand callee's exit graph exceeds 20 nodes, the summary is discarded to avoid instantiation explosion (`GraphInstantiator` produces cross-products of edges that scale quadratically with graph size).
+
+Cached results persist across all methods within a single `run()` invocation but are not saved to disk. On-demand results are stored in the same `SummaryCache` used by same-file inter-procedural analysis, so a method analyzed on-demand for one caller benefits all subsequent callers for free.
 
 ### Constructor Whitelist (the `<init>` Trap)
 
@@ -331,15 +353,15 @@ Edit `SafeMethods.java`. Three categories:
 ### Adding Transfer Functions
 Edit `TransferFunctions.java`. The `apply()` method dispatches on `Stmt` type. Add new cases by pattern matching on Jimple statement types.
 
-### Inter-Procedural Analysis (Section 5.3)
-The inter-procedural analysis follows Section 5.3 of the paper. Key components:
+### Inter-Procedural Analysis
+Key components:
 
 1. **`CallGraphBuilder`** builds an intra-file call graph from Jimple invoke statements and computes a bottom-up analysis order using Tarjan's SCC algorithm.
 2. **`SummaryCache`** stores method summaries keyed by both full signature and sub-signature (for virtual/interface dispatch resolution).
 3. **`GraphInstantiator`** implements the 4-step summary instantiation algorithm: compute node mapping μ (least fixed point of 3 constraints), combine caller/callee graphs, simplify by removing captured load nodes, and propagate mutated fields.
-4. **`TransferFunctions.handleInvoke()`** checks the cache between the `SafeMethods` whitelist and conservative fallback, applying callee summaries when available.
+4. **`TransferFunctions.handleInvoke()`** implements a four-tier resolution strategy: SafeMethods → SummaryCache → on-demand cross-file analysis → conservative fallback.
 
-To extend this further (e.g., whole-program analysis), the main change would be expanding `CallGraphBuilder` to include methods from library JARs or use a pre-computed call graph.
+The on-demand analysis (Tier 3) automatically resolves cross-file callees from the `JavaView`, so most JDK delegation patterns (e.g., `HashSet.size()` → `HashMap.size()`) are handled without manual whitelisting. The performance guards (depth limit, per-method budget, graph size guard) can be tuned via constants in `TransferFunctions.java`.
 
 ## Validation Against the Paper
 
@@ -435,7 +457,7 @@ The script saves per-file results to `experiment/tool_results/` as it goes. On r
 ## Known Limitations
 
 - **JDK analysis uses runtime bytecode**: When analyzing JDK source files, classes are loaded from the JDK runtime image rather than compiling from source. The analysis results reflect the compiled bytecode, which may differ slightly from source-level expectations (e.g., compiler-generated bridge methods, synthetic fields).
-- **Inter-procedural scope is same-file only**: The bottom-up analysis covers methods defined in the analyzed source files. Calls to external methods (libraries, JDK) not in `SafeMethods` are still treated conservatively.
+- **On-demand cross-file analysis has bounded scope**: Cross-file callees are analyzed on demand, but depth (default 5), per-method budget (default 10), and graph size (default 20 nodes) limits mean deeply nested or complex JDK call chains may still fall back to conservative. Methods whose exit graph exceeds the size limit are not cached, so their callers also fall back to conservative.
 - **Recursive call chains use bounded iteration**: Mutually recursive methods (SCCs in the call graph) are analyzed by iterating up to 5 times. If summaries do not stabilize, the last computed summary is used. The paper suggests iterating to a true fixed point; we cap at 5 for practical reasons.
 - **No exception-path precision**: Exception control flow is handled by SootUp's CFG but not modeled with special precision.
 - **Array modeling is simplified**: Array elements are tracked via mutation records but not with per-index precision.
