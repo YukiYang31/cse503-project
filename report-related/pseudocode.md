@@ -6,7 +6,7 @@ The analysis determines whether a Java method is **side-effect-free** — i.e., 
 
 ## 1. Overall Analysis Pipeline
 
-The top-level algorithm compiles source to Jimple IR, computes a bottom-up method ordering, analyzes each method intraprocedurally while composing callee summaries interprocedurally, and issues a verdict per method.
+The top-level algorithm compiles source to Jimple IR, computes a bottom-up method ordering, analyzes each method intraprocedurally while composing callee summaries interprocedurally, and issues a verdict per method. Cross-file callees are resolved on demand via the `view` (a handle to the full JDK runtime or compiled classpath).
 
 ```
 Algorithm: SideEffectAnalysis(sourceFiles)
@@ -14,30 +14,40 @@ Algorithm: SideEffectAnalysis(sourceFiles)
 Input:  Set of Java source files
 Output: For each method m, a verdict SIDE_EFFECT_FREE or SIDE_EFFECTING(reason)
 
-1.  Compile sourceFiles to bytecode; load into Jimple IR
-2.  methods <- all concrete methods from loaded classes
-3.  batches <- ComputeBottomUpOrder(methods)          // Algorithm 2
-4.  cache   <- empty summary cache
+1.  Compile sourceFiles to bytecode; load into Jimple IR via SootUp
+2.  view    <- JavaView over the class directory (or JDK runtime image)
+3.  methods <- all concrete methods from loaded classes
+4.  batches <- ComputeBottomUpOrder(methods)          // Algorithm 2
+5.  cache   <- empty summary cache
+6.  analyzing <- empty set (shared recursion guard for on-demand analysis)
+7.  budget    <- [MAX_ON_DEMAND_TOTAL]  // mutable counter, reset per top-level method
 
-5.  for each batch in batches do                      // leaves-first order
-6.      if |batch| = 1 then
-7.          m <- the single method in batch
-8.          summary <- AnalyzeMethod(m, cache)         // Algorithm 3
-9.          cache.put(m, summary)
-10.     else                                           // SCC: mutually recursive
-11.         repeat up to K times                       // K = 5
-12.             changed <- false
-13.             for each method m in batch do
-14.                 summary <- AnalyzeMethod(m, cache)
-15.                 if summary differs from cache.get(m) then
-16.                     cache.put(m, summary)
-17.                     changed <- true
-18.             until not changed
-19.
-20.     for each method m in batch do
-21.         verdict <- CheckSideEffects(cache.get(m))  // Algorithm 7
-22.         output verdict for m
+8.  for each batch in batches do                      // leaves-first order
+9.      if |batch| = 1 then
+10.         m <- the single method in batch
+11.         budget[0] <- MAX_ON_DEMAND_TOTAL           // reset budget per method
+12.         summary <- AnalyzeMethod(m, cache, view, analyzing, budget)  // Algorithm 3
+13.         cache.put(m, summary)
+14.     else                                           // SCC: mutually recursive
+15.         repeat up to K times                       // K = 5
+16.             changed <- false
+17.             for each method m in batch do
+18.                 budget[0] <- MAX_ON_DEMAND_TOTAL
+19.                 summary <- AnalyzeMethod(m, cache, view, analyzing, budget)
+20.                 if summary differs from cache.get(m) then
+21.                     cache.put(m, summary)
+22.                     changed <- true
+23.             until not changed
+24.
+25.     for each method m in batch do
+26.         verdict <- CheckSideEffects(cache.get(m))  // Algorithm 8
+27.         output verdict for m
 ```
+
+**Constants:**
+- `MAX_ON_DEMAND_DEPTH = 5` — maximum depth of recursive on-demand analysis (size of `analyzing` set)
+- `MAX_ON_DEMAND_TOTAL = 10` — maximum number of on-demand analyses per top-level method
+- `MAX_ON_DEMAND_GRAPH_SIZE = 20` — if an on-demand callee's exit graph exceeds this many nodes, discard the result (prevents instantiation explosion)
 
 ---
 
@@ -71,13 +81,15 @@ Output: List of batches (each batch is a list of methods),
 Each method is analyzed by a forward dataflow analysis over its control-flow graph. The lattice element is a points-to graph **G = (I, O, L, E, W)**, and the join operator is set union over all components.
 
 ```
-Algorithm: AnalyzeMethod(m, cache)
+Algorithm: AnalyzeMethod(m, cache, view, analyzing, budget)
 
-Input:  Method m with Jimple CFG, summary cache
+Input:  Method m with Jimple CFG, summary cache,
+        JavaView view (for on-demand cross-file resolution),
+        analyzing set (recursion guard), budget counter
 Output: MethodSummary(m) containing the exit graph and verdict
 
 1.  G_init <- empty PointsToGraph         // I = O = L = E = W = empty
-2.  transfer <- TransferFunctions(cache)  // has access to summary cache
+2.  transfer <- TransferFunctions(cache, view, analyzing, budget)
 
 3.  // Standard forward dataflow fixed-point iteration
 4.  for each statement s in CFG(m) in forward order do
@@ -88,7 +100,7 @@ Output: MethodSummary(m) containing the exit graph and verdict
 8.  // repeat steps 4-7 until no G_out changes (fixed point)
 
 9.  G_exit <- join of G_out for all tail statements of CFG(m)
-10. verdict <- CheckSideEffects(m, G_exit) // Algorithm 7
+10. verdict <- CheckSideEffects(m, G_exit) // Algorithm 8
 11. return MethodSummary(m, G_exit, verdict)
 ```
 
@@ -217,27 +229,35 @@ Apply(return v, G):
 
 ### 4i. Method Invocation
 
-Method invocations are handled in three tiers:
+Method invocations are handled in four tiers. Each tier is tried in order; the first one that succeeds handles the call.
 
 ```
 Apply(v = w.foo(a1, ..., ak), G):
 
     sig <- resolve method signature of foo
 
+    // Tier 1: Safe method whitelist
     if IsSafeMethod(sig) then
-        // Known side-effect-free library method
+        // Known side-effect-free library method (e.g., Object.hashCode, String.length)
         if v has reference type then
             n <- fresh InsideNode
             strongUpdate(v, { n })
         return
 
-    if cache.contains(sig) then
-        // Use cached interprocedural summary
-        calleeSummary <- cache.get(sig)
+    // Tier 2: Inter-procedural summary cache (same-file callees)
+    calleeSummary <- cache.lookup(sig)
+    if calleeSummary != null then
         InstantiateSummary(G, calleeSummary, [w, a1, ..., ak], v)  // Algorithm 5
         return
 
-    // Conservative fallback: assume the worst
+    // Tier 3: On-demand cross-file analysis
+    if view != null then
+        calleeSummary <- AnalyzeExternalMethod(sig, view, cache, analyzing, budget)  // Algorithm 7
+        if calleeSummary != null then
+            InstantiateSummary(G, calleeSummary, [w, a1, ..., ak], v)
+            return
+
+    // Tier 4: Conservative fallback — assume the worst
     for each reference-type argument a in [w, a1, ..., ak] do
         for each node n in pt(a) do
             markGlobalEscaped(n)
@@ -352,7 +372,64 @@ repeat until no violation exists:
 
 ---
 
-## 7. Side-Effect Checking
+## 7. On-Demand Cross-File Analysis
+
+When a method invocation cannot be resolved by the safe method whitelist (Tier 1) or the summary cache (Tier 2), and a `view` is available, the analysis attempts to resolve and analyze the callee on the fly. This enables inter-file analysis (e.g., `HashSet.size()` calling `HashMap.size()` in a different file) without pre-analyzing the entire classpath.
+
+Three guards prevent unbounded recursion and performance explosion:
+- **Depth limit**: The `analyzing` set tracks methods currently being analyzed in the on-demand call chain. If `|analyzing| >= MAX_ON_DEMAND_DEPTH`, the call falls back to conservative.
+- **Budget**: A mutable counter `budget[0]` is decremented for each on-demand analysis and reset per top-level method. If `budget[0] <= 0`, the call falls back to conservative.
+- **Graph size guard**: If the callee's exit graph exceeds `MAX_ON_DEMAND_GRAPH_SIZE` nodes, the result is discarded (not cached) to prevent `InstantiateSummary` cross-product explosion in the caller.
+
+```
+Algorithm: AnalyzeExternalMethod(sig, view, cache, analyzing, budget)
+
+Input:  Method signature sig,
+        JavaView view (handle to classpath/JDK runtime),
+        summary cache, analyzing set (recursion guard), budget counter
+Output: MethodSummary or null (null = fall back to conservative)
+
+1.  // Guard: recursion
+2.  if sig in analyzing then return null
+
+3.  // Guard: depth limit
+4.  if |analyzing| >= MAX_ON_DEMAND_DEPTH then return null
+
+5.  // Guard: budget exhausted
+6.  if budget[0] <= 0 then return null
+
+7.  // Resolve method from the view
+8.  class <- view.getClass(sig.declaringClass)
+9.  if class not found then return null
+10. method <- class.getMethod(sig.subSignature)
+11. if method not found or not concrete then return null
+
+12. // Begin on-demand analysis
+13. analyzing.add(sig)
+14. budget[0] <- budget[0] - 1
+15. try:
+16.     G_exit <- AnalyzeMethod(method, cache, view, analyzing, budget)  // recursive!
+
+17.     // Guard: graph size — discard overly large summaries
+18.     if |nodes in G_exit| > MAX_ON_DEMAND_GRAPH_SIZE then return null
+
+19.     summary <- CheckSideEffects(method, G_exit)
+20.     cache.put(sig, summary)            // cache for future lookups
+21.     return summary
+22. catch any exception:
+23.     return null                         // graceful fallback
+24. finally:
+25.     analyzing.remove(sig)              // always clean up, even on exception
+```
+
+**Key properties:**
+- The `analyzing` set is shared across the recursive call chain (passed by reference), so mutual recursion between on-demand callees is detected automatically.
+- The `budget` counter is shared (mutable array `int[1]`) and reset per top-level method in Algorithm 1, ensuring that one expensive method (e.g., `writeObject`) does not starve later methods (e.g., `isEmpty`).
+- Successfully analyzed summaries are cached in the summary cache, so the same cross-file method is analyzed at most once per `run()` invocation.
+
+---
+
+## 8. Side-Effect Checking
 
 Given the exit graph of a method, the checker determines the final verdict.
 
@@ -425,3 +502,6 @@ return SIDE_EFFECT_FREE
 | **mu** | Node mapping from callee namespace to caller namespace |
 | **Set A** | Prestate nodes: objects existing before method entry |
 | **Set B** | Globally escaped closure: objects reachable from global state |
+| **view** | JavaView handle to the classpath or JDK runtime for resolving cross-file classes |
+| **analyzing** | Set of method signatures currently being analyzed on demand (recursion guard) |
+| **budget** | Mutable counter `int[1]` limiting total on-demand analyses per top-level method |
