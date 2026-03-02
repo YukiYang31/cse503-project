@@ -100,7 +100,7 @@ def run_tool_on_file(java_file_path):
     except subprocess.TimeoutExpired:
         elapsed = time.time() - start_time
         print(f"  TIMEOUT after {elapsed:.1f}s")
-        return None
+        return "TIMEOUT"
 
     # Find the new timing file
     if TIMING_DIR.exists():
@@ -144,6 +144,9 @@ def categorize(jdk_annotation, our_verdict, file_has_annotations):
    
     has_annotation = jdk_annotation in ('Pure', 'SideEffectFree')
 
+    if our_verdict == 'TIMEOUT':
+        return 'Timeout'
+
     if our_verdict == 'NOT_ANALYZED':
         return 'Not Analyzed'
 
@@ -181,6 +184,7 @@ def build_csv(ground_truth, tool_results_by_file):
     rows = []
 
     for filename, timing_data in sorted(tool_results_by_file.items()):
+        timed_out = timing_data.get('timedOut', False)
         phase = timing_data.get('phaseTimings', {})
         methods = timing_data.get('methods', [])
         stats = timing_data.get('statistics', {})
@@ -254,54 +258,39 @@ def build_csv(ground_truth, tool_results_by_file):
             key = entry['canonical_key']
             if key in matched_annotation_keys:
                 continue
-            if not entry['has_body']:
-                # Abstract/interface methods can't be analyzed
-                rows.append({
-                    'file': filename,
-                    'class': entry['class_name'],
-                    'method': entry['method_name'],
-                    'signature': '',
-                    'jdk_annotation': entry['annotation'],
-                    'our_verdict': 'NOT_ANALYZED',
-                    'reason': 'abstract/interface method',
-                    'category': 'Not Analyzed',
-                    'dataflow_ms': 0,
-                    'check_ms': 0,
-                    'total_method_ms': 0,
-                    'jimple_stmts': 0,
-                    'graph_nodes': 0,
-                    'graph_edges': 0,
-                    'file_total_ms': file_total_ms,
-                    'file_ir_loading_ms': file_ir_loading_ms,
-                    'file_call_graph_ms': file_call_graph_ms,
-                    'file_dataflow_total_ms': file_dataflow_total_ms,
-                    'file_check_total_ms': file_check_total_ms,
-                    'file_methods_count': file_methods_count,
-                })
+            if timed_out:
+                unmatched_verdict = 'TIMEOUT'
+                unmatched_reason = 'file timed out'
+            elif not entry['has_body']:
+                unmatched_verdict = 'NOT_ANALYZED'
+                unmatched_reason = 'abstract/interface method'
             else:
-                # Concrete annotated method not in tool output — maybe error
-                rows.append({
-                    'file': filename,
-                    'class': entry['class_name'],
-                    'method': entry['method_name'],
-                    'signature': '',
-                    'jdk_annotation': entry['annotation'],
-                    'our_verdict': 'NOT_ANALYZED',
-                    'reason': 'not in tool output',
-                    'category': 'Not Analyzed',
-                    'dataflow_ms': 0,
-                    'check_ms': 0,
-                    'total_method_ms': 0,
-                    'jimple_stmts': 0,
-                    'graph_nodes': 0,
-                    'graph_edges': 0,
-                    'file_total_ms': file_total_ms,
-                    'file_ir_loading_ms': file_ir_loading_ms,
-                    'file_call_graph_ms': file_call_graph_ms,
-                    'file_dataflow_total_ms': file_dataflow_total_ms,
-                    'file_check_total_ms': file_check_total_ms,
-                    'file_methods_count': file_methods_count,
-                })
+                unmatched_verdict = 'NOT_ANALYZED'
+                unmatched_reason = 'not in tool output'
+
+            jdk_annotation = entry['annotation']
+            rows.append({
+                'file': filename,
+                'class': entry['class_name'],
+                'method': entry['method_name'],
+                'signature': '',
+                'jdk_annotation': jdk_annotation,
+                'our_verdict': unmatched_verdict,
+                'reason': unmatched_reason,
+                'category': categorize(jdk_annotation, unmatched_verdict, filename in files_with_annotations),
+                'dataflow_ms': 0,
+                'check_ms': 0,
+                'total_method_ms': 0,
+                'jimple_stmts': 0,
+                'graph_nodes': 0,
+                'graph_edges': 0,
+                'file_total_ms': file_total_ms,
+                'file_ir_loading_ms': file_ir_loading_ms,
+                'file_call_graph_ms': file_call_graph_ms,
+                'file_dataflow_total_ms': file_dataflow_total_ms,
+                'file_check_total_ms': file_check_total_ms,
+                'file_methods_count': file_methods_count,
+            })
 
     return rows
 
@@ -341,7 +330,7 @@ def print_summary(rows):
     print(f"\nTotal methods in CSV: {len(rows)}")
     print("\nCategory Breakdown:")
     for cat in ['Match', 'Tool False Positive', 'Annotation Deficit',
-                'File Not Annotated', 'Both Side-Effecting', 'Not Analyzed', 'Unknown']:
+                'File Not Annotated', 'Both Side-Effecting', 'Not Analyzed', 'Timeout', 'Unknown']:
         count = categories.get(cat, 0)
         if count > 0:
             print(f"  {cat:25s}: {count:5d}")
@@ -484,7 +473,20 @@ def main():
             print(f"\n[{idx + 1}/{total_files}] Processing {java_file.name}...")
 
             timing_path = run_tool_on_file(str(java_file))
-            if timing_path:
+            if timing_path == "TIMEOUT":
+                timeout_data = {
+                    'timedOut': True,
+                    'methods': [],
+                    'phaseTimings': {},
+                    'statistics': {},
+                }
+                tool_results_by_file[java_file.name] = timeout_data
+                TOOL_RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+                dest = TOOL_RESULTS_DIR / f"{java_file.name}.json"
+                with open(dest, 'w') as f:
+                    json.dump(timeout_data, f, indent=2)
+                print(f"  Saved timeout marker to {dest}")
+            elif timing_path:
                 timing_data = load_timing_json(timing_path)
                 tool_results_by_file[java_file.name] = timing_data
                 save_tool_result(java_file.name, timing_path)
