@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-03-01T13:20:39",
+  "timestamp": "2026-03-01T17:03:30",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/MissingFormatWidthException.java"],
   "phaseTimings": {
-    "totalMs": 3896.4,
+    "totalMs": 3244.4,
     "compilationMs": 0.0,
-    "irLoadingMs": 110.2,
-    "callGraphMs": 3602.6,
-    "dataflowTotalMs": 67.4,
-    "sideEffectTotalMs": 0.2,
-    "overheadMs": 116.1
+    "irLoadingMs": 80.4,
+    "callGraphMs": 3034.8,
+    "dataflowTotalMs": 47.3,
+    "sideEffectTotalMs": 0.1,
+    "overheadMs": 81.8
   },
   "methods": [
     {
       "signature": "<java.util.MissingFormatWidthException: void <init>(java.lang.String)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 66.7,
+      "dataflowMs": 46.8,
       "sideEffectMs": 0.1,
-      "totalMs": 66.8,
+      "totalMs": 46.8,
       "jimpleStmtCount": 9,
       "graphNodes": 8,
       "graphEdges": 11
@@ -37,7 +37,7 @@
       "signature": "<java.util.MissingFormatWidthException: java.lang.String getMessage()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.2,
+      "dataflowMs": 0.1,
       "sideEffectMs": 0.0,
       "totalMs": 0.2,
       "jimpleStmtCount": 3,
@@ -47,7 +47,7 @@
   ],
   "statistics": {
     "methodCount": 3,
-    "avgTimePerMethodMs": 22.5,
+    "avgTimePerMethodMs": 15.8,
     "totalJimpleStmts": 15
   }
 }

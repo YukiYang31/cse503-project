@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-03-01T12:16:48",
+  "timestamp": "2026-03-01T16:55:09",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/EventListenerProxy.java"],
   "phaseTimings": {
-    "totalMs": 353.5,
+    "totalMs": 127.2,
     "compilationMs": 0.0,
-    "irLoadingMs": 130.3,
-    "callGraphMs": 72.1,
-    "dataflowTotalMs": 27.6,
-    "sideEffectTotalMs": 2.0,
-    "overheadMs": 121.5
+    "irLoadingMs": 46.9,
+    "callGraphMs": 25.1,
+    "dataflowTotalMs": 9.1,
+    "sideEffectTotalMs": 0.6,
+    "overheadMs": 45.4
   },
   "methods": [
     {
       "signature": "<java.util.EventListenerProxy: void <init>(java.util.EventListener)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 25.5,
-      "sideEffectMs": 1.7,
-      "totalMs": 27.2,
+      "dataflowMs": 8.5,
+      "sideEffectMs": 0.5,
+      "totalMs": 8.9,
       "jimpleStmtCount": 5,
       "graphNodes": 2,
       "graphEdges": 1
@@ -26,9 +26,9 @@
       "signature": "<java.util.EventListenerProxy: java.util.EventListener getListener()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 2.0,
-      "sideEffectMs": 0.3,
-      "totalMs": 2.4,
+      "dataflowMs": 0.7,
+      "sideEffectMs": 0.1,
+      "totalMs": 0.8,
       "jimpleStmtCount": 3,
       "graphNodes": 2,
       "graphEdges": 1
@@ -36,7 +36,7 @@
   ],
   "statistics": {
     "methodCount": 2,
-    "avgTimePerMethodMs": 14.8,
+    "avgTimePerMethodMs": 4.9,
     "totalJimpleStmts": 8
   }
 }

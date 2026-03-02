@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-03-01T12:42:01",
+  "timestamp": "2026-03-01T16:59:57",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/IllegalFormatCodePointException.java"],
   "phaseTimings": {
-    "totalMs": 3655.3,
+    "totalMs": 2314.1,
     "compilationMs": 0.0,
-    "irLoadingMs": 108.6,
-    "callGraphMs": 3344.1,
-    "dataflowTotalMs": 75.3,
-    "sideEffectTotalMs": 10.1,
-    "overheadMs": 117.1
+    "irLoadingMs": 61.8,
+    "callGraphMs": 2138.0,
+    "dataflowTotalMs": 50.9,
+    "sideEffectTotalMs": 1.5,
+    "overheadMs": 61.9
   },
   "methods": [
     {
       "signature": "<java.util.IllegalFormatCodePointException: java.lang.String getMessage()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 28.4,
-      "sideEffectMs": 9.9,
-      "totalMs": 38.3,
+      "dataflowMs": 23.3,
+      "sideEffectMs": 1.5,
+      "totalMs": 24.8,
       "jimpleStmtCount": 7,
       "graphNodes": 4,
       "graphEdges": 0
@@ -26,9 +26,9 @@
       "signature": "<java.util.IllegalFormatCodePointException: int getCodePoint()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.4,
-      "sideEffectMs": 0.1,
-      "totalMs": 0.5,
+      "dataflowMs": 0.2,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.2,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
@@ -37,9 +37,9 @@
       "signature": "<java.util.IllegalFormatCodePointException: void <init>(int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 46.5,
+      "dataflowMs": 27.5,
       "sideEffectMs": 0.1,
-      "totalMs": 46.6,
+      "totalMs": 27.5,
       "jimpleStmtCount": 5,
       "graphNodes": 4,
       "graphEdges": 5
@@ -47,7 +47,7 @@
   ],
   "statistics": {
     "methodCount": 3,
-    "avgTimePerMethodMs": 28.5,
+    "avgTimePerMethodMs": 17.5,
     "totalJimpleStmts": 15
   }
 }

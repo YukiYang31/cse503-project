@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-03-01T12:11:21",
+  "timestamp": "2026-03-01T16:53:57",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/AbstractSequentialList.java"],
   "phaseTimings": {
-    "totalMs": 6251.8,
+    "totalMs": 1489.5,
     "compilationMs": 0.0,
-    "irLoadingMs": 153.2,
-    "callGraphMs": 5754.1,
-    "dataflowTotalMs": 185.8,
-    "sideEffectTotalMs": 0.7,
-    "overheadMs": 157.9
+    "irLoadingMs": 48.8,
+    "callGraphMs": 1339.2,
+    "dataflowTotalMs": 49.3,
+    "sideEffectTotalMs": 0.2,
+    "overheadMs": 52.0
   },
   "methods": [
     {
       "signature": "<java.util.AbstractSequentialList: void <init>()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 53.7,
-      "sideEffectMs": 0.1,
-      "totalMs": 53.8,
+      "dataflowMs": 13.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 13.6,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
@@ -26,9 +26,9 @@
       "signature": "<java.util.AbstractSequentialList: java.lang.Object set(int,java.lang.Object)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 69.3,
-      "sideEffectMs": 0.1,
-      "totalMs": 69.4,
+      "dataflowMs": 20.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 20.6,
       "jimpleStmtCount": 17,
       "graphNodes": 10,
       "graphEdges": 2
@@ -37,9 +37,9 @@
       "signature": "<java.util.AbstractSequentialList: java.util.Iterator iterator()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.3,
+      "dataflowMs": 0.1,
       "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "totalMs": 0.1,
       "jimpleStmtCount": 3,
       "graphNodes": 2,
       "graphEdges": 0
@@ -48,9 +48,9 @@
       "signature": "<java.util.AbstractSequentialList: boolean addAll(int,java.util.Collection)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field unknown",
-      "dataflowMs": 55.7,
-      "sideEffectMs": 0.2,
-      "totalMs": 56.0,
+      "dataflowMs": 13.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 13.5,
       "jimpleStmtCount": 24,
       "graphNodes": 18,
       "graphEdges": 5
@@ -59,9 +59,9 @@
       "signature": "<java.util.AbstractSequentialList: void add(int,java.lang.Object)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field unknown",
-      "dataflowMs": 2.9,
-      "sideEffectMs": 0.1,
-      "totalMs": 3.0,
+      "dataflowMs": 0.6,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.7,
       "jimpleStmtCount": 17,
       "graphNodes": 18,
       "graphEdges": 5
@@ -70,9 +70,9 @@
       "signature": "<java.util.AbstractSequentialList: java.lang.Object remove(int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field unknown",
-      "dataflowMs": 2.3,
-      "sideEffectMs": 0.1,
-      "totalMs": 2.4,
+      "dataflowMs": 0.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.5,
       "jimpleStmtCount": 16,
       "graphNodes": 17,
       "graphEdges": 5
@@ -81,9 +81,9 @@
       "signature": "<java.util.AbstractSequentialList: java.lang.Object get(int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field unknown",
-      "dataflowMs": 1.6,
-      "sideEffectMs": 0.1,
-      "totalMs": 1.7,
+      "dataflowMs": 0.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.5,
       "jimpleStmtCount": 15,
       "graphNodes": 17,
       "graphEdges": 5
@@ -91,7 +91,7 @@
   ],
   "statistics": {
     "methodCount": 7,
-    "avgTimePerMethodMs": 26.6,
+    "avgTimePerMethodMs": 7.1,
     "totalJimpleStmts": 95
   }
 }

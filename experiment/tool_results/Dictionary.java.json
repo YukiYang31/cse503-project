@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-03-01T12:15:52",
+  "timestamp": "2026-03-01T16:54:48",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Dictionary.java"],
   "phaseTimings": {
-    "totalMs": 349.9,
+    "totalMs": 119.7,
     "compilationMs": 0.0,
-    "irLoadingMs": 141.8,
-    "callGraphMs": 66.3,
-    "dataflowTotalMs": 10.7,
-    "sideEffectTotalMs": 1.3,
-    "overheadMs": 129.8
+    "irLoadingMs": 49.7,
+    "callGraphMs": 21.2,
+    "dataflowTotalMs": 3.1,
+    "sideEffectTotalMs": 0.3,
+    "overheadMs": 45.3
   },
   "methods": [
     {
       "signature": "<java.util.Dictionary: void <init>()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 10.7,
-      "sideEffectMs": 1.3,
-      "totalMs": 12.0,
+      "dataflowMs": 3.1,
+      "sideEffectMs": 0.3,
+      "totalMs": 3.4,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
@@ -25,7 +25,7 @@
   ],
   "statistics": {
     "methodCount": 1,
-    "avgTimePerMethodMs": 12.0,
+    "avgTimePerMethodMs": 3.4,
     "totalJimpleStmts": 3
   }
 }

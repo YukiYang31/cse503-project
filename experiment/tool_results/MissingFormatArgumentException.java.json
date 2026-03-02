@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-03-01T13:20:34",
+  "timestamp": "2026-03-01T17:03:26",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/MissingFormatArgumentException.java"],
   "phaseTimings": {
-    "totalMs": 3990.4,
+    "totalMs": 2879.7,
     "compilationMs": 0.0,
-    "irLoadingMs": 110.5,
-    "callGraphMs": 3657.0,
-    "dataflowTotalMs": 115.1,
-    "sideEffectTotalMs": 0.4,
-    "overheadMs": 107.4
+    "irLoadingMs": 80.9,
+    "callGraphMs": 2605.9,
+    "dataflowTotalMs": 111.4,
+    "sideEffectTotalMs": 0.3,
+    "overheadMs": 81.2
   },
   "methods": [
     {
       "signature": "<java.util.MissingFormatArgumentException: void <init>(java.lang.String)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 56.9,
-      "sideEffectMs": 0.2,
-      "totalMs": 57.0,
+      "dataflowMs": 59.7,
+      "sideEffectMs": 0.1,
+      "totalMs": 59.8,
       "jimpleStmtCount": 9,
       "graphNodes": 8,
       "graphEdges": 11
@@ -26,9 +26,9 @@
       "signature": "<java.util.MissingFormatArgumentException: java.lang.String getMessage()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field unknown",
-      "dataflowMs": 58.1,
+      "dataflowMs": 51.5,
       "sideEffectMs": 0.2,
-      "totalMs": 58.3,
+      "totalMs": 51.7,
       "jimpleStmtCount": 9,
       "graphNodes": 34,
       "graphEdges": 35
@@ -37,7 +37,7 @@
       "signature": "<java.util.MissingFormatArgumentException: java.lang.String getFormatSpecifier()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.2,
+      "dataflowMs": 0.1,
       "sideEffectMs": 0.0,
       "totalMs": 0.2,
       "jimpleStmtCount": 3,
@@ -47,7 +47,7 @@
   ],
   "statistics": {
     "methodCount": 3,
-    "avgTimePerMethodMs": 38.5,
+    "avgTimePerMethodMs": 37.2,
     "totalJimpleStmts": 21
   }
 }

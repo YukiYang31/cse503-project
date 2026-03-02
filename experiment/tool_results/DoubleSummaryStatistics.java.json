@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-03-01T12:16:01",
+  "timestamp": "2026-03-01T16:54:51",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/DoubleSummaryStatistics.java"],
   "phaseTimings": {
-    "totalMs": 5906.1,
+    "totalMs": 1556.8,
     "compilationMs": 0.0,
-    "irLoadingMs": 151.3,
-    "callGraphMs": 5487.5,
-    "dataflowTotalMs": 124.3,
-    "sideEffectTotalMs": 2.0,
-    "overheadMs": 141.0
+    "irLoadingMs": 46.0,
+    "callGraphMs": 1396.0,
+    "dataflowTotalMs": 56.7,
+    "sideEffectTotalMs": 0.7,
+    "overheadMs": 57.3
   },
   "methods": [
     {
       "signature": "<java.util.DoubleSummaryStatistics: void sumWithCompensation(double)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates this via field sum",
-      "dataflowMs": 28.2,
-      "sideEffectMs": 1.7,
-      "totalMs": 29.9,
+      "dataflowMs": 11.0,
+      "sideEffectMs": 0.6,
+      "totalMs": 11.5,
       "jimpleStmtCount": 12,
       "graphNodes": 1,
       "graphEdges": 0
@@ -26,9 +26,9 @@
       "signature": "<java.util.DoubleSummaryStatistics: long getCount()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.2,
+      "dataflowMs": 0.1,
       "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "totalMs": 0.1,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
@@ -37,9 +37,9 @@
       "signature": "<java.util.DoubleSummaryStatistics: double getSum()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 14.9,
+      "dataflowMs": 8.0,
       "sideEffectMs": 0.0,
-      "totalMs": 14.9,
+      "totalMs": 8.0,
       "jimpleStmtCount": 12,
       "graphNodes": 1,
       "graphEdges": 0
@@ -48,9 +48,9 @@
       "signature": "<java.util.DoubleSummaryStatistics: double getAverage()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 1.6,
+      "dataflowMs": 0.8,
       "sideEffectMs": 0.0,
-      "totalMs": 1.6,
+      "totalMs": 0.8,
       "jimpleStmtCount": 11,
       "graphNodes": 1,
       "graphEdges": 0
@@ -81,9 +81,9 @@
       "signature": "<java.util.DoubleSummaryStatistics: java.lang.String toString()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field simpleName",
-      "dataflowMs": 44.0,
+      "dataflowMs": 21.3,
       "sideEffectMs": 0.0,
-      "totalMs": 44.1,
+      "totalMs": 21.3,
       "jimpleStmtCount": 22,
       "graphNodes": 12,
       "graphEdges": 2
@@ -92,9 +92,9 @@
       "signature": "<java.util.DoubleSummaryStatistics: void <init>()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.2,
+      "dataflowMs": 0.1,
       "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "totalMs": 0.1,
       "jimpleStmtCount": 5,
       "graphNodes": 1,
       "graphEdges": 0
@@ -103,9 +103,9 @@
       "signature": "<java.util.DoubleSummaryStatistics: void <init>(long,double,double,double)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 34.0,
+      "dataflowMs": 14.9,
       "sideEffectMs": 0.0,
-      "totalMs": 34.0,
+      "totalMs": 15.0,
       "jimpleStmtCount": 42,
       "graphNodes": 6,
       "graphEdges": 0
@@ -114,9 +114,9 @@
       "signature": "<java.util.DoubleSummaryStatistics: void combine(java.util.DoubleSummaryStatistics)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates this via field simpleSum",
-      "dataflowMs": 0.6,
+      "dataflowMs": 0.3,
       "sideEffectMs": 0.0,
-      "totalMs": 0.6,
+      "totalMs": 0.3,
       "jimpleStmtCount": 24,
       "graphNodes": 2,
       "graphEdges": 0
@@ -125,9 +125,9 @@
       "signature": "<java.util.DoubleSummaryStatistics: void accept(double)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "mutates this via field simpleSum",
-      "dataflowMs": 0.3,
+      "dataflowMs": 0.2,
       "sideEffectMs": 0.0,
-      "totalMs": 0.4,
+      "totalMs": 0.2,
       "jimpleStmtCount": 16,
       "graphNodes": 1,
       "graphEdges": 0
@@ -135,7 +135,7 @@
   ],
   "statistics": {
     "methodCount": 11,
-    "avgTimePerMethodMs": 11.5,
+    "avgTimePerMethodMs": 5.2,
     "totalJimpleStmts": 153
   }
 }

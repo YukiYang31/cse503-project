@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-03-01T12:11:13",
+  "timestamp": "2026-03-01T16:53:55",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/AbstractQueue.java"],
   "phaseTimings": {
-    "totalMs": 5686.6,
+    "totalMs": 1413.1,
     "compilationMs": 0.0,
-    "irLoadingMs": 148.3,
-    "callGraphMs": 5313.2,
-    "dataflowTotalMs": 77.0,
-    "sideEffectTotalMs": 0.3,
-    "overheadMs": 147.8
+    "irLoadingMs": 45.9,
+    "callGraphMs": 1285.3,
+    "dataflowTotalMs": 32.7,
+    "sideEffectTotalMs": 0.1,
+    "overheadMs": 49.2
   },
   "methods": [
     {
       "signature": "<java.util.AbstractQueue: void <init>()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 23.5,
-      "sideEffectMs": 0.1,
-      "totalMs": 23.6,
+      "dataflowMs": 9.0,
+      "sideEffectMs": 0.0,
+      "totalMs": 9.1,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
@@ -26,9 +26,9 @@
       "signature": "<java.util.AbstractQueue: java.lang.Object element()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 2.6,
-      "sideEffectMs": 0.1,
-      "totalMs": 2.7,
+      "dataflowMs": 0.7,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.7,
       "jimpleStmtCount": 7,
       "graphNodes": 3,
       "graphEdges": 0
@@ -37,9 +37,9 @@
       "signature": "<java.util.AbstractQueue: boolean add(java.lang.Object)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 47.8,
+      "dataflowMs": 21.0,
       "sideEffectMs": 0.0,
-      "totalMs": 47.9,
+      "totalMs": 21.1,
       "jimpleStmtCount": 8,
       "graphNodes": 7,
       "graphEdges": 7
@@ -48,9 +48,9 @@
       "signature": "<java.util.AbstractQueue: boolean addAll(java.util.Collection)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 2.5,
+      "dataflowMs": 1.5,
       "sideEffectMs": 0.0,
-      "totalMs": 2.5,
+      "totalMs": 1.5,
       "jimpleStmtCount": 20,
       "graphNodes": 8,
       "graphEdges": 7
@@ -59,9 +59,9 @@
       "signature": "<java.util.AbstractQueue: void clear()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 0.3,
+      "dataflowMs": 0.2,
       "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "totalMs": 0.2,
       "jimpleStmtCount": 5,
       "graphNodes": 2,
       "graphEdges": 0
@@ -80,7 +80,7 @@
   ],
   "statistics": {
     "methodCount": 6,
-    "avgTimePerMethodMs": 12.9,
+    "avgTimePerMethodMs": 5.5,
     "totalJimpleStmts": 50
   }
 }

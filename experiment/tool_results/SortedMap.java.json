@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-03-01T13:48:39",
+  "timestamp": "2026-03-01T17:10:00",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/SortedMap.java"],
   "phaseTimings": {
-    "totalMs": 8606.3,
+    "totalMs": 3068.8,
     "compilationMs": 0.0,
-    "irLoadingMs": 218.6,
-    "callGraphMs": 8029.5,
-    "dataflowTotalMs": 135.9,
-    "sideEffectTotalMs": 0.3,
-    "overheadMs": 222.0
+    "irLoadingMs": 98.7,
+    "callGraphMs": 2787.9,
+    "dataflowTotalMs": 77.4,
+    "sideEffectTotalMs": 0.2,
+    "overheadMs": 104.6
   },
   "methods": [
     {
       "signature": "<java.util.SortedMap: java.util.SortedMap reversed()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 133.3,
+      "dataflowMs": 76.0,
       "sideEffectMs": 0.1,
-      "totalMs": 133.4,
+      "totalMs": 76.1,
       "jimpleStmtCount": 3,
       "graphNodes": 7,
       "graphEdges": 10
@@ -26,9 +26,9 @@
       "signature": "<java.util.SortedMap: java.util.SequencedMap reversed()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 1.4,
+      "dataflowMs": 0.6,
       "sideEffectMs": 0.1,
-      "totalMs": 1.6,
+      "totalMs": 0.7,
       "jimpleStmtCount": 3,
       "graphNodes": 7,
       "graphEdges": 10
@@ -37,9 +37,9 @@
       "signature": "<java.util.SortedMap: java.lang.Object putLast(java.lang.Object,java.lang.Object)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.5,
+      "dataflowMs": 0.3,
       "sideEffectMs": 0.0,
-      "totalMs": 0.5,
+      "totalMs": 0.3,
       "jimpleStmtCount": 6,
       "graphNodes": 4,
       "graphEdges": 0
@@ -48,9 +48,9 @@
       "signature": "<java.util.SortedMap: java.lang.Object putFirst(java.lang.Object,java.lang.Object)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.7,
+      "dataflowMs": 0.5,
       "sideEffectMs": 0.0,
-      "totalMs": 0.7,
+      "totalMs": 0.5,
       "jimpleStmtCount": 6,
       "graphNodes": 4,
       "graphEdges": 0
@@ -58,7 +58,7 @@
   ],
   "statistics": {
     "methodCount": 4,
-    "avgTimePerMethodMs": 34.0,
+    "avgTimePerMethodMs": 19.4,
     "totalJimpleStmts": 18
   }
 }

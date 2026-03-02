@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-03-01T12:17:17",
+  "timestamp": "2026-03-01T16:55:19",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/FormatProcessor.java"],
   "phaseTimings": {
-    "totalMs": 5661.2,
+    "totalMs": 1913.7,
     "compilationMs": 0.0,
-    "irLoadingMs": 156.4,
-    "callGraphMs": 4883.8,
-    "dataflowTotalMs": 473.6,
-    "sideEffectTotalMs": 0.4,
-    "overheadMs": 147.1
+    "irLoadingMs": 52.5,
+    "callGraphMs": 1613.1,
+    "dataflowTotalMs": 195.6,
+    "sideEffectTotalMs": 0.2,
+    "overheadMs": 52.3
   },
   "methods": [
     {
       "signature": "<java.util.FormatProcessor: boolean findFormat(java.lang.String,boolean)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "String parameter escapes to global scope",
-      "dataflowMs": 284.8,
-      "sideEffectMs": 0.1,
-      "totalMs": 284.9,
+      "dataflowMs": 127.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 127.2,
       "jimpleStmtCount": 25,
       "graphNodes": 5,
       "graphEdges": 1
@@ -26,9 +26,9 @@
       "signature": "<java.util.FormatProcessor: java.lang.String stringTemplateFormat(java.util.List)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field unknown",
-      "dataflowMs": 34.4,
-      "sideEffectMs": 0.1,
-      "totalMs": 34.5,
+      "dataflowMs": 17.4,
+      "sideEffectMs": 0.0,
+      "totalMs": 17.4,
       "jimpleStmtCount": 26,
       "graphNodes": 17,
       "graphEdges": 4
@@ -37,9 +37,9 @@
       "signature": "<java.util.FormatProcessor: void <init>(java.util.Locale)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.2,
+      "dataflowMs": 0.1,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 0.1,
       "jimpleStmtCount": 5,
       "graphNodes": 2,
       "graphEdges": 1
@@ -48,9 +48,9 @@
       "signature": "<java.util.FormatProcessor: java.lang.String process(java.lang.StringTemplate)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field unknown",
-      "dataflowMs": 101.0,
+      "dataflowMs": 32.7,
       "sideEffectMs": 0.1,
-      "totalMs": 101.1,
+      "totalMs": 32.8,
       "jimpleStmtCount": 13,
       "graphNodes": 34,
       "graphEdges": 18
@@ -59,9 +59,9 @@
       "signature": "<java.util.FormatProcessor: java.util.FormatProcessor create(java.util.Locale)>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.6,
+      "dataflowMs": 0.4,
       "sideEffectMs": 0.0,
-      "totalMs": 0.6,
+      "totalMs": 0.4,
       "jimpleStmtCount": 5,
       "graphNodes": 6,
       "graphEdges": 6
@@ -70,9 +70,9 @@
       "signature": "<java.util.FormatProcessor: java.lang.invoke.MethodHandle linkage(java.util.List,java.lang.invoke.MethodType)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field unknown",
-      "dataflowMs": 51.4,
-      "sideEffectMs": 0.1,
-      "totalMs": 51.5,
+      "dataflowMs": 17.5,
+      "sideEffectMs": 0.0,
+      "totalMs": 17.6,
       "jimpleStmtCount": 17,
       "graphNodes": 28,
       "graphEdges": 15
@@ -81,9 +81,9 @@
       "signature": "<java.util.FormatProcessor: java.lang.Object process(java.lang.StringTemplate)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field unknown",
-      "dataflowMs": 0.6,
-      "sideEffectMs": 0.1,
-      "totalMs": 0.7,
+      "dataflowMs": 0.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 0.3,
       "jimpleStmtCount": 4,
       "graphNodes": 34,
       "graphEdges": 18
@@ -92,9 +92,9 @@
       "signature": "<java.util.FormatProcessor: void <clinit>()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field FMT",
-      "dataflowMs": 0.5,
+      "dataflowMs": 0.1,
       "sideEffectMs": 0.0,
-      "totalMs": 0.5,
+      "totalMs": 0.1,
       "jimpleStmtCount": 4,
       "graphNodes": 6,
       "graphEdges": 7
@@ -102,7 +102,7 @@
   ],
   "statistics": {
     "methodCount": 8,
-    "avgTimePerMethodMs": 59.2,
+    "avgTimePerMethodMs": 24.5,
     "totalJimpleStmts": 99
   }
 }

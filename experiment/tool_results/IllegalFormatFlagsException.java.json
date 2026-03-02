@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-03-01T12:42:17",
+  "timestamp": "2026-03-01T17:00:06",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/IllegalFormatFlagsException.java"],
   "phaseTimings": {
-    "totalMs": 4030.6,
+    "totalMs": 2079.7,
     "compilationMs": 0.0,
-    "irLoadingMs": 109.8,
-    "callGraphMs": 3654.8,
-    "dataflowTotalMs": 152.0,
-    "sideEffectTotalMs": 0.3,
-    "overheadMs": 113.7
+    "irLoadingMs": 50.4,
+    "callGraphMs": 1887.5,
+    "dataflowTotalMs": 86.9,
+    "sideEffectTotalMs": 0.2,
+    "overheadMs": 54.7
   },
   "methods": [
     {
       "signature": "<java.util.IllegalFormatFlagsException: java.lang.String getMessage()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field unknown",
-      "dataflowMs": 133.4,
-      "sideEffectMs": 0.2,
-      "totalMs": 133.6,
+      "dataflowMs": 73.8,
+      "sideEffectMs": 0.1,
+      "totalMs": 73.9,
       "jimpleStmtCount": 9,
       "graphNodes": 19,
       "graphEdges": 5
@@ -26,9 +26,9 @@
       "signature": "<java.util.IllegalFormatFlagsException: void <init>(java.lang.String)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 18.5,
-      "sideEffectMs": 0.1,
-      "totalMs": 18.5,
+      "dataflowMs": 13.0,
+      "sideEffectMs": 0.0,
+      "totalMs": 13.0,
       "jimpleStmtCount": 9,
       "graphNodes": 8,
       "graphEdges": 11
@@ -47,7 +47,7 @@
   ],
   "statistics": {
     "methodCount": 3,
-    "avgTimePerMethodMs": 50.8,
+    "avgTimePerMethodMs": 29.0,
     "totalJimpleStmts": 21
   }
 }

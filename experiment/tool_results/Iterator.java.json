@@ -1,42 +1,42 @@
 {
-  "timestamp": "2026-02-26T14:40:00",
+  "timestamp": "2026-03-01T17:00:32",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Iterator.java"],
   "phaseTimings": {
-    "totalMs": 4516.9,
+    "totalMs": 2745.5,
     "compilationMs": 0.0,
-    "irLoadingMs": 101.1,
-    "callGraphMs": 4288.2,
-    "dataflowTotalMs": 19.6,
-    "sideEffectTotalMs": 2.4,
-    "overheadMs": 105.5
+    "irLoadingMs": 69.2,
+    "callGraphMs": 2540.7,
+    "dataflowTotalMs": 66.7,
+    "sideEffectTotalMs": 0.1,
+    "overheadMs": 68.7
   },
   "methods": [
     {
       "signature": "<java.util.Iterator: void forEachRemaining(java.util.function.Consumer)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 17.0,
-      "sideEffectMs": 2.4,
-      "totalMs": 19.4,
+      "dataflowMs": 48.6,
+      "sideEffectMs": 0.1,
+      "totalMs": 48.7,
       "jimpleStmtCount": 9,
-      "graphNodes": 3,
-      "graphEdges": 0
+      "graphNodes": 6,
+      "graphEdges": 5
     },
     {
       "signature": "<java.util.Iterator: void remove()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 2.6,
-      "sideEffectMs": 0.1,
-      "totalMs": 2.6,
+      "dataflowMs": 18.1,
+      "sideEffectMs": 0.0,
+      "totalMs": 18.1,
       "jimpleStmtCount": 4,
-      "graphNodes": 2,
-      "graphEdges": 0
+      "graphNodes": 6,
+      "graphEdges": 7
     }
   ],
   "statistics": {
     "methodCount": 2,
-    "avgTimePerMethodMs": 11.0,
+    "avgTimePerMethodMs": 33.4,
     "totalJimpleStmts": 13
   }
 }

@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-03-01T14:04:46",
+  "timestamp": "2026-03-01T17:13:01",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Tripwire.java"],
   "phaseTimings": {
-    "totalMs": 5145.9,
+    "totalMs": 3376.5,
     "compilationMs": 0.0,
-    "irLoadingMs": 143.2,
-    "callGraphMs": 94.5,
-    "dataflowTotalMs": 4732.8,
+    "irLoadingMs": 100.3,
+    "callGraphMs": 55.3,
+    "dataflowTotalMs": 3130.2,
     "sideEffectTotalMs": 0.2,
-    "overheadMs": 175.2
+    "overheadMs": 90.5
   },
   "methods": [
     {
       "signature": "<java.util.Tripwire: void <clinit>()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field ENABLED",
-      "dataflowMs": 4644.7,
+      "dataflowMs": 3066.2,
       "sideEffectMs": 0.1,
-      "totalMs": 4644.8,
+      "totalMs": 3066.3,
       "jimpleStmtCount": 6,
       "graphNodes": 4,
       "graphEdges": 5
@@ -26,9 +26,9 @@
       "signature": "<java.util.Tripwire: java.lang.Boolean lambda$static$0()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 41.3,
+      "dataflowMs": 27.9,
       "sideEffectMs": 0.0,
-      "totalMs": 41.4,
+      "totalMs": 27.9,
       "jimpleStmtCount": 3,
       "graphNodes": 6,
       "graphEdges": 2
@@ -37,9 +37,9 @@
       "signature": "<java.util.Tripwire: void <init>()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.2,
+      "dataflowMs": 0.1,
       "sideEffectMs": 0.0,
-      "totalMs": 0.2,
+      "totalMs": 0.1,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
@@ -48,9 +48,9 @@
       "signature": "<java.util.Tripwire: void trip(java.lang.Class,java.lang.String)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "Class parameter escapes to global scope",
-      "dataflowMs": 46.5,
+      "dataflowMs": 35.9,
       "sideEffectMs": 0.1,
-      "totalMs": 46.6,
+      "totalMs": 36.0,
       "jimpleStmtCount": 9,
       "graphNodes": 21,
       "graphEdges": 11
@@ -58,7 +58,7 @@
   ],
   "statistics": {
     "methodCount": 4,
-    "avgTimePerMethodMs": 1183.3,
+    "avgTimePerMethodMs": 782.6,
     "totalJimpleStmts": 21
   }
 }

@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-03-01T13:49:36",
+  "timestamp": "2026-03-01T17:10:22",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Stack.java"],
   "phaseTimings": {
-    "totalMs": 7351.2,
+    "totalMs": 3502.3,
     "compilationMs": 0.0,
-    "irLoadingMs": 259.1,
-    "callGraphMs": 6760.7,
-    "dataflowTotalMs": 41.4,
-    "sideEffectTotalMs": 3.7,
-    "overheadMs": 286.3
+    "irLoadingMs": 86.2,
+    "callGraphMs": 3303.1,
+    "dataflowTotalMs": 19.6,
+    "sideEffectTotalMs": 1.5,
+    "overheadMs": 91.9
   },
   "methods": [
     {
       "signature": "<java.util.Stack: java.lang.Object push(java.lang.Object)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 28.5,
-      "sideEffectMs": 3.4,
-      "totalMs": 31.9,
+      "dataflowMs": 11.9,
+      "sideEffectMs": 1.3,
+      "totalMs": 13.2,
       "jimpleStmtCount": 4,
       "graphNodes": 2,
       "graphEdges": 0
@@ -37,9 +37,9 @@
       "signature": "<java.util.Stack: java.lang.Object peek()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 7.9,
-      "sideEffectMs": 0.1,
-      "totalMs": 8.0,
+      "dataflowMs": 5.3,
+      "sideEffectMs": 0.0,
+      "totalMs": 5.4,
       "jimpleStmtCount": 9,
       "graphNodes": 3,
       "graphEdges": 0
@@ -48,9 +48,9 @@
       "signature": "<java.util.Stack: java.lang.Object pop()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 2.3,
+      "dataflowMs": 0.8,
       "sideEffectMs": 0.0,
-      "totalMs": 2.4,
+      "totalMs": 0.8,
       "jimpleStmtCount": 6,
       "graphNodes": 2,
       "graphEdges": 0
@@ -59,9 +59,9 @@
       "signature": "<java.util.Stack: int search(java.lang.Object)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 1.1,
+      "dataflowMs": 0.7,
       "sideEffectMs": 0.0,
-      "totalMs": 1.2,
+      "totalMs": 0.7,
       "jimpleStmtCount": 8,
       "graphNodes": 2,
       "graphEdges": 0
@@ -70,9 +70,9 @@
       "signature": "<java.util.Stack: boolean empty()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 1.2,
+      "dataflowMs": 0.5,
       "sideEffectMs": 0.0,
-      "totalMs": 1.2,
+      "totalMs": 0.6,
       "jimpleStmtCount": 7,
       "graphNodes": 1,
       "graphEdges": 0
@@ -80,7 +80,7 @@
   ],
   "statistics": {
     "methodCount": 6,
-    "avgTimePerMethodMs": 7.5,
+    "avgTimePerMethodMs": 3.5,
     "totalJimpleStmts": 37
   }
 }

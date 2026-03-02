@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-03-01T13:46:06",
+  "timestamp": "2026-03-01T17:07:46",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/ServiceConfigurationError.java"],
   "phaseTimings": {
-    "totalMs": 7550.7,
+    "totalMs": 2770.4,
     "compilationMs": 0.0,
-    "irLoadingMs": 237.7,
-    "callGraphMs": 6919.8,
-    "dataflowTotalMs": 137.0,
-    "sideEffectTotalMs": 0.5,
-    "overheadMs": 255.6
+    "irLoadingMs": 92.0,
+    "callGraphMs": 2549.9,
+    "dataflowTotalMs": 50.4,
+    "sideEffectTotalMs": 0.1,
+    "overheadMs": 78.0
   },
   "methods": [
     {
       "signature": "<java.util.ServiceConfigurationError: void <init>(java.lang.String)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 122.5,
-      "sideEffectMs": 0.2,
-      "totalMs": 122.6,
+      "dataflowMs": 44.9,
+      "sideEffectMs": 0.1,
+      "totalMs": 45.0,
       "jimpleStmtCount": 4,
       "graphNodes": 8,
       "graphEdges": 10
@@ -26,9 +26,9 @@
       "signature": "<java.util.ServiceConfigurationError: void <init>(java.lang.String,java.lang.Throwable)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 14.6,
-      "sideEffectMs": 0.3,
-      "totalMs": 14.9,
+      "dataflowMs": 5.4,
+      "sideEffectMs": 0.1,
+      "totalMs": 5.5,
       "jimpleStmtCount": 5,
       "graphNodes": 9,
       "graphEdges": 11
@@ -36,7 +36,7 @@
   ],
   "statistics": {
     "methodCount": 2,
-    "avgTimePerMethodMs": 68.8,
+    "avgTimePerMethodMs": 25.3,
     "totalJimpleStmts": 9
   }
 }

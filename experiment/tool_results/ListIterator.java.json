@@ -1,14 +1,14 @@
 {
-  "timestamp": "2026-03-01T13:19:59",
+  "timestamp": "2026-03-01T17:02:59",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/ListIterator.java"],
   "phaseTimings": {
-    "totalMs": 251.6,
+    "totalMs": 220.3,
     "compilationMs": 0.0,
-    "irLoadingMs": 131.4,
-    "callGraphMs": 16.6,
+    "irLoadingMs": 99.0,
+    "callGraphMs": 12.4,
     "dataflowTotalMs": 0.0,
     "sideEffectTotalMs": 0.0,
-    "overheadMs": 103.5
+    "overheadMs": 109.0
   },
   "methods": [
   ],

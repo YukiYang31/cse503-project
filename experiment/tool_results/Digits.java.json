@@ -1,14 +1,14 @@
 {
-  "timestamp": "2026-03-01T12:15:54",
+  "timestamp": "2026-03-01T17:14:41",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/Digits.java"],
   "phaseTimings": {
-    "totalMs": 279.3,
+    "totalMs": 167.0,
     "compilationMs": 0.0,
-    "irLoadingMs": 149.2,
-    "callGraphMs": 16.8,
+    "irLoadingMs": 84.6,
+    "callGraphMs": 9.9,
     "dataflowTotalMs": 0.0,
     "sideEffectTotalMs": 0.0,
-    "overheadMs": 113.3
+    "overheadMs": 72.5
   },
   "methods": [
   ],

@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-03-01T12:16:23",
+  "timestamp": "2026-03-01T16:54:59",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/EmptyStackException.java"],
   "phaseTimings": {
-    "totalMs": 5523.6,
+    "totalMs": 1591.7,
     "compilationMs": 0.0,
-    "irLoadingMs": 152.2,
-    "callGraphMs": 5129.9,
-    "dataflowTotalMs": 89.1,
-    "sideEffectTotalMs": 0.1,
-    "overheadMs": 152.2
+    "irLoadingMs": 49.1,
+    "callGraphMs": 1469.0,
+    "dataflowTotalMs": 27.8,
+    "sideEffectTotalMs": 0.0,
+    "overheadMs": 45.8
   },
   "methods": [
     {
       "signature": "<java.util.EmptyStackException: void <init>()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 89.1,
-      "sideEffectMs": 0.1,
-      "totalMs": 89.2,
+      "dataflowMs": 27.8,
+      "sideEffectMs": 0.0,
+      "totalMs": 27.9,
       "jimpleStmtCount": 3,
       "graphNodes": 7,
       "graphEdges": 9
@@ -25,7 +25,7 @@
   ],
   "statistics": {
     "methodCount": 1,
-    "avgTimePerMethodMs": 89.2,
+    "avgTimePerMethodMs": 27.9,
     "totalJimpleStmts": 3
   }
 }

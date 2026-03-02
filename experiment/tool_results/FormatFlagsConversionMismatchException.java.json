@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-03-01T12:17:02",
+  "timestamp": "2026-03-01T16:55:14",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/FormatFlagsConversionMismatchException.java"],
   "phaseTimings": {
-    "totalMs": 5086.1,
+    "totalMs": 1730.3,
     "compilationMs": 0.0,
-    "irLoadingMs": 134.1,
-    "callGraphMs": 4661.6,
-    "dataflowTotalMs": 140.9,
-    "sideEffectTotalMs": 0.3,
-    "overheadMs": 149.2
+    "irLoadingMs": 50.6,
+    "callGraphMs": 1554.6,
+    "dataflowTotalMs": 70.6,
+    "sideEffectTotalMs": 0.2,
+    "overheadMs": 54.4
   },
   "methods": [
     {
       "signature": "<java.util.FormatFlagsConversionMismatchException: void <init>(java.lang.String,char)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 75.9,
+      "dataflowMs": 35.3,
       "sideEffectMs": 0.1,
-      "totalMs": 76.0,
+      "totalMs": 35.4,
       "jimpleStmtCount": 11,
       "graphNodes": 8,
       "graphEdges": 11
@@ -26,9 +26,9 @@
       "signature": "<java.util.FormatFlagsConversionMismatchException: java.lang.String getFlags()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.5,
+      "dataflowMs": 0.4,
       "sideEffectMs": 0.0,
-      "totalMs": 0.5,
+      "totalMs": 0.4,
       "jimpleStmtCount": 3,
       "graphNodes": 2,
       "graphEdges": 1
@@ -48,9 +48,9 @@
       "signature": "<java.util.FormatFlagsConversionMismatchException: java.lang.String getMessage()>",
       "verdict": "SIDE_EFFECTING",
       "reason": "writes to static field count",
-      "dataflowMs": 64.4,
-      "sideEffectMs": 0.2,
-      "totalMs": 64.5,
+      "dataflowMs": 34.8,
+      "sideEffectMs": 0.1,
+      "totalMs": 34.8,
       "jimpleStmtCount": 11,
       "graphNodes": 19,
       "graphEdges": 12
@@ -58,7 +58,7 @@
   ],
   "statistics": {
     "methodCount": 4,
-    "avgTimePerMethodMs": 35.3,
+    "avgTimePerMethodMs": 17.7,
     "totalJimpleStmts": 28
   }
 }

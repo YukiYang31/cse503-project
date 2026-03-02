@@ -1,23 +1,23 @@
 {
-  "timestamp": "2026-03-01T12:41:56",
+  "timestamp": "2026-03-01T16:59:53",
   "sourceFiles": ["jdk/src/java.base/share/classes/java/util/IllegalFormatArgumentIndexException.java"],
   "phaseTimings": {
-    "totalMs": 4081.6,
+    "totalMs": 2012.0,
     "compilationMs": 0.0,
-    "irLoadingMs": 125.8,
-    "callGraphMs": 3754.8,
-    "dataflowTotalMs": 72.5,
+    "irLoadingMs": 53.9,
+    "callGraphMs": 1865.4,
+    "dataflowTotalMs": 35.5,
     "sideEffectTotalMs": 0.1,
-    "overheadMs": 128.4
+    "overheadMs": 57.2
   },
   "methods": [
     {
       "signature": "<java.util.IllegalFormatArgumentIndexException: void <init>(int)>",
       "verdict": "SIDE_EFFECTING",
       "reason": "this escapes to global scope",
-      "dataflowMs": 70.7,
-      "sideEffectMs": 0.1,
-      "totalMs": 70.8,
+      "dataflowMs": 34.8,
+      "sideEffectMs": 0.0,
+      "totalMs": 34.8,
       "jimpleStmtCount": 5,
       "graphNodes": 4,
       "graphEdges": 5
@@ -26,9 +26,9 @@
       "signature": "<java.util.IllegalFormatArgumentIndexException: int getIndex()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 0.2,
+      "dataflowMs": 0.1,
       "sideEffectMs": 0.0,
-      "totalMs": 0.3,
+      "totalMs": 0.1,
       "jimpleStmtCount": 3,
       "graphNodes": 1,
       "graphEdges": 0
@@ -37,9 +37,9 @@
       "signature": "<java.util.IllegalFormatArgumentIndexException: java.lang.String getMessage()>",
       "verdict": "SIDE_EFFECT_FREE",
       "reason": null,
-      "dataflowMs": 1.6,
+      "dataflowMs": 0.6,
       "sideEffectMs": 0.0,
-      "totalMs": 1.6,
+      "totalMs": 0.6,
       "jimpleStmtCount": 10,
       "graphNodes": 4,
       "graphEdges": 0
@@ -47,7 +47,7 @@
   ],
   "statistics": {
     "methodCount": 3,
-    "avgTimePerMethodMs": 24.2,
+    "avgTimePerMethodMs": 11.8,
     "totalJimpleStmts": 18
   }
 }
