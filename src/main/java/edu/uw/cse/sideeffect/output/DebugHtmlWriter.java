@@ -8,7 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import sootup.core.signatures.FieldSignature;
-import sootup.core.jimple.basic.Local;
 
 
 /**
@@ -18,9 +17,12 @@ import sootup.core.jimple.basic.Local;
 public class DebugHtmlWriter implements Closeable {
 
     public record SourceFile(String fileName, String content) {}
+    private sealed interface TraceItem permits TraceEntry, LubEntry {}
     private record TraceEntry(int stepNumber, String stmtText, String dotSource, String mutatedFieldsText,
                                String calleeGraphDot, String calleeSig, String muPrimeText,
-                               String preSimplificationDot) {}
+                               String preSimplificationDot) implements TraceItem {}
+    private record LubEntry(int stepNumber, String in1Dot, String in2Dot, String outDot,
+                             String in1MutText, String in2MutText, String outMutText) implements TraceItem {}
 
     private final String methodSig;
     private final Path outputPath;
@@ -28,7 +30,7 @@ public class DebugHtmlWriter implements Closeable {
     private List<SourceFile> sourceFiles = List.of();
     private List<String> bytecodeLines = List.of();
     private final List<String> jimpleStatements = new ArrayList<>();
-    private final List<TraceEntry> traceEntries = new ArrayList<>();
+    private final List<TraceItem> traceEntries = new ArrayList<>();
     private int stepCounter = 0;
 
     // Pending callee graph info (set before addTraceEntry, consumed by addTraceEntry)
@@ -128,6 +130,22 @@ public class DebugHtmlWriter implements Closeable {
         pendingMuPrimeText = null;
         pendingPreSimplificationDot = null;
         traceEntries.add(new TraceEntry(stepCounter, stmtText, dotSource, wText, calleeDot, calleeSig, muPrime, preSimplDot));
+    }
+
+    /**
+     * Record a LUB (least upper bound) merge entry: shows both incoming branch graphs
+     * and the merged result graph at a join point (e.g., after an if/else).
+     * Call this after the merge is complete.
+     */
+    public void addLubEntry(PointsToGraph in1, PointsToGraph in2, PointsToGraph out) {
+        stepCounter++;
+        String in1Dot = GraphPrinter.generateDotString(in1, "Branch 1 (in\u2081)");
+        String in2Dot = GraphPrinter.generateDotString(in2, "Branch 2 (in\u2082)");
+        String outDot = GraphPrinter.generateDotString(out, "Result (in\u2081 \u2294 in\u2082)");
+        String in1MutText = formatMutatedFields(in1.getMutatedFields());
+        String in2MutText = formatMutatedFields(in2.getMutatedFields());
+        String outMutText = formatMutatedFields(out.getMutatedFields());
+        traceEntries.add(new LubEntry(stepCounter, in1Dot, in2Dot, outDot, in1MutText, in2MutText, outMutText));
     }
 
     public void setExitGraph(PointsToGraph graph) {
@@ -404,33 +422,64 @@ public class DebugHtmlWriter implements Closeable {
         if (traceEntries.isEmpty()) {
             out.println("<p class=\"muted\">No key milestone statements found.</p>");
         }
-        for (TraceEntry entry : traceEntries) {
-            out.println("<div class=\"step\">");
-            out.println("<h3>Step " + entry.stepNumber + "</h3>");
-            out.println("<pre class=\"jimple\">" + escapeHtml(entry.stmtText) + "</pre>");
-            // If this step involved a callee graph merge, show the callee exit graph and mu'
-            if (entry.calleeGraphDot != null) {
-                out.println("<h4 style=\"color:#2563eb;margin-top:12px;\">\u2B07 Callee Exit Graph (after node renaming): " + escapeHtml(entry.calleeSig) + "</h4>");
-                out.println("<div class=\"graph-container\" id=\"callee-graph-" + entry.stepNumber + "\"  style=\"border-left:4px solid #2563eb;\">");
-                out.println("<p class=\"loading\">Rendering callee graph...</p>");
-                out.println("</div>");
-                if (entry.muPrimeText != null) {
-                    out.println("<h4 style=\"color:#7c3aed;margin-top:12px;\">\u03BC\u2032 (Node Mapping)</h4>");
-                    out.println("<pre class=\"data\" style=\"border-left:4px solid #7c3aed;\">" + escapeHtml(entry.muPrimeText) + "</pre>");
-                }
-                if (entry.preSimplificationDot != null) {
-                    out.println("<h4 style=\"color:#d97706;margin-top:12px;\">\u2B07 Combined Graph (before simplification)</h4>");
-                    out.println("<div class=\"graph-container\" id=\"pre-simpl-graph-" + entry.stepNumber + "\"  style=\"border-left:4px solid #d97706;\">");
-                    out.println("<p class=\"loading\">Rendering pre-simplification graph...</p>");
+        for (TraceItem item : traceEntries) {
+            if (item instanceof TraceEntry entry) {
+                out.println("<div class=\"step\">");
+                out.println("<h3>Step " + entry.stepNumber + "</h3>");
+                out.println("<pre class=\"jimple\">" + escapeHtml(entry.stmtText) + "</pre>");
+                // If this step involved a callee graph merge, show the callee exit graph and mu'
+                if (entry.calleeGraphDot != null) {
+                    out.println("<h4 style=\"color:#2563eb;margin-top:12px;\">\u2B07 Callee Exit Graph (after node renaming): " + escapeHtml(entry.calleeSig) + "</h4>");
+                    out.println("<div class=\"graph-container\" id=\"callee-graph-" + entry.stepNumber + "\"  style=\"border-left:4px solid #2563eb;\">");
+                    out.println("<p class=\"loading\">Rendering callee graph...</p>");
                     out.println("</div>");
+                    if (entry.muPrimeText != null) {
+                        out.println("<h4 style=\"color:#7c3aed;margin-top:12px;\">\u03BC\u2032 (Node Mapping)</h4>");
+                        out.println("<pre class=\"data\" style=\"border-left:4px solid #7c3aed;\">" + escapeHtml(entry.muPrimeText) + "</pre>");
+                    }
+                    if (entry.preSimplificationDot != null) {
+                        out.println("<h4 style=\"color:#d97706;margin-top:12px;\">\u2B07 Combined Graph (before simplification)</h4>");
+                        out.println("<div class=\"graph-container\" id=\"pre-simpl-graph-" + entry.stepNumber + "\"  style=\"border-left:4px solid #d97706;\">");
+                        out.println("<p class=\"loading\">Rendering pre-simplification graph...</p>");
+                        out.println("</div>");
+                    }
+                    out.println("<h4 style=\"color:#16a34a;margin-top:12px;\">\u2B07 Caller Graph (after merge, after node simplification)</h4>");
                 }
-                out.println("<h4 style=\"color:#16a34a;margin-top:12px;\">\u2B07 Caller Graph (after merge, after node simplification)</h4>");
+                out.println("<div class=\"graph-container\" id=\"graph-" + entry.stepNumber + "\">");
+                out.println("<p class=\"loading\">Rendering graph...</p>");
+                out.println("</div>");
+                out.println("<p class=\"data\"><strong>W = </strong>" + escapeHtml(entry.mutatedFieldsText) + "</p>");
+                out.println("</div>");
+            } else if (item instanceof LubEntry lub) {
+                out.println("<div class=\"step lub-step\">");
+                out.println("<h3>\u2294 LUB Merge at Join Point &nbsp;<span class=\"step-num\">(Step " + lub.stepNumber + ")</span></h3>");
+                out.println("<p class=\"muted\">Two control-flow branches meet here. The graphs from both branches are unioned (\u2294).</p>");
+                out.println("<div class=\"lub-branches\">");
+                // Branch 1
+                out.println("  <div class=\"lub-branch\">");
+                out.println("    <h4 style=\"color:#0369a1;\">Branch&nbsp;1 &nbsp;(in\u2081)</h4>");
+                out.println("    <div class=\"graph-container\" id=\"lub-in1-" + lub.stepNumber + "\">");
+                out.println("      <p class=\"loading\">Rendering graph...</p>");
+                out.println("    </div>");
+                out.println("    <p class=\"data\"><strong>W = </strong>" + escapeHtml(lub.in1MutText()) + "</p>");
+                out.println("  </div>");
+                // Branch 2
+                out.println("  <div class=\"lub-branch\">");
+                out.println("    <h4 style=\"color:#0369a1;\">Branch&nbsp;2 &nbsp;(in\u2082)</h4>");
+                out.println("    <div class=\"graph-container\" id=\"lub-in2-" + lub.stepNumber + "\">");
+                out.println("      <p class=\"loading\">Rendering graph...</p>");
+                out.println("    </div>");
+                out.println("    <p class=\"data\"><strong>W = </strong>" + escapeHtml(lub.in2MutText()) + "</p>");
+                out.println("  </div>");
+                out.println("</div>"); // end .lub-branches
+                // Result
+                out.println("<h4 style=\"color:#16a34a;margin-top:16px;\">\u2294 Result &nbsp;(in\u2081 \u2294 in\u2082)</h4>");
+                out.println("<div class=\"graph-container\" id=\"lub-out-" + lub.stepNumber + "\" style=\"border-left:4px solid #16a34a;\">");
+                out.println("<p class=\"loading\">Rendering graph...</p>");
+                out.println("</div>");
+                out.println("<p class=\"data\"><strong>W = </strong>" + escapeHtml(lub.outMutText()) + "</p>");
+                out.println("</div>"); // end .step.lub-step
             }
-            out.println("<div class=\"graph-container\" id=\"graph-" + entry.stepNumber + "\">");
-            out.println("<p class=\"loading\">Rendering graph...</p>");
-            out.println("</div>");
-            out.println("<p class=\"data\"><strong>W = </strong>" + escapeHtml(entry.mutatedFieldsText) + "</p>");
-            out.println("</div>");
         }
 
         // Exit Graph
@@ -482,14 +531,20 @@ public class DebugHtmlWriter implements Closeable {
         // JavaScript: DOT sources and viz.js rendering
         out.println("<script>");
         out.println("const graphs = {");
-        for (TraceEntry entry : traceEntries) {
-            if (entry.calleeGraphDot != null) {
-                out.println("  \"callee-graph-" + entry.stepNumber + "\": " + jsStringLiteral(entry.calleeGraphDot) + ",");
+        for (TraceItem item : traceEntries) {
+            if (item instanceof TraceEntry entry) {
+                if (entry.calleeGraphDot != null) {
+                    out.println("  \"callee-graph-" + entry.stepNumber + "\": " + jsStringLiteral(entry.calleeGraphDot) + ",");
+                }
+                if (entry.preSimplificationDot != null) {
+                    out.println("  \"pre-simpl-graph-" + entry.stepNumber + "\": " + jsStringLiteral(entry.preSimplificationDot) + ",");
+                }
+                out.println("  \"graph-" + entry.stepNumber + "\": " + jsStringLiteral(entry.dotSource) + ",");
+            } else if (item instanceof LubEntry lub) {
+                out.println("  \"lub-in1-" + lub.stepNumber + "\": " + jsStringLiteral(lub.in1Dot) + ",");
+                out.println("  \"lub-in2-" + lub.stepNumber + "\": " + jsStringLiteral(lub.in2Dot) + ",");
+                out.println("  \"lub-out-" + lub.stepNumber + "\": " + jsStringLiteral(lub.outDot) + ",");
             }
-            if (entry.preSimplificationDot != null) {
-                out.println("  \"pre-simpl-graph-" + entry.stepNumber + "\": " + jsStringLiteral(entry.preSimplificationDot) + ",");
-            }
-            out.println("  \"graph-" + entry.stepNumber + "\": " + jsStringLiteral(entry.dotSource) + ",");
         }
         if (exitGraphDot != null) {
             out.println("  \"exit-graph\": " + jsStringLiteral(exitGraphDot) + ",");
@@ -625,6 +680,31 @@ public class DebugHtmlWriter implements Closeable {
         }
         .step h3 {
             margin-top: 0;
+        }
+        .lub-step {
+            border-left: 4px solid #0ea5e9;
+            background: #f0f9ff;
+        }
+        .lub-step h3 {
+            color: #0369a1;
+        }
+        .step-num {
+            font-weight: normal;
+            font-size: 0.85em;
+            color: #64748b;
+        }
+        .lub-branches {
+            display: flex;
+            gap: 20px;
+            margin-top: 12px;
+        }
+        .lub-branch {
+            flex: 1;
+            min-width: 0;
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            padding: 12px;
+            background: white;
         }
         .graph-container {
             background: white;

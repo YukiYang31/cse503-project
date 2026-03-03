@@ -4,14 +4,13 @@ import edu.uw.cse.sideeffect.AnalysisConfig;
 import edu.uw.cse.sideeffect.graph.PointsToGraph;
 import edu.uw.cse.sideeffect.output.DebugHtmlWriter;
 import edu.uw.cse.sideeffect.util.NodeMerger;
-import sootup.analysis.intraprocedural.ForwardFlowAnalysis;
+import java.util.List;
+import java.util.Set;
 import sootup.core.graph.StmtGraph;
 import sootup.core.jimple.common.stmt.Stmt;
 import sootup.core.model.Body;
 import sootup.java.core.views.JavaView;
 
-import java.util.List;
-import java.util.Set;
 
 /**
  * Forward dataflow analysis that builds a PointsToGraph for each program point.
@@ -99,6 +98,11 @@ public class SideEffectFlowAnalysis extends ForwardFlowAnalysis<PointsToGraph> {
         // Fix #3: Apply node merging at join points (if enabled)
         if (config.merge) {
             NodeMerger.enforceUniqueness(out);
+        }
+
+        // Record LUB merge step in debug HTML
+        if (debugWriter != null) {
+            debugWriter.addLubEntry(in1, in2, out);
         }
     }
 
