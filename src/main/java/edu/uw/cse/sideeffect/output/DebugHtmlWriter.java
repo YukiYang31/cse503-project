@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import sootup.core.signatures.FieldSignature;
+import sootup.core.jimple.basic.Local;
 
 
 /**

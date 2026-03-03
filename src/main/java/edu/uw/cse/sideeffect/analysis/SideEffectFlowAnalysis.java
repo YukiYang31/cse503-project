@@ -10,7 +10,7 @@ import sootup.core.graph.StmtGraph;
 import sootup.core.jimple.common.stmt.Stmt;
 import sootup.core.model.Body;
 import sootup.java.core.views.JavaView;
-
+import sootup.analysis.intraprocedural.ForwardFlowAnalysis;
 
 /**
  * Forward dataflow analysis that builds a PointsToGraph for each program point.
