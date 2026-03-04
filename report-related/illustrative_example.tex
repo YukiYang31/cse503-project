@@ -1,0 +1,169 @@
+% Illustrative Example — interprocedural side-effect analysis
+% Include this file via \input{report-related/illustrative_example}
+% Requires: tikz (arrows.meta, positioning, calc), listings, amsmath, amssymb, booktabs
+
+\subsection{Illustrative Example}
+\label{sec:example}
+
+We demonstrate the analysis on a two-method example that exercises the key algorithmic steps: intraprocedural dataflow, the constructor exception rule, interprocedural summary instantiation, and side-effect checking.
+
+\begin{figure}[H]
+\begin{lstlisting}[language=Java, basicstyle=\ttfamily\small, numbers=left, xleftmargin=2em]
+class BankAccount {
+    Object owner;
+    int amount;
+
+    BankAccount(Object owner, int amount) {  // callee: constructor
+        this.owner = owner;
+        this.amount = amount;
+    }
+}
+
+class Wallet {
+    BankAccount account;
+
+    void swapAccount(Object newOwner) {
+        BankAccount temp = new BankAccount(newOwner, 0);  // interprocedural
+        this.account = temp;
+    }
+}
+\end{lstlisting}
+\caption{Example program. The \texttt{BankAccount} constructor initializes the \texttt{owner} and \texttt{amount} fields; \texttt{Wallet.swapAccount()} creates a new account via \texttt{new} and overwrites its own \texttt{account} field.}
+\label{fig:example-code}
+\end{figure}
+
+Our analysis first uses Algorithm \ref{alg:ComputeBottomUpOrder} to obtain a call graph and the corresponding batch order. The call graph places the \texttt{BankAccount} constructor before \texttt{swapAccount()}, so the constructor's summary is cached before the caller is analyzed.
+
+%% ────────────────────────────────────────────────────
+\paragraph{Analysis of \texttt{BankAccount(Object owner, int amount)} (callee).}
+The constructor is fully intraprocedural --- it contains no method calls. The analysis processes it via forward dataflow (Algorithm~3), applying transfer functions to each statement:
+
+\begin{enumerate}
+\item \textbf{Identity} (Alg.~4a): \texttt{this} $\to P_0$, \texttt{owner} $\to P_1$. The primitive parameter \texttt{amount} is not tracked in the points-to graph.
+
+\item \textbf{Field store} (Alg.~4e): Writing \texttt{this.owner = owner} with $\text{pt}(\texttt{this}) = \{P_0\}$ and $\text{pt}(\texttt{owner}) = \{P_1\}$ adds an inside edge $P_0 \xrightarrow{\texttt{owner}} P_1$ to $I$ and records $(P_0, \texttt{owner})$ in $W$.
+
+\item \textbf{Field store} (Alg.~4e): Writing \texttt{this.amount = amount} --- since \texttt{amount} is a primitive (\texttt{int}), no inside edge is created (there is no reference target). However, the mutation $(P_0, \texttt{amount})$ is still recorded in $W$.
+\end{enumerate}
+
+\noindent
+Figure~\ref{fig:ctor-exit} shows the exit graph. The side-effect checker (Algorithm~8) computes the prestate set $A = \{P_0, P_1\}$ (both are ParameterNodes; there are no outside edges to expand). Although $W = \{(P_0, \texttt{owner}), (P_0, \texttt{amount})\}$ and $P_0 \in A$, the checker applies the \textbf{constructor exception}: direct field writes to \texttt{this} in a constructor are allowed, because they initialize the newly created object rather than mutating a pre-existing one. Since $P_0$ is the constructor's \texttt{this} and the method is a constructor, $P_0$ is skipped. No other prestate node is mutated, so the verdict is \textsc{side\_effect\_free}. The summary is stored in the cache.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+    >=Stealth, node distance=3.5cm,
+    param/.style={ellipse, draw=blue!70, fill=blue!8, thick,
+                  minimum width=1.5cm, minimum height=0.85cm, font=\small},
+    insedge/.style={->, thick},
+    lbl/.style={font=\footnotesize},
+    varlbl/.style={font=\footnotesize\itshape, text=gray},
+]
+    \node[param] (P0) {$P_0$};
+    \node[param, right of=P0] (P1) {$P_1$};
+
+    \draw[insedge] (P0) -- node[above, lbl] {owner} (P1);
+
+    \node[varlbl, above=2pt of P0] {this};
+    \node[varlbl, above=2pt of P1] {owner};
+
+    \node[below=0.6cm of $(P0)!0.5!(P1)$, font=\footnotesize, text=gray]
+        {$W = \{(P_0, \texttt{owner}),\; (P_0, \texttt{amount})\}$ --- excused by constructor rule};
+\end{tikzpicture}
+\caption{Exit graph of the \texttt{BankAccount} constructor.
+  Both nodes are ParameterNodes (blue ellipses).
+  The inside edge $P_0 \xrightarrow{\texttt{owner}} P_1$ records the reference field store \texttt{this.owner = owner}.
+  The primitive store \texttt{this.amount = amount} adds $(P_0, \texttt{amount})$ to $W$ but no edge (primitives have no pointer targets).
+  Although $P_0$ is mutated and $P_0 \in A$ (prestate), the constructor exception rule skips $P_0$: initializing \texttt{this} in a constructor is allowed.
+  Verdict: \textsc{side\_effect\_free}.}
+\label{fig:ctor-exit}
+\end{figure}
+
+
+%% ────────────────────────────────────────────────────
+\paragraph{Analysis of \texttt{Wallet.swapAccount(Object newOwner)} (caller).}
+
+\begin{enumerate}
+\item \textbf{Identity} (Alg.~4a): \texttt{this} $\to P_0$, \texttt{newOwner} $\to P_1$.
+
+\item \textbf{Allocation + Constructor Invoke} (Alg.~4b, 4i):
+  In Jimple, \texttt{new BankAccount(newOwner, 0)} is decomposed into two statements:
+  \begin{enumerate}
+    \item[(a)] \textbf{Allocation}: \texttt{\$r = new BankAccount} creates a fresh InsideNode $I_0$; \texttt{\$r} $\to I_0$.
+    \item[(b)] \textbf{Constructor call}: \texttt{\$r.\textless init\textgreater(newOwner, 0)} invokes the constructor with actual arguments $[\texttt{\$r}, \texttt{newOwner}, \texttt{0}]$.
+  \end{enumerate}
+
+  The cached constructor summary is instantiated into the caller's graph via Algorithm~5:
+
+  \begin{itemize}
+  \item \textit{Node mapping} $\mu$ (Step~1): The constructor's $P_0^{\text{callee}}$ (\texttt{this}) maps to $\{I_0\}$ (the freshly allocated object), and $P_1^{\text{callee}}$ (\texttt{owner}) maps to $\{P_1\}$ (\texttt{newOwner}).
+  The primitive parameter \texttt{amount} has no ParameterNode and requires no mapping.
+  Since there are no outside edges in the constructor's summary, $\mu$ stabilizes immediately.
+
+  \item \textit{Combine} (Step~2): The constructor's inside edge $P_0^{\text{callee}} \xrightarrow{\texttt{owner}} P_1^{\text{callee}}$ is projected through $\mu'$: for $I_0 \in \mu'(P_0^{\text{callee}})$ and $P_1 \in \mu'(P_1^{\text{callee}})$, the edge $I_0 \xrightarrow{\texttt{owner}} P_1$ is added to the caller's graph.
+
+  \item \textit{Mutations} (Step~4): The constructor's $W = \{(P_0^{\text{callee}}, \texttt{owner}),\; (P_0^{\text{callee}}, \texttt{amount})\}$ maps to $(I_0, \texttt{owner})$ and $(I_0, \texttt{amount})$. Since $I_0$ is an InsideNode, neither mutation is propagated to the caller's $W$.
+  \end{itemize}
+
+  \noindent
+  After instantiation: $I = \{I_0 \xrightarrow{\texttt{owner}} P_1\}$, $W = \varnothing$. Variable \texttt{temp} $\to \{I_0\}$.
+
+\item \textbf{Field store} (Alg.~4e): Writing \texttt{this.account = temp} with $\text{pt}(\texttt{this}) = \{P_0\}$ and $\text{pt}(\texttt{temp}) = \{I_0\}$ adds an inside edge $P_0 \xrightarrow{\texttt{account}} I_0$ and records $(P_0, \texttt{account})$ in $W$.
+\end{enumerate}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+    >=Stealth,
+    param/.style={ellipse, draw=blue!70, fill=blue!8, thick,
+                  minimum width=1.5cm, minimum height=0.85cm, font=\small},
+    parammut/.style={ellipse, draw=red!80, fill=red!12, very thick, double, double distance=1.5pt,
+                     minimum width=1.5cm, minimum height=0.85cm, font=\small},
+    inside/.style={rectangle, draw=green!60!black, fill=green!8, thick,
+                   minimum width=1.5cm, minimum height=0.85cm, rounded corners=2pt, font=\small},
+    insedge/.style={->, thick},
+    lbl/.style={font=\footnotesize},
+    varlbl/.style={font=\footnotesize\itshape, text=gray},
+]
+    \node[parammut] (P0) {$P_0$};
+    \node[inside, right=3cm of P0] (I0) {$I_0$};
+    \node[param, right=3cm of I0]  (P1) {$P_1$};
+
+    \draw[insedge] (P0) -- node[above, lbl] {account} (I0);
+    \draw[insedge] (I0) -- node[above, lbl] {owner} (P1);
+
+    \node[varlbl, above=2pt of P0] {this};
+    \node[varlbl, above=2pt of I0] {temp};
+    \node[varlbl, above=2pt of P1] {newOwner};
+\end{tikzpicture}
+\caption{Exit graph of \texttt{swapAccount()}.
+  $P_0$ (double red border) is a mutated prestate node: the inside edge $P_0 \xrightarrow{\texttt{account}} I_0$ records the field store \texttt{this.account = temp}, and $(P_0, \texttt{account}) \in W$.
+  $I_0$ (green box) is the freshly allocated \texttt{BankAccount}; the edge $I_0 \xrightarrow{\texttt{owner}} P_1$ was introduced by instantiating the constructor summary.
+  Since $P_0 \in A$ and $(P_0, \texttt{account}) \in W$, the verdict is \textsc{side\_effecting}.}
+\label{fig:swap-exit}
+\end{figure}
+
+\noindent
+Figure~\ref{fig:swap-exit} shows the final exit graph.
+The side-effect checker computes $A = \{P_0, P_1\}$ (both are ParameterNodes; there are no outside edges, so $A$ is not expanded).
+Since $(P_0, \texttt{account}) \in W$ and $P_0 \in A$, the method mutates a pre-existing object.
+Note that unlike the constructor, \texttt{swapAccount()} is \emph{not} a constructor, so the constructor exception does not apply --- the mutation to $P_0$ is a genuine side effect.
+The verdict is \textsc{side\_effecting} (\textit{mutates} \texttt{this} \textit{via field} \texttt{account}).
+
+\medskip
+\noindent
+Table~\ref{tab:example-summary} summarizes the two verdicts. The key insight is the interplay between the constructor exception and interprocedural summary instantiation: the constructor's writes to \texttt{this.owner} and \texttt{this.amount} are excused because they initialize a new object, and when the constructor's summary is instantiated in the caller, both mutations map to $I_0$ (a fresh InsideNode) so they do not propagate. However, the caller's own write to \texttt{this.account} mutates the pre-existing Wallet receiver ($P_0$) --- a genuine side effect.
+
+\begin{table}[h]
+\centering
+\caption{Analysis verdicts for the example.}
+\label{tab:example-summary}
+\begin{tabular}{llll}
+\toprule
+\textbf{Method} & \textbf{Verdict} & \textbf{Key Observation} \\
+\midrule
+\texttt{BankAccount(Object, int)}  & \textsc{side\_effect\_free} & $P_0$ mutated but excused (constructor rule) \\
+\texttt{Wallet.swapAccount()}      & \textsc{side\_effecting}    & $P_0$ mutated; not a constructor, so no exception \\
+\bottomrule
+\end{tabular}
+\end{table}
