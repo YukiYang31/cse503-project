@@ -35,9 +35,11 @@ Constructors have a special rule: direct field writes to `this` (`this.f = x`) a
 ```bash
 # Analyze all methods in a Java file
 ./gradlew run --args="MyFile.java"
+./gradlew run --args="jdk/src/java.base/share/classes/java/io/File.java"
 
 # Analyze a specific method
 ./gradlew run --args="MyFile.java --method myMethod"
+./gradlew run --args="jdk/src/java.base/share/classes/java/lang/String.java --method indexOf"
 
 # Show points-to graphs (text + DOT files)
 ./gradlew run --args="MyFile.java --show-graph"
@@ -51,20 +53,13 @@ Constructors have a special rule: direct field writes to `this` (`this.f = x`) a
 # Generate HTML debug traces with visual graphs (opens in browser)
 ./gradlew run --args="MyFile.java --debug"
 
-# Analyze JDK source files (loaded from JDK runtime bytecode, no compilation needed)
-./gradlew run --args="jdk/src/java.base/share/classes/java/io/File.java"
-
-# Analyze a specific method in a JDK class
-./gradlew run --args="jdk/src/java.base/share/classes/java/lang/String.java --method indexOf"
-
-# JDK analysis with timing
-./gradlew run --args="jdk/src/java.base/share/classes/java/lang/Long.java --timing"
-
 # Debug a specific method
 ./gradlew run --args="MyFile.java --debug --method myMethod"
 
 # Print timing summary and save JSON to timing/
 ./gradlew run --args="MyFile.java --timing"
+./gradlew run --args="jdk/src/java.base/share/classes/java/lang/Long.java --timing"
+
 ```
 
 ### Render DOT Graphs
