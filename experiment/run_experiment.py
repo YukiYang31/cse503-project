@@ -35,6 +35,16 @@ RESULTS_CSV_PATH = EXPERIMENT_DIR / "results.csv"
 TOOL_RESULTS_DIR = EXPERIMENT_DIR / "tool_results"
 
 GRADLE_CMD = "./gradlew"
+RANDOOP_SEF_PATH = EXPERIMENT_DIR / "Randoop-sef-methods.txt"
+
+
+def load_randoop_sef():
+    """Load the set of method canonical keys that Randoop considers side-effect-free."""
+    if not RANDOOP_SEF_PATH.exists():
+        print(f"WARNING: {RANDOOP_SEF_PATH} not found, Randoop comparison disabled")
+        return set()
+    with open(RANDOOP_SEF_PATH) as f:
+        return set(line.strip() for line in f if line.strip())
 
 
 def parse_sootup_signature(sig):
@@ -166,7 +176,35 @@ def categorize(jdk_annotation, our_verdict, file_has_annotations):
     return 'Unknown'
 
 
-def build_csv(ground_truth, tool_results_by_file):
+def categorize_randoop_vs_jdk(jdk_annotation, randoop_sef, file_has_annotations):
+    """Compare Randoop's SEF verdict against the JDK ground-truth annotation."""
+    if not file_has_annotations:
+        return 'File Not Annotated'
+    has_annotation = jdk_annotation in ('Pure', 'SideEffectFree')
+    if has_annotation and randoop_sef:
+        return 'Ground Truth Both SEF'
+    if has_annotation and not randoop_sef:
+        return 'Randoop Miss'
+    if not has_annotation and randoop_sef:
+        return 'Randoop Extra'
+    return 'Ground Truth Both Not SEF'
+
+
+def categorize_randoop_vs_ours(randoop_sef, our_verdict):
+    """Compare Randoop's SEF verdict against our tool's verdict."""
+    if our_verdict in ('NOT_ANALYZED', 'TIMEOUT'):
+        return 'Not Comparable'
+    our_sef = our_verdict == 'SIDE_EFFECT_FREE'
+    if randoop_sef and our_sef:
+        return 'Both SEF'
+    if not randoop_sef and not our_sef:
+        return 'Both Side-Effecting'
+    if randoop_sef and not our_sef:
+        return 'Randoop Only SEF'
+    return 'Ours Only SEF'
+
+
+def build_csv(ground_truth, tool_results_by_file, randoop_sef_set):
     """
     Combine ground truth annotations with tool results into the final CSV.
 
@@ -228,6 +266,10 @@ def build_csv(ground_truth, tool_results_by_file):
 
             cat = categorize(jdk_annotation, verdict, filename in files_with_annotations)
 
+            randoop_sef = canonical_key in randoop_sef_set if canonical_key else False
+            randoop_vs_jdk = categorize_randoop_vs_jdk(jdk_annotation, randoop_sef, filename in files_with_annotations)
+            randoop_vs_ours = categorize_randoop_vs_ours(randoop_sef, verdict)
+
             rows.append({
                 'file': filename,
                 'class': class_name,
@@ -237,6 +279,9 @@ def build_csv(ground_truth, tool_results_by_file):
                 'our_verdict': verdict,
                 'reason': reason or '',
                 'category': cat,
+                'randoop_sef': randoop_sef,
+                'randoop_vs_jdk': randoop_vs_jdk,
+                'randoop_vs_ours': randoop_vs_ours,
                 'dataflow_ms': method.get('dataflowMs', 0),
                 'check_ms': method.get('sideEffectMs', 0),
                 'total_method_ms': method.get('totalMs', 0),
@@ -269,6 +314,7 @@ def build_csv(ground_truth, tool_results_by_file):
                 unmatched_reason = 'not in tool output'
 
             jdk_annotation = entry['annotation']
+            unmatched_randoop_sef = entry['canonical_key'] in randoop_sef_set
             rows.append({
                 'file': filename,
                 'class': entry['class_name'],
@@ -278,6 +324,9 @@ def build_csv(ground_truth, tool_results_by_file):
                 'our_verdict': unmatched_verdict,
                 'reason': unmatched_reason,
                 'category': categorize(jdk_annotation, unmatched_verdict, filename in files_with_annotations),
+                'randoop_sef': unmatched_randoop_sef,
+                'randoop_vs_jdk': categorize_randoop_vs_jdk(jdk_annotation, unmatched_randoop_sef, filename in files_with_annotations),
+                'randoop_vs_ours': categorize_randoop_vs_ours(unmatched_randoop_sef, unmatched_verdict),
                 'dataflow_ms': 0,
                 'check_ms': 0,
                 'total_method_ms': 0,
@@ -300,6 +349,7 @@ def write_csv(rows, path):
     fieldnames = [
         'file', 'class', 'method', 'signature', 'jdk_annotation',
         'our_verdict', 'reason', 'category',
+        'randoop_sef', 'randoop_vs_jdk', 'randoop_vs_ours',
         'dataflow_ms', 'check_ms', 'total_method_ms',
         'jimple_stmts', 'graph_nodes', 'graph_edges',
         'file_total_ms', 'file_ir_loading_ms', 'file_call_graph_ms',
@@ -346,6 +396,33 @@ def print_summary(rows):
         print(f"\nAnnotated methods analyzed: {total}")
         print(f"  Matches (tool agrees):     {matches} ({100*matches/total:.1f}%)")
         print(f"  Tool False Positives:      {false_pos} ({100*false_pos/total:.1f}%)")
+
+    # Randoop vs JDK ground truth
+    randoop_annotated = [r for r in rows if r['jdk_annotation'] in ('Pure', 'SideEffectFree')]
+    if randoop_annotated:
+        print(f"\nRandoop vs JDK Annotations (annotated methods only: {len(randoop_annotated)}):")
+        for cat in ['Ground Truth Both SEF', 'Randoop Miss', 'Randoop Extra', 'Ground TruthBoth Not SEF']:
+            count = sum(1 for r in randoop_annotated if r['randoop_vs_jdk'] == cat)
+            if count > 0:
+                print(f"  {cat:25s}: {count:5d}")
+
+    # Randoop vs our tool (on methods both analyze)
+    comparable = [r for r in rows if r['randoop_vs_ours'] != 'Not Comparable']
+    if comparable:
+        print(f"\nRandoop vs Our Tool ({len(comparable)} methods comparable):")
+        for cat in ['Both SEF', 'Both Side-Effecting', 'Randoop Only SEF', 'Ours Only SEF']:
+            count = sum(1 for r in comparable if r['randoop_vs_ours'] == cat)
+            if count > 0:
+                print(f"  {cat:25s}: {count:5d}")
+
+        # Methods where both Randoop and JDK checker agree it's side-effecting, but our tool says SEF
+        both_say_se_ours_say_sef = [
+            r for r in comparable
+            if not r['randoop_sef']
+            and r['jdk_annotation'] not in ('Pure', 'SideEffectFree')
+            and r['our_verdict'] == 'SIDE_EFFECT_FREE'
+        ]
+        print(f"\n  Randoop=SE + Checker=SE + Ours=SEF (potential over-approx): {len(both_say_se_ours_say_sef)}")
 
     # Timing stats
     analyzed = [r for r in rows if r['our_verdict'] != 'NOT_ANALYZED']
@@ -420,9 +497,12 @@ def main():
         else:
             i += 1
 
-    # Step 1: Extract ground truth
+    # Step 1: Extract ground truth and load Randoop SEF list
     ground_truth = extract_ground_truth()
     print(f"Ground truth: {len(ground_truth)} annotated methods")
+    randoop_sef_set = load_randoop_sef()
+    java_util_randoop = sum(1 for k in randoop_sef_set if k.startswith('java.util.'))
+    print(f"Randoop SEF list: {len(randoop_sef_set)} methods total, {java_util_randoop} from java.util")
 
     # Step 2: Run the tool on each file
     java_files = sorted(JDK_UTIL_DIR.glob("*.java"))
@@ -506,7 +586,7 @@ def main():
             print(f"Merged with cached results: CSV will contain {len(tool_results_by_file)} files total")
 
     # Step 3: Build and write CSV
-    rows = build_csv(ground_truth, tool_results_by_file)
+    rows = build_csv(ground_truth, tool_results_by_file, randoop_sef_set)
     if force_run:
         ts = time.strftime("%Y%m%d_%H%M%S")
         csv_path = EXPERIMENT_DIR / f"results_{ts}.csv"
