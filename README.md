@@ -219,7 +219,7 @@ loop overhead) are not individually timed.
 
 ## JDK Experiment
 
-The `experiment/` directory contains scripts to evaluate the tool against the Checker Framework's manual `@Pure` and `@SideEffectFree` annotations in the JDK's `java.util` package (~870 annotated methods across 67 files).
+The `experiment/` directory contains scripts to evaluate the tool against the Checker Framework's manual `@Pure` and `@SideEffectFree` annotations in the JDK's `java.util` package (~870 annotated methods across 67 files). The JDK with annotations can be cloned from https://github.com/typetools/jdk. Users need to clone the JDK into the top directory for experiments to run. 
 
 ### Running the Experiment
 
@@ -277,6 +277,7 @@ The script saves per-file results to `experiment/tool_results/` as it goes. On r
 
 - **JDK analysis uses runtime bytecode**: When analyzing JDK source files, classes are loaded from the JDK runtime image rather than compiling from source. The analysis results reflect the compiled bytecode, which may differ slightly from source-level expectations (e.g., compiler-generated bridge methods, synthetic fields).
 - **On-demand cross-file analysis has bounded scope**: Cross-file callees are analyzed on demand, but depth (default 5), per-method budget (default 10), and graph size (default 20 nodes) limits mean deeply nested or complex JDK call chains may still fall back to conservative. Methods whose exit graph exceeds the size limit are not cached, so their callers also fall back to conservative.
+- **On-demand inter-file analysis only covers JDK classes, not user-defined files**: When analyzing user code, the `JavaView` is backed only by the compiled output of the files explicitly passed as arguments. If file1 calls file2 but only file1 is given as input, file2 is never compiled or loaded — `view.getClass()` returns empty and the call falls back to conservative (all arguments globally escaped). To get proper inter-procedural analysis across user-defined files, all files must be passed together as arguments.
 - **Recursive call chains use bounded iteration**: Mutually recursive methods (SCCs in the call graph) are analyzed by iterating up to 5 times. If summaries do not stabilize, the last computed summary is used. The paper suggests iterating to a true fixed point; we cap at 5 for practical reasons.
 - **No exception-path precision**: Exception control flow is handled by SootUp's CFG but not modeled with special precision.
 - **Array modeling is simplified**: Array elements are tracked via mutation records but not with per-index precision.
