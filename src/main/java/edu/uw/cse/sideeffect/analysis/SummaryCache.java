@@ -1,6 +1,9 @@
 package edu.uw.cse.sideeffect.analysis;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,6 +15,8 @@ public class SummaryCache {
 
     private final Map<String, MethodSummary> bySignature = new HashMap<>();
     private final Map<String, MethodSummary> bySubSignature = new HashMap<>();
+    /** All summaries stored per sub-signature — supports virtual dispatch union at call sites. */
+    private final Map<String, List<MethodSummary>> allBySubSignature = new HashMap<>();
 
     /**
      * Store a summary keyed by both full signature and sub-signature.
@@ -24,6 +29,7 @@ public class SummaryCache {
         bySignature.put(fullSig, summary);
         if (subSig != null) {
             bySubSignature.put(subSig, summary);
+            allBySubSignature.computeIfAbsent(subSig, k -> new ArrayList<>()).add(summary);
         }
     }
 
@@ -39,6 +45,15 @@ public class SummaryCache {
             return bySubSignature.get(subSig);
         }
         return null;
+    }
+
+    /**
+     * Returns all summaries stored for the given sub-signature (base method + all overrides).
+     * Used at virtual/interface call sites to apply union semantics across all implementations.
+     */
+    public List<MethodSummary> lookupAllBySubSignature(String subSig) {
+        if (subSig == null) return Collections.emptyList();
+        return allBySubSignature.getOrDefault(subSig, Collections.emptyList());
     }
 
     public int size() {

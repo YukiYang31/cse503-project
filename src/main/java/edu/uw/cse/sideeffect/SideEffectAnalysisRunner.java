@@ -159,6 +159,7 @@ public class SideEffectAnalysisRunner {
         CallGraphBuilder.Result cgResult = CallGraphBuilder.computeBottomUpOrder(classes, config);
         List<List<JavaSootMethod>> batches = cgResult.batches();
         Map<String, Set<String>> callGraph = cgResult.callGraph();
+        Map<String, Set<String>> overrideGraph = cgResult.overrideGraph();
 
         if (config.timing) {
             timer.recordCallGraph(System.nanoTime() - cgStart);
@@ -284,6 +285,9 @@ public class SideEffectAnalysisRunner {
             for (MethodSummary summary : summaries) {
                 GraphPrinter.printTextSummary(summary);
                 GraphPrinter.writeDotFile(summary);
+            }
+            if (!overrideGraph.isEmpty()) {
+                GraphPrinter.writeOverrideDependencyDot(callGraph, overrideGraph);
             }
         }
 

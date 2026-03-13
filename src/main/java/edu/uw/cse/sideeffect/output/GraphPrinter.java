@@ -9,6 +9,8 @@ import java.io.*;
 import java.util.*;
 import sootup.core.jimple.basic.Local;
 import sootup.core.signatures.FieldSignature;
+import sootup.java.core.JavaSootClass;
+import sootup.java.core.JavaSootMethod;
 
 
 /**
@@ -228,6 +230,125 @@ public class GraphPrinter {
             System.out.println("DOT output written to: dot-graph/" + fileName);
         } catch (IOException e) {
             System.err.println("Error writing DOT file dot-graph/" + fileName + ": " + e.getMessage());
+        }
+    }
+
+    /**
+     * Write a DOT file showing the inter-file override dependency graph.
+     * Blue arrows = call edges between analyzed methods.
+     * Red arrows  = override edges (overriding method → base method, labeled "overrides").
+     *
+     * This is a separate graph from the per-method points-to DOT files and uses its own
+     * color scheme — no overlap with the solid/dashed InsideEdge/OutsideEdge convention.
+     *
+     * Output: dot-graph/override-dependency.dot
+     */
+    public static void writeOverrideDependencyDot(
+            Map<String, Set<String>> callGraph,
+            Map<String, Set<String>> overrideGraph) {
+
+        File dotDir = new File("dot-graph");
+        if (!dotDir.exists()) dotDir.mkdirs();
+
+        String fileName = "override-dependency.dot";
+        try (PrintWriter out = new PrintWriter(new FileWriter(new File(dotDir, fileName)))) {
+
+            out.println("digraph \"Override Dependency Graph\" {");
+            out.println("  rankdir=LR;");
+            out.println("  node [fontname=\"Helvetica\", fontsize=10, shape=box,"
+                + " style=filled, fillcolor=lightyellow];");
+            out.println("  edge [fontname=\"Helvetica\", fontsize=9];");
+            out.println();
+
+            // Node set: all methods in the call graph plus any overriding methods
+            Set<String> allMethods = new LinkedHashSet<>(callGraph.keySet());
+            for (Set<String> overrides : overrideGraph.values()) {
+                allMethods.addAll(overrides);
+            }
+
+            // Emit nodes with short readable labels
+            for (String sig : allMethods) {
+                String label = shortMethodLabel(sig);
+                out.println("  \"" + escapeDot(sig) + "\" [label=\"" + escapeDot(label) + "\"];");
+            }
+            out.println();
+
+            // Emit call edges (blue) — only between methods in the analyzed set
+            for (Map.Entry<String, Set<String>> entry : callGraph.entrySet()) {
+                for (String callee : entry.getValue()) {
+                    if (allMethods.contains(callee)) {
+                        out.println("  \"" + escapeDot(entry.getKey()) + "\" -> \""
+                            + escapeDot(callee) + "\" [color=blue];");
+                    }
+                }
+            }
+            out.println();
+
+            // Emit override edges (red): overridingMethod → baseMethod
+            for (Map.Entry<String, Set<String>> entry : overrideGraph.entrySet()) {
+                String baseSig = entry.getKey();
+                for (String overrideSig : entry.getValue()) {
+                    out.println("  \"" + escapeDot(overrideSig) + "\" -> \""
+                        + escapeDot(baseSig) + "\" [color=red, label=\"overrides\","
+                        + " style=bold, fontcolor=red];");
+                }
+            }
+
+            out.println("}");
+            out.flush();
+            System.out.println("Override dependency graph written to: dot-graph/" + fileName);
+        } catch (IOException e) {
+            System.err.println("Error writing override dependency DOT file: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Produce a short human-readable label from a full SootUp method signature.
+     * Input:  {@code <some.pkg.ClassName: ReturnType methodName(ParamType1, ParamType2)>}
+     * Output: {@code ClassName.methodName(ParamType1, ParamType2)}  (using simple class names)
+     */
+    private static String shortMethodLabel(String sig) {
+        try {
+            // sig format: <pkg.ClassName: ReturnType methodName(ParamTypes)>
+            int ltIdx  = sig.indexOf('<');
+            int colon  = sig.indexOf(':');
+            int gtIdx  = sig.lastIndexOf('>');
+            if (ltIdx < 0 || colon < 0 || gtIdx < 0) return sig;
+
+            String className = sig.substring(ltIdx + 1, colon).trim();
+            int lastDot = className.lastIndexOf('.');
+            if (lastDot >= 0) className = className.substring(lastDot + 1);
+
+            // rest = "ReturnType methodName(ParamTypes)"
+            String rest = sig.substring(colon + 1, gtIdx).trim();
+            int spaceIdx = rest.indexOf(' ');
+            if (spaceIdx < 0) return className + "." + rest;
+            String methodPart = rest.substring(spaceIdx + 1).trim();
+
+            int parenOpen  = methodPart.indexOf('(');
+            int parenClose = methodPart.lastIndexOf(')');
+            if (parenOpen < 0 || parenClose < parenOpen) return className + "." + methodPart;
+
+            String methodName = methodPart.substring(0, parenOpen);
+            String rawParams  = methodPart.substring(parenOpen + 1, parenClose);
+
+            // Simplify each param type to its simple name
+            String simplifiedParams;
+            if (rawParams.isEmpty()) {
+                simplifiedParams = "";
+            } else {
+                String[] parts = rawParams.split(",");
+                List<String> simplified = new ArrayList<>();
+                for (String p : parts) {
+                    String t = p.trim();
+                    int d = t.lastIndexOf('.');
+                    simplified.add(d >= 0 ? t.substring(d + 1) : t);
+                }
+                simplifiedParams = String.join(", ", simplified);
+            }
+            return className + "." + methodName + "(" + simplifiedParams + ")";
+        } catch (Exception e) {
+            return sig;
         }
     }
 

@@ -77,6 +77,49 @@ dot -Tpng 'MethodName.dot' -o graph.png
 | `--debug` | Write per-method HTML debug traces to `debug/` directory (implies `--show-graph` and `--timing`) |
 | `--timing` | Print timing summary and save structured JSON to `timing/` directory |
 
+## Inter-File Override Analysis
+
+When multiple `.java` files are passed as input and one class overrides a method from another, the tool automatically detects the override relationship and incorporates it into the analysis.
+
+**Example:**
+```bash
+./gradlew run --args="Base.java Derived.java --show-graph"
+```
+
+**What happens internally:**
+
+1. **Override detection** — For each loaded class, the tool checks whether its direct superclass is also in the input set. If `Derived extends Base` and both files are passed, any method `Derived.m()` whose sub-signature matches a concrete method in `Base` is recorded as an override. Transitive chains (e.g. `C extends B extends A` across three passed files) are captured naturally since all classes are iterated.
+
+2. **Call graph augmentation** — Override edges are added to the call graph before SCC computation and bottom-up ordering. This ensures overriding methods are always analyzed before (or in the same SCC as) any caller that dispatches through the base type.
+
+3. **Union of summaries at call sites** — At any virtual dispatch site (e.g. `obj.m()` where `obj` is declared as type `Base`), the tool applies the side-effect summaries of **all** known implementations — `Base.m()` and `Derived.m()` — to the points-to graph. The result is the conservative union:
+   - `SIDE_EFFECT_FREE` only if **all** override implementations are side-effect-free
+   - `SIDE_EFFECTING` if **any** implementation mutates pre-existing state
+
+4. **Override dependency DOT file** (produced when `--show-graph` is used) — `dot-graph/override-dependency.dot` shows:
+   - **Blue arrows** — call edges between analyzed methods
+   - **Red arrows** — override relationships (`Derived.m()` → `Base.m()`, labeled `overrides`)
+
+   Render it with:
+   ```bash
+   dot -Tpng dot-graph/override-dependency.dot -o override-dependency.png
+   ```
+
+**Scope:** Override detection and the union semantics apply only to files explicitly passed as input. JDK and external library calls continue to use the existing four-tier resolution (SafeMethods whitelist → summary cache → on-demand analysis → conservative fallback). Static calls and constructor calls always use exact-match dispatch — no union is applied.
+
+**Running with test files:**
+```bash
+# Two-file override example
+./gradlew run --args="src/test/resources/interfile/Base.java \
+                      src/test/resources/interfile/Derived.java \
+                      --show-graph"
+
+# Debug a caller that dispatches virtually
+./gradlew run --args="src/test/resources/interfile/Base.java \
+                      src/test/resources/interfile/Derived.java \
+                      --debug --method caller"
+```
+
 ## Understanding the Output
 
 ### Side-Effect Analysis Verdicts

@@ -70,6 +70,20 @@ public class Main {
             System.exit(1);
         }
 
+        // Verify all source files exist before attempting compilation
+        boolean anyMissing = false;
+        for (String f : sourceFiles) {
+            if (!Files.exists(Path.of(f))) {
+                System.err.println("Error: file not found: " + Path.of(f).toAbsolutePath());
+                anyMissing = true;
+            }
+        }
+        if (anyMissing) {
+            System.err.println("Paths are resolved relative to the working directory: "
+                + Path.of("").toAbsolutePath());
+            System.exit(1);
+        }
+
         AnalysisConfig config = new AnalysisConfig(showGraph, merge, methodFilter, debug, timing);
 
         TimingRecorder timer = config.timing ? new TimingRecorder() : TimingRecorder.NOOP;

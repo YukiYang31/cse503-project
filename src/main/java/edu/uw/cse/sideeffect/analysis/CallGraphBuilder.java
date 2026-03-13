@@ -11,6 +11,7 @@ import sootup.core.model.Body;
 import sootup.core.signatures.MethodSignature;
 import sootup.java.core.JavaSootClass;
 import sootup.java.core.JavaSootMethod;
+import sootup.java.core.types.JavaClassType;
 
 
 /**
@@ -22,12 +23,15 @@ public class CallGraphBuilder {
 
     /**
      * Result of call graph construction: the bottom-up analysis order plus the raw call graph.
-     * @param batches      methods grouped by SCC in bottom-up order
-     * @param callGraph    caller signature → set of callee signatures
+     * @param batches       methods grouped by SCC in bottom-up order
+     * @param callGraph     caller signature → set of callee signatures
+     * @param overrideGraph base method signature → set of overriding method signatures
+     *                      (populated only for methods in the explicitly-passed input classes)
      */
     public record Result(
             List<List<JavaSootMethod>> batches,
-            Map<String, Set<String>> callGraph
+            Map<String, Set<String>> callGraph,
+            Map<String, Set<String>> overrideGraph
     ) {}
 
     /**
@@ -55,6 +59,35 @@ public class CallGraphBuilder {
                 methodBySig.put(sig, method);
                 String subSig = method.getSignature().getSubSignature().toString();
                 methodBySubSig.put(subSig, method);
+            }
+        }
+
+        // Build class-name → class lookup for override detection
+        Map<String, JavaSootClass> classByName = new LinkedHashMap<>();
+        for (JavaSootClass cls : classes) {
+            classByName.put(cls.getType().getFullyQualifiedName(), cls);
+        }
+
+        // Detect override relationships among the loaded (input) classes only.
+        // For each class, if its direct superclass is also in the input set, record any
+        // method that shares a sub-signature with a concrete superclass method as an override.
+        // Iterating all classes captures transitive chains (C→B→A) across passes.
+        Map<String, Set<String>> overrideGraph = new LinkedHashMap<>();
+        for (JavaSootClass cls : classes) {
+            Optional<JavaClassType> superTypeOpt = cls.getSuperclass();
+            if (superTypeOpt.isEmpty()) continue;
+            JavaSootClass superCls = classByName.get(superTypeOpt.get().getFullyQualifiedName());
+            if (superCls == null) continue;  // superclass not in input set → skip
+            for (JavaSootMethod method : cls.getMethods()) {
+                if (!method.isConcrete()) continue;
+                Optional<? extends JavaSootMethod> superMethod =
+                        superCls.getMethod(method.getSignature().getSubSignature());
+                if (superMethod.isPresent() && superMethod.get().isConcrete()) {
+                    String baseSig     = superMethod.get().getSignature().toString();
+                    String overrideSig = method.getSignature().toString();
+                    overrideGraph.computeIfAbsent(baseSig, k -> new LinkedHashSet<>())
+                                 .add(overrideSig);
+                }
             }
         }
 
@@ -90,8 +123,24 @@ public class CallGraphBuilder {
             callGraph.put(callerSig, callees);
         }
 
+        // Augment call graph with override edges so that Tarjan's SCC and bottom-up ordering
+        // account for override relationships: any caller of a base method implicitly also
+        // depends on every overriding implementation.
+        for (Map.Entry<String, Set<String>> entry : callGraph.entrySet()) {
+            Set<String> extras = new LinkedHashSet<>();
+            for (String calleeSig : entry.getValue()) {
+                Set<String> overrides = overrideGraph.getOrDefault(calleeSig, Collections.emptySet());
+                extras.addAll(overrides);
+            }
+            entry.getValue().addAll(extras);
+        }
+
         if (config.debug) {
-            System.out.println("\nDebug== Call graph:");
+            System.out.println("\nDebug== Override graph:");
+            for (var entry : overrideGraph.entrySet()) {
+                System.out.println("Debug==   " + entry.getKey() + " overridden by " + entry.getValue());
+            }
+            System.out.println("\nDebug== Call graph (after override augmentation):");
             for (var entry : callGraph.entrySet()) {
                 if (!entry.getValue().isEmpty()) {
                     System.out.println("Debug==   " + entry.getKey() + " -> " + entry.getValue());
@@ -127,7 +176,7 @@ public class CallGraphBuilder {
             }
         }
 
-        return new Result(result, callGraph);
+        return new Result(result, callGraph, overrideGraph);
     }
 
     /** Extract an invoke expression from a statement, if present */

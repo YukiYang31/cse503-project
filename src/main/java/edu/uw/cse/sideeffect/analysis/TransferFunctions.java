@@ -507,6 +507,30 @@ public class TransferFunctions {
 
         // Apply summary if found (shared by Tier 2 and Tier 3)
         if (calleeSummary != null) {
+            // For virtual/interface calls: apply ALL override summaries (union semantics).
+            // A virtual dispatch to A.m() could resolve to B.m() at runtime, so the
+            // analysis must be conservative over all known implementations.
+            boolean isVirtualDispatch = (invokeExpr instanceof JVirtualInvokeExpr)
+                                     || (invokeExpr instanceof JInterfaceInvokeExpr);
+            if (isVirtualDispatch && summaryCache != null) {
+                List<MethodSummary> allSummaries = summaryCache.lookupAllBySubSignature(subSig);
+                if (allSummaries.size() > 1) {
+                    if (config.debug) System.out.println("Debug== virtual dispatch union: applying "
+                        + allSummaries.size() + " summaries for sub-sig " + subSig);
+                    Set<Node> unionReturn = new HashSet<>();
+                    for (MethodSummary s : allSummaries) {
+                        applySummaryToState(s, invokeExpr, returnVar, graph, methodSig);
+                        if (returnVar != null && returnVar.getType() instanceof ReferenceType) {
+                            unionReturn.addAll(graph.pointsTo(returnVar));
+                        }
+                    }
+                    // Set return var to the union of all summaries' return targets
+                    if (returnVar != null && !unionReturn.isEmpty()) {
+                        graph.strongUpdate(returnVar, unionReturn);
+                    }
+                    return;
+                }
+            }
             applySummaryToState(calleeSummary, invokeExpr, returnVar, graph, methodSig);
             return;
         }
