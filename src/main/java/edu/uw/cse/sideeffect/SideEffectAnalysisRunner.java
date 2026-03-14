@@ -311,15 +311,18 @@ public class SideEffectAnalysisRunner {
                     System.out.println("Debug== Analyzing SCC: " + names);
                 }
                 boolean sccTimedOut = false;
+                // this part needs refactoring. Code works but bad code. 
                 if (config.methodTimeoutSecs > 0) {
                     long sccTimeoutSecs = (long) filteredBatch.size() * config.methodTimeoutSecs;
                     ExecutorService exec = Executors.newSingleThreadExecutor();
                     final List<JavaSootMethod> batchFinal = filteredBatch;
                     final List<DebugHtmlWriter.SourceFile> srcFinal = sourceContents;
                     Future<?> future = exec.submit(() -> {
-                        int maxIterations = 5;
-                        for (int iter = 0; iter < maxIterations; iter++) {
-                            boolean anyChanged = false;
+                        boolean anyChanged;
+                        int iter = 0;
+                        do {
+                            anyChanged = false;
+                            iter++;
                             for (JavaSootMethod method : batchFinal) {
                                 if (!method.isConcrete()) continue;
                                 MethodSummary oldSummary = cache.lookup(
@@ -333,11 +336,8 @@ public class SideEffectAnalysisRunner {
                                     }
                                 }
                             }
-                            if (!anyChanged) {
-                                if (config.debug) System.out.println("Debug== SCC stabilized after " + (iter + 1) + " iterations");
-                                break;
-                            }
-                        }
+                        } while (anyChanged);
+                        if (config.debug) System.out.println("Debug== SCC stabilized after " + iter + " iterations");
                     });
                     try {
                         future.get(sccTimeoutSecs, TimeUnit.SECONDS);
@@ -359,9 +359,11 @@ public class SideEffectAnalysisRunner {
                         exec.shutdownNow();
                     }
                 } else {
-                    int maxIterations = 5;
-                    for (int iter = 0; iter < maxIterations; iter++) {
-                        boolean anyChanged = false;
+                    boolean anyChanged;
+                    int iter = 0;
+                    do {
+                        anyChanged = false;
+                        iter++;
                         for (JavaSootMethod method : filteredBatch) {
                             if (!method.isConcrete()) continue;
                             MethodSummary oldSummary = cache.lookup(
@@ -375,11 +377,8 @@ public class SideEffectAnalysisRunner {
                                 }
                             }
                         }
-                        if (!anyChanged) {
-                            if (config.debug) System.out.println("Debug== SCC stabilized after " + (iter + 1) + " iterations");
-                            break;
-                        }
-                    }
+                    } while (anyChanged);
+                    if (config.debug) System.out.println("Debug== SCC stabilized after " + iter + " iterations");
                 }
                 // Collect final summaries for the SCC methods (skip if whole SCC timed out)
                 if (!sccTimedOut) {
