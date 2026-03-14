@@ -60,6 +60,10 @@ Constructors have a special rule: direct field writes to `this` (`this.f = x`) a
 ./gradlew run --args="MyFile.java --timing"
 ./gradlew run --args="jdk/src/java.base/share/classes/java/lang/Long.java --timing"
 
+# Per-method timeouts: call graph gets 2 min, each method gets 1 min
+# Timed-out methods are written as TIMEOUT in the JSON; others complete normally
+./gradlew run --args="jdk/src/java.base/share/classes/java/util/TreeMap.java --timing --callgraph-timeout 120 --method-timeout 60"
+
 ```
 
 ### Render DOT Graphs
@@ -76,6 +80,8 @@ dot -Tpng 'MethodName.dot' -o graph.png
 | `--method <name>` | Only analyze methods with this name |
 | `--debug` | Write per-method HTML debug traces to `debug/` directory (implies `--show-graph` and `--timing`) |
 | `--timing` | Print timing summary and save structured JSON to `timing/` directory |
+| `--callgraph-timeout <secs>` | Timeout for the call graph construction phase (0 = unlimited). If exceeded, all methods are written as `TIMEOUT` and the tool exits cleanly. |
+| `--method-timeout <secs>` | Per-method (or per-SCC) timeout (0 = unlimited). If exceeded for a method, that method is written as `TIMEOUT` and analysis continues for the remaining methods. |
 
 ## Inter-File Override Analysis
 
@@ -292,7 +298,7 @@ The script saves per-file results to `experiment/tool_results/` as it goes. On r
 
 1. **Extract ground truth** (`extract_annotations.py`): Parses `@Pure`/`@SideEffectFree` annotations from JDK source files, handling inner classes, receiver parameters, generic erasure, and abstract methods. Outputs `experiment/ground_truth.json`.
 
-2. **Run the tool**: Executes the side-effect analysis on each `.java` file one at a time via `./gradlew run --args="<file> --timing"`. Tool results (timing JSON with verdicts) are saved to `experiment/tool_results/` for reproducibility.
+2. **Run the tool**: Executes the side-effect analysis on each `.java` file one at a time via `./gradlew run --args="<file> --timing --callgraph-timeout 120 --method-timeout 60"`. The call graph phase has a 2-minute timeout; each method has a 1-minute timeout. Timed-out methods appear as `TIMEOUT` entries in the per-file JSON so partial results are always preserved. Tool results (timing JSON with verdicts) are saved to `experiment/tool_results/` for reproducibility.
 
 3. **Produce CSV**: Each row is one method with columns for JDK annotation, tool verdict, match category, per-method timing, and per-file pipeline timing. Written to `experiment/results.csv` by default; when `--force` is used, written to a timestamped file (e.g. `experiment/results_20260226_143022.csv`) so the existing `results.csv` is not overwritten.
 
@@ -306,6 +312,7 @@ The script saves per-file results to `experiment/tool_results/` as it goes. On r
 | File Not Annotated | Tool says SIDE_EFFECT_FREE but the entire file has no annotations |
 | Both Side-Effecting | Not annotated + tool says SIDE_EFFECTING |
 | Not Analyzed | Annotated but tool didn't analyze (abstract method, error) |
+| Timeout | Method (or its entire file's call graph) exceeded the configured timeout |
 
 ### Output Files
 

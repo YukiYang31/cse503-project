@@ -35,6 +35,8 @@ public class Main {
         boolean debug = false;
         boolean timing = false;
         String methodFilter = null;
+        int callGraphTimeoutSecs = 0;
+        int methodTimeoutSecs = 0;
 
         for (int i = 0; i < args.length; i++) {
             switch (args[i]) {
@@ -50,6 +52,8 @@ public class Main {
                         System.exit(1);
                     }
                 }
+                case "--callgraph-timeout" -> callGraphTimeoutSecs = Integer.parseInt(args[++i]);
+                case "--method-timeout"    -> methodTimeoutSecs    = Integer.parseInt(args[++i]);
                 case "--help", "-h" -> {
                     printUsage();
                     System.exit(0);
@@ -84,7 +88,8 @@ public class Main {
             System.exit(1);
         }
 
-        AnalysisConfig config = new AnalysisConfig(showGraph, merge, methodFilter, debug, timing);
+        AnalysisConfig config = new AnalysisConfig(showGraph, merge, methodFilter, debug, timing,
+                callGraphTimeoutSecs, methodTimeoutSecs);
 
         TimingRecorder timer = config.timing ? new TimingRecorder() : TimingRecorder.NOOP;
         timer.setSourceFiles(sourceFiles);
@@ -192,6 +197,8 @@ public class Main {
         System.out.println("  --debug         Write per-method HTML debug traces to debug/ directory");
         System.out.println("                  (implies --show-graph and --timing)");
         System.out.println("  --timing        Print timing summary and save JSON to timing/ directory");
+        System.out.println("  --callgraph-timeout <secs>  Timeout for call graph phase (0 = unlimited)");
+        System.out.println("  --method-timeout <secs>     Per-method timeout (0 = unlimited)");
         System.out.println("  --help, -h      Show this help message");
     }
 }

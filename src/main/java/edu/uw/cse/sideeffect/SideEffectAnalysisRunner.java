@@ -50,6 +50,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 /**
@@ -156,7 +162,43 @@ public class SideEffectAnalysisRunner {
         long cgStart = 0;
         if (config.timing) cgStart = System.nanoTime();
 
-        CallGraphBuilder.Result cgResult = CallGraphBuilder.computeBottomUpOrder(classes, config);
+        CallGraphBuilder.Result cgResult;
+        if (config.callGraphTimeoutSecs > 0) {
+            ExecutorService cgExec = Executors.newSingleThreadExecutor();
+            final Collection<JavaSootClass> classesFinal = classes;
+            Future<CallGraphBuilder.Result> cgFuture = cgExec.submit(
+                    () -> CallGraphBuilder.computeBottomUpOrder(classesFinal, config));
+            try {
+                cgResult = cgFuture.get(config.callGraphTimeoutSecs, TimeUnit.SECONDS);
+            } catch (TimeoutException e) {
+                cgFuture.cancel(true);
+                cgExec.shutdownNow();
+                System.err.println("TIMEOUT: call graph construction exceeded " +
+                        config.callGraphTimeoutSecs + "s — marking all methods as TIMEOUT");
+                if (config.timing) {
+                    timer.recordCallGraph(System.nanoTime() - cgStart);
+                    // Emit a TIMEOUT MethodTiming for every concrete method we can find
+                    for (JavaSootClass cls : classes) {
+                        for (JavaSootMethod m : cls.getMethods()) {
+                            if (m.isConcrete()) {
+                                timer.addMethodTiming(new TimingRecorder.MethodTiming(
+                                        m.getSignature().toString(), "TIMEOUT",
+                                        "timeout at building call graph", 0, 0, 0, 0, 0));
+                            }
+                        }
+                    }
+                }
+                return; // Main.java will call timer.endTotal() + timer.saveJson()
+            } catch (InterruptedException | ExecutionException e) {
+                cgExec.shutdownNow();
+                throw new RuntimeException("Call graph computation failed: " + e.getMessage(), e);
+            } finally {
+                cgExec.shutdown();
+            }
+        } else {
+            cgResult = CallGraphBuilder.computeBottomUpOrder(classes, config);
+        }
+
         List<List<JavaSootMethod>> batches = cgResult.batches();
         Map<String, Set<String>> callGraph = cgResult.callGraph();
         Map<String, Set<String>> overrideGraph = cgResult.overrideGraph();
@@ -225,7 +267,32 @@ public class SideEffectAnalysisRunner {
             if (filteredBatch.size() == 1) {
                 JavaSootMethod method = filteredBatch.get(0);
                 if (!method.isConcrete()) continue;
-                MethodSummary summary = analyzeMethod(method, sourceContents, cache, callGraph);
+                MethodSummary summary;
+                if (config.methodTimeoutSecs > 0) {
+                    ExecutorService exec = Executors.newSingleThreadExecutor();
+                    final List<DebugHtmlWriter.SourceFile> srcCapture = sourceContents;
+                    Future<MethodSummary> future = exec.submit(
+                            () -> analyzeMethod(method, srcCapture, cache, callGraph));
+                    try {
+                        summary = future.get(config.methodTimeoutSecs, TimeUnit.SECONDS);
+                    } catch (TimeoutException e) {
+                        future.cancel(true);
+                        String sig = method.getSignature().toString();
+                        System.err.println("\nTIMEOUT: method analysis exceeded " +
+                                config.methodTimeoutSecs + "s for " + sig);
+                        if (config.timing) {
+                            timer.addMethodTiming(new TimingRecorder.MethodTiming(
+                                    sig, "TIMEOUT", "method analysis timed out", 0, 0, 0, 0, 0));
+                        }
+                        summary = null;
+                    } catch (InterruptedException | ExecutionException e) {
+                        summary = null;
+                    } finally {
+                        exec.shutdownNow();
+                    }
+                } else {
+                    summary = analyzeMethod(method, sourceContents, cache, callGraph);
+                }
                 methodsDone++;
                 printProgress(methodsDone, totalMethods);
                 if (summary != null) {
@@ -243,37 +310,93 @@ public class SideEffectAnalysisRunner {
                             .toList();
                     System.out.println("Debug== Analyzing SCC: " + names);
                 }
-                int maxIterations = 5;
-                for (int iter = 0; iter < maxIterations; iter++) {
-                    boolean anyChanged = false;
-                    for (JavaSootMethod method : filteredBatch) {
-                        if (!method.isConcrete()) continue;
-                        MethodSummary oldSummary = cache.lookup(
-                                method.getSignature().toString(),
-                                method.getSignature().getSubSignature().toString());
-                        MethodSummary newSummary = analyzeMethod(method, sourceContents, cache, callGraph);
-                        if (newSummary != null) {
-                            storeSummary(method, newSummary, cache);
-                            if (oldSummary == null || oldSummary.getResult() != newSummary.getResult()) {
-                                anyChanged = true;
+                boolean sccTimedOut = false;
+                if (config.methodTimeoutSecs > 0) {
+                    long sccTimeoutSecs = (long) filteredBatch.size() * config.methodTimeoutSecs;
+                    ExecutorService exec = Executors.newSingleThreadExecutor();
+                    final List<JavaSootMethod> batchFinal = filteredBatch;
+                    final List<DebugHtmlWriter.SourceFile> srcFinal = sourceContents;
+                    Future<?> future = exec.submit(() -> {
+                        int maxIterations = 5;
+                        for (int iter = 0; iter < maxIterations; iter++) {
+                            boolean anyChanged = false;
+                            for (JavaSootMethod method : batchFinal) {
+                                if (!method.isConcrete()) continue;
+                                MethodSummary oldSummary = cache.lookup(
+                                        method.getSignature().toString(),
+                                        method.getSignature().getSubSignature().toString());
+                                MethodSummary newSummary = analyzeMethod(method, srcFinal, cache, callGraph);
+                                if (newSummary != null) {
+                                    storeSummary(method, newSummary, cache);
+                                    if (oldSummary == null || oldSummary.getResult() != newSummary.getResult()) {
+                                        anyChanged = true;
+                                    }
+                                }
+                            }
+                            if (!anyChanged) {
+                                if (config.debug) System.out.println("Debug== SCC stabilized after " + (iter + 1) + " iterations");
+                                break;
                             }
                         }
+                    });
+                    try {
+                        future.get(sccTimeoutSecs, TimeUnit.SECONDS);
+                    } catch (TimeoutException e) {
+                        future.cancel(true);
+                        sccTimedOut = true;
+                        System.err.println("\nTIMEOUT: SCC batch analysis exceeded " + sccTimeoutSecs + "s");
+                        if (config.timing) {
+                            for (JavaSootMethod method : filteredBatch) {
+                                if (!method.isConcrete()) continue;
+                                timer.addMethodTiming(new TimingRecorder.MethodTiming(
+                                        method.getSignature().toString(), "TIMEOUT",
+                                        "method analysis timed out", 0, 0, 0, 0, 0));
+                            }
+                        }
+                    } catch (InterruptedException | ExecutionException e) {
+                        // fall through, collect what's in the cache
+                    } finally {
+                        exec.shutdownNow();
                     }
-                    if (!anyChanged) {
-                        if (config.debug) System.out.println("Debug== SCC stabilized after " + (iter + 1) + " iterations");
-                        break;
+                } else {
+                    int maxIterations = 5;
+                    for (int iter = 0; iter < maxIterations; iter++) {
+                        boolean anyChanged = false;
+                        for (JavaSootMethod method : filteredBatch) {
+                            if (!method.isConcrete()) continue;
+                            MethodSummary oldSummary = cache.lookup(
+                                    method.getSignature().toString(),
+                                    method.getSignature().getSubSignature().toString());
+                            MethodSummary newSummary = analyzeMethod(method, sourceContents, cache, callGraph);
+                            if (newSummary != null) {
+                                storeSummary(method, newSummary, cache);
+                                if (oldSummary == null || oldSummary.getResult() != newSummary.getResult()) {
+                                    anyChanged = true;
+                                }
+                            }
+                        }
+                        if (!anyChanged) {
+                            if (config.debug) System.out.println("Debug== SCC stabilized after " + (iter + 1) + " iterations");
+                            break;
+                        }
                     }
                 }
-                // Collect final summaries for the SCC methods
-                for (JavaSootMethod method : filteredBatch) {
-                    if (!method.isConcrete()) continue;
-                    methodsDone++;
-                    if (config.methodFilter != null && !method.getName().equals(config.methodFilter)) continue;
-                    MethodSummary summary = cache.lookup(
-                            method.getSignature().toString(),
-                            method.getSignature().getSubSignature().toString());
-                    if (summary != null) {
-                        summaries.add(summary);
+                // Collect final summaries for the SCC methods (skip if whole SCC timed out)
+                if (!sccTimedOut) {
+                    for (JavaSootMethod method : filteredBatch) {
+                        if (!method.isConcrete()) continue;
+                        methodsDone++;
+                        if (config.methodFilter != null && !method.getName().equals(config.methodFilter)) continue;
+                        MethodSummary summary = cache.lookup(
+                                method.getSignature().toString(),
+                                method.getSignature().getSubSignature().toString());
+                        if (summary != null) {
+                            summaries.add(summary);
+                        }
+                    }
+                } else {
+                    for (JavaSootMethod method : filteredBatch) {
+                        if (method.isConcrete()) methodsDone++;
                     }
                 }
                 printProgress(methodsDone, totalMethods);

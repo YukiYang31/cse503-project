@@ -87,7 +87,7 @@ def run_tool_on_file(java_file_path):
     if TIMING_DIR.exists():
         existing = set(TIMING_DIR.glob("timing_*.json"))
 
-    args_str = f"{java_file_path} --timing"
+    args_str = f"{java_file_path} --timing --callgraph-timeout 120 --method-timeout 60"
     cmd = [GRADLE_CMD, "run", f"--args={args_str}"]
 
     print(f"  Running: {' '.join(cmd)}")
@@ -98,7 +98,7 @@ def run_tool_on_file(java_file_path):
             cmd,
             capture_output=True,
             text=True,
-            timeout=120,  # 2 minute timeout per file
+            timeout=1800,  # 30 minute safety-net; Java handles granular timeouts internally
         )
         elapsed = time.time() - start_time
         print(f"  Completed in {elapsed:.1f}s (exit code {result.returncode})")
