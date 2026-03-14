@@ -402,6 +402,49 @@ public class SideEffectAnalysisRunner {
             }
         }
 
+        // Post-processing: propagate SIDE_EFFECTING from overrides up to base methods.
+        // If any concrete override is SIDE_EFFECTING, the base method must also be
+        // considered SIDE_EFFECTING (a virtual call to the base may dispatch to it).
+        if (!overrideGraph.isEmpty()) {
+            // Build an index from full signature → position in summaries list
+            Map<String, Integer> summaryIndexMap = new java.util.HashMap<>();
+            for (int i = 0; i < summaries.size(); i++) {
+                summaryIndexMap.put(summaries.get(i).getMethodSignature(), i);
+            }
+            // Iterate until no more changes (handles multi-level inheritance chains)
+            boolean changed = true;
+            while (changed) {
+                changed = false;
+                for (Map.Entry<String, Set<String>> entry : overrideGraph.entrySet()) {
+                    String baseSig = entry.getKey();
+                    Integer baseIdx = summaryIndexMap.get(baseSig);
+                    if (baseIdx == null) continue;
+                    MethodSummary baseSummary = summaries.get(baseIdx);
+                    if (baseSummary.getResult() == MethodSummary.SideEffectResult.SIDE_EFFECTING) continue;
+                    for (String overrideSig : entry.getValue()) {
+                        MethodSummary overrideSummary = cache.lookup(overrideSig, null);
+                        if (overrideSummary != null &&
+                                overrideSummary.getResult() == MethodSummary.SideEffectResult.SIDE_EFFECTING) {
+                            MethodSummary updated = new MethodSummary(
+                                    baseSig, baseSummary.getExitGraph(),
+                                    MethodSummary.SideEffectResult.SIDE_EFFECTING,
+                                    "overridden by side-effecting " + overrideSig,
+                                    baseSummary.getReturnTargets());
+                            summaries.set(baseIdx, updated);
+                            // Update cache so further iterations see the updated result
+                            cache.put(baseSig, null, updated);
+                            if (config.debug) {
+                                System.out.println("Debug== [override propagation] marking " + baseSig
+                                        + " as SIDE_EFFECTING due to override " + overrideSig);
+                            }
+                            changed = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         // Print graphs if requested
         if (config.showGraph) {
             for (MethodSummary summary : summaries) {
