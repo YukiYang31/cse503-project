@@ -89,20 +89,32 @@ When multiple `.java` files are passed as input and one class overrides a method
 
 **Example:**
 ```bash
-./gradlew run --args="Base.java Derived.java --show-graph"
+./gradlew run --args="src/test/resources/interfile/OverrideBase.java \
+                      src/test/resources/interfile/OverrideDerived.java"
+```
+
+Output:
+```
+OverrideDerived.process(java.lang.Object)  : SIDE_EFFECTING  (mutates this via field value)
+OverrideBase.process(java.lang.Object)     : SIDE_EFFECTING  (overridden by side-effecting <OverrideDerived: ...>)
+OverrideBase.caller(OverrideBase,Object)   : SIDE_EFFECTING  (mutates OverrideBase parameter via field value)
 ```
 
 **What happens internally:**
 
 1. **Override detection** — For each loaded class, the tool checks whether its direct superclass is also in the input set. If `Derived extends Base` and both files are passed, any method `Derived.m()` whose sub-signature matches a concrete method in `Base` is recorded as an override. Transitive chains (e.g. `C extends B extends A` across three passed files) are captured naturally since all classes are iterated.
 
-2. **Call graph augmentation** — Override edges are added to the call graph before SCC computation and bottom-up ordering. This ensures overriding methods are always analyzed before (or in the same SCC as) any caller that dispatches through the base type.
+2. **Call graph augmentation** — Override edges are added to the call graph in two ways before SCC computation and bottom-up ordering:
+   - **Callers of base methods** also get edges to all overrides — ensuring callers are analyzed after all implementations are known.
+   - **Each base method** gets a direct edge to all its overrides — ensuring overrides are always analyzed before the base method itself in the bottom-up order.
 
-3. **Union of summaries at call sites** — At any virtual dispatch site (e.g. `obj.m()` where `obj` is declared as type `Base`), the tool applies the side-effect summaries of **all** known implementations — `Base.m()` and `Derived.m()` — to the points-to graph. The result is the conservative union:
+3. **Base method propagation** — Immediately after a base method is analyzed, the tool checks whether any of its overrides is already cached as `SIDE_EFFECTING`. If so, the base method's verdict is upgraded to `SIDE_EFFECTING` before it is stored in the cache. This means `Base.m()` correctly reflects the worst-case behavior of all its concrete implementations, not just its own body. Because the call graph ordering guarantees overrides are processed first, the override's cached result is always available at this point.
+
+4. **Union of summaries at call sites** — At any virtual dispatch site (e.g. `obj.m()` where `obj` is declared as type `Base`), the tool applies the side-effect summaries of **all** known implementations — `Base.m()` and `Derived.m()` — to the points-to graph. The result is the conservative union:
    - `SIDE_EFFECT_FREE` only if **all** override implementations are side-effect-free
    - `SIDE_EFFECTING` if **any** implementation mutates pre-existing state
 
-4. **Override dependency DOT file** (produced when `--show-graph` is used) — `dot-graph/override-dependency.dot` shows:
+5. **Override dependency DOT file** (produced when `--show-graph` is used) — `dot-graph/override-dependency.dot` shows:
    - **Blue arrows** — call edges between analyzed methods
    - **Red arrows** — override relationships (`Derived.m()` → `Base.m()`, labeled `overrides`)
 
@@ -111,18 +123,18 @@ When multiple `.java` files are passed as input and one class overrides a method
    dot -Tpng dot-graph/override-dependency.dot -o override-dependency.png
    ```
 
-**Scope:** Override detection and the union semantics apply only to files explicitly passed as input. JDK and external library calls continue to use the existing four-tier resolution (SafeMethods whitelist → summary cache → on-demand analysis → conservative fallback). Static calls and constructor calls always use exact-match dispatch — no union is applied.
+**Scope:** Override detection and the propagation semantics apply only to files explicitly passed as input. JDK and external library calls continue to use the existing four-tier resolution (SafeMethods whitelist → summary cache → on-demand analysis → conservative fallback). Static calls and constructor calls always use exact-match dispatch — no union is applied.
 
 **Running with test files:**
 ```bash
 # Two-file override example
-./gradlew run --args="src/test/resources/interfile/Base.java \
-                      src/test/resources/interfile/Derived.java \
+./gradlew run --args="src/test/resources/interfile/OverrideBase.java \
+                      src/test/resources/interfile/OverrideDerived.java \
                       --show-graph"
 
 # Debug a caller that dispatches virtually
-./gradlew run --args="src/test/resources/interfile/Base.java \
-                      src/test/resources/interfile/Derived.java \
+./gradlew run --args="src/test/resources/interfile/OverrideBase.java \
+                      src/test/resources/interfile/OverrideDerived.java \
                       --debug --method caller"
 ```
 

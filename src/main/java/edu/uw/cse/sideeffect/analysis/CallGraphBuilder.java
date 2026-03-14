@@ -135,6 +135,15 @@ public class CallGraphBuilder {
             entry.getValue().addAll(extras);
         }
 
+        // Add direct edges from each base method to its overrides so that Tarjan's
+        // bottom-up ordering processes overrides before the base method itself.
+        // This lets us check the cache for SIDE_EFFECTING overrides immediately
+        // after analyzing the base, without a separate post-processing pass.
+        for (Map.Entry<String, Set<String>> entry : overrideGraph.entrySet()) {
+            callGraph.computeIfAbsent(entry.getKey(), k -> new HashSet<>())
+                     .addAll(entry.getValue());
+        }
+
         if (config.debug) {
             System.out.println("\nDebug== Override graph:");
             for (var entry : overrideGraph.entrySet()) {
