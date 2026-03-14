@@ -72,6 +72,8 @@ public class SideEffectAnalysisRunner {
     private JavaView view;                // set in run(), used by analyzeMethod() for on-demand analysis
     private Set<String> analyzing;        // shared recursion guard for on-demand analysis
     private int[] onDemandBudget;         // shared budget counter [remaining] for on-demand analysis
+    private Map<String, Set<String>> rawCallGraph;   // direct invocations only (for debug)
+    private Map<String, Set<String>> overrideGraph;  // base -> overrides (for debug)
 
     public SideEffectAnalysisRunner(AnalysisConfig config, Path classDir, List<Path> sourceFiles,
                                 TimingRecorder timer) {
@@ -202,6 +204,8 @@ public class SideEffectAnalysisRunner {
         List<List<JavaSootMethod>> batches = cgResult.batches();
         Map<String, Set<String>> callGraph = cgResult.callGraph();
         Map<String, Set<String>> overrideGraph = cgResult.overrideGraph();
+        this.rawCallGraph = cgResult.rawCallGraph();
+        this.overrideGraph = overrideGraph;
 
         if (config.timing) {
             timer.recordCallGraph(System.nanoTime() - cgStart);
@@ -296,8 +300,6 @@ public class SideEffectAnalysisRunner {
                 methodsDone++;
                 printProgress(methodsDone, totalMethods);
                 if (summary != null) {
-                    summary = applyOverridePropagation(
-                            method.getSignature().toString(), summary, overrideGraph, cache);
                     storeSummary(method, summary, cache);
                     // Only include in output if it matches the filter (or no filter)
                     if (config.methodFilter == null || method.getName().equals(config.methodFilter)) {
@@ -332,8 +334,6 @@ public class SideEffectAnalysisRunner {
                                         method.getSignature().getSubSignature().toString());
                                 MethodSummary newSummary = analyzeMethod(method, srcFinal, cache, callGraph);
                                 if (newSummary != null) {
-                                    newSummary = applyOverridePropagation(
-                                            method.getSignature().toString(), newSummary, overrideGraph, cache);
                                     storeSummary(method, newSummary, cache);
                                     if (oldSummary == null || oldSummary.getResult() != newSummary.getResult()) {
                                         anyChanged = true;
@@ -375,8 +375,6 @@ public class SideEffectAnalysisRunner {
                                     method.getSignature().getSubSignature().toString());
                             MethodSummary newSummary = analyzeMethod(method, sourceContents, cache, callGraph);
                             if (newSummary != null) {
-                                newSummary = applyOverridePropagation(
-                                        method.getSignature().toString(), newSummary, overrideGraph, cache);
                                 storeSummary(method, newSummary, cache);
                                 if (oldSummary == null || oldSummary.getResult() != newSummary.getResult()) {
                                     anyChanged = true;
@@ -436,8 +434,8 @@ public class SideEffectAnalysisRunner {
 
     /**
      * If the method is a base method with at least one SIDE_EFFECTING override already in the
-     * cache, upgrade the summary to SIDE_EFFECTING. Called immediately after analyzeMethod so
-     * that the cache and output reflect the correct result before any caller is analyzed.
+     * cache, upgrade the summary to SIDE_EFFECTING. Called inside analyzeMethod (before the
+     * timing record and debug HTML are written) so all output reflects the final verdict.
      */
     private MethodSummary applyOverridePropagation(String methodSig, MethodSummary summary,
                                                     Map<String, Set<String>> overrideGraph,
@@ -489,7 +487,7 @@ public class SideEffectAnalysisRunner {
                 for (Stmt stmt : cfg.getStmts()) {
                     debugWriter.addJimpleStatement(stmt.toString());
                 }
-                debugWriter.setCallGraph(sig, callGraph);
+                debugWriter.setGraphs(sig, rawCallGraph, overrideGraph, callGraph);
             }
 
             try {
@@ -531,6 +529,14 @@ public class SideEffectAnalysisRunner {
                 MethodSummary summary = new MethodSummary(sig, exitGraph,
                         sideEffectResult.getResult(), sideEffectResult.getReason(),
                         exitGraph.getReturnTargets());
+
+                // Apply override propagation eagerly so the timing record and debug HTML
+                // both reflect the final verdict (e.g. base method marked SIDE_EFFECTING
+                // because an overriding method already in the cache is side-effecting).
+                // The call in run() after analyzeMethod returns is then a no-op.
+                if (overrideGraph != null) {
+                    summary = applyOverridePropagation(sig, summary, overrideGraph, cache);
+                }
 
                 long sideEffectNs = 0;
                 if (config.timing) sideEffectNs = System.nanoTime() - sideEffectStart;

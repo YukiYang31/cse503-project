@@ -50,7 +50,9 @@ public class DebugHtmlWriter implements Closeable {
     private String mutatedFieldsText;
     private String sideEffectResult;
     private String sideEffectReason;
-    private String callGraphDot;   // DOT source for the dependency graph
+    private String rawCallGraphDot;    // DOT: direct invocations only
+    private String overrideGraphDot;   // DOT: override relationships
+    private String mergedGraphDot;     // DOT: call + override edges (used for analysis order)
 
     private DebugHtmlWriter(String methodSig, Path outputPath) {
         this.methodSig = methodSig;
@@ -244,55 +246,66 @@ public class DebugHtmlWriter implements Closeable {
     }
 
     /**
-     * Build a visual dependency graph (DOT) showing the entire call graph,
-     * with the current method highlighted.
-     * @param currentMethodSig  the signature of the current method
-     * @param callGraph         caller sig → set of callee sigs
+     * Generate DOT visualizations for the raw call graph, override graph, and merged graph.
+     * Called once per method in debug mode.
+     *
+     * @param currentMethodSig  the method being analyzed (highlighted in each graph)
+     * @param rawCallGraph      caller → callees from direct invocations only
+     * @param overrideGraph     base method → set of overriding methods
+     * @param mergedCallGraph   rawCallGraph augmented with override edges (used for analysis order)
      */
-    public void setCallGraph(String currentMethodSig, Map<String, Set<String>> callGraph) {
-        // Collect all nodes that appear in the call graph (as caller or callee)
+    public void setGraphs(String currentMethodSig,
+                          Map<String, Set<String>> rawCallGraph,
+                          Map<String, Set<String>> overrideGraph,
+                          Map<String, Set<String>> mergedCallGraph) {
+        this.rawCallGraphDot   = buildCallGraphDot(currentMethodSig, rawCallGraph, rawCallGraph, overrideGraph, "Raw Call Graph");
+        this.overrideGraphDot  = overrideGraph.isEmpty() ? null : buildOverrideGraphDot(currentMethodSig, overrideGraph);
+        this.mergedGraphDot    = buildCallGraphDot(currentMethodSig, mergedCallGraph, rawCallGraph, overrideGraph, "Merged Graph");
+    }
+
+    /**
+     * Build a call-graph DOT. Edges present in rawCallGraph are drawn in blue;
+     * edges only in mergedCallGraph (override-derived) are drawn in red.
+     */
+    private String buildCallGraphDot(String currentMethodSig,
+                                      Map<String, Set<String>> graph,
+                                      Map<String, Set<String>> rawCallGraph,
+                                      Map<String, Set<String>> overrideGraph,
+                                      String graphTitle) {
         Set<String> allNodes = new LinkedHashSet<>();
-        List<String[]> edges = new ArrayList<>();
-        for (Map.Entry<String, Set<String>> entry : callGraph.entrySet()) {
+        List<String[]> edges = new ArrayList<>(); // [from, to, color]
+        for (Map.Entry<String, Set<String>> entry : graph.entrySet()) {
             String caller = entry.getKey();
             allNodes.add(caller);
             for (String callee : entry.getValue()) {
                 allNodes.add(callee);
-                edges.add(new String[]{caller, callee});
+                // Blue if it's a direct call edge, red if it was added via override augmentation
+                boolean isDirect = rawCallGraph.getOrDefault(caller, Set.of()).contains(callee);
+                edges.add(new String[]{caller, callee, isDirect ? "#2563eb" : "#dc2626"});
             }
         }
-        // Also include the current method even if it has no edges
         allNodes.add(currentMethodSig);
 
-        // Sort edges for deterministic output
         edges.sort((a, b) -> {
             int cmp = a[0].compareTo(b[0]);
             return cmp != 0 ? cmp : a[1].compareTo(b[1]);
         });
 
-        // Build DOT
         StringBuilder dot = new StringBuilder();
-        dot.append("digraph CallGraph {\n");
+        dot.append("digraph ").append(graphTitle.replace(" ", "_")).append(" {\n");
         dot.append("  rankdir=LR;\n");
-        dot.append("  node [shape=box, style=filled, fillcolor=\"#f1f5f9\", "
-                 + "fontname=\"Helvetica\", fontsize=11];\n");
-        dot.append("  edge [color=\"#64748b\"];\n");
+        dot.append("  node [shape=box, style=filled, fillcolor=\"#f1f5f9\", fontname=\"Helvetica\", fontsize=11];\n");
 
-        // Assign stable node IDs
-        Map<String, String> nodeIds = new LinkedHashMap<>();
-        int idx = 0;
         List<String> sortedNodes = new ArrayList<>(allNodes);
         sortedNodes.sort(String::compareTo);
-        for (String sig : sortedNodes) {
-            nodeIds.put(sig, "n" + idx++);
-        }
+        Map<String, String> nodeIds = new LinkedHashMap<>();
+        int idx = 0;
+        for (String sig : sortedNodes) nodeIds.put(sig, "n" + idx++);
 
-        // Emit nodes
         for (String sig : sortedNodes) {
             String nid = nodeIds.get(sig);
             String label = shortLabel(sig);
             if (sig.equals(currentMethodSig)) {
-                // Highlight the current method
                 dot.append("  ").append(nid)
                    .append(" [label=\"").append(dotEscape(label))
                    .append("\", fillcolor=\"#dbeafe\", penwidth=2.5, color=\"#2563eb\"];\n");
@@ -302,17 +315,75 @@ public class DebugHtmlWriter implements Closeable {
             }
         }
 
-        // Emit edges
         for (String[] edge : edges) {
             String fromId = nodeIds.get(edge[0]);
-            String toId = nodeIds.get(edge[1]);
+            String toId   = nodeIds.get(edge[1]);
             if (fromId != null && toId != null) {
-                dot.append("  ").append(fromId).append(" -> ").append(toId).append(";\n");
+                dot.append("  ").append(fromId).append(" -> ").append(toId)
+                   .append(" [color=\"").append(edge[2]).append("\"];\n");
+            }
+        }
+        dot.append("}\n");
+        return dot.toString();
+    }
+
+    /**
+     * Build an override-graph DOT. Edges go from base method to overriding method,
+     * drawn with dashed red arrows labeled "overrides".
+     */
+    private String buildOverrideGraphDot(String currentMethodSig,
+                                          Map<String, Set<String>> overrideGraph) {
+        Set<String> allNodes = new LinkedHashSet<>();
+        List<String[]> edges = new ArrayList<>(); // [base, override]
+        for (Map.Entry<String, Set<String>> entry : overrideGraph.entrySet()) {
+            allNodes.add(entry.getKey());
+            for (String override : entry.getValue()) {
+                allNodes.add(override);
+                edges.add(new String[]{entry.getKey(), override});
+            }
+        }
+        allNodes.add(currentMethodSig);
+
+        edges.sort((a, b) -> {
+            int cmp = a[0].compareTo(b[0]);
+            return cmp != 0 ? cmp : a[1].compareTo(b[1]);
+        });
+
+        StringBuilder dot = new StringBuilder();
+        dot.append("digraph OverrideGraph {\n");
+        dot.append("  rankdir=LR;\n");
+        dot.append("  node [shape=box, style=filled, fillcolor=\"#fff5f5\", fontname=\"Helvetica\", fontsize=11];\n");
+        dot.append("  edge [color=\"#dc2626\", style=dashed];\n");
+
+        List<String> sortedNodes = new ArrayList<>(allNodes);
+        sortedNodes.sort(String::compareTo);
+        Map<String, String> nodeIds = new LinkedHashMap<>();
+        int idx = 0;
+        for (String sig : sortedNodes) nodeIds.put(sig, "n" + idx++);
+
+        for (String sig : sortedNodes) {
+            String nid = nodeIds.get(sig);
+            String label = shortLabel(sig);
+            if (sig.equals(currentMethodSig)) {
+                dot.append("  ").append(nid)
+                   .append(" [label=\"").append(dotEscape(label))
+                   .append("\", fillcolor=\"#dbeafe\", penwidth=2.5, color=\"#2563eb\"];\n");
+            } else {
+                dot.append("  ").append(nid)
+                   .append(" [label=\"").append(dotEscape(label)).append("\"];\n");
             }
         }
 
+        for (String[] edge : edges) {
+            String fromId = nodeIds.get(edge[0]);
+            String toId   = nodeIds.get(edge[1]);
+            if (fromId != null && toId != null) {
+                dot.append("  ").append(fromId).append(" -> ").append(toId)
+                   .append(" [label=\"overrides\"];\n");
+            }
+        }
         dot.append("}\n");
-        this.callGraphDot = dot.toString();
+        return dot.toString();
     }
 
     /**
@@ -409,11 +480,25 @@ public class DebugHtmlWriter implements Closeable {
         }
         out.println("</pre>");
 
-        // Call Graph (Dependency Graph)
-        if (callGraphDot != null) {
-            out.println("<h2>Call Dependency Graph</h2>");
-            out.println("<p class=\"muted\">Full call graph. Current method highlighted in blue.</p>");
-            out.println("<div class=\"graph-container\" id=\"call-graph\">");
+        // Call Graph, Override Graph, Merged Graph
+        if (rawCallGraphDot != null) {
+            out.println("<h2>Call Graph (Direct Invocations)</h2>");
+            out.println("<p class=\"muted\">Edges from actual invoke statements. Current method highlighted in blue.</p>");
+            out.println("<div class=\"graph-container\" id=\"raw-call-graph\">");
+            out.println("<p class=\"loading\">Rendering graph...</p>");
+            out.println("</div>");
+        }
+        if (overrideGraphDot != null) {
+            out.println("<h2>Override Graph</h2>");
+            out.println("<p class=\"muted\">Dashed red arrows: base method &rarr; overriding method. Current method highlighted in blue.</p>");
+            out.println("<div class=\"graph-container\" id=\"override-graph\">");
+            out.println("<p class=\"loading\">Rendering graph...</p>");
+            out.println("</div>");
+        }
+        if (mergedGraphDot != null) {
+            out.println("<h2>Merged Graph (Analysis Order)</h2>");
+            out.println("<p class=\"muted\">Blue edges: direct call edges. Red edges: override-derived edges added for correct bottom-up ordering. Tarjan&apos;s SCC runs on this graph.</p>");
+            out.println("<div class=\"graph-container\" id=\"merged-graph\">");
             out.println("<p class=\"loading\">Rendering graph...</p>");
             out.println("</div>");
         }
@@ -550,8 +635,14 @@ public class DebugHtmlWriter implements Closeable {
         if (exitGraphDot != null) {
             out.println("  \"exit-graph\": " + jsStringLiteral(exitGraphDot) + ",");
         }
-        if (callGraphDot != null) {
-            out.println("  \"call-graph\": " + jsStringLiteral(callGraphDot));
+        if (rawCallGraphDot != null) {
+            out.println("  \"raw-call-graph\": " + jsStringLiteral(rawCallGraphDot) + ",");
+        }
+        if (overrideGraphDot != null) {
+            out.println("  \"override-graph\": " + jsStringLiteral(overrideGraphDot) + ",");
+        }
+        if (mergedGraphDot != null) {
+            out.println("  \"merged-graph\": " + jsStringLiteral(mergedGraphDot));
         }
         out.println("};");
         out.println();

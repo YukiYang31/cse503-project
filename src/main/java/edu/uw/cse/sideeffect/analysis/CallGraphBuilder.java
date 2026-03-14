@@ -31,6 +31,7 @@ public class CallGraphBuilder {
     public record Result(
             List<List<JavaSootMethod>> batches,
             Map<String, Set<String>> callGraph,
+            Map<String, Set<String>> rawCallGraph,
             Map<String, Set<String>> overrideGraph
     ) {}
 
@@ -123,6 +124,25 @@ public class CallGraphBuilder {
             callGraph.put(callerSig, callees);
         }
 
+        if (config.debug) {
+            System.out.println("\nDebug== Call graph (direct invocations only):");
+            for (var entry : callGraph.entrySet()) {
+                if (!entry.getValue().isEmpty()) {
+                    System.out.println("Debug==   " + entry.getKey() + " -> " + entry.getValue());
+                }
+            }
+            System.out.println("\nDebug== Override graph (base -> overrides):");
+            for (var entry : overrideGraph.entrySet()) {
+                System.out.println("Debug==   " + entry.getKey() + " overridden by " + entry.getValue());
+            }
+        }
+
+        // Snapshot the raw call graph (direct invocations only) before override augmentation
+        Map<String, Set<String>> rawCallGraph = new HashMap<>();
+        for (var e : callGraph.entrySet()) {
+            rawCallGraph.put(e.getKey(), new HashSet<>(e.getValue()));
+        }
+
         // Augment call graph with override edges so that Tarjan's SCC and bottom-up ordering
         // account for override relationships: any caller of a base method implicitly also
         // depends on every overriding implementation.
@@ -145,11 +165,7 @@ public class CallGraphBuilder {
         }
 
         if (config.debug) {
-            System.out.println("\nDebug== Override graph:");
-            for (var entry : overrideGraph.entrySet()) {
-                System.out.println("Debug==   " + entry.getKey() + " overridden by " + entry.getValue());
-            }
-            System.out.println("\nDebug== Call graph (after override augmentation):");
+            System.out.println("\nDebug== Merged graph (call + override edges, used for analysis order):");
             for (var entry : callGraph.entrySet()) {
                 if (!entry.getValue().isEmpty()) {
                     System.out.println("Debug==   " + entry.getKey() + " -> " + entry.getValue());
@@ -185,7 +201,7 @@ public class CallGraphBuilder {
             }
         }
 
-        return new Result(result, callGraph, overrideGraph);
+        return new Result(result, callGraph, rawCallGraph, overrideGraph);
     }
 
     /** Extract an invoke expression from a statement, if present */
