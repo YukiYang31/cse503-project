@@ -108,7 +108,7 @@ public class SideEffectAnalysisTest {
             MethodSummary sideEffectResult = SideEffectChecker.check(
                     method.getSignature().toString(), exitGraph, isConstructor);
             return new MethodSummary(method.getSignature().toString(), exitGraph,
-                    sideEffectResult.getResult(), sideEffectResult.getReason(),
+                    sideEffectResult.getResult(), sideEffectResult.getReasons(),
                     exitGraph.getReturnTargets());
         } catch (Exception e) {
             return null;

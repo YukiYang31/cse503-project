@@ -1,0 +1,83 @@
+\subsection{Side-Effect Verdict} \label{sec:side-effect-verdict}
+Before we infer the side-effectiveness of the method, we validate the exit points-to graph based on the following rules:
+1. An inside node cannot be the source of an outside edge
+2. An outside node cannot lead to an inside edge.
+If either of the two rules is violated, we immediately return \texttt{GRAPH VIOLATION}.
+
+After the graph is validated, the analysis determines side-effectiveness by inspecting the exit points-to graph and the write set. The checker accumulates \emph{all} violations into a set of reasons and reports them together. The output type of the checker is therefore either \texttt{SIDE\_EFFECT\_FREE} or \texttt{SIDE\_EFFECTING(reasons)}, where \texttt{reasons} is a \texttt{Set<String>}, a set of human-readable strings each describing one distinct violation. 
+
+
+Following the algorithm of Salcianu--Rinard, we define two node sets from the exit graph. Let $\mathit{PrestateNodes}$ be the set of all nodes reachable from any parameter node by traversing only outside edges. These are the nodes that represent objects which existed before the method was called: the parameter nodes themselves plus any heap objects read from them. Let $\mathit{EscapedNodes}$ be the set of all nodes that escape. We say that a node $n$ \emph{escapes} if it is reachable from the global state --- if any part of the program outside the current method can access the object $n$ represents without going through the method's parameters. Formally, $n$ escapes if it is reachable from $E \cup \{n_{GBL}\}$ via any combination of inside and outside edges in the exit graph. Both sets are computed as graph reachability closures over the exit graph.
+
+A node in $\mathit{PrestateNodes}$ that is also in $\mathit{EscapedNodes}$ has escaped to global scope---it was part of the heap before the call and is now accessible to the whole program, which is a side effect. Similarly, a write set entry $\langle n, f \rangle \in W$ where $n \in \mathit{PrestateNodes}$ indicates that a pre-existing heap object was mutated, which is also a side effect.
+
+Step 3 of Algorithm~\ref{alg:sideEffectChecker} checks for mutations to the global node $n_{GBL}$ directly, as a separate step before the loop over $\mathit{PrestateNodes}$. The reason is that $n_{GBL}$ is always a member of $\mathit{EscapedNodes}$ by definition (it is the root of global state). If we added $n_{GBL}$ to $\mathit{PrestateNodes}$, every method that reads any static field would have $n_{GBL} \in \mathit{PrestateNodes} \cap \mathit{EscapedNodes}$, causing the escape check to fire and classify all such methods as side-effecting. Step 3 avoids this by checking only write set entries whose source node is $n_{GBL}$: a static field \emph{write} is a side effect, but a static field \emph{read} is not.
+
+Constructors are treated with a limited exception to the side-effect rules. Direct field writes to the receiver object (e.g., \texttt{this.f = x}) are considered side-effect-free, since they initialize an object that is newly allocated during the constructor call. However, this exception is precise: only direct writes to fields of \texttt{this} (i.e., the parameter node $P_0$) are exempted from the mutation check. The escape check still applies---if \texttt{this} escapes to global scope even inside a constructor, that is a side effect. Writes that traverse through the receiver to reach other heap objects (e.g., \texttt{this.list.add(x)}) are treated as mutations of pre-existing state and cause the constructor to be classified as side-effecting.
+
+This distinction follows from the definition of side effects used by the analysis. At constructor entry, the receiver object is freshly allocated and did not exist in the pre-state. Direct field assignments to \texttt{this} therefore modify only newly created state and cannot affect any heap location observable before the constructor call. In contrast, writes that traverse through the receiver may reach objects supplied as arguments or reachable from global state. Such objects may have existed before the constructor invocation, and mutating them constitutes a side effect under the pre-state mutation criterion.
+
+After the graph-based checks above produce a verdict, there is one additional source of side-effectfulness: a method may be overridden by another method that is itself side-effecting. This matters for soundness because a call site that dispatches virtually may invoke the overriding implementation at runtime, even if the base method is side-effect-free. The analysis therefore performs an override propagation step (Step 6) after the graph-based verdict is determined. This step consults a precomputed \emph{override graph}, which maps each base method to the set of methods that override it within the set of analyzed files. If the base method passed all graph-based checks (i.e., was tentatively classified as \texttt{SIDE\_EFFECT\_FREE}), Step 6 iterates over every known override and looks it up in the summary cache. A reason of the form \emph{``overridden by side-effecting $o$''} is added to the reason set for each override $o$ that has been determined to be side-effecting. If at least one such override exists, the base method is changed to \texttt{SIDE\_EFFECTING} and all overrides are reported.
+
+\begin{lstlisting}[
+    caption={Side-effect inference},
+    label={alg:sideEffectChecker},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=none,
+    keepspaces=true,
+    showstringspaces=false,
+    mathescape=true
+]
+Algorithm: CheckSideEffects(m, G_exit)
+
+Input:  Method m, exit graph G_exit = (I, O, L, E, W)
+Output: SIDE_EFFECT_FREE or SIDE_EFFECTING(reasons : Set<String>)
+
+// Step 1: Compute PrestateNodes
+//   Objects that existed before the call: parameter nodes plus all
+//   nodes reachable from them via outside edges only.
+PrestateNodes $\leftarrow$ reachability({ n $\in$ G_exit : n is ParameterNode }, outside edges only)
+
+// Step 2: Compute EscapedNodes
+//   A node escapes if it is reachable from global state, i.e., from
+//   E $\cup$ {$n_{GBL}$} via any combination of inside and outside edges.
+EscapedNodes $\leftarrow$ reachability(E $\cup$ { $n_{GBL}$ }, all edges)
+
+// Accumulate all violations into a set of reasons
+reasons $\leftarrow$ {}
+
+// Step 3: Check for writes to static fields (mutations of $n_{GBL}$)
+for each $\langle n_{GBL}$, f$\rangle$ in W do
+    reasons $\leftarrow$ reasons $\cup$ { "writes to static field f" }
+
+// Step 4: Check each prestate node for escape and mutation
+for each node n in PrestateNodes do
+    // Escape check: prestate node must not be globally reachable
+    if n in EscapedNodes then
+        reasons $\leftarrow$ reasons $\cup$ { "prestate node n escapes to global scope" }
+
+    // Mutation check: prestate node must not appear in the write set
+    for each $\langle$n, f$\rangle$ in W do
+        // Constructor exception
+        if m is a constructor and n = P0 then
+            continue
+        reasons $\leftarrow$ reasons $\cup$ { "mutates prestate node n via field f" }
+
+// Step 5: Return verdict with all accumulated reasons
+if reasons $\neq$ {} then
+    return SIDE_EFFECTING(reasons)
+verdict $\leftarrow$ SIDE_EFFECT_FREE
+
+// Step 6: Override propagation
+if OverrideGraph contains m then
+    for each override o in OverrideGraph[m] do
+        if SummaryCache[o].result = SIDE_EFFECTING then
+            reasons $\leftarrow$ reasons $\cup$ { "overridden by side-effecting o" }
+
+if reasons $\neq$ {} then
+    return SIDE_EFFECTING(reasons)
+
+return verdict
+\end{lstlisting}

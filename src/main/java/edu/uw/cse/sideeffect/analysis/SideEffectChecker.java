@@ -41,7 +41,7 @@ public class SideEffectChecker {
             if (debug) System.out.println("Debug== [side-effect] graph invariant violation: " + String.join("; ", violations));
             return new MethodSummary(methodSig, exitGraph,
                 MethodSummary.SideEffectResult.GRAPH_VIOLATION,
-                String.join("; ", violations));
+                violations);
         }
 
         // Step 1: Compute set A (prestate nodes)
@@ -53,21 +53,22 @@ public class SideEffectChecker {
         // Step 3: Compute set W
         Set<MutatedField> setW = exitGraph.getMutatedFields();
 
+        if (debug) {
+            System.out.println("Debug== [side-effect] set A (prestate nodes): " + nodeSetStr(setA));
+            System.out.println("Debug== [side-effect] set B (globally escaped): " + nodeSetStr(setB));
+            System.out.println("Debug== [side-effect] set W (mutated fields): " + mutatedFieldsStr(setW));
+        }
+
+        // Accumulate all reasons for side-effecting behavior instead of returning on first
+        List<String> reasons = new ArrayList<>();
+
         // Step 3a: Check for static field writes (GlobalNode mutations in W)
         for (MutatedField mf : setW) {
             if (mf.node() instanceof GlobalNode) {
                 String fieldName = mf.field() != null ? mf.field().getName() : "unknown";
                 if (debug) System.out.println("Debug== [side-effect] GlobalNode mutation in W => SIDE_EFFECTING (writes to static field " + fieldName + ")");
-                return new MethodSummary(methodSig, exitGraph,
-                    MethodSummary.SideEffectResult.SIDE_EFFECTING,
-                    "writes to static field " + fieldName);
+                reasons.add("writes to static field " + fieldName);
             }
-        }
-
-        if (debug) {
-            System.out.println("Debug== [side-effect] set A (prestate nodes): " + nodeSetStr(setA));
-            System.out.println("Debug== [side-effect] set B (globally escaped): " + nodeSetStr(setB));
-            System.out.println("Debug== [side-effect] set W (mutated fields): " + mutatedFieldsStr(setW));
         }
 
         // Step 4: For each n ∈ A, check (a) n ∉ B and (b) no ⟨n,f⟩ ∈ W
@@ -75,9 +76,7 @@ public class SideEffectChecker {
             // Check (a): n ∉ B
             if (setB.contains(n)) {
                 if (debug) System.out.println("Debug== [side-effect] prestate node " + n.getId() + " ∈ set B (globally escaped) => SIDE_EFFECTING");
-                return new MethodSummary(methodSig, exitGraph,
-                    MethodSummary.SideEffectResult.SIDE_EFFECTING,
-                    describeNode(n) + " escapes to global scope");
+                reasons.add(describeNode(n) + " escapes to global scope");
             }
 
             // Check (b): no ⟨n,f⟩ ∈ W (with constructor exception for P0)
@@ -92,17 +91,21 @@ public class SideEffectChecker {
 
                     String fieldName = mf.field() != null ? mf.field().getName() : "array element";
                     if (debug) System.out.println("Debug== [side-effect] prestate node " + n.getId() + " mutated via " + fieldName + " => SIDE_EFFECTING");
-                    return new MethodSummary(methodSig, exitGraph,
-                        MethodSummary.SideEffectResult.SIDE_EFFECTING,
-                        "mutates " + describeNode(n) + " via field " + fieldName);
+                    reasons.add("mutates " + describeNode(n) + " via field " + fieldName);
                 }
             }
         }
 
-        // Step 5: SIDE_EFFECT_FREE
+        // Step 5: Return verdict with all accumulated reasons
+        if (!reasons.isEmpty()) {
+            return new MethodSummary(methodSig, exitGraph,
+                MethodSummary.SideEffectResult.SIDE_EFFECTING,
+                reasons);
+        }
+
         if (debug) System.out.println("Debug== [side-effect] no prestate mutations, no global escape => SIDE_EFFECT_FREE");
         return new MethodSummary(methodSig, exitGraph,
-            MethodSummary.SideEffectResult.SIDE_EFFECT_FREE, null);
+            MethodSummary.SideEffectResult.SIDE_EFFECT_FREE, List.of());
     }
 
     /**

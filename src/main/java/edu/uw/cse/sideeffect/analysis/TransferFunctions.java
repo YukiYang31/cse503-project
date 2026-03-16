@@ -676,7 +676,7 @@ public class TransferFunctions {
             boolean isCtor = "<init>".equals(method.getName());
             MethodSummary result = SideEffectChecker.check(sig, exitGraph, isCtor, false);
             MethodSummary summary = new MethodSummary(sig, exitGraph,
-                result.getResult(), result.getReason(), exitGraph.getReturnTargets());
+                result.getResult(), result.getReasons(), exitGraph.getReturnTargets());
 
             summaryCache.put(sig, methodSig.getSubSignature().toString(), summary);
             return summary;

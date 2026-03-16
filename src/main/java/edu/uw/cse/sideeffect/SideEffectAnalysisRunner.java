@@ -443,6 +443,7 @@ public class SideEffectAnalysisRunner {
         if (summary.getResult() == MethodSummary.SideEffectResult.SIDE_EFFECTING) return summary;
         Set<String> overrides = overrideGraph.get(methodSig);
         if (overrides == null) return summary;
+        List<String> reasons = new ArrayList<>();
         for (String overrideSig : overrides) {
             MethodSummary overrideSummary = cache.lookup(overrideSig, null);
             if (overrideSummary != null &&
@@ -451,13 +452,14 @@ public class SideEffectAnalysisRunner {
                     System.out.println("Debug== [override propagation] marking " + methodSig
                             + " as SIDE_EFFECTING due to override " + overrideSig);
                 }
-                return new MethodSummary(methodSig, summary.getExitGraph(),
-                        MethodSummary.SideEffectResult.SIDE_EFFECTING,
-                        "overridden by side-effecting " + overrideSig,
-                        summary.getReturnTargets());
+                reasons.add("overridden by side-effecting " + overrideSig);
             }
         }
-        return summary;
+        if (reasons.isEmpty()) return summary;
+        return new MethodSummary(methodSig, summary.getExitGraph(),
+                MethodSummary.SideEffectResult.SIDE_EFFECTING,
+                reasons,
+                summary.getReturnTargets());
     }
 
     /** Store a summary in the cache, keyed by both full and sub signature */
@@ -527,7 +529,7 @@ public class SideEffectAnalysisRunner {
                 boolean isConstructor = "<init>".equals(method.getName());
                 MethodSummary sideEffectResult = SideEffectChecker.check(sig, exitGraph, isConstructor, config.debug);
                 MethodSummary summary = new MethodSummary(sig, exitGraph,
-                        sideEffectResult.getResult(), sideEffectResult.getReason(),
+                        sideEffectResult.getResult(), sideEffectResult.getReasons(),
                         exitGraph.getReturnTargets());
 
                 // Apply override propagation eagerly so the timing record and debug HTML
