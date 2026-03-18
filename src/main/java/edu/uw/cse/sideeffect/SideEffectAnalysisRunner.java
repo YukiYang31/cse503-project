@@ -5,6 +5,7 @@ import java.util.Deque;
 import java.util.ArrayDeque;
 
 import edu.uw.cse.sideeffect.analysis.CallGraphBuilder;
+import edu.uw.cse.sideeffect.analysis.LibrarySummaryCache;
 import edu.uw.cse.sideeffect.analysis.MethodSummary;
 import edu.uw.cse.sideeffect.analysis.SideEffectChecker;
 import edu.uw.cse.sideeffect.analysis.SideEffectFlowAnalysis;
@@ -35,7 +36,6 @@ import org.objectweb.asm.util.Textifier;
 import org.objectweb.asm.util.TraceMethodVisitor;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URI;
@@ -69,9 +69,7 @@ public class SideEffectAnalysisRunner {
     private final List<Path> sourceFiles;
     private final TimingRecorder timer;
     private final Set<String> jrtClassNames;  // non-empty = JRT mode
-    private JavaView view;                // set in run(), used by analyzeMethod() for on-demand analysis
-    private Set<String> analyzing;        // shared recursion guard for on-demand analysis
-    private int[] onDemandBudget;         // shared budget counter [remaining] for on-demand analysis
+    private JavaView view;                // set in run()
     private Map<String, Set<String>> rawCallGraph;   // direct invocations only (for debug)
     private Map<String, Set<String>> overrideGraph;  // base -> overrides (for debug)
 
@@ -117,13 +115,17 @@ public class SideEffectAnalysisRunner {
             JrtFileSystemAnalysisInputLocation jrtInput = new JrtFileSystemAnalysisInputLocation();
             this.view = new JavaView(jrtInput);
         } else {
+            // User mode: load user classes only (JRT view created lazily in CallGraphBuilder)
             JavaClassPathAnalysisInputLocation inputLocation =
                 new JavaClassPathAnalysisInputLocation(classDir.toString());
             this.view = new JavaView(inputLocation);
         }
-        // Create shared state for on-demand cross-file analysis
-        this.analyzing = new HashSet<>();
-        this.onDemandBudget = new int[]{10};  // reset per top-level method
+
+        // Load global library cache from disk (for reuse across runs)
+        int diskCacheLoaded = LibrarySummaryCache.loadFromDisk();
+        if (diskCacheLoaded > 0 && config.debug) {
+            System.out.println("Debug== Loaded " + diskCacheLoaded + " cached library summaries from disk");
+        }
 
         // Get classes — filter to targets when using JRT mode
         Collection<JavaSootClass> classes;
@@ -168,8 +170,9 @@ public class SideEffectAnalysisRunner {
         if (config.callGraphTimeoutSecs > 0) {
             ExecutorService cgExec = Executors.newSingleThreadExecutor();
             final Collection<JavaSootClass> classesFinal = classes;
+            final JavaView viewFinal = this.view;
             Future<CallGraphBuilder.Result> cgFuture = cgExec.submit(
-                    () -> CallGraphBuilder.computeBottomUpOrder(classesFinal, config));
+                    () -> CallGraphBuilder.computeBottomUpOrder(classesFinal, viewFinal, config));
             try {
                 cgResult = cgFuture.get(config.callGraphTimeoutSecs, TimeUnit.SECONDS);
             } catch (TimeoutException e) {
@@ -198,7 +201,7 @@ public class SideEffectAnalysisRunner {
                 cgExec.shutdown();
             }
         } else {
-            cgResult = CallGraphBuilder.computeBottomUpOrder(classes, config);
+            cgResult = CallGraphBuilder.computeBottomUpOrder(classes, view, config);
         }
 
         List<List<JavaSootMethod>> batches = cgResult.batches();
@@ -211,8 +214,24 @@ public class SideEffectAnalysisRunner {
             timer.recordCallGraph(System.nanoTime() - cgStart);
         }
 
+        // Build set of user-class method signatures (for output filtering — don't show
+        // JDK library methods discovered via BFS in the results table)
+        Set<String> userMethodSigs = new HashSet<>();
+        for (JavaSootClass cls : classes) {
+            for (JavaSootMethod m : cls.getMethods()) {
+                userMethodSigs.add(m.getSignature().toString());
+            }
+        }
+
         // Analyze only methods reachable from the target (if methodFilter is set)
         SummaryCache cache = new SummaryCache();
+
+        // Pre-populate cache from disk-backed library cache
+        cache.putAll(LibrarySummaryCache.getAll());
+        if (config.debug && LibrarySummaryCache.size() > 0) {
+            System.out.println("Debug== Pre-populated SummaryCache with " + LibrarySummaryCache.size() + " library summaries");
+        }
+
         List<MethodSummary> summaries = new ArrayList<>();
 
         Set<String> reachable = null;
@@ -301,8 +320,10 @@ public class SideEffectAnalysisRunner {
                 printProgress(methodsDone, totalMethods);
                 if (summary != null) {
                     storeSummary(method, summary, cache);
-                    // Only include in output if it matches the filter (or no filter)
-                    if (config.methodFilter == null || method.getName().equals(config.methodFilter)) {
+                    // Only include in output if it's a user method and matches filter
+                    String methodSig = method.getSignature().toString();
+                    if (userMethodSigs.contains(methodSig)
+                            && (config.methodFilter == null || method.getName().equals(config.methodFilter))) {
                         summaries.add(summary);
                     }
                 }
@@ -389,9 +410,11 @@ public class SideEffectAnalysisRunner {
                     for (JavaSootMethod method : filteredBatch) {
                         if (!method.isConcrete()) continue;
                         methodsDone++;
+                        String mSig = method.getSignature().toString();
+                        if (!userMethodSigs.contains(mSig)) continue;
                         if (config.methodFilter != null && !method.getName().equals(config.methodFilter)) continue;
                         MethodSummary summary = cache.lookup(
-                                method.getSignature().toString(),
+                                mSig,
                                 method.getSignature().getSubSignature().toString());
                         if (summary != null) {
                             summaries.add(summary);
@@ -462,11 +485,27 @@ public class SideEffectAnalysisRunner {
                 summary.getReturnTargets());
     }
 
-    /** Store a summary in the cache, keyed by both full and sub signature */
+    /** Store a summary in the cache, keyed by both full and sub signature.
+     *  Also persists library (non-user) methods to the disk cache. */
     private void storeSummary(JavaSootMethod method, MethodSummary summary, SummaryCache cache) {
         String fullSig = method.getSignature().toString();
         String subSig = method.getSignature().getSubSignature().toString();
         cache.put(fullSig, subSig, summary);
+
+        // Persist library methods to disk cache for reuse across runs
+        if (isLibraryMethod(method)) {
+            LibrarySummaryCache.put(fullSig, summary);
+        }
+    }
+
+    /** A method is a "library method" if its declaring class is not from the user's classpath. */
+    private boolean isLibraryMethod(JavaSootMethod method) {
+        if (classDir == null) return true; // JRT mode: all methods are library
+        String className = method.getDeclaringClassType().getFullyQualifiedName();
+        // If the class comes from a JDK package, it's a library method
+        return className.startsWith("java.") || className.startsWith("javax.")
+                || className.startsWith("sun.") || className.startsWith("com.sun.")
+                || className.startsWith("jdk.");
     }
 
     private MethodSummary analyzeMethod(JavaSootMethod method,
@@ -506,14 +545,9 @@ public class SideEffectAnalysisRunner {
                 long dataflowStart = 0;
                 if (config.timing) dataflowStart = System.nanoTime();
 
-                // Reset on-demand budget for each top-level method so budget exhaustion
-                // from one method (e.g., writeObject) doesn't starve later methods
-                onDemandBudget[0] = 10;
-
-                // Run the forward flow analysis (with inter-procedural cache + on-demand cross-file)
+                // Run the forward flow analysis (with inter-procedural cache)
                 SideEffectFlowAnalysis analysis = new SideEffectFlowAnalysis(
-                    cfg, body, config, method.isStatic(), debugWriter, paramTypeNames, cache,
-                    view, analyzing, onDemandBudget);
+                    cfg, body, config, method.isStatic(), debugWriter, paramTypeNames, cache);
 
                 // Get the exit graph
                 PointsToGraph exitGraph = analysis.getExitGraph();

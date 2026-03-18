@@ -21,19 +21,14 @@ import sootup.core.jimple.common.stmt.Stmt;
 import sootup.core.model.Body;
 import sootup.core.signatures.FieldSignature;
 import sootup.core.signatures.MethodSignature;
-import sootup.core.types.ClassType;
 import sootup.core.types.ReferenceType;
 import sootup.core.types.Type;
-import sootup.java.core.JavaSootClass;
-import sootup.java.core.JavaSootMethod;
-import sootup.java.core.views.JavaView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 
@@ -49,11 +44,6 @@ public class TransferFunctions {
     private final List<String> paramTypeNames; // nullable — falls back to index-based labels
     private final SummaryCache summaryCache; // nullable — null means intra-procedural only
     private final DebugHtmlWriter debugWriter; // nullable — null means no debug output
-    private final JavaView view;          // nullable — null when on-demand analysis is disabled
-    private final Set<String> analyzing;  // shared recursion guard, nullable
-    private final int[] onDemandBudget;   // shared budget counter [remaining], nullable
-    private static final int MAX_ON_DEMAND_DEPTH = 5;   // max recursive on-demand analysis depth
-    private static final int MAX_ON_DEMAND_TOTAL = 10;   // max on-demand analyses per top-level method
 
     /**
      * Per-statement counter snapshots ensure that re-processing the same statement
@@ -66,36 +56,26 @@ public class TransferFunctions {
     public static final String RETURN_VAR_NAME = "$RETURN";
 
     public TransferFunctions(AnalysisConfig config, boolean isStaticMethod) {
-        this(config, isStaticMethod, null, null, null, null, null, null);
+        this(config, isStaticMethod, null, null, null);
     }
 
     public TransferFunctions(AnalysisConfig config, boolean isStaticMethod, List<String> paramTypeNames) {
-        this(config, isStaticMethod, paramTypeNames, null, null, null, null, null);
+        this(config, isStaticMethod, paramTypeNames, null, null);
     }
 
     public TransferFunctions(AnalysisConfig config, boolean isStaticMethod,
                               List<String> paramTypeNames, SummaryCache summaryCache) {
-        this(config, isStaticMethod, paramTypeNames, summaryCache, null, null, null, null);
+        this(config, isStaticMethod, paramTypeNames, summaryCache, null);
     }
 
     public TransferFunctions(AnalysisConfig config, boolean isStaticMethod,
                               List<String> paramTypeNames, SummaryCache summaryCache,
                               DebugHtmlWriter debugWriter) {
-        this(config, isStaticMethod, paramTypeNames, summaryCache, debugWriter, null, null, null);
-    }
-
-    public TransferFunctions(AnalysisConfig config, boolean isStaticMethod,
-                              List<String> paramTypeNames, SummaryCache summaryCache,
-                              DebugHtmlWriter debugWriter,
-                              JavaView view, Set<String> analyzing, int[] onDemandBudget) {
         this.config = config;
         this.isStaticMethod = isStaticMethod;
         this.paramTypeNames = paramTypeNames;
         this.summaryCache = summaryCache;
         this.debugWriter = debugWriter;
-        this.view = view;
-        this.analyzing = analyzing;
-        this.onDemandBudget = onDemandBudget;
     }
 
 
@@ -500,12 +480,7 @@ public class TransferFunctions {
         String subSig = methodSig.getSubSignature().toString();
         MethodSummary calleeSummary = summaryCache != null ? summaryCache.lookup(fullSig, subSig) : null;
 
-        // Tier 3: On-demand cross-file analysis
-        if (calleeSummary == null && view != null) {
-            calleeSummary = analyzeExternalMethod(methodSig);
-        }
-
-        // Apply summary if found (shared by Tier 2 and Tier 3)
+        // Apply summary if found
         if (calleeSummary != null) {
             // For virtual/interface calls: apply ALL override summaries (union semantics).
             // A virtual dispatch to A.m() could resolve to B.m() at runtime, so the
@@ -627,63 +602,6 @@ public class TransferFunctions {
         // Record mu' for debug HTML output
         if (debugWriter != null && result.muPrimeText() != null) {
             debugWriter.setNextMuPrime(result.muPrimeText());
-        }
-    }
-
-    /**
-     * Tier 3: On-demand cross-file analysis.
-     * Resolves a method from the JavaView, analyzes it, caches the result.
-     * Returns null if the method cannot be resolved or analyzed (falls back to conservative).
-     */
-    private MethodSummary analyzeExternalMethod(MethodSignature methodSig) {
-        String sig = methodSig.toString();
-        if (analyzing == null || analyzing.contains(sig)) return null;
-        if (analyzing.size() >= MAX_ON_DEMAND_DEPTH) return null;  // depth limit
-        if (onDemandBudget != null && onDemandBudget[0] <= 0) return null;  // budget exhausted
-
-        ClassType classType = methodSig.getDeclClassType();
-        Optional<JavaSootClass> classOpt = view.getClass(classType);
-        if (classOpt.isEmpty()) return null;
-
-        Optional<? extends JavaSootMethod> methodOpt = classOpt.get().getMethod(methodSig.getSubSignature());
-        if (methodOpt.isEmpty() || !methodOpt.get().isConcrete()) return null;
-
-        JavaSootMethod method = methodOpt.get();
-        analyzing.add(sig);
-        if (onDemandBudget != null) onDemandBudget[0]--;
-        try {
-            Body body = method.getBody();
-            StmtGraph<?> cfg = body.getStmtGraph();
-
-            List<String> paramTypes = method.getSignature().getParameterTypes().stream()
-                .map(Type::toString)
-                .map(t -> { int dot = t.lastIndexOf('.'); return dot >= 0 ? t.substring(dot + 1) : t; })
-                .toList();
-
-            // Lightweight analysis: no debug output, no timing, no call graph
-            AnalysisConfig lightConfig = new AnalysisConfig(false, config.merge, null, false, false);
-            SideEffectFlowAnalysis analysis = new SideEffectFlowAnalysis(
-                cfg, body, lightConfig, method.isStatic(), null, paramTypes,
-                summaryCache, view, analyzing, onDemandBudget);
-
-            PointsToGraph exitGraph = analysis.getExitGraph();
-
-            // Guard: if exit graph is too large, skip caching to avoid
-            // instantiation explosion in the caller (O(nodes^2) edge cross-products)
-            int graphNodes = exitGraph.getAllNodes().size();
-            if (graphNodes > 20) return null;
-
-            boolean isCtor = "<init>".equals(method.getName());
-            MethodSummary result = SideEffectChecker.check(sig, exitGraph, isCtor, false);
-            MethodSummary summary = new MethodSummary(sig, exitGraph,
-                result.getResult(), result.getReasons(), exitGraph.getReturnTargets());
-
-            summaryCache.put(sig, methodSig.getSubSignature().toString(), summary);
-            return summary;
-        } catch (Exception e) {
-            return null;  // fall back to conservative
-        } finally {
-            analyzing.remove(sig);
         }
     }
 

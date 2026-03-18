@@ -37,7 +37,7 @@ This document describes the code structure, key design decisions, and how to ext
 - **`Main.java`** — CLI argument parsing. Detects JDK source files and routes to either compilation or JRT mode, then invokes `SideEffectAnalysisRunner`.
 - **`AnalysisConfig.java`** — Holds CLI flags (`showGraph`, `merge`, `methodFilter`, `debug`, `timing`). Passed to all analysis components. `--debug` implies `--show-graph` and `--timing`.
 - **`JavaCompiler.java`** — Compiles `.java` to `.class` in a temp directory using `javax.tools.JavaCompiler`.
-- **`SideEffectAnalysisRunner.java`** — Creates a SootUp `JavaView`, builds call graph, analyzes methods bottom-up with inter-procedural summary cache. Creates and manages the shared state for on-demand cross-file analysis (`JavaView`, recursion guard `Set<String>`, budget `int[]`).
+- **`SideEffectAnalysisRunner.java`** — Creates a SootUp `JavaView`, builds call graph (with BFS JDK discovery), analyzes methods bottom-up with inter-procedural summary cache. Pre-populates summary cache from disk-backed library cache at startup; persists library method summaries to disk after analysis.
 
 ### Graph Data Structures (`edu.uw.cse.sideeffect.graph`)
 
@@ -51,13 +51,15 @@ This document describes the code structure, key design decisions, and how to ext
 
 ### Analysis Engine (`edu.uw.cse.sideeffect.analysis`)
 
-- **`SideEffectFlowAnalysis.java`** — Forward dataflow analysis extending SootUp's `ForwardFlowAnalysis<PointsToGraph>`. Handles fixed-point iteration, join-point merging (union semantics), and exit graph computation. Threads `JavaView`, `Set<String> analyzing`, and `int[] onDemandBudget` through to `TransferFunctions`.
-- **`TransferFunctions.java`** — Maps each Jimple statement type to a graph operation. This is the core of the analysis. Handles: `JIdentityStmt` (parameter/this setup), `JAssignStmt` (allocations, copies, field loads/stores, casts, array ops, invocations), `JInvokeStmt` (void calls), `JReturnStmt` (return value tracking). Implements the four-tier method resolution strategy for invocations (see [Method Resolution](#method-resolution-four-tier-strategy) below).
+- **`SideEffectFlowAnalysis.java`** — Forward dataflow analysis extending SootUp's `ForwardFlowAnalysis<PointsToGraph>`. Handles fixed-point iteration, join-point merging (union semantics), and exit graph computation.
+- **`TransferFunctions.java`** — Maps each Jimple statement type to a graph operation. This is the core of the analysis. Handles: `JIdentityStmt` (parameter/this setup), `JAssignStmt` (allocations, copies, field loads/stores, casts, array ops, invocations), `JInvokeStmt` (void calls), `JReturnStmt` (return value tracking). Implements the three-tier method resolution strategy for invocations (see [Method Resolution](#method-resolution-three-tier-strategy) below).
 - **`SideEffectChecker.java`** — Determines method side-effects from the exit graph. Algorithm: (1) compute prestate nodes A (BFS from ParameterNodes via outside edges), (2) compute globally escaped nodes B (BFS from E union GlobalNode via all edges), (3) check for static field mutations in W, (4) for each node in A check escape to B and mutations in W. Constructor exception: allows direct `this.f` writes for `<init>` methods.
 - **`GraphInstantiator.java`** — Implements Section 5.3 of Salcianu & Rinard: instantiates callee summaries at call sites. Steps: (0) remap callee node IDs to fresh caller IDs, (1) compute node mapping mu via least fixed point of 3 constraints, (2) combine graphs (inside/outside edges, locals, escaped set), (3) remove captured load nodes, (4) propagate mutated fields W.
 - **`MethodSummary.java`** — Stores the analysis result for a single method: exit `PointsToGraph`, `SideEffectResult` enum (`SIDE_EFFECT_FREE`, `SIDE_EFFECTING`, `GRAPH_VIOLATION`), reason string, and return targets for inter-procedural instantiation.
 - **`SummaryCache.java`** — Dual-key cache: stores summaries by both full signature (e.g., `<java.util.HashMap: int size()>`) and sub-signature (e.g., `int size()`). The sub-signature fallback handles virtual/interface dispatch where the call site type differs from the implementation type.
-- **`CallGraphBuilder.java`** — Builds an intra-file call graph from Jimple invoke statements. Resolves virtual/interface calls to concrete implementations within the analyzed classes. Computes bottom-up analysis order using Tarjan's SCC algorithm. Returns batches (single methods or SCCs).
+- **`CallGraphBuilder.java`** — Builds a call graph from Jimple invoke statements, including BFS discovery of JDK-reachable methods. Resolves virtual/interface calls to concrete implementations within the discovered classes. Computes bottom-up analysis order using Tarjan's SCC algorithm. Returns batches (single methods or SCCs). BFS is bounded by a 200-class cap and forbidden package prefixes (`sun.*`, `jdk.internal.*`, `java.awt.*`, etc.).
+- **`LibrarySummaryCache.java`** — Disk-backed cache for library (JDK) method summaries. Persists summaries to `jdk-cache/` as JSON files (SHA-256 hashed filenames) so they can be reused across CLI invocations.
+- **`MethodSummarySerializer.java`** — JSON serialization/deserialization for `MethodSummary` and `PointsToGraph` using Gson. Preserves node IDs and types for cache round-tripping.
 
 ### Output (`edu.uw.cse.sideeffect.output`)
 
@@ -81,68 +83,51 @@ SootUp is the modern successor to Soot. Key advantages:
 - Modular architecture, actively maintained
 - Clean Jimple IR with pattern-matchable statement types
 
-### Method Resolution: Four-Tier Strategy
+### Method Resolution: Three-Tier Strategy
 
-When `TransferFunctions.handleInvoke()` encounters a method call, it resolves the callee through four tiers:
+When `TransferFunctions.handleInvoke()` encounters a method call, it resolves the callee through three tiers:
 
 ```
 Tier 1: SafeMethods.isSafe()?          → YES → treat as safe, return
 Tier 2: SummaryCache.lookup()?         → YES → instantiate summary, return
-Tier 3: On-demand analysis?            → resolve from JavaView, analyze, cache, instantiate
-Tier 4: Conservative fallback          → mark all args escaped (only if tiers 1-3 fail)
+Tier 3: Conservative fallback          → mark all args escaped (only if tiers 1-2 fail)
 ```
 
 **Tier 1 (SafeMethods)** is a hardcoded whitelist — it *assumes* methods are safe without proof. This is necessary for common JDK methods like constructors (`Object.<init>()`, `ArrayList.<init>()`) that would otherwise cause every `new` expression to be flagged as side-effecting (see [The `<init>` Trap](#constructor-whitelist-the-init-trap)).
 
-**Tier 2 (SummaryCache)** looks up summaries from methods already analyzed in the current run — either same-file methods analyzed bottom-up, or cross-file methods previously analyzed on-demand.
+**Tier 2 (SummaryCache)** looks up summaries from methods already analyzed in the current run. The cache is pre-populated at startup from the disk-backed library cache (`jdk-cache/`), so JDK methods analyzed in a prior run are immediately available. Additionally, the complete call graph (including BFS-discovered JDK methods) ensures callees are analyzed bottom-up before their callers.
 
-**Tier 3 (On-demand analysis)** resolves the callee from the `JavaView` and analyzes it on the fly. This is the key mechanism for cross-file inter-procedural analysis. See [On-Demand Cross-File Analysis](#on-demand-cross-file-analysis) for details.
-
-**Tier 4 (Conservative fallback)** marks all reference-type arguments and the receiver as globally escaped, and points the return value to `GlobalNode`. This is sound but pessimistic — it may produce false positives.
+**Tier 3 (Conservative fallback)** marks all reference-type arguments and the receiver as globally escaped, and points the return value to `GlobalNode`. This is sound but pessimistic — it may produce false positives. With the complete call graph and library cache, this tier is reached far less often than before.
 
 ### Inter-Procedural Analysis (Section 5.3)
 
-The analysis processes methods bottom-up over an intra-file call graph:
+The analysis processes methods bottom-up over a complete call graph that includes both user code and transitively reachable JDK methods:
 
-1. **Call graph construction**: `CallGraphBuilder` collects invoke targets from Jimple, resolves virtual/interface calls to concrete implementations within the analyzed classes, and computes a bottom-up order using Tarjan's SCC algorithm.
-2. **Bottom-up analysis**: Methods are analyzed in reverse topological order. Leaf methods (no user-defined callees) are analyzed first; their summaries are cached and used when analyzing their callers.
-3. **Summary instantiation**: At each call site, `GraphInstantiator` maps callee parameter nodes to caller argument nodes (via a least-fixed-point mu mapping), combines inside/outside edges, removes captured load nodes, and propagates callee mutations to the caller's graph.
-4. **SCC handling**: For mutually recursive methods, the analysis iterates within each SCC until summaries stabilize (max 5 iterations).
+1. **Call graph construction**: `CallGraphBuilder` first performs a BFS from user classes to discover JDK-reachable methods (bounded by 200 classes and forbidden package prefixes). It then collects invoke targets from Jimple, resolves virtual/interface calls to concrete implementations within all discovered classes, and computes a bottom-up order using Tarjan's SCC algorithm.
+2. **Cache pre-population**: Before analysis begins, the `SummaryCache` is pre-populated from the disk-backed `LibrarySummaryCache` (`jdk-cache/`), so JDK methods analyzed in prior runs are immediately available.
+3. **Bottom-up analysis**: Methods are analyzed in reverse topological order. Leaf methods (no callees) are analyzed first; their summaries are cached and used when analyzing their callers. Library method summaries are persisted to disk for reuse across runs.
+4. **Summary instantiation**: At each call site, `GraphInstantiator` maps callee parameter nodes to caller argument nodes (via a least-fixed-point mu mapping), combines inside/outside edges, removes captured load nodes, and propagates callee mutations to the caller's graph.
+5. **SCC handling**: For mutually recursive methods, the analysis iterates within each SCC until summaries stabilize (max 5 iterations).
 
-### On-Demand Cross-File Analysis
+### Complete Call Graph with BFS JDK Discovery
 
-When a method call cannot be resolved within the analyzed file (SafeMethods miss + SummaryCache miss), the tool resolves the callee from the `JavaView` and analyzes it on the fly, caching the result for future lookups. This enables cross-file inter-procedural analysis without requiring whole-program analysis upfront.
+Instead of on-demand analysis at call sites, the tool builds a complete call graph upfront that includes transitively reachable JDK methods. This ensures all callees are analyzed bottom-up before their callers, eliminating the need for lazy cross-file resolution.
 
-For example, `HashSet.size()` calls `this.map.size()`, which resolves to `HashMap.size()` in bytecode. Without on-demand analysis, the tool would conservatively mark all arguments as globally escaped (false positive). With on-demand analysis, `HashMap.size()` is analyzed, found to be side-effect-free, and its summary is instantiated at the call site — correctly classifying `HashSet.size()` as `SIDE_EFFECT_FREE`.
+**BFS class discovery** (`CallGraphBuilder.computeBottomUpOrder()`):
+1. Start with user classes as the initial set
+2. For each method body, scan for invoke statements and resolve targets to their declaring class
+3. Skip methods that are already in `SafeMethods` or `LibrarySummaryCache` (stop conditions)
+4. Skip methods in forbidden packages (`sun.*`, `com.sun.*`, `jdk.internal.*`, `java.awt.*`, `javax.swing.*`, `java.nio.*`, `java.security.*`, `javax.crypto.*`, `java.lang.invoke.*`, `java.lang.reflect.*`, `java.util.concurrent.*`)
+5. Cap discovery at 200 classes to prevent explosion
+6. After BFS, run the existing adjacency-list construction and Tarjan SCC on the expanded set
 
-**Implementation** (`TransferFunctions.analyzeExternalMethod()`):
-1. Check recursion guard — if the method's signature is already in the `analyzing` set, return null (avoids infinite loops for mutual recursion)
-2. Check depth limit — if `analyzing.size() >= MAX_ON_DEMAND_DEPTH` (default 5), return null
-3. Check budget — if `onDemandBudget[0] <= 0`, return null
-4. Resolve the class from `JavaView` using `methodSig.getDeclClassType()`
-5. Find the concrete method; if abstract/native/missing, return null
-6. Add signature to `analyzing`, decrement budget
-7. Create a lightweight `SideEffectFlowAnalysis` (no debug, no timing) with the same `view`, `analyzing` set, and `onDemandBudget` (enabling recursive on-demand for the callee's callees)
-8. Check graph size — if exit graph exceeds 20 nodes, return null (avoids instantiation explosion)
-9. Run `SideEffectChecker.check()`, create `MethodSummary`, cache in `SummaryCache`
-10. Remove signature from `analyzing` (via `try-finally`)
+**Global library cache** (`LibrarySummaryCache`):
+- At startup, loads cached JDK method summaries from `jdk-cache/*.json` into memory
+- Pre-populates the `SummaryCache` so previously analyzed library methods are immediately available
+- After analyzing a library method, persists its summary to disk for future runs
+- Uses SHA-256 hashed filenames (Java method signatures contain filesystem-illegal characters)
 
-**Performance guards** (constants in `TransferFunctions.java`):
-
-| Guard | Default | Purpose |
-|---|---|---|
-| `MAX_ON_DEMAND_DEPTH` | 5 | Max depth of recursive on-demand calls. Only counts cross-file calls — same-file cache hits cost zero depth. |
-| `MAX_ON_DEMAND_TOTAL` | 10 | Max total on-demand analyses per top-level method. Reset before each top-level method so one greedy method doesn't starve others. |
-| Graph size guard | 20 nodes | Max exit graph size for caching. Prevents `GraphInstantiator` from producing quadratic edge cross-products. |
-
-**Shared state** (created in `SideEffectAnalysisRunner.run()`, threaded through `SideEffectFlowAnalysis` → `TransferFunctions`):
-
-| State | Type | Lifetime | Purpose |
-|---|---|---|---|
-| `view` | `JavaView` | Entire `run()` | Resolves classes for on-demand analysis |
-| `analyzing` | `Set<String>` | Entire `run()` | Recursion guard — tracks signatures currently being analyzed in the call chain |
-| `onDemandBudget` | `int[1]` | Reset per top-level method | Mutable counter shared across recursive on-demand calls. Uses `int[]` instead of `int` because Java passes primitives by value. |
-| `summaryCache` | `SummaryCache` | Entire `run()` | Caches all summaries (same-file + on-demand). Never reset during a run. |
+For example, `HashSet.size()` calls `HashMap.size()`. The BFS discovers `HashMap` as a reachable class, includes it in the call graph, and ensures `HashMap.size()` is analyzed bottom-up before `HashSet.size()`. On subsequent runs, `HashMap.size()`'s cached summary is loaded from `jdk-cache/` without re-analysis.
 
 ### Constructor Whitelist (the `<init>` Trap)
 
@@ -189,7 +174,7 @@ Edit `SafeMethods.java`. Three categories:
 - `SAFE_CLASS_PREFIXES`: Classes whose instance methods are known side-effect-free (e.g., `java.lang.String`)
 - `SAFE_METHOD_SIGNATURES`: Specific method signatures known to be side-effect-free
 
-Note: with on-demand cross-file analysis (Tier 3), many methods that previously required whitelisting are now analyzed automatically. You only need to add methods here if they are native, too complex for on-demand analysis (exceed budget/depth/graph-size limits), or if you want to force a specific result.
+Note: with the complete call graph (BFS JDK discovery) and disk-backed library cache, many methods that previously required whitelisting are now analyzed automatically. You only need to add methods here if they are native, in forbidden packages excluded from BFS, or if you want to force a specific result.
 
 ### Adding Transfer Functions
 Edit `TransferFunctions.java`. The `apply()` method dispatches on `Stmt` type. Add new cases by pattern matching on Jimple statement types. The main dispatch is:
@@ -198,21 +183,16 @@ Edit `TransferFunctions.java`. The `apply()` method dispatches on `Stmt` type. A
 - `JInvokeStmt` → `handleInvokeStmt()` (void calls)
 - `JReturnStmt` → `handleReturn()` (return value tracking)
 
-### Tuning On-Demand Analysis Performance
-Edit constants at the top of `TransferFunctions.java`:
-- `MAX_ON_DEMAND_DEPTH` (default 5): Increase to follow deeper cross-file call chains at the cost of slower analysis.
-- `MAX_ON_DEMAND_TOTAL` (default 10): Increase to analyze more unique callees per top-level method. The budget is also reset in `SideEffectAnalysisRunner.analyzeMethod()`.
-- Graph size guard (default 20 nodes): The threshold in `analyzeExternalMethod()`. Increase to allow larger callee summaries to be instantiated, at the risk of quadratic edge explosion in `GraphInstantiator`.
-
 ### Extending Inter-Procedural Analysis
 Key components:
 
-1. **`CallGraphBuilder`** builds an intra-file call graph from Jimple invoke statements and computes a bottom-up analysis order using Tarjan's SCC algorithm.
-2. **`SummaryCache`** stores method summaries keyed by both full signature and sub-signature (for virtual/interface dispatch resolution).
-3. **`GraphInstantiator`** implements the 4-step summary instantiation algorithm: compute node mapping mu (least fixed point of 3 constraints), combine caller/callee graphs, simplify by removing captured load nodes, and propagate mutated fields.
-4. **`TransferFunctions.handleInvoke()`** implements the four-tier resolution strategy: SafeMethods → SummaryCache → on-demand cross-file analysis → conservative fallback.
+1. **`CallGraphBuilder`** builds a complete call graph (user + JDK) via BFS class discovery and Tarjan's SCC algorithm. Edit `FORBIDDEN_PREFIXES` and `MAX_DISCOVERED_CLASSES` to tune BFS scope.
+2. **`SummaryCache`** stores method summaries keyed by both full signature and sub-signature (for virtual/interface dispatch resolution). Pre-populated from `LibrarySummaryCache` at startup.
+3. **`LibrarySummaryCache`** persists library method summaries to `jdk-cache/` on disk. Loaded at startup to avoid re-analyzing JDK methods across runs.
+4. **`GraphInstantiator`** implements the 4-step summary instantiation algorithm: compute node mapping mu (least fixed point of 3 constraints), combine caller/callee graphs, simplify by removing captured load nodes, and propagate mutated fields.
+5. **`TransferFunctions.handleInvoke()`** implements the three-tier resolution strategy: SafeMethods → SummaryCache → conservative fallback.
 
-The on-demand analysis (Tier 3) automatically resolves cross-file callees from the `JavaView`, so most JDK delegation patterns (e.g., `HashSet.size()` → `HashMap.size()`) are handled without manual whitelisting.
+The complete call graph with BFS discovery ensures most JDK delegation patterns (e.g., `HashSet.size()` → `HashMap.size()`) are analyzed bottom-up without manual whitelisting.
 
 ## Validation Against the Paper
 

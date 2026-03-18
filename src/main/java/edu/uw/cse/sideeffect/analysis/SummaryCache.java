@@ -56,6 +56,18 @@ public class SummaryCache {
         return allBySubSignature.getOrDefault(subSig, Collections.emptyList());
     }
 
+    /** Bulk-insert summaries (e.g. from SafeMethods pre-population or disk cache). */
+    public void putAll(Map<String, MethodSummary> entries) {
+        for (var entry : entries.entrySet()) {
+            // Use full sig as both keys (library methods don't need sub-sig dispatch)
+            put(entry.getKey(), null, entry.getValue());
+        }
+    }
+
+    public boolean containsFullSig(String fullSig) {
+        return bySignature.containsKey(fullSig);
+    }
+
     public int size() {
         return bySignature.size();
     }

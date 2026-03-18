@@ -123,7 +123,7 @@ OverrideBase.caller(OverrideBase,Object)   : SIDE_EFFECTING  (mutates OverrideBa
    dot -Tpng dot-graph/override-dependency.dot -o override-dependency.png
    ```
 
-**Scope:** Override detection and the propagation semantics apply only to files explicitly passed as input. JDK and external library calls continue to use the existing four-tier resolution (SafeMethods whitelist → summary cache → on-demand analysis → conservative fallback). Static calls and constructor calls always use exact-match dispatch — no union is applied.
+**Scope:** Override detection and the propagation semantics apply only to files explicitly passed as input. JDK and external library calls use the three-tier resolution (SafeMethods whitelist → summary cache → conservative fallback). Static calls and constructor calls always use exact-match dispatch — no union is applied.
 
 **Running with test files:**
 ```bash
@@ -338,8 +338,8 @@ The script saves per-file results to `experiment/tool_results/` as it goes. On r
 ## Known Limitations
 
 - **JDK analysis uses runtime bytecode**: When analyzing JDK source files, classes are loaded from the JDK runtime image rather than compiling from source. The analysis results reflect the compiled bytecode, which may differ slightly from source-level expectations (e.g., compiler-generated bridge methods, synthetic fields).
-- **On-demand cross-file analysis has bounded scope**: Cross-file callees are analyzed on demand, but depth (default 5), per-method budget (default 10), and graph size (default 20 nodes) limits mean deeply nested or complex JDK call chains may still fall back to conservative. Methods whose exit graph exceeds the size limit are not cached, so their callers also fall back to conservative.
-- **On-demand inter-file analysis only covers JDK classes, not user-defined files**: When analyzing user code, the `JavaView` is backed only by the compiled output of the files explicitly passed as arguments. If file1 calls file2 but only file1 is given as input, file2 is never compiled or loaded — `view.getClass()` returns empty and the call falls back to conservative (all arguments globally escaped). To get proper inter-procedural analysis across user-defined files, all files must be passed together as arguments.
+- **BFS class discovery has bounded scope**: The call graph builder discovers JDK-reachable methods via BFS from user code, but limits discovery to 200 classes and excludes forbidden packages (`sun.*`, `jdk.internal.*`, `java.awt.*`, etc.). Methods in excluded packages or beyond the discovery cap fall back to conservative.
+- **Inter-file analysis only covers co-compiled files**: When analyzing user code, the `JavaView` is backed only by the compiled output of the files explicitly passed as arguments. If file1 calls file2 but only file1 is given as input, file2 is never compiled or loaded — the call falls back to conservative (all arguments globally escaped). To get proper inter-procedural analysis across user-defined files, all files must be passed together as arguments.
 - **Mutually recursive methods (SCCs) iterate to a true fixed point**: Methods in an SCC are analyzed until a fixed point is reached. Termination is guaranteed by the monotone lattice (verdicts only move toward `SIDE_EFFECTING`, never back). When `--method-timeout` is set, the entire SCC fixpoint loop runs under a wall-clock timeout as a safety net.
 - **No exception-path precision**: Exception control flow is handled by SootUp's CFG but not modeled with special precision.
 - **Array modeling is simplified**: Array elements are tracked via mutation records but not with per-index precision.
