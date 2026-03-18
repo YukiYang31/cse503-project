@@ -1,0 +1,280 @@
+{
+  "sig": "\u003cjava.net.InetAddress: java.net.spi.InetAddressResolver resolver()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field bootstrapResolver",
+    "writes to static field resolver"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    },
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "load static resolver"
+    },
+    {
+      "id": "L1",
+      "kind": "LOAD",
+      "label": "load static BUILTIN_RESOLVER"
+    },
+    {
+      "id": "L2",
+      "kind": "LOAD",
+      "label": "load static bootstrapResolver"
+    },
+    {
+      "id": "L3",
+      "kind": "LOAD",
+      "label": "load static BUILTIN_RESOLVER"
+    },
+    {
+      "id": "L12",
+      "kind": "LOAD",
+      "label": "callee: callee: load value from parameter this"
+    },
+    {
+      "id": "L11",
+      "kind": "LOAD",
+      "label": "callee: load static BUILTIN_RESOLVER"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static RESOLVER_LOCK"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load static RESOLVER_LOCK"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load static bootstrapResolver"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "load static BUILTIN_RESOLVER"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "load static HOSTS_FILE_NAME"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new Optional"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: load static security"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "load static INET_ADDRESS_RESOLVER_PERMISSION"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static EMPTY"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: load value from parameter this"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: load static BUILTIN_RESOLVER"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load value from parameter this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.net.InetAddress: java.net.spi.InetAddressResolver bootstrapResolver\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.net.InetAddress: java.net.spi.InetAddressResolver resolver\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.util.List SUPPRESSED_SENTINEL\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.net.InetAddress: java.lang.RuntimePermission INET_ADDRESS_RESOLVER_PERMISSION\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.net.InetAddress: java.lang.String HOSTS_FILE_NAME\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.net.InetAddress: java.util.concurrent.locks.ReentrantLock RESOLVER_LOCK\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.net.InetAddress: java.util.concurrent.locks.ReentrantLock RESOLVER_LOCK\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Optional: java.lang.Object value\u003e",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.net.InetAddress: java.net.spi.InetAddressResolver BUILTIN_RESOLVER\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.net.InetAddress: java.net.spi.InetAddressResolver BUILTIN_RESOLVER\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.net.InetAddress: java.net.spi.InetAddressResolver BUILTIN_RESOLVER\u003e",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Optional: java.util.Optional EMPTY\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Throwable: java.lang.Throwable cause\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Throwable: java.util.List suppressedExceptions\u003e",
+        "target": "L7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "field": "\u003cjava.util.Optional: java.lang.Object value\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L10",
+        "field": "\u003cjava.util.Optional: java.lang.Object value\u003e",
+        "target": "L12",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.net.InetAddress: java.net.spi.InetAddressResolver bootstrapResolver\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.net.InetAddress: java.net.spi.InetAddressResolver resolver\u003e"
+      },
+      {
+        "node": "I0"
+      }
+    ],
+    "globalEscaped": [
+      "GBL",
+      "L0",
+      "L1",
+      "L3",
+      "I0",
+      "L12",
+      "L9",
+      "L11"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 13
+  }
+}

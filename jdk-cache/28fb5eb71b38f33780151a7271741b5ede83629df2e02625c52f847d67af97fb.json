@@ -1,0 +1,62 @@
+{
+  "sig": "\u003cjava.util.AbstractList$Itr: void \u003cinit\u003e(java.util.AbstractList)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "AbstractList parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load this$0 from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.AbstractList$Itr: java.util.AbstractList this$0\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.AbstractList$Itr: java.util.AbstractList this$0\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.AbstractList$Itr: int expectedModCount\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.AbstractList$Itr: int cursor\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.AbstractList$Itr: int lastRet\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.AbstractList$Itr: java.util.AbstractList this$0\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

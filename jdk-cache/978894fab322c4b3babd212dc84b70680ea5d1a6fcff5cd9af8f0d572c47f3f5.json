@@ -1,0 +1,33 @@
+{
+  "sig": "\u003cjava.util.Arrays: boolean equals(char[],int,int,char[],int,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "char[] parameter escapes to global scope",
+    "char[] parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "char[] parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "char[] parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "P3"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "sig": "\u003cjava.util.StringTokenizer: void \u003cinit\u003e(java.lang.String,java.lang.String,boolean)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates loaded object \u0027callee: load delimiterCodePoints from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "String parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "String parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load delimiters from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load delimiterCodePoints from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.StringTokenizer: java.lang.String str\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.StringTokenizer: java.lang.String delimiters\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.StringTokenizer: java.lang.String delimiters\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.StringTokenizer: int[] delimiterCodePoints\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.StringTokenizer: int[] delimiterCodePoints\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.StringTokenizer: int maxPosition\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.StringTokenizer: boolean retDelims\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.StringTokenizer: int currentPosition\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.StringTokenizer: java.lang.String str\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.StringTokenizer: java.lang.String delimiters\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.StringTokenizer: int maxDelimCodePoint\u003e"
+      },
+      {
+        "node": "L1"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.StringTokenizer: int newPosition\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.StringTokenizer: int[] delimiterCodePoints\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.StringTokenizer: boolean hasSurrogates\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.StringTokenizer: boolean delimsChanged\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 2
+  }
+}

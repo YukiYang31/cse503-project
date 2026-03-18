@@ -1,0 +1,79 @@
+{
+  "sig": "\u003cjava.util.StringTokenizer: void setMaxDelimCodePoint()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field maxDelimCodePoint",
+    "mutates this via field delimiterCodePoints",
+    "mutates this via field hasSurrogates",
+    "mutates loaded object \u0027load delimiterCodePoints from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load delimiters from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load delimiterCodePoints from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.StringTokenizer: java.lang.String delimiters\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.StringTokenizer: int[] delimiterCodePoints\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.StringTokenizer: int[] delimiterCodePoints\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "I0"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.StringTokenizer: int maxDelimCodePoint\u003e"
+      },
+      {
+        "node": "L1"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.StringTokenizer: int[] delimiterCodePoints\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.StringTokenizer: boolean hasSurrogates\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 1
+  }
+}

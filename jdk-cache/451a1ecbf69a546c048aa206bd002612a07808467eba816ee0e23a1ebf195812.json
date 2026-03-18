@@ -1,0 +1,52 @@
+{
+  "sig": "\u003cjava.lang.Integer: java.lang.Integer valueOf(int)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "L1",
+      "kind": "LOAD",
+      "label": "array element from load static cache"
+    },
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new Integer"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static cache"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "array element from load static cache"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Integer"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Integer$IntegerCache: java.lang.Integer[] cache\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 2
+  }
+}
