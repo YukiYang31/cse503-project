@@ -1,0 +1,49 @@
+{
+  "sig": "\u003cjava.util.ArrayList: void clear()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field modCount",
+    "mutates this via field size",
+    "mutates loaded object \u0027load elementData from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load elementData from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList: int modCount\u003e"
+      },
+      {
+        "node": "L0"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList: int size\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}
