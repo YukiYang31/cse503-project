@@ -1,0 +1,93 @@
+{
+  "sig": "\u003cjava.util.ArrayList: void ensureCapacity(int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field modCount",
+    "mutates this via field elementData"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load elementData from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load static DEFAULTCAPACITY_EMPTY_ELEMENTDATA"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: load elementData from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: load static DEFAULTCAPACITY_EMPTY_ELEMENTDATA"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: return from copyOf"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList: int modCount\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 4
+  }
+}

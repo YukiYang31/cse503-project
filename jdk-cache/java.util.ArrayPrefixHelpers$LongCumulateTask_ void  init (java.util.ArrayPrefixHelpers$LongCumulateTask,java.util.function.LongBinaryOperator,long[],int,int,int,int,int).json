@@ -1,0 +1,89 @@
+{
+  "sig": "\u003cjava.util.ArrayPrefixHelpers$LongCumulateTask: void \u003cinit\u003e(java.util.ArrayPrefixHelpers$LongCumulateTask,java.util.function.LongBinaryOperator,long[],int,int,int,int,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "ArrayPrefixHelpers$LongCumulateTask parameter escapes to global scope",
+    "LongBinaryOperator parameter escapes to global scope",
+    "long[] parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ArrayPrefixHelpers$LongCumulateTask parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "LongBinaryOperator parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "long[] parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayPrefixHelpers$LongCumulateTask: long[] array\u003e",
+        "target": "P3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayPrefixHelpers$LongCumulateTask: java.util.function.LongBinaryOperator function\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayPrefixHelpers$LongCumulateTask: int fence\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayPrefixHelpers$LongCumulateTask: int hi\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayPrefixHelpers$LongCumulateTask: long[] array\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayPrefixHelpers$LongCumulateTask: java.util.function.LongBinaryOperator function\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayPrefixHelpers$LongCumulateTask: int origin\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayPrefixHelpers$LongCumulateTask: int threshold\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayPrefixHelpers$LongCumulateTask: int lo\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "sig": "\u003cjava.util.ArrayList: java.lang.Object[] toArray(java.lang.Object[])\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Object[] parameter escapes to global scope",
+    "mutates Object[] parameter via field array element",
+    "loaded object \u0027load elementData from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "P1",
+      "kind": "PARAMETER",
+      "paramIndex": 1,
+      "label": "Object[] parameter"
+    },
+    {
+      "id": "I1",
+      "kind": "INSIDE",
+      "label": "return from copyOf"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Object[] parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load elementData from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "return from getClass"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "return from copyOf"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P1"
+      }
+    ],
+    "globalEscaped": [
+      "P1",
+      "L0"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 1
+  }
+}

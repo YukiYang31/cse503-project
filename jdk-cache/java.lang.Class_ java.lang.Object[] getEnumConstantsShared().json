@@ -1,0 +1,88 @@
+{
+  "sig": "\u003cjava.lang.Class: java.lang.Object[] getEnumConstantsShared()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "mutates this via field enumConstants",
+    "loaded object \u0027load enumConstants from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    },
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "load enumConstants from parameter this"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load enumConstants from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new Class$3"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Class: java.lang.Object[] enumConstants\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Class: java.lang.Object[] enumConstants\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "GBL",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Class: java.lang.Object[] enumConstants\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "GBL",
+      "I0",
+      "I1",
+      "I2"
+    ],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 1
+  }
+}

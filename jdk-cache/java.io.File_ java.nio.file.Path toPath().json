@@ -1,0 +1,81 @@
+{
+  "sig": "\u003cjava.io.File: java.nio.file.Path toPath()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field filePath",
+    "loaded object \u0027load path from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    },
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "load filePath from parameter this"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load filePath from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load path from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.File: java.nio.file.Path filePath\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.File: java.nio.file.Path filePath\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.File: java.lang.String path\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.File: java.nio.file.Path filePath\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "GBL",
+      "L1",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 2
+  }
+}

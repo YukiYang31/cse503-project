@@ -1,0 +1,1067 @@
+{
+  "sig": "\u003cjava.io.BufferedInputStream: int read1(byte[],int,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "mutates this via field array element",
+    "mutates this via field pos",
+    "byte[] parameter escapes to global scope",
+    "mutates byte[] parameter via field array element",
+    "loaded object \u0027callee: load buf from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: load in from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load in from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: load in from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load lock from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load in from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load in from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load lock from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new IOException"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: new IOException"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new IOException"
+      },
+      {
+        "id": "L21",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L20",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load in from parameter this"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      },
+      {
+        "id": "I5",
+        "kind": "INSIDE",
+        "label": "callee: new IOException"
+      },
+      {
+        "id": "L23",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L22",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I6",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: callee: callee: new array"
+      },
+      {
+        "id": "I7",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: callee: callee: new IOException"
+      },
+      {
+        "id": "L25",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L24",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static EMPTY"
+      },
+      {
+        "id": "I8",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: new array"
+      },
+      {
+        "id": "L27",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I9",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: new IOException"
+      },
+      {
+        "id": "L26",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static U"
+      },
+      {
+        "id": "L29",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L28",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load lock from parameter this"
+      },
+      {
+        "id": "I11",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: callee: new IOException"
+      },
+      {
+        "id": "L30",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "I10",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: callee: new array"
+      },
+      {
+        "id": "L32",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "I13",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: callee: callee: new array"
+      },
+      {
+        "id": "L31",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I12",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: callee: callee: new IOException"
+      },
+      {
+        "id": "L34",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static U"
+      },
+      {
+        "id": "I15",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: new array"
+      },
+      {
+        "id": "I14",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: new IOException"
+      },
+      {
+        "id": "L33",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static EMPTY"
+      },
+      {
+        "id": "L36",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I17",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: callee: new IOException"
+      },
+      {
+        "id": "L35",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I16",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: callee: new array"
+      },
+      {
+        "id": "L38",
+        "kind": "LOAD",
+        "label": "callee: callee: load in from parameter this"
+      },
+      {
+        "id": "I19",
+        "kind": "INSIDE",
+        "label": "callee: callee: new IOException"
+      },
+      {
+        "id": "I18",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "L37",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L39",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L41",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L40",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L43",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L42",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L45",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L44",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static EMPTY"
+      },
+      {
+        "id": "L47",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L46",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L49",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static EMPTY"
+      },
+      {
+        "id": "L48",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "byte[] parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load buf from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load static EMPTY"
+      },
+      {
+        "id": "L50",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: load static U"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L52",
+        "kind": "LOAD",
+        "label": "callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L51",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load in from parameter this"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: load in from parameter this"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L54",
+        "kind": "LOAD",
+        "label": "callee: callee: load static U"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L53",
+        "kind": "LOAD",
+        "label": "callee: callee: load static EMPTY"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L56",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L55",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static U"
+      },
+      {
+        "id": "L57",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load lock from parameter this"
+      },
+      {
+        "id": "L16",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static EMPTY"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L19",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L38",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L52",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L32",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I11",
+        "target": "L27",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I11",
+        "target": "L29",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I11",
+        "target": "I11",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I11",
+        "target": "L31",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L36",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L37",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "I3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L35",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I12",
+        "target": "I12",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I12",
+        "target": "L42",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I12",
+        "target": "L45",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I12",
+        "target": "L46",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L38",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L39",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L40",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L41",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L43",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I14",
+        "target": "L48",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I14",
+        "target": "L50",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I14",
+        "target": "L51",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I14",
+        "target": "L6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I14",
+        "target": "I14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I14",
+        "target": "L7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "L16",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "L19",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "I7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I17",
+        "target": "I17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I17",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I17",
+        "target": "L10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I17",
+        "target": "L11",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I19",
+        "target": "I19",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I19",
+        "target": "L55",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I19",
+        "target": "L56",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I19",
+        "target": "L57",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L27",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L39",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L50",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L34",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L46",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L54",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L22",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L38",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L26",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L41",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L53",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L45",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L57",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L21",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L33",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L49",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L25",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L37",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L29",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L40",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L56",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L24",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L44",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L36",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L48",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L51",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L35",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L43",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L55",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I9",
+        "target": "L25",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "target": "I9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "target": "L20",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "target": "L21",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "target": "L22",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L38",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L38",
+        "target": "L47",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L38",
+        "target": "L30",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L38",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L38",
+        "target": "L51",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L38",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L38",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L38",
+        "target": "L13",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0"
+      },
+      {
+        "node": "L32"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.BufferedInputStream: int pos\u003e"
+      },
+      {
+        "node": "L38"
+      },
+      {
+        "node": "P1"
+      }
+    ],
+    "globalEscaped": [
+      "I0",
+      "I1",
+      "I2",
+      "I3",
+      "I4",
+      "L20",
+      "I5",
+      "I6",
+      "L44",
+      "I7",
+      "I8",
+      "L24",
+      "I9",
+      "L49",
+      "L26",
+      "L28",
+      "P0",
+      "P1",
+      "L1",
+      "L2",
+      "L30",
+      "I11",
+      "L52",
+      "I10",
+      "L51",
+      "L32",
+      "I13",
+      "L54",
+      "L6",
+      "I12",
+      "L53",
+      "L8",
+      "L12",
+      "L34",
+      "I15",
+      "L33",
+      "I14",
+      "L14",
+      "I17",
+      "L13",
+      "I16",
+      "L38",
+      "I19",
+      "L15",
+      "I18",
+      "L39"
+    ],
+    "insideNodeCounter": 20,
+    "loadNodeCounter": 58
+  }
+}

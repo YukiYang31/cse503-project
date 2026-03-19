@@ -1,0 +1,45 @@
+{
+  "sig": "\u003cjava.lang.System$2: java.lang.String getLoaderNameID(java.lang.ClassLoader)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "callee: load nameAndId from parameter this"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ClassLoader parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load nameAndId from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P1",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.String nameAndId\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "sig": "\u003cjava.lang.System$2: java.lang.String newStringUTF8NoRepl(byte[],int,int)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "return from newStringUTF8NoRepl"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "byte[] parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "return from newStringUTF8NoRepl"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

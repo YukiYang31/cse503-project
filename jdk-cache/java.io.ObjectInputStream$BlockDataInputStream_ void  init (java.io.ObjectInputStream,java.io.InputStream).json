@@ -1,0 +1,148 @@
+{
+  "sig": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: void \u003cinit\u003e(java.io.ObjectInputStream,java.io.InputStream)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ObjectInputStream parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "InputStream parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "new ObjectInputStream$PeekInputStream"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "new DataInputStream"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: char[] cbuf\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: byte[] buf\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: byte[] hbuf\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: java.io.ObjectInputStream this$0\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: java.io.DataInputStream din\u003e",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: java.io.ObjectInputStream$PeekInputStream in\u003e",
+        "target": "I3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "field": "\u003cjava.io.FilterInputStream: java.io.InputStream in\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "field": "\u003cjava.io.FilterInputStream: java.io.InputStream in\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: int pos\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: int end\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: byte[] hbuf\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: char[] cbuf\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: java.io.ObjectInputStream this$0\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: int unread\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: byte[] buf\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: boolean blkmode\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: java.io.ObjectInputStream$PeekInputStream in\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: java.io.DataInputStream din\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 5,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "sig": "\u003cjava.util.Locale: sun.util.locale.LocaleExtensions getCompatibilityExtensions(java.lang.String,java.lang.String,java.lang.String,java.lang.String)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "String parameter escapes to global scope",
+    "String parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "load static CALENDAR_JAPANESE"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "String parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "String parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "String parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "String parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static CALENDAR_JAPANESE"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003csun.util.locale.LocaleExtensions: sun.util.locale.LocaleExtensions NUMBER_THAI\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.util.locale.LocaleExtensions: sun.util.locale.LocaleExtensions CALENDAR_JAPANESE\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "P2"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

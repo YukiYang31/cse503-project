@@ -1,0 +1,30 @@
+{
+  "sig": "\u003cjava.util.OptionalInt: void \u003cinit\u003e(int)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.OptionalInt: int value\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.OptionalInt: boolean isPresent\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

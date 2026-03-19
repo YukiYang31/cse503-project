@@ -1,0 +1,91 @@
+{
+  "sig": "\u003cjava.lang.module.Configuration: java.util.stream.Stream configurations()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "mutates this via field allConfigurations",
+    "loaded object \u0027load allConfigurations from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load allConfigurations from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load parents from GBL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ArrayList"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new HashSet"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "new ArrayDeque"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.module.Configuration: java.util.List parents\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.Configuration: java.util.List allConfigurations\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.Configuration: java.util.List allConfigurations\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.Configuration: java.util.List allConfigurations\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "GBL",
+      "L0",
+      "L1",
+      "I0",
+      "I1",
+      "I2"
+    ],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 1
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "sig": "\u003cjava.lang.Character: void toSurrogates(int,char[],int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates char[] parameter via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "char[] parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P1"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

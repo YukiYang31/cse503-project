@@ -1,0 +1,39 @@
+{
+  "sig": "\u003cjava.util.ArrayList: boolean contains(java.lang.Object)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Object parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: load elementData from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

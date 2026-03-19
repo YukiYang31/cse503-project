@@ -1,0 +1,153 @@
+{
+  "sig": "\u003cjava.lang.ClassValue: java.lang.ClassValue$ClassValueMap initializeMap(java.lang.Class)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates Class parameter via field classValueMap"
+  ],
+  "returnTargets": [
+    {
+      "id": "L1",
+      "kind": "LOAD",
+      "label": "load classValueMap from Class parameter"
+    },
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new ClassValue$ClassValueMap"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Class parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static CRITICAL_SECTION"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load classValueMap from Class parameter"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ClassValue$ClassValueMap"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: new AssertionError"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "load static UNSAFE"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue: java.lang.Object CRITICAL_SECTION\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue: jdk.internal.misc.Unsafe UNSAFE\u003e",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Class: java.lang.ClassValue$ClassValueMap classValueMap\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Class: java.lang.ClassValue$ClassValueMap classValueMap\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Class: java.lang.ClassValue$ClassValueMap classValueMap\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I0",
+      "I1",
+      "L5"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 6
+  }
+}

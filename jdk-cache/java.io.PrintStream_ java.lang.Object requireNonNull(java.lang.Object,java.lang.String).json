@@ -1,0 +1,103 @@
+{
+  "sig": "\u003cjava.io.PrintStream: java.lang.Object requireNonNull(java.lang.Object,java.lang.String)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "String parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "P0",
+      "kind": "PARAMETER",
+      "paramIndex": 0,
+      "label": "Object parameter"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Object parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "String parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new NullPointerException"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L4",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 5
+  }
+}

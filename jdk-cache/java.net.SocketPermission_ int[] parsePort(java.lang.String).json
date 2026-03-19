@@ -1,0 +1,122 @@
+{
+  "sig": "\u003cjava.net.SocketPermission: int[] parsePort(java.lang.String)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "String parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new array"
+    },
+    {
+      "id": "I2",
+      "kind": "INSIDE",
+      "label": "new array"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "String parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "return from substring"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "new IllegalArgumentException"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L4",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "I2"
+      },
+      {
+        "node": "I0"
+      }
+    ],
+    "globalEscaped": [
+      "P1",
+      "I0",
+      "I1",
+      "I2"
+    ],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 5
+  }
+}

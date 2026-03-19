@@ -36,14 +36,14 @@
     "edges": [
       {
         "src": "P0",
-        "field": "\u003cjava.io.ObjectInputStream$HandleTable: java.lang.Object[] entries\u003e",
-        "target": "L1",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: byte[] status\u003e",
+        "target": "L0",
         "type": "OUTSIDE"
       },
       {
         "src": "P0",
-        "field": "\u003cjava.io.ObjectInputStream$HandleTable: byte[] status\u003e",
-        "target": "L0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: java.lang.Object[] entries\u003e",
+        "target": "L1",
         "type": "OUTSIDE"
       }
     ],

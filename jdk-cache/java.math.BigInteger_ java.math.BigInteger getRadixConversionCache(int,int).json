@@ -1,0 +1,69 @@
+{
+  "sig": "\u003cjava.math.BigInteger: java.math.BigInteger getRadixConversionCache(int,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field powerCache",
+    "writes to static field unknown"
+  ],
+  "returnTargets": [
+    {
+      "id": "L2",
+      "kind": "LOAD",
+      "label": "array element from array element from load static powerCache"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static powerCache"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "array element from load static powerCache"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "array element from array element from load static powerCache"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "return from copyOf"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger[][] powerCache\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger[][] powerCache\u003e"
+      },
+      {
+        "node": "I0"
+      },
+      {
+        "node": "GBL"
+      }
+    ],
+    "globalEscaped": [
+      "GBL",
+      "L0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 3
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "sig": "\u003cjava.lang.System$2: void setContinuation(java.lang.Thread,jdk.internal.vm.Continuation)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates Thread parameter via field cont"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Thread parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Continuation parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P1",
+        "field": "\u003cjava.lang.Thread: jdk.internal.vm.Continuation cont\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P1",
+        "field": "\u003cjava.lang.Thread: jdk.internal.vm.Continuation cont\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

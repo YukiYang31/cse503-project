@@ -1,0 +1,37 @@
+{
+  "sig": "\u003cjava.util.Enumeration: java.util.Iterator asIterator()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new Enumeration$1"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Enumeration$1"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

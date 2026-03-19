@@ -1,0 +1,90 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: java.lang.Object[] lambda$reducing$43(java.util.function.BinaryOperator,java.lang.Object[],java.lang.Object[])\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates Object[] parameter via field array element"
+  ],
+  "returnTargets": [
+    {
+      "id": "P1",
+      "kind": "PARAMETER",
+      "paramIndex": 1,
+      "label": "Object[] parameter"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "BinaryOperator parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Object[] parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Object[] parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "array element from Object[] parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "array element from Object[] parameter"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static configLog"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static TRACE"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P1"
+      }
+    ],
+    "globalEscaped": [
+      "L2",
+      "L3",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 4
+  }
+}

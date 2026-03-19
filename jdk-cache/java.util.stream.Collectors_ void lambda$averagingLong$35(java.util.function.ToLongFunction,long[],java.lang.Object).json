@@ -1,0 +1,44 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: void lambda$averagingLong$35(java.util.function.ToLongFunction,long[],java.lang.Object)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "ToLongFunction parameter escapes to global scope",
+    "mutates long[] parameter via field array element",
+    "Object parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "ToLongFunction parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "long[] parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Object parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P1"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P2"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

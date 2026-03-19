@@ -1,0 +1,116 @@
+{
+  "sig": "\u003cjava.lang.module.ModuleReference: void \u003cinit\u003e(java.lang.module.ModuleDescriptor,java.net.URI)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ModuleDescriptor parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "URI parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new NullPointerException"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleReference: java.lang.module.ModuleDescriptor descriptor\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleReference: java.net.URI location\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleReference: java.net.URI location\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleReference: java.lang.module.ModuleDescriptor descriptor\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 3
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "sig": "\u003cjava.util.Locale: java.lang.String convertOldISOCodes(java.lang.String)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "String parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "String parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "return from intern"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

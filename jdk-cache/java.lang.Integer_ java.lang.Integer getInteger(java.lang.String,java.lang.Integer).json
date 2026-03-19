@@ -1,0 +1,208 @@
+{
+  "sig": "\u003cjava.lang.Integer: java.lang.Integer getInteger(java.lang.String,java.lang.Integer)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "String parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    },
+    {
+      "id": "P1",
+      "kind": "PARAMETER",
+      "paramIndex": 1,
+      "label": "Integer parameter"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "String parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Integer parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: load static security"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: callee: new NullPointerException"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: new PropertyPermission"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new IllegalArgumentException"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: load static props"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: load defaults from parameter this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L7",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L7",
+        "target": "L9",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "GBL",
+      "I0",
+      "I1",
+      "I2",
+      "L8",
+      "L9"
+    ],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 10
+  }
+}

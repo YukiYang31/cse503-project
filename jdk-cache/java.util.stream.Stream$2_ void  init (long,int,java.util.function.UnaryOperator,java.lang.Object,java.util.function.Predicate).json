@@ -1,0 +1,79 @@
+{
+  "sig": "\u003cjava.util.stream.Stream$2: void \u003cinit\u003e(long,int,java.util.function.UnaryOperator,java.lang.Object,java.util.function.Predicate)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "UnaryOperator parameter"
+      },
+      {
+        "id": "P4",
+        "kind": "PARAMETER",
+        "paramIndex": 4,
+        "label": "Object parameter"
+      },
+      {
+        "id": "P5",
+        "kind": "PARAMETER",
+        "paramIndex": 5,
+        "label": "Predicate parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.Stream$2: java.util.function.Predicate val$hasNext\u003e",
+        "target": "P5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.Stream$2: java.util.function.UnaryOperator val$next\u003e",
+        "target": "P3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.Stream$2: java.lang.Object val$seed\u003e",
+        "target": "P4",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.Stream$2: java.lang.Object val$seed\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.Stream$2: java.util.function.UnaryOperator val$next\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Spliterators$AbstractSpliterator: int characteristics\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Spliterators$AbstractSpliterator: long est\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.Stream$2: java.util.function.Predicate val$hasNext\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

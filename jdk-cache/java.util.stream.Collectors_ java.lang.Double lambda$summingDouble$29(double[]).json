@@ -1,0 +1,32 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: java.lang.Double lambda$summingDouble$29(double[])\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "return from valueOf"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "double[] parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "return from valueOf"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

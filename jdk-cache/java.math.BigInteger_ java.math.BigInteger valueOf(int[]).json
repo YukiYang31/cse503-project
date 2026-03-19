@@ -1,0 +1,115 @@
+{
+  "sig": "\u003cjava.math.BigInteger: java.math.BigInteger valueOf(int[])\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "int[] parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new BigInteger"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "int[] parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load mag from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: load mag from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new BigInteger"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new NumberFormatException"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "I1"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 3
+  }
+}

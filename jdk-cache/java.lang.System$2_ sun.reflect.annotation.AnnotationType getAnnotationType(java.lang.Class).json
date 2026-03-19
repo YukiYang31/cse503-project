@@ -1,0 +1,45 @@
+{
+  "sig": "\u003cjava.lang.System$2: sun.reflect.annotation.AnnotationType getAnnotationType(java.lang.Class)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "callee: load annotationType from parameter this"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Class parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load annotationType from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P1",
+        "field": "\u003cjava.lang.Class: sun.reflect.annotation.AnnotationType annotationType\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

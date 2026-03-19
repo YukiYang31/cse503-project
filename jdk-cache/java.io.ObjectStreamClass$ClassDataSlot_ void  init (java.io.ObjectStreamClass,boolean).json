@@ -1,0 +1,43 @@
+{
+  "sig": "\u003cjava.io.ObjectStreamClass$ClassDataSlot: void \u003cinit\u003e(java.io.ObjectStreamClass,boolean)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ObjectStreamClass parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$ClassDataSlot: java.io.ObjectStreamClass desc\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$ClassDataSlot: boolean hasData\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$ClassDataSlot: java.io.ObjectStreamClass desc\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

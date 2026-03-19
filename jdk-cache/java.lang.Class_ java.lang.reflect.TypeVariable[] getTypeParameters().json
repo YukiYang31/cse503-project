@@ -1,0 +1,84 @@
+{
+  "sig": "\u003cjava.lang.Class: java.lang.reflect.TypeVariable[] getTypeParameters()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "mutates this via field array element",
+    "loaded object \u0027callee: load genericInfo from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    },
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new array"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load genericInfo from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load static NONE"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "GBL",
+      "L0",
+      "L1"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 2
+  }
+}

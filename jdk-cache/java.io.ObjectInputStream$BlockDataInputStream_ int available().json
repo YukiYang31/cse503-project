@@ -1,0 +1,65 @@
+{
+  "sig": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: int available()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "mutates this via field pos",
+    "mutates this via field end",
+    "mutates this via field unread",
+    "loaded object \u0027load in from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load in from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load in from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load in from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: java.io.ObjectInputStream$PeekInputStream in\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: int pos\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: int end\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$BlockDataInputStream: int unread\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

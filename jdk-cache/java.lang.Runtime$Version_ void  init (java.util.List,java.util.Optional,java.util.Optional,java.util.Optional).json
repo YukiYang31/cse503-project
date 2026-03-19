@@ -1,0 +1,87 @@
+{
+  "sig": "\u003cjava.lang.Runtime$Version: void \u003cinit\u003e(java.util.List,java.util.Optional,java.util.Optional,java.util.Optional)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "List parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Optional parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "Optional parameter"
+      },
+      {
+        "id": "P4",
+        "kind": "PARAMETER",
+        "paramIndex": 4,
+        "label": "Optional parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Runtime$Version: java.util.List version\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Runtime$Version: java.util.Optional build\u003e",
+        "target": "P3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Runtime$Version: java.util.Optional optional\u003e",
+        "target": "P4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Runtime$Version: java.util.Optional pre\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Runtime$Version: java.util.List version\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Runtime$Version: java.util.Optional pre\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Runtime$Version: java.util.Optional build\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Runtime$Version: java.util.Optional optional\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

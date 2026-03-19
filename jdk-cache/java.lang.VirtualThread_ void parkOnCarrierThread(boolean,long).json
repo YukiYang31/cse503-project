@@ -1,0 +1,102 @@
+{
+  "sig": "\u003cjava.lang.VirtualThread: void parkOnCarrierThread(boolean,long)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field state",
+    "mutates this via field parkPermit"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static U"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new AssertionError"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.VirtualThread: jdk.internal.misc.Unsafe U\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L4",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.VirtualThread: int state\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.VirtualThread: boolean parkPermit\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "L0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 5
+  }
+}

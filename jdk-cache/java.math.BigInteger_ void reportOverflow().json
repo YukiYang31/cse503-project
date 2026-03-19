@@ -1,0 +1,20 @@
+{
+  "sig": "\u003cjava.math.BigInteger: void reportOverflow()\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ArithmeticException"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

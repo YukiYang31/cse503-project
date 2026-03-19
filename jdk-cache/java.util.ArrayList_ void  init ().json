@@ -37,12 +37,11 @@
     ],
     "mutatedFields": [
       {
-        "node": "P0",
-        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e"
+        "node": "P0"
       },
       {
         "node": "P0",
-        "field": "\u003cjava.util.AbstractList: int modCount\u003e"
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e"
       }
     ],
     "globalEscaped": [],

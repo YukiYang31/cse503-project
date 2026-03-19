@@ -1,0 +1,37 @@
+{
+  "sig": "\u003cjava.util.Collections: java.util.Enumeration enumeration(java.util.Collection)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Collection parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new Collections$3"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Collection parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Collections$3"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

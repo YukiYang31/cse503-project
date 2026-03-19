@@ -1,0 +1,94 @@
+{
+  "sig": "\u003cjava.io.PushbackInputStream: void ensureOpen()\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load in from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new IOException"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.PushbackInputStream: java.io.InputStream in\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 6
+  }
+}

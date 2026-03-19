@@ -1,0 +1,92 @@
+{
+  "sig": "\u003cjava.util.Map$Entry: java.lang.Object $deserializeLambda$(java.lang.invoke.SerializedLambda)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "SerializedLambda parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "SerializedLambda parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new IllegalArgumentException"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L4",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "GBL",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 5
+  }
+}

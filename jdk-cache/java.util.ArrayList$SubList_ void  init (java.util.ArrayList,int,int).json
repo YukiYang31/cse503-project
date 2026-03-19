@@ -1,0 +1,58 @@
+{
+  "sig": "\u003cjava.util.ArrayList$SubList: void \u003cinit\u003e(java.util.ArrayList,int,int)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ArrayList parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayList$SubList: java.util.ArrayList root\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList$SubList: int size\u003e"
+      },
+      {
+        "node": "P0"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList$SubList: java.util.ArrayList root\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList$SubList: int offset\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList$SubList: java.util.ArrayList$SubList parent\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList$SubList: int modCount\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

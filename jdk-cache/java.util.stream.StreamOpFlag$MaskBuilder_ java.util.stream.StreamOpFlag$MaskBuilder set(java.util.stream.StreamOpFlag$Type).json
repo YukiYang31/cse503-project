@@ -1,0 +1,58 @@
+{
+  "sig": "\u003cjava.util.stream.StreamOpFlag$MaskBuilder: java.util.stream.StreamOpFlag$MaskBuilder set(java.util.stream.StreamOpFlag$Type)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "StreamOpFlag$Type parameter escapes to global scope",
+    "loaded object \u0027callee: load map from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "P0",
+      "kind": "PARAMETER",
+      "paramIndex": 0,
+      "label": "this"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "StreamOpFlag$Type parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load map from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "return from valueOf"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.StreamOpFlag$MaskBuilder: java.util.Map map\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P1",
+      "L0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 1
+  }
+}

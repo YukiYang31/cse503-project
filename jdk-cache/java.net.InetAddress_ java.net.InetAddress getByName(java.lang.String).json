@@ -1,0 +1,40 @@
+{
+  "sig": "\u003cjava.net.InetAddress: java.net.InetAddress getByName(java.lang.String)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "String parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "array element from GBL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "String parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "array element from GBL"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

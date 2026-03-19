@@ -1,0 +1,132 @@
+{
+  "sig": "\u003cjava.net.URL: java.net.URLConnection openConnection(java.net.Proxy)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "Proxy parameter escapes to global scope",
+    "loaded object \u0027load handler from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Proxy parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static NO_PROXY"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load static security"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load static DIRECT"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new IllegalArgumentException"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "load handler from parameter this"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.net.URL: java.net.URLStreamHandler handler\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.net.Proxy$Type: java.net.Proxy$Type DIRECT\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.net.Proxy: java.net.Proxy NO_PROXY\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L4",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "GBL",
+      "P0",
+      "P1",
+      "L0",
+      "L1",
+      "L3",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 5
+  }
+}

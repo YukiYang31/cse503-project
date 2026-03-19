@@ -1,0 +1,85 @@
+{
+  "sig": "\u003cjava.lang.module.Configuration: java.util.Set descriptors()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027load modules from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    },
+    {
+      "id": "L1",
+      "kind": "LOAD",
+      "label": "callee: load static EMPTY_SET"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load modules from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load static EMPTY_SET"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new Collectors$CollectorImpl"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.ImmutableCollections: java.util.ImmutableCollections$SetN EMPTY_SET\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.Collectors: java.util.Set CH_UNORDERED_ID\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.Configuration: java.util.Set modules\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "GBL",
+      "L0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 2
+  }
+}

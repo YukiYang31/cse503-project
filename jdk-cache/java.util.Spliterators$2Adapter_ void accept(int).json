@@ -1,0 +1,33 @@
+{
+  "sig": "\u003cjava.util.Spliterators$2Adapter: void accept(int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field valueReady",
+    "mutates this via field nextElement"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Spliterators$2Adapter: boolean valueReady\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Spliterators$2Adapter: int nextElement\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

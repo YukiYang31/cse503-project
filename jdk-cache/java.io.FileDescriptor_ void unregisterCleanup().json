@@ -1,0 +1,65 @@
+{
+  "sig": "\u003cjava.io.FileDescriptor: void unregisterCleanup()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field cleanup",
+    "mutates loaded object \u0027load cleanup from parameter this\u0027 via field size",
+    "mutates loaded object \u0027load cleanup from parameter this\u0027 via field modCount",
+    "mutates loaded object \u0027callee: load table from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load cleanup from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load table from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.FileDescriptor: jdk.internal.ref.PhantomCleanable cleanup\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.HashMap: java.util.HashMap$Node[] table\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.FileDescriptor: jdk.internal.ref.PhantomCleanable cleanup\u003e"
+      },
+      {
+        "node": "L0",
+        "field": "\u003cjava.util.HashMap: int size\u003e"
+      },
+      {
+        "node": "L0",
+        "field": "\u003cjava.util.HashMap: int modCount\u003e"
+      },
+      {
+        "node": "L1"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

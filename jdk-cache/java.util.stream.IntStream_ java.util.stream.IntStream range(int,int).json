@@ -1,0 +1,137 @@
+{
+  "sig": "\u003cjava.util.stream.IntStream: java.util.stream.IntStream range(int,int)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "callee: callee: new IntPipeline$Head"
+    },
+    {
+      "id": "I1",
+      "kind": "INSIDE",
+      "label": "callee: new IntPipeline$Head"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: load static EMPTY_INT_SPLITERATOR"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Streams$RangeIntSpliterator"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new IntPipeline$Head"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new IllegalStateException"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Spliterators: java.util.Spliterator$OfInt EMPTY_INT_SPLITERATOR\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "I2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "L0",
+      "I0",
+      "I1",
+      "I2"
+    ],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 4
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "sig": "\u003cjava.math.BigInteger: java.math.BigInteger divideBurnikelZiegler(java.math.BigInteger)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "BigInteger parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "BigInteger parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load static ZERO"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new MutableBigInteger"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new MutableBigInteger"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: new MutableBigInteger"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger ZERO\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "GBL",
+      "P1",
+      "I0",
+      "I1",
+      "I2"
+    ],
+    "insideNodeCounter": 4,
+    "loadNodeCounter": 1
+  }
+}

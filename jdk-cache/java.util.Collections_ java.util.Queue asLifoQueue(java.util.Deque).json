@@ -1,0 +1,98 @@
+{
+  "sig": "\u003cjava.util.Collections: java.util.Queue asLifoQueue(java.util.Deque)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Deque parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new Collections$AsLIFOQueue"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Deque parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Collections$AsLIFOQueue"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new NullPointerException"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "I0",
+      "I1"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 3
+  }
+}

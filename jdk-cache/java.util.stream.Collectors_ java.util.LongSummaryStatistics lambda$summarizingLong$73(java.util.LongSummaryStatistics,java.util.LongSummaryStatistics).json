@@ -1,0 +1,56 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: java.util.LongSummaryStatistics lambda$summarizingLong$73(java.util.LongSummaryStatistics,java.util.LongSummaryStatistics)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates LongSummaryStatistics parameter via field max",
+    "mutates LongSummaryStatistics parameter via field min",
+    "mutates LongSummaryStatistics parameter via field sum",
+    "mutates LongSummaryStatistics parameter via field count"
+  ],
+  "returnTargets": [
+    {
+      "id": "P0",
+      "kind": "PARAMETER",
+      "paramIndex": 0,
+      "label": "LongSummaryStatistics parameter"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "LongSummaryStatistics parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "LongSummaryStatistics parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.LongSummaryStatistics: long max\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.LongSummaryStatistics: long min\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.LongSummaryStatistics: long sum\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.LongSummaryStatistics: long count\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

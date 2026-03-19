@@ -1,0 +1,47 @@
+{
+  "sig": "\u003cjava.util.Collections: java.util.Collection unmodifiableCollection(java.util.Collection)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Collection parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "P0",
+      "kind": "PARAMETER",
+      "paramIndex": 0,
+      "label": "Collection parameter"
+    },
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new Collections$UnmodifiableCollection"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Collection parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Collections$UnmodifiableCollection"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

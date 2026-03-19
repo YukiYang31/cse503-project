@@ -1,0 +1,91 @@
+{
+  "sig": "\u003cjava.lang.PublicMethods: java.lang.reflect.Method[] toArray()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027load map from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new array"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load map from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load method from GBL"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load next from GBL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.PublicMethods$MethodList: java.lang.PublicMethods$MethodList next\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.PublicMethods$MethodList: java.lang.reflect.Method method\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.PublicMethods: java.util.Map map\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L2",
+        "field": "\u003cjava.lang.PublicMethods$MethodList: java.lang.PublicMethods$MethodList next\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L2",
+        "field": "\u003cjava.lang.PublicMethods$MethodList: java.lang.reflect.Method method\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "I0"
+      }
+    ],
+    "globalEscaped": [
+      "GBL",
+      "L0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 1
+  }
+}

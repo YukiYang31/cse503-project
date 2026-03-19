@@ -1,0 +1,26 @@
+{
+  "sig": "\u003cjava.net.InetAddress: void validate(java.lang.String)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "String parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new UnknownHostException"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

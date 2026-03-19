@@ -1,0 +1,45 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: java.util.concurrent.ConcurrentMap lambda$groupingByConcurrent$61(java.util.function.Function,java.util.concurrent.ConcurrentMap)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Function parameter escapes to global scope",
+    "ConcurrentMap parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "P1",
+      "kind": "PARAMETER",
+      "paramIndex": 1,
+      "label": "ConcurrentMap parameter"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Function parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ConcurrentMap parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "GBL",
+      "P1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

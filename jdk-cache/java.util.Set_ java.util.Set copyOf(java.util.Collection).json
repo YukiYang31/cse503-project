@@ -1,0 +1,65 @@
+{
+  "sig": "\u003cjava.util.Set: java.util.Set copyOf(java.util.Collection)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    },
+    {
+      "id": "P0",
+      "kind": "PARAMETER",
+      "paramIndex": 0,
+      "label": "Collection parameter"
+    },
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "callee: load static EMPTY_SET"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Collection parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load static EMPTY_SET"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new HashSet"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.ImmutableCollections: java.util.ImmutableCollections$SetN EMPTY_SET\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "I1"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 2
+  }
+}

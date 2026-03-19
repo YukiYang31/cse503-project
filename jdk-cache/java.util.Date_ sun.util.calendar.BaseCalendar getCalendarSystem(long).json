@@ -1,0 +1,52 @@
+{
+  "sig": "\u003cjava.util.Date: sun.util.calendar.BaseCalendar getCalendarSystem(long)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field jcal"
+  ],
+  "returnTargets": [
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "load static gcal"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static gcal"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Date: sun.util.calendar.BaseCalendar gcal\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Date: sun.util.calendar.BaseCalendar jcal\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.Date: sun.util.calendar.BaseCalendar jcal\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "GBL"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

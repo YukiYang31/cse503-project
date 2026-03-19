@@ -1,0 +1,167 @@
+{
+  "sig": "\u003cjava.io.ObjectStreamClass$FieldReflector: void getPrimFieldValues(java.lang.Object,byte[])\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Object parameter escapes to global scope",
+    "byte[] parameter escapes to global scope",
+    "mutates byte[] parameter via field array element",
+    "loaded object \u0027load readKeys from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027load offsets from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Object parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "byte[] parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load readKeys from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load offsets from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load typeCodes from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new InternalError"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "load static UNSAFE"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: long[] readKeys\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: int[] offsets\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: char[] typeCodes\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: jdk.internal.misc.Unsafe UNSAFE\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L7",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P2"
+      }
+    ],
+    "globalEscaped": [
+      "P1",
+      "P2",
+      "I0",
+      "L3"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 8
+  }
+}

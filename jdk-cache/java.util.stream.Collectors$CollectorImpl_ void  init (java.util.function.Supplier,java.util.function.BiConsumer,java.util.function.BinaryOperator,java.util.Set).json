@@ -1,0 +1,87 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors$CollectorImpl: void \u003cinit\u003e(java.util.function.Supplier,java.util.function.BiConsumer,java.util.function.BinaryOperator,java.util.Set)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "Supplier parameter escapes to global scope",
+    "BiConsumer parameter escapes to global scope",
+    "BinaryOperator parameter escapes to global scope",
+    "Set parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Supplier parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "BiConsumer parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "BinaryOperator parameter"
+      },
+      {
+        "id": "P4",
+        "kind": "PARAMETER",
+        "paramIndex": 4,
+        "label": "Set parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "P3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "P4",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0"
+      }
+    ],
+    "globalEscaped": [
+      "P0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

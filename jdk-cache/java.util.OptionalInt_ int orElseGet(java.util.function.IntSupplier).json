@@ -1,0 +1,31 @@
+{
+  "sig": "\u003cjava.util.OptionalInt: int orElseGet(java.util.function.IntSupplier)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "IntSupplier parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "IntSupplier parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

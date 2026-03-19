@@ -1,0 +1,100 @@
+{
+  "sig": "\u003cjava.util.Spliterators: java.util.Spliterator$OfDouble spliteratorUnknownSize(java.util.PrimitiveIterator$OfDouble,int)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new Spliterators$DoubleIteratorSpliterator"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "PrimitiveIterator$OfDouble parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Spliterators$DoubleIteratorSpliterator"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new NullPointerException"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.Spliterators$DoubleIteratorSpliterator: java.util.PrimitiveIterator$OfDouble it\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "I1"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 3
+  }
+}

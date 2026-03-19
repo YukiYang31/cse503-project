@@ -1,0 +1,45 @@
+{
+  "sig": "\u003cjava.math.BigInteger: int[] montReduce(int[],int[],int,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "int[] parameter escapes to global scope",
+    "mutates int[] parameter via field array element",
+    "int[] parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "P0",
+      "kind": "PARAMETER",
+      "paramIndex": 0,
+      "label": "int[] parameter"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "int[] parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "int[] parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P0"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

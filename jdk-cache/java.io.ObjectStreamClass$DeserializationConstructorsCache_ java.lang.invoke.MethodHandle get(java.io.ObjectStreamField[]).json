@@ -1,0 +1,65 @@
+{
+  "sig": "\u003cjava.io.ObjectStreamClass$DeserializationConstructorsCache: java.lang.invoke.MethodHandle get(java.io.ObjectStreamField[])\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "ObjectStreamField[] parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ObjectStreamField[] parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ObjectStreamClass$DeserializationConstructorsCache$Key$Lookup"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable$HandleList: int[] list\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.ObjectStreamClass$DeserializationConstructorsCache$Key$Lookup: java.io.ObjectStreamField[] fields\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "I0"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 0
+  }
+}

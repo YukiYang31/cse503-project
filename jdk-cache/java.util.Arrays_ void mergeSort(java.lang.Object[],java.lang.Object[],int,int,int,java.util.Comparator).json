@@ -1,0 +1,223 @@
+{
+  "sig": "\u003cjava.util.Arrays: void mergeSort(java.lang.Object[],java.lang.Object[],int,int,int,java.util.Comparator)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Object[] parameter escapes to global scope",
+    "mutates Object[] parameter via field array element",
+    "Object[] parameter escapes to global scope",
+    "mutates Object[] parameter via field array element",
+    "Comparator parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "L21",
+        "kind": "LOAD",
+        "label": "callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L20",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L23",
+        "kind": "LOAD",
+        "label": "callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L22",
+        "kind": "LOAD",
+        "label": "callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L25",
+        "kind": "LOAD",
+        "label": "array element from Object[] parameter"
+      },
+      {
+        "id": "L24",
+        "kind": "LOAD",
+        "label": "array element from Object[] parameter"
+      },
+      {
+        "id": "L27",
+        "kind": "LOAD",
+        "label": "array element from Object[] parameter"
+      },
+      {
+        "id": "L26",
+        "kind": "LOAD",
+        "label": "array element from Object[] parameter"
+      },
+      {
+        "id": "L28",
+        "kind": "LOAD",
+        "label": "array element from Object[] parameter"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Object[] parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Object[] parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "array element from Object[] parameter"
+      },
+      {
+        "id": "P5",
+        "kind": "PARAMETER",
+        "paramIndex": 5,
+        "label": "Comparator parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "array element from Object[] parameter"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L16",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L19",
+        "kind": "LOAD",
+        "label": "callee: array element from Object[] parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P0"
+      },
+      {
+        "node": "P1"
+      }
+    ],
+    "globalEscaped": [
+      "L21",
+      "L20",
+      "L23",
+      "L22",
+      "L25",
+      "L24",
+      "L27",
+      "L26",
+      "P0",
+      "P1",
+      "L0",
+      "P5",
+      "L1",
+      "L2",
+      "L3",
+      "L4",
+      "L5",
+      "L6",
+      "L10",
+      "L7",
+      "L8",
+      "L12",
+      "L9",
+      "L11",
+      "L14",
+      "L13",
+      "L16",
+      "L15",
+      "L18",
+      "L17",
+      "L19"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 26
+  }
+}

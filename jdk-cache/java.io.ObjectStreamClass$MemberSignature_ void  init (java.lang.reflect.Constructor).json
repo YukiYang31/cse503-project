@@ -1,0 +1,80 @@
+{
+  "sig": "\u003cjava.io.ObjectStreamClass$MemberSignature: void \u003cinit\u003e(java.lang.reflect.Constructor)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Constructor parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Constructor parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static TYPE"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Void: java.lang.Class TYPE\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$MemberSignature: java.lang.String name\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$MemberSignature: java.lang.String signature\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$MemberSignature: java.lang.reflect.Member member\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$MemberSignature: java.lang.reflect.Member member\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$MemberSignature: java.lang.String signature\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$MemberSignature: java.lang.String name\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "GBL",
+      "P1",
+      "L0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

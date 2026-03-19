@@ -1,0 +1,70 @@
+{
+  "sig": "\u003cjava.lang.Integer: void \u003cclinit\u003e()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field DigitOnes",
+    "writes to static field digits",
+    "writes to static field TYPE",
+    "writes to static field DigitTens"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "new array"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "I2"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.Integer: byte[] DigitOnes\u003e"
+      },
+      {
+        "node": "I0"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.Integer: char[] digits\u003e"
+      },
+      {
+        "node": "I1"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.Integer: java.lang.Class TYPE\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.Integer: byte[] DigitTens\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "GBL",
+      "I0",
+      "I1",
+      "I2"
+    ],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 0
+  }
+}

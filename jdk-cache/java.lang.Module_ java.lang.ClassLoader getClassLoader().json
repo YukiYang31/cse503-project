@@ -1,0 +1,66 @@
+{
+  "sig": "\u003cjava.lang.Module: java.lang.ClassLoader getClassLoader()\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "L2",
+      "kind": "LOAD",
+      "label": "load loader from parameter this"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load static security"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load static GET_CLASSLOADER_PERMISSION"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load loader from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Module: java.lang.ClassLoader loader\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.lang.RuntimePermission GET_CLASSLOADER_PERMISSION\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "L1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 3
+  }
+}

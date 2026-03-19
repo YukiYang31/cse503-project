@@ -1,0 +1,749 @@
+{
+  "sig": "\u003cjava.lang.Module: boolean implIsExportedOrOpen(java.lang.String,java.lang.Module,boolean)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "String parameter escapes to global scope",
+    "Module parameter escapes to global scope",
+    "loaded object \u0027callee: load name from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027load descriptor from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load packages from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load openPackages from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load name from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load exportedPackages from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load name from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load name from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "L21",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load queue from parameter this"
+      },
+      {
+        "id": "L20",
+        "kind": "LOAD",
+        "label": "callee: load static EVERYONE_MODULE"
+      },
+      {
+        "id": "L23",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load lock from parameter this"
+      },
+      {
+        "id": "L22",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load head from parameter this"
+      },
+      {
+        "id": "L25",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load queue from parameter this"
+      },
+      {
+        "id": "L24",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load head from parameter this"
+      },
+      {
+        "id": "L27",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load next from load head from parameter this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L26",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static NULL"
+      },
+      {
+        "id": "L29",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load lock from parameter this"
+      },
+      {
+        "id": "L28",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load map from parameter this"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "String parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Module parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load name from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load descriptor from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: load packages from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: load packages from parameter this"
+      },
+      {
+        "id": "L30",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load head from parameter this"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: load static EVERYONE_MODULE"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load name from parameter this"
+      },
+      {
+        "id": "L32",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static NULL"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: load static ALL_UNNAMED_MODULE"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: load static ALL_UNNAMED_MODULE"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: load exportedPackages from parameter this"
+      },
+      {
+        "id": "L31",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load queue from parameter this"
+      },
+      {
+        "id": "L34",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: load static EVERYONE_MODULE"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load name from parameter this"
+      },
+      {
+        "id": "L33",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load head from parameter this"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load head from parameter this"
+      },
+      {
+        "id": "L36",
+        "kind": "LOAD",
+        "label": "callee: callee: load name from parameter this"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load lock from parameter this"
+      },
+      {
+        "id": "L35",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load next from load head from parameter this"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load head from parameter this"
+      },
+      {
+        "id": "L16",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static NULL"
+      },
+      {
+        "id": "L38",
+        "kind": "LOAD",
+        "label": "callee: load static ALL_UNNAMED_MODULE"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load next from load head from parameter this"
+      },
+      {
+        "id": "L37",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L19",
+        "kind": "LOAD",
+        "label": "callee: load static exports"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Module: java.lang.module.ModuleDescriptor descriptor\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Module: java.util.Map exportedPackages\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Module: java.util.Map openPackages\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L36",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.util.Set packages\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.util.Set packages\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L32",
+        "target": "L32",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L32",
+        "target": "L33",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L32",
+        "target": "L35",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L32",
+        "target": "L35",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L21",
+        "target": "L26",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L21",
+        "target": "L27",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L21",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L21",
+        "target": "L24",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L21",
+        "target": "L24",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L21",
+        "target": "L22",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L16",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L34",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L37",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L33",
+        "target": "L32",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L33",
+        "target": "L33",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L33",
+        "target": "L35",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L33",
+        "target": "L35",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L25",
+        "target": "L29",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L25",
+        "target": "L30",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L25",
+        "target": "L32",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L25",
+        "target": "L33",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L25",
+        "target": "L35",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L25",
+        "target": "L33",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L35",
+        "target": "L32",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L35",
+        "target": "L33",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L35",
+        "target": "L35",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L35",
+        "target": "L35",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L24",
+        "target": "L27",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L24",
+        "target": "L26",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L24",
+        "target": "L27",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L24",
+        "target": "L24",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "L16",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "L13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L26",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L32",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Module: java.lang.Module ALL_UNNAMED_MODULE\u003e",
+        "target": "L38",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Module: java.lang.Module ALL_UNNAMED_MODULE\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Module: java.lang.Module ALL_UNNAMED_MODULE\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Module$ReflectionData: java.lang.WeakPairMap exports\u003e",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Module: java.lang.Module EVERYONE_MODULE\u003e",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Module: java.lang.Module EVERYONE_MODULE\u003e",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Module: java.lang.Module EVERYONE_MODULE\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L27",
+        "target": "L27",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L27",
+        "target": "L26",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L27",
+        "target": "L27",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L27",
+        "target": "L24",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L16",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L16",
+        "target": "L16",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L16",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L16",
+        "target": "L13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L26",
+        "target": "L27",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L26",
+        "target": "L26",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L26",
+        "target": "L27",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L26",
+        "target": "L24",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L16",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L28",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L19",
+        "field": "\u003cjava.lang.WeakPairMap: java.lang.ref.ReferenceQueue queue\u003e",
+        "target": "L25",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L19",
+        "field": "\u003cjava.lang.WeakPairMap: java.lang.ref.ReferenceQueue queue\u003e",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L19",
+        "field": "\u003cjava.lang.WeakPairMap: java.lang.ref.ReferenceQueue queue\u003e",
+        "target": "L21",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L19",
+        "field": "\u003cjava.lang.WeakPairMap: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L19",
+        "field": "\u003cjava.lang.WeakPairMap: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L19",
+        "field": "\u003cjava.lang.WeakPairMap: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L34",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L12"
+      },
+      {
+        "node": "L13"
+      },
+      {
+        "node": "L35"
+      },
+      {
+        "node": "L24"
+      },
+      {
+        "node": "L25"
+      },
+      {
+        "node": "L15"
+      },
+      {
+        "node": "L26"
+      },
+      {
+        "node": "L32"
+      },
+      {
+        "node": "L21"
+      },
+      {
+        "node": "L33"
+      },
+      {
+        "node": "L16"
+      },
+      {
+        "node": "L27"
+      }
+    ],
+    "globalEscaped": [
+      "L20",
+      "L23",
+      "L24",
+      "GBL",
+      "L27",
+      "L26",
+      "L29",
+      "L28",
+      "P0",
+      "P1",
+      "P2",
+      "L2",
+      "L3",
+      "L4",
+      "L6",
+      "L10",
+      "L32",
+      "L7",
+      "L31",
+      "L8",
+      "L34",
+      "L33",
+      "L14",
+      "L35",
+      "L13",
+      "L16",
+      "L38",
+      "L15",
+      "L37",
+      "L18",
+      "L17"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 39
+  }
+}

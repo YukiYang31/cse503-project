@@ -1,0 +1,38 @@
+{
+  "sig": "\u003cjava.util.Map$Entry: int lambda$comparingByKey$bbdbfea9$1(java.util.Map$Entry,java.util.Map$Entry)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Map$Entry parameter escapes to global scope",
+    "Map$Entry parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Map$Entry parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Map$Entry parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "GBL",
+      "P1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

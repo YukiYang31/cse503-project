@@ -1,0 +1,106 @@
+{
+  "sig": "\u003cjava.util.DualPivotQuicksort$Merger: void \u003cinit\u003e(java.util.concurrent.CountedCompleter,java.lang.Object,int,java.lang.Object,int,int,java.lang.Object,int,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "CountedCompleter parameter escapes to global scope",
+    "Object parameter escapes to global scope",
+    "Object parameter escapes to global scope",
+    "Object parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "CountedCompleter parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Object parameter"
+      },
+      {
+        "id": "P4",
+        "kind": "PARAMETER",
+        "paramIndex": 4,
+        "label": "Object parameter"
+      },
+      {
+        "id": "P7",
+        "kind": "PARAMETER",
+        "paramIndex": 7,
+        "label": "Object parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.DualPivotQuicksort$Merger: java.lang.Object a1\u003e",
+        "target": "P4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.DualPivotQuicksort$Merger: java.lang.Object a2\u003e",
+        "target": "P7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.DualPivotQuicksort$Merger: java.lang.Object dst\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.DualPivotQuicksort$Merger: int k\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.DualPivotQuicksort$Merger: java.lang.Object a2\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.DualPivotQuicksort$Merger: java.lang.Object a1\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.DualPivotQuicksort$Merger: int hi2\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.DualPivotQuicksort$Merger: int hi1\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.DualPivotQuicksort$Merger: int lo2\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.DualPivotQuicksort$Merger: int lo1\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.DualPivotQuicksort$Merger: java.lang.Object dst\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

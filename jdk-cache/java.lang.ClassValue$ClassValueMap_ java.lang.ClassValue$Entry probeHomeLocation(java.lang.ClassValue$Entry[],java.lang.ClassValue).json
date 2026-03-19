@@ -1,0 +1,38 @@
+{
+  "sig": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry probeHomeLocation(java.lang.ClassValue$Entry[],java.lang.ClassValue)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "callee: array element from ClassValue$Entry[] parameter"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "ClassValue$Entry[] parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ClassValue parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: array element from ClassValue$Entry[] parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

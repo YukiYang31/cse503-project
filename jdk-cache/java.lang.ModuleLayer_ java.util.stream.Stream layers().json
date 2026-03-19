@@ -1,0 +1,103 @@
+{
+  "sig": "\u003cjava.lang.ModuleLayer: java.util.stream.Stream layers()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "mutates this via field allLayers",
+    "loaded object \u0027load allLayers from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load allLayers from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load parents from GBL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ArrayList"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new HashSet"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "new ArrayDeque"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: new Collections$UnmodifiableRandomAccessList"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List parents\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List allLayers\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List allLayers\u003e",
+        "target": "I3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List allLayers\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List allLayers\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "GBL",
+      "L0",
+      "L1",
+      "I0",
+      "I1",
+      "I2",
+      "I3"
+    ],
+    "insideNodeCounter": 4,
+    "loadNodeCounter": 1
+  }
+}

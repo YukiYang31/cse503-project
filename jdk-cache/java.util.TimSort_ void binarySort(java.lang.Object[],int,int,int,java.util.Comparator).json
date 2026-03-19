@@ -1,0 +1,131 @@
+{
+  "sig": "\u003cjava.util.TimSort: void binarySort(java.lang.Object[],int,int,int,java.util.Comparator)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Object[] parameter escapes to global scope",
+    "mutates Object[] parameter via field array element",
+    "Comparator parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Object[] parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P4",
+        "kind": "PARAMETER",
+        "paramIndex": 4,
+        "label": "Comparator parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "array element from Object[] parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "array element from Object[] parameter"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "array element from Object[] parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new AssertionError"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L5",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "L0",
+      "P4",
+      "L1",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 6
+  }
+}

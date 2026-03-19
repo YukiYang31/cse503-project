@@ -1,0 +1,70 @@
+{
+  "sig": "\u003cjava.io.ObjectInputFilter$Config$Global: java.io.ObjectInputFilter$Status lambda$new$3(java.lang.String,java.lang.Class)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Class parameter escapes to global scope",
+    "loaded object \u0027callee: load name from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "L1",
+      "kind": "LOAD",
+      "label": "load static ALLOWED"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "String parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Class parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load name from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load static ALLOWED"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.io.ObjectInputFilter$Status: java.io.ObjectInputFilter$Status ALLOWED\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.io.ObjectInputFilter$Status: java.io.ObjectInputFilter$Status UNDECIDED\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

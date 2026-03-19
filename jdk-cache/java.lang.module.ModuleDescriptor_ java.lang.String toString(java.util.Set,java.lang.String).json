@@ -1,0 +1,541 @@
+{
+  "sig": "\u003cjava.lang.module.ModuleDescriptor: java.lang.String toString(java.util.Set,java.lang.String)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Set parameter escapes to global scope",
+    "String parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new Streams$StreamBuilderImpl"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new NullPointerException"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: callee: new ReferencePipeline$Head"
+      },
+      {
+        "id": "L21",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new IllegalStateException"
+      },
+      {
+        "id": "L20",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "callee: callee: new NullPointerException"
+      },
+      {
+        "id": "L23",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I5",
+        "kind": "INSIDE",
+        "label": "callee: callee: new NullPointerException"
+      },
+      {
+        "id": "L22",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I6",
+        "kind": "INSIDE",
+        "label": "callee: new Streams$ConcatSpliterator$OfRef"
+      },
+      {
+        "id": "I7",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new NullPointerException"
+      },
+      {
+        "id": "L24",
+        "kind": "LOAD",
+        "label": "callee: callee: load static CH_NOID"
+      },
+      {
+        "id": "I8",
+        "kind": "INSIDE",
+        "label": "callee: callee: new ReferencePipeline$Head"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "I9",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new IllegalStateException"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Set parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "String parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I11",
+        "kind": "INSIDE",
+        "label": "callee: callee: new Collectors$CollectorImpl"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I10",
+        "kind": "INSIDE",
+        "label": "callee: callee: new Streams$2"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L16",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L19",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      }
+    ],
+    "edges": [
+      {
+        "src": "I9",
+        "target": "L16",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "target": "I9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "target": "L20",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "target": "L21",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L24",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L22",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L21",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "I3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L11",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L12",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "I7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "I8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "L19",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "I6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "L22",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "L23",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "I0",
+      "I1",
+      "I11",
+      "I2",
+      "I10",
+      "I3",
+      "I4",
+      "I5",
+      "I6",
+      "I7",
+      "I8",
+      "L24",
+      "GBL",
+      "I9"
+    ],
+    "insideNodeCounter": 12,
+    "loadNodeCounter": 25
+  }
+}

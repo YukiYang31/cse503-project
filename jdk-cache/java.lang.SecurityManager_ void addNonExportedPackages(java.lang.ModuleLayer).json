@@ -1,0 +1,42 @@
+{
+  "sig": "\u003cjava.lang.SecurityManager: void addNonExportedPackages(java.lang.ModuleLayer)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027callee: load modules from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "ModuleLayer parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load modules from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.Configuration: java.util.Set modules\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "GBL",
+      "L0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

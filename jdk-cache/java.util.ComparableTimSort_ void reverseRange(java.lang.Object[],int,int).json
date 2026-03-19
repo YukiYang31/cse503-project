@@ -1,0 +1,37 @@
+{
+  "sig": "\u003cjava.util.ComparableTimSort: void reverseRange(java.lang.Object[],int,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates Object[] parameter via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Object[] parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "array element from Object[] parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "array element from Object[] parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P0"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

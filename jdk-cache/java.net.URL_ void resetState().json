@@ -1,0 +1,83 @@
+{
+  "sig": "\u003cjava.net.URL: void resetState()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field port",
+    "mutates this via field host",
+    "mutates this via field authority",
+    "mutates this via field file",
+    "mutates this via field tempState",
+    "mutates this via field path",
+    "mutates this via field userInfo",
+    "mutates this via field query",
+    "mutates this via field protocol",
+    "mutates this via field ref",
+    "mutates this via field handler",
+    "mutates this via field hashCode"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.URL: int port\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.URL: java.lang.String host\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.URL: java.lang.String authority\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.URL: java.lang.String file\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.URL: java.net.UrlDeserializedState tempState\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.URL: java.lang.String path\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.URL: java.lang.String userInfo\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.URL: java.lang.String query\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.URL: java.lang.String protocol\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.URL: java.lang.String ref\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.URL: java.net.URLStreamHandler handler\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.URL: int hashCode\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

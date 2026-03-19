@@ -1,0 +1,57 @@
+{
+  "sig": "\u003cjava.lang.ModuleLayer: void bindToLoader(java.lang.ClassLoader)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "ClassLoader parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ClassLoader parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static CLV"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new CopyOnWriteArrayList"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ModuleLayer: jdk.internal.loader.ClassLoaderValue CLV\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "GBL",
+      "P1",
+      "L0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 1
+  }
+}

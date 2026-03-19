@@ -1,0 +1,81 @@
+{
+  "sig": "\u003cjava.lang.Class: java.security.ProtectionDomain protectionDomain()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field allPermDomain",
+    "this escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    },
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "load static allPermDomain"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static allPermDomain"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load static ALL_PERMISSION"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Permissions"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new ProtectionDomain"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.security.ProtectionDomain allPermDomain\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.security.AllPermission ALL_PERMISSION\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.Class: java.security.ProtectionDomain allPermDomain\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "L1",
+      "I0",
+      "I1"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 2
+  }
+}

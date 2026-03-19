@@ -1,0 +1,165 @@
+{
+  "sig": "\u003cjava.lang.ThreadLocal$ThreadLocalMap: void replaceStaleEntry(java.lang.ThreadLocal,java.lang.Object,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field size",
+    "ThreadLocal parameter escapes to global scope",
+    "Object parameter escapes to global scope",
+    "mutates loaded object \u0027load table from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: load table from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: callee: load table from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ThreadLocal parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Object parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load table from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "array element from load table from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "array element from load table from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "array element from load table from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ThreadLocal$ThreadLocalMap$Entry"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: load table from parameter this"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: load table from parameter this"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: array element from load table from parameter this"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: load table from parameter this"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from load table from parameter this"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: array element from load table from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ThreadLocal$ThreadLocalMap: java.lang.ThreadLocal$ThreadLocalMap$Entry[] table\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ThreadLocal$ThreadLocalMap: java.lang.ThreadLocal$ThreadLocalMap$Entry[] table\u003e",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ThreadLocal$ThreadLocalMap: java.lang.ThreadLocal$ThreadLocalMap$Entry[] table\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ThreadLocal$ThreadLocalMap: java.lang.ThreadLocal$ThreadLocalMap$Entry[] table\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L2",
+        "field": "\u003cjava.lang.ThreadLocal$ThreadLocalMap$Entry: java.lang.Object value\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ThreadLocal$ThreadLocalMap: int size\u003e"
+      },
+      {
+        "node": "L2",
+        "field": "\u003cjava.lang.ThreadLocal$ThreadLocalMap$Entry: java.lang.Object value\u003e"
+      },
+      {
+        "node": "L10"
+      },
+      {
+        "node": "L4"
+      },
+      {
+        "node": "L3",
+        "field": "\u003cjava.lang.ThreadLocal$ThreadLocalMap$Entry: java.lang.Object value\u003e"
+      },
+      {
+        "node": "L0"
+      },
+      {
+        "node": "L6",
+        "field": "\u003cjava.lang.ThreadLocal$ThreadLocalMap$Entry: java.lang.Object value\u003e"
+      },
+      {
+        "node": "L11",
+        "field": "\u003cjava.lang.ThreadLocal$ThreadLocalMap$Entry: java.lang.Object value\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P1",
+      "P2",
+      "L1",
+      "L2",
+      "I0",
+      "L6",
+      "L9",
+      "L11"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 12
+  }
+}

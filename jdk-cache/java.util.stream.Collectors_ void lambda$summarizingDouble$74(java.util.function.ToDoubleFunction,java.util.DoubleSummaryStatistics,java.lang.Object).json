@@ -1,0 +1,70 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: void lambda$summarizingDouble$74(java.util.function.ToDoubleFunction,java.util.DoubleSummaryStatistics,java.lang.Object)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "ToDoubleFunction parameter escapes to global scope",
+    "mutates DoubleSummaryStatistics parameter via field sum",
+    "mutates DoubleSummaryStatistics parameter via field max",
+    "mutates DoubleSummaryStatistics parameter via field count",
+    "mutates DoubleSummaryStatistics parameter via field min",
+    "mutates DoubleSummaryStatistics parameter via field simpleSum",
+    "mutates DoubleSummaryStatistics parameter via field sumCompensation",
+    "Object parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "ToDoubleFunction parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "DoubleSummaryStatistics parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Object parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P1",
+        "field": "\u003cjava.util.DoubleSummaryStatistics: double sum\u003e"
+      },
+      {
+        "node": "P1",
+        "field": "\u003cjava.util.DoubleSummaryStatistics: double max\u003e"
+      },
+      {
+        "node": "P1",
+        "field": "\u003cjava.util.DoubleSummaryStatistics: long count\u003e"
+      },
+      {
+        "node": "P1",
+        "field": "\u003cjava.util.DoubleSummaryStatistics: double min\u003e"
+      },
+      {
+        "node": "P1",
+        "field": "\u003cjava.util.DoubleSummaryStatistics: double simpleSum\u003e"
+      },
+      {
+        "node": "P1",
+        "field": "\u003cjava.util.DoubleSummaryStatistics: double sumCompensation\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P2"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

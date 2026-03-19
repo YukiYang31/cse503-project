@@ -1,0 +1,45 @@
+{
+  "sig": "\u003cjava.lang.ModuleLayer: java.lang.LayerInstantiationException fail(java.lang.String,java.lang.Object[])\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "I1",
+      "kind": "INSIDE",
+      "label": "new LayerInstantiationException"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "String parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Object[] parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "return from format"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new LayerInstantiationException"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "I0"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 0
+  }
+}

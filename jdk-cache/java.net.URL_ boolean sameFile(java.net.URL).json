@@ -1,0 +1,298 @@
+{
+  "sig": "\u003cjava.net.URL: boolean sameFile(java.net.URL)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field hostAddress",
+    "mutates URL parameter via field hostAddress",
+    "loaded object \u0027callee: callee: callee: callee: load host from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load host from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "L21",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: array element from GBL"
+      },
+      {
+        "id": "L20",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load host from parameter this"
+      },
+      {
+        "id": "L22",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load host from parameter this"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "URL parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load handler from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load host from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load host from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: load protocol from parameter this"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: load protocol from parameter this"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: load protocol from parameter this"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: load protocol from parameter this"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: load file from parameter this"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: load protocol from parameter this"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: load file from parameter this"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: load file from parameter this"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: load handler from URL parameter"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: load file from parameter this"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: load file from parameter this"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load hostAddress from parameter this"
+      },
+      {
+        "id": "L16",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: array element from GBL"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: load handler from URL parameter"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load host from parameter this"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load host from parameter this"
+      },
+      {
+        "id": "L19",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load hostAddress from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.net.URL: java.lang.String host\u003e",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.net.URL: java.lang.String host\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.net.URL: java.lang.String host\u003e",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.net.URL: java.lang.String protocol\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.net.URL: java.lang.String protocol\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.net.URL: java.lang.String protocol\u003e",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.net.URL: java.net.URLStreamHandler handler\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.net.URL: java.net.URLStreamHandler handler\u003e",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.net.URL: java.lang.String file\u003e",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.net.URL: java.lang.String file\u003e",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.net.URL: java.lang.String file\u003e",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.net.URL: java.net.InetAddress hostAddress\u003e",
+        "target": "L16",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.net.URL: java.net.InetAddress hostAddress\u003e",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.net.URL: java.lang.String host\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.net.URL: java.lang.String host\u003e",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.net.URL: java.lang.String host\u003e",
+        "target": "L22",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.net.URL: java.net.URLStreamHandler handler\u003e",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.net.URL: java.lang.String protocol\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.net.URL: java.lang.String protocol\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.net.URL: java.lang.String file\u003e",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.net.URL: java.lang.String file\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.net.URL: java.net.InetAddress hostAddress\u003e",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.net.URL: java.net.InetAddress hostAddress\u003e",
+        "target": "L21",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.URL: java.net.InetAddress hostAddress\u003e"
+      },
+      {
+        "node": "P1",
+        "field": "\u003cjava.net.URL: java.net.InetAddress hostAddress\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "L18",
+      "L17"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 23
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "sig": "\u003cjava.lang.System: java.lang.System$Logger lambda$getLogger$0(java.lang.String,java.util.ResourceBundle,java.lang.Class)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field service",
+    "String parameter escapes to global scope",
+    "ResourceBundle parameter escapes to global scope",
+    "loaded object \u0027callee: load module from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I1",
+      "kind": "INSIDE",
+      "label": "callee: new LocalizedLoggerWrapper"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "String parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ResourceBundle parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Class parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load static service"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load static LOGGERFINDER_PERMISSION"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: load module from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new LocalizedLoggerWrapper"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System$LoggerFinder: java.lang.RuntimePermission LOGGERFINDER_PERMISSION\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System$LoggerFinder: java.lang.System$LoggerFinder service\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "field": "\u003cjava.lang.Class: java.lang.Module module\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.System$LoggerFinder: java.lang.System$LoggerFinder service\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "GBL",
+      "P0",
+      "P1",
+      "L0",
+      "L2",
+      "I0",
+      "I1"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 3
+  }
+}

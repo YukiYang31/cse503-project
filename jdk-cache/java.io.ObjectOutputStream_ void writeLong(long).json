@@ -1,0 +1,91 @@
+{
+  "sig": "\u003cjava.io.ObjectOutputStream: void writeLong(long)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates loaded object \u0027load bout from parameter this\u0027 via field pos",
+    "loaded object \u0027callee: load dout from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load dout from parameter this\u0027 via field written",
+    "loaded object \u0027callee: callee: load writeBuffer from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load out from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load bout from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load dout from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: load writeBuffer from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: load out from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream: java.io.ObjectOutputStream$BlockDataOutputStream bout\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.DataOutputStream dout\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.io.DataOutputStream: byte[] writeBuffer\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.io.DataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L1",
+        "field": "\u003cjava.io.DataOutputStream: int written\u003e"
+      },
+      {
+        "node": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: int pos\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "L1",
+      "L2",
+      "L3"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 4
+  }
+}

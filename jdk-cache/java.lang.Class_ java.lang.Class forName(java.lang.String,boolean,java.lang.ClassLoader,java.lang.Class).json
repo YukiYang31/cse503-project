@@ -1,0 +1,86 @@
+{
+  "sig": "\u003cjava.lang.Class: java.lang.Class forName(java.lang.String,boolean,java.lang.ClassLoader,java.lang.Class)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "String parameter escapes to global scope",
+    "ClassLoader parameter escapes to global scope",
+    "Class parameter escapes to global scope",
+    "loaded object \u0027callee: callee: load classLoader from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "String parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "ClassLoader parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "Class parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load static security"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: load classLoader from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load static GET_CLASSLOADER_PERMISSION"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.lang.RuntimePermission GET_CLASSLOADER_PERMISSION\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P3",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "P2",
+      "P3",
+      "L2"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 3
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "sig": "\u003cjava.util.ArrayList: java.util.ListIterator listIterator()\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new ArrayList$ListItr"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ArrayList$ListItr"
+      }
+    ],
+    "edges": [
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.ArrayList$Itr: java.util.ArrayList this$0\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.ArrayList$ListItr: java.util.ArrayList this$0\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 1
+  }
+}

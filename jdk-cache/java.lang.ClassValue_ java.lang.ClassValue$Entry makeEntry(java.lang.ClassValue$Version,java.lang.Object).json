@@ -1,0 +1,51 @@
+{
+  "sig": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Entry makeEntry(java.lang.ClassValue$Version,java.lang.Object)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "ClassValue$Version parameter escapes to global scope",
+    "Object parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new ClassValue$Entry"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "ClassValue$Version parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Object parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ClassValue$Entry"
+      }
+    ],
+    "edges": [
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

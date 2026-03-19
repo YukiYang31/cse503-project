@@ -1,0 +1,255 @@
+{
+  "sig": "\u003cjava.lang.module.ModuleDescriptor: void \u003cinit\u003e(java.lang.String,java.lang.module.ModuleDescriptor$Version,java.util.Set,java.util.Set,java.util.Set,java.util.Set,java.util.Set,java.util.Set,java.util.Set,java.lang.String,int,boolean)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027callee: load map from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load map from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "String parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "ModuleDescriptor$Version parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "Set parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static OPEN"
+      },
+      {
+        "id": "P4",
+        "kind": "PARAMETER",
+        "paramIndex": 4,
+        "label": "Set parameter"
+      },
+      {
+        "id": "P5",
+        "kind": "PARAMETER",
+        "paramIndex": 5,
+        "label": "Set parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load map from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load static AUTOMATIC"
+      },
+      {
+        "id": "P6",
+        "kind": "PARAMETER",
+        "paramIndex": 6,
+        "label": "Set parameter"
+      },
+      {
+        "id": "P7",
+        "kind": "PARAMETER",
+        "paramIndex": 7,
+        "label": "Set parameter"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: load map from parameter this"
+      },
+      {
+        "id": "P8",
+        "kind": "PARAMETER",
+        "paramIndex": 8,
+        "label": "Set parameter"
+      },
+      {
+        "id": "P9",
+        "kind": "PARAMETER",
+        "paramIndex": 9,
+        "label": "Set parameter"
+      },
+      {
+        "id": "P10",
+        "kind": "PARAMETER",
+        "paramIndex": 10,
+        "label": "String parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Modifier: java.lang.module.ModuleDescriptor$Modifier OPEN\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Modifier: java.lang.module.ModuleDescriptor$Modifier AUTOMATIC\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.util.Set opens\u003e",
+        "target": "P6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.lang.module.ModuleDescriptor$Version version\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.util.Set exports\u003e",
+        "target": "P5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.lang.String mainClass\u003e",
+        "target": "P10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.lang.String name\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.util.Set packages\u003e",
+        "target": "P9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.util.Set requires\u003e",
+        "target": "P4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.util.Set modifiers\u003e",
+        "target": "P3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.util.Set provides\u003e",
+        "target": "P8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.util.Set uses\u003e",
+        "target": "P7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P3",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P3",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.lang.String rawVersionString\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.lang.module.ModuleDescriptor$Version version\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.util.Set modifiers\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.lang.String mainClass\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.util.Set uses\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.util.Set exports\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.util.Set packages\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: boolean open\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.util.Set opens\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: int hash\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.lang.String name\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: boolean automatic\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.util.Set requires\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.util.Set provides\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "L0",
+      "L1",
+      "L2",
+      "L3"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 4
+  }
+}

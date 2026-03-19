@@ -1,0 +1,312 @@
+{
+  "sig": "\u003cjava.io.ObjectStreamClass$DeserializationConstructorsCache$Key$Impl: void \u003cinit\u003e(java.io.ObjectStreamField[])\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates loaded object \u0027load fieldNames from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027load fieldTypes from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ObjectStreamField[] parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load fieldNames from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "array element from ObjectStreamField[] parameter"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: load name from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "load fieldTypes from parameter this"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "array element from ObjectStreamField[] parameter"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: load static security"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: load classLoader from parameter this"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load parent from parameter this"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static security"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static security"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static security"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static GET_CLASSLOADER_PERMISSION"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load classLoader from parameter this"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: load classLoader from parameter this"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: load type from parameter this"
+      },
+      {
+        "id": "L16",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static security"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load parent from parameter this"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static GET_CLASSLOADER_PERMISSION"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load classLoader from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.lang.RuntimePermission GET_CLASSLOADER_PERMISSION\u003e",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.lang.RuntimePermission GET_CLASSLOADER_PERMISSION\u003e",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable$HandleList: int[] list\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$DeserializationConstructorsCache$Key$Impl: java.lang.Class[] fieldTypes\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$DeserializationConstructorsCache$Key$Impl: java.lang.Class[] fieldTypes\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$DeserializationConstructorsCache$Key$Impl: java.lang.String[] fieldNames\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$DeserializationConstructorsCache$Key$Impl: java.lang.String[] fieldNames\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.io.ObjectStreamField: java.lang.String name\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.io.ObjectStreamField: java.lang.Class type\u003e",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L6",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L10",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L14",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable$HandleList: int size\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable$HandleList: int[] list\u003e"
+      },
+      {
+        "node": "I2"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$DeserializationConstructorsCache$Key$Impl: java.lang.Class[] fieldTypes\u003e"
+      },
+      {
+        "node": "L3"
+      },
+      {
+        "node": "I1"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$DeserializationConstructorsCache$Key$Impl: java.lang.String[] fieldNames\u003e"
+      },
+      {
+        "node": "L0"
+      }
+    ],
+    "globalEscaped": [
+      "L18",
+      "L6",
+      "L11",
+      "L14",
+      "L13"
+    ],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 0
+  }
+}

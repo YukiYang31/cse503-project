@@ -1,0 +1,83 @@
+{
+  "sig": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: void writeLongs(long[],int,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field pos",
+    "loaded object \u0027load buf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load writeBuffer from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load out from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "long[] parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load buf from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load writeBuffer from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: load out from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.DataOutputStream dout\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L0"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: int pos\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "L0",
+      "L1",
+      "L2"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

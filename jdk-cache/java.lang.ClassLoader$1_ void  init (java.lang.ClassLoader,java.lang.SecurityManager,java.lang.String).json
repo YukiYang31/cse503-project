@@ -1,0 +1,61 @@
+{
+  "sig": "\u003cjava.lang.ClassLoader$1: void \u003cinit\u003e(java.lang.ClassLoader,java.lang.SecurityManager,java.lang.String)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ClassLoader parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "SecurityManager parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "String parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader$1: java.lang.String val$packageName\u003e",
+        "target": "P3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader$1: java.lang.SecurityManager val$sm\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader$1: java.lang.String val$packageName\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader$1: java.lang.SecurityManager val$sm\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

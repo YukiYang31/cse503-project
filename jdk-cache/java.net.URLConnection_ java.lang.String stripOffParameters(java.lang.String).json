@@ -1,0 +1,44 @@
+{
+  "sig": "\u003cjava.net.URLConnection: java.lang.String stripOffParameters(java.lang.String)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "P1",
+      "kind": "PARAMETER",
+      "paramIndex": 1,
+      "label": "String parameter"
+    },
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "return from substring"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "String parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "return from substring"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

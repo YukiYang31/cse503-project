@@ -1,0 +1,59 @@
+{
+  "sig": "\u003cjava.math.BigInteger: int[] implMultiplyToLen(int[],int,int[],int,int[])\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates int[] parameter via field array element"
+  ],
+  "returnTargets": [
+    {
+      "id": "P4",
+      "kind": "PARAMETER",
+      "paramIndex": 4,
+      "label": "int[] parameter"
+    },
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new array"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "int[] parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "int[] parameter"
+      },
+      {
+        "id": "P4",
+        "kind": "PARAMETER",
+        "paramIndex": 4,
+        "label": "int[] parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "I0"
+      },
+      {
+        "node": "P4"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

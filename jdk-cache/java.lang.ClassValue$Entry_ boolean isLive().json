@@ -1,0 +1,58 @@
+{
+  "sig": "\u003cjava.lang.ClassValue$Entry: boolean isLive()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "mutates this via field list"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load classValue from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: load version from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

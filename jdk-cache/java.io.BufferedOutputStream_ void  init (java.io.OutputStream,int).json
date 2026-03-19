@@ -1,0 +1,144 @@
+{
+  "sig": "\u003cjava.io.BufferedOutputStream: void \u003cinit\u003e(java.io.OutputStream,int)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "OutputStream parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: callee: new Object"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new IllegalArgumentException"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.BufferedOutputStream: jdk.internal.misc.InternalLock lock\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.BufferedOutputStream: byte[] buf\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.FilterOutputStream: java.io.OutputStream out\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.FilterOutputStream: java.lang.Object closeLock\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.BufferedOutputStream: byte[] buf\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.BufferedOutputStream: jdk.internal.misc.InternalLock lock\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.BufferedOutputStream: int maxBufSize\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.FilterOutputStream: java.lang.Object closeLock\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.FilterOutputStream: java.io.OutputStream out\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I1"
+    ],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 3
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "sig": "\u003cjava.util.HashMap: java.util.HashMap$TreeNode replacementTreeNode(java.util.HashMap$Node,java.util.HashMap$Node)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "HashMap$Node parameter escapes to global scope",
+    "loaded object \u0027load key from HashMap$Node parameter\u0027 escapes to global scope",
+    "loaded object \u0027load value from HashMap$Node parameter\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new HashMap$TreeNode"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "HashMap$Node parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "HashMap$Node parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load key from HashMap$Node parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load value from HashMap$Node parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new HashMap$TreeNode"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object key\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P2",
+      "L0",
+      "L1",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 2
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "sig": "\u003cjava.util.stream.SpinedBuffer$OfDouble: void arrayForEach(double[],int,int,java.util.function.DoubleConsumer)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates DoubleConsumer parameter via field sumCompensation",
+    "mutates DoubleConsumer parameter via field sum",
+    "mutates DoubleConsumer parameter via field max",
+    "mutates DoubleConsumer parameter via field simpleSum",
+    "mutates DoubleConsumer parameter via field count",
+    "mutates DoubleConsumer parameter via field min"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "double[] parameter"
+      },
+      {
+        "id": "P4",
+        "kind": "PARAMETER",
+        "paramIndex": 4,
+        "label": "DoubleConsumer parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P4",
+        "field": "\u003cjava.util.DoubleSummaryStatistics: double sumCompensation\u003e"
+      },
+      {
+        "node": "P4",
+        "field": "\u003cjava.util.DoubleSummaryStatistics: double sum\u003e"
+      },
+      {
+        "node": "P4",
+        "field": "\u003cjava.util.DoubleSummaryStatistics: double max\u003e"
+      },
+      {
+        "node": "P4",
+        "field": "\u003cjava.util.DoubleSummaryStatistics: double simpleSum\u003e"
+      },
+      {
+        "node": "P4",
+        "field": "\u003cjava.util.DoubleSummaryStatistics: long count\u003e"
+      },
+      {
+        "node": "P4",
+        "field": "\u003cjava.util.DoubleSummaryStatistics: double min\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,1423 @@
+{
+  "sig": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] getStackTrace()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field map",
+    "writes to static field unknown",
+    "mutates this via field stackTrace",
+    "loaded object \u0027callee: load stackTrace from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load backtrace from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load map from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new ConcurrentHashMap"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new array"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: new array"
+      },
+      {
+        "id": "L21",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load table from parameter this"
+      },
+      {
+        "id": "L20",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load table from parameter this"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: new HashMap$Node"
+      },
+      {
+        "id": "I5",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: callee: new HashMap$TreeNode"
+      },
+      {
+        "id": "L23",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load next from array element from callee: load table from parameter this"
+      },
+      {
+        "id": "I6",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: new array"
+      },
+      {
+        "id": "L22",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load table from parameter this"
+      },
+      {
+        "id": "L25",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: array element from load table from parameter this"
+      },
+      {
+        "id": "L24",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load keySet from parameter this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L27",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load next from load next from array element from load table from parameter this"
+      },
+      {
+        "id": "L26",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: array element from load table from parameter this"
+      },
+      {
+        "id": "L29",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load key from array element from callee: load table from parameter this"
+      },
+      {
+        "id": "L28",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load next from array element from load table from parameter this"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load stackTrace from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: load backtrace from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load module from parameter this"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static bootLayer"
+      },
+      {
+        "id": "L30",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load key from array element from load table from parameter this"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load name from parameter this"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load layer from parameter this"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: array element from callee: load table from parameter this"
+      },
+      {
+        "id": "L31",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load key from load next from array element from callee: load table from parameter this"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load loader from parameter this"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load key from load next from array element from load table from parameter this"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static bootLayer"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load next from array element from HashMap$Node[] parameter"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load next from array element from load table from parameter this"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load value from HashMap$Node parameter"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: load map from parameter this"
+      },
+      {
+        "id": "L16",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load value from GBL"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load value from array element from load table from parameter this"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load value from load next from array element from callee: load table from parameter this"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load value from array element from callee: load table from parameter this"
+      },
+      {
+        "id": "L19",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load value from load next from array element from load table from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "I1",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L20",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L21",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L24",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L21",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L21",
+        "target": "L20",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L21",
+        "target": "L21",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L21",
+        "target": "L21",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L21",
+        "target": "L24",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L20",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L20",
+        "target": "L20",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L20",
+        "target": "L21",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L20",
+        "target": "L21",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L20",
+        "target": "L24",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L12",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L23",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L23",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L23",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L23",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L23",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L12",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L22",
+        "field": "\u003cjava.util.HashMap: java.util.Set keySet\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L22",
+        "field": "\u003cjava.util.HashMap: java.util.Set keySet\u003e",
+        "target": "L24",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L25",
+        "target": "L25",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L25",
+        "target": "L27",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L25",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L25",
+        "target": "L27",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L25",
+        "target": "L28",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L24",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L24",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L24",
+        "target": "L20",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L24",
+        "target": "L21",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L24",
+        "target": "L21",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L24",
+        "target": "L24",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L27",
+        "target": "L25",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L27",
+        "target": "L27",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L27",
+        "target": "L27",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L27",
+        "target": "L28",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L12",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.ModuleLayer bootLayer\u003e",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.ModuleLayer bootLayer\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.HashSet: java.util.HashMap map\u003e",
+        "target": "L22",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L26",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L26",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L26",
+        "target": "L30",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L26",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L26",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L28",
+        "target": "L25",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L28",
+        "target": "L27",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L28",
+        "target": "L27",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L28",
+        "target": "L28",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Throwable: java.lang.Object backtrace\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L3",
+        "field": "\u003cjava.lang.Module: java.lang.ModuleLayer layer\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L3",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L3",
+        "field": "\u003cjava.lang.Module: java.lang.ClassLoader loader\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "L29",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L31",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L31",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L31",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L12",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L11",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L11",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L11",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L11",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L11",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L9",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L9",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L9",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L9",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L9",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L9",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L9",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L9",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L9",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L9",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L9",
+        "target": "L12",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L9",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L9",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L9",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L9",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L9",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L9",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L12",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L12",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L12",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L12",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L11",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e"
+      },
+      {
+        "node": "L27"
+      },
+      {
+        "node": "L16"
+      },
+      {
+        "node": "L28"
+      },
+      {
+        "node": "L17"
+      },
+      {
+        "node": "GBL"
+      },
+      {
+        "node": "L18"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e"
+      },
+      {
+        "node": "L12"
+      },
+      {
+        "node": "L23"
+      },
+      {
+        "node": "L24"
+      },
+      {
+        "node": "L25"
+      },
+      {
+        "node": "L9"
+      },
+      {
+        "node": "L14"
+      },
+      {
+        "node": "L15"
+      },
+      {
+        "node": "L26"
+      },
+      {
+        "node": "L31"
+      },
+      {
+        "node": "L20"
+      },
+      {
+        "node": "L21"
+      },
+      {
+        "node": "L10"
+      },
+      {
+        "node": "L11"
+      },
+      {
+        "node": "L22"
+      },
+      {
+        "node": "L22",
+        "field": "\u003cjava.util.HashMap: java.util.Set keySet\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I0",
+      "I1",
+      "I2",
+      "I3",
+      "L21",
+      "L20",
+      "I4",
+      "I5",
+      "L22",
+      "I6",
+      "L25",
+      "L24",
+      "GBL",
+      "L26",
+      "L0",
+      "L1",
+      "L2",
+      "L3",
+      "L10",
+      "L12",
+      "L9",
+      "L14",
+      "L13",
+      "L15",
+      "L18",
+      "L17"
+    ],
+    "insideNodeCounter": 7,
+    "loadNodeCounter": 32
+  }
+}

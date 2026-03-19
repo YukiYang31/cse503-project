@@ -1,0 +1,68 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: java.util.Optional lambda$reducing$48(java.util.stream.Collectors$1OptionalBox)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "L1",
+      "kind": "LOAD",
+      "label": "callee: load static EMPTY"
+    },
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "callee: new Optional"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Collectors$1OptionalBox parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load value from Collectors$1OptionalBox parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load static EMPTY"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new Optional"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.Collectors$1OptionalBox: java.lang.Object value\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 2
+  }
+}

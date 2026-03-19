@@ -1,0 +1,63 @@
+{
+  "sig": "\u003cjava.io.ObjectInputStream$FieldValues: char get(java.lang.String,char)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "String parameter escapes to global scope",
+    "loaded object \u0027load primValues from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "String parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static TYPE"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load primValues from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$FieldValues: byte[] primValues\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Character: java.lang.Class TYPE\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "P1",
+      "L0",
+      "L1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

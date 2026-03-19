@@ -1,0 +1,58 @@
+{
+  "sig": "\u003cjava.util.Hashtable: java.util.Iterator getIterator(int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "callee: load static EMPTY_ITERATOR"
+    },
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new Hashtable$Enumerator"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load static EMPTY_ITERATOR"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Hashtable$Enumerator"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Collections$EmptyIterator: java.util.Collections$EmptyIterator EMPTY_ITERATOR\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 1
+  }
+}

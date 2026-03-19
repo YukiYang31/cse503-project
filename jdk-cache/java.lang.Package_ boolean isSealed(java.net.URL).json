@@ -1,0 +1,603 @@
+{
+  "sig": "\u003cjava.lang.Package: boolean isSealed(java.net.URL)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027load sealBase from load versionInfo from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load value from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load mref from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load allLayers from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load location from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load name from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load static EMPTY\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load cf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load cf from parameter this\u0027 via field allLayers"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new NullPointerException"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new NullPointerException"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new Optional"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new NullPointerException"
+      },
+      {
+        "id": "L21",
+        "kind": "LOAD",
+        "label": "callee: callee: load layer from parameter this"
+      },
+      {
+        "id": "L20",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load name from parameter this"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new ArrayDeque"
+      },
+      {
+        "id": "L23",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I5",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new Collections$UnmodifiableRandomAccessList"
+      },
+      {
+        "id": "I6",
+        "kind": "INSIDE",
+        "label": "callee: callee: new NoSuchElementException"
+      },
+      {
+        "id": "L22",
+        "kind": "LOAD",
+        "label": "callee: callee: load loader from parameter this"
+      },
+      {
+        "id": "I7",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new Optional"
+      },
+      {
+        "id": "L25",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static bootLayer"
+      },
+      {
+        "id": "L24",
+        "kind": "LOAD",
+        "label": "callee: callee: load name from parameter this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L27",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L26",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L29",
+        "kind": "LOAD",
+        "label": "callee: callee: load static EMPTY_LAYER"
+      },
+      {
+        "id": "L28",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static EMPTY"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "URL parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "load versionInfo from parameter this"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "load static NULL_VERSION_INFO"
+      },
+      {
+        "id": "L30",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "load sealBase from load versionInfo from parameter this"
+      },
+      {
+        "id": "L32",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: load value from parameter this"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: load mref from parameter this"
+      },
+      {
+        "id": "L31",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load allLayers from parameter this"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static EMPTY"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: load value from parameter this"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: load location from parameter this"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: load name from parameter this"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: load module from parameter this"
+      },
+      {
+        "id": "L16",
+        "kind": "LOAD",
+        "label": "callee: callee: load layer from parameter this"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load name from parameter this"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static bootLayer"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: callee: load loader from parameter this"
+      },
+      {
+        "id": "L19",
+        "kind": "LOAD",
+        "label": "callee: callee: load cf from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Package: java.lang.Package$VersionInfo versionInfo\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.NamedPackage: java.lang.Module module\u003e",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L3",
+        "field": "\u003cjava.lang.Package$VersionInfo: java.net.URL sealBase\u003e",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L26",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L27",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L23",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "I3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L30",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L31",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L32",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L21",
+        "field": "\u003cjava.lang.module.ResolvedModule: java.lang.module.Configuration cf\u003e",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L6",
+        "field": "\u003cjava.lang.module.ResolvedModule: java.lang.module.ModuleReference mref\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L10",
+        "field": "\u003cjava.lang.module.ModuleReference: java.net.URI location\u003e",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "I6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L25",
+        "field": "\u003cjava.lang.module.ResolvedModule: java.lang.module.Configuration cf\u003e",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "field": "\u003cjava.lang.Module: java.lang.ModuleLayer layer\u003e",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "field": "\u003cjava.lang.Module: java.lang.ModuleLayer layer\u003e",
+        "target": "L21",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L24",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "field": "\u003cjava.lang.Module: java.lang.ClassLoader loader\u003e",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "field": "\u003cjava.lang.Module: java.lang.ClassLoader loader\u003e",
+        "target": "L22",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L27",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L26",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L30",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L32",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ModuleLayer: java.lang.ModuleLayer EMPTY_LAYER\u003e",
+        "target": "L29",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.ModuleLayer bootLayer\u003e",
+        "target": "L25",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.ModuleLayer bootLayer\u003e",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Package$VersionInfo: java.lang.Package$VersionInfo NULL_VERSION_INFO\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List parents\u003e",
+        "target": "L30",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.module.ResolvedModule: java.lang.module.ModuleReference mref\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L28",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L19",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List allLayers\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L19",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List allLayers\u003e",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L19",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List allLayers\u003e",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L19",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.Map nameToModule\u003e",
+        "target": "L28",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L19",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List allLayers\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I0",
+      "L30",
+      "I1",
+      "I2",
+      "I3",
+      "L31",
+      "I4",
+      "I5",
+      "I6",
+      "L11",
+      "L9",
+      "L24",
+      "GBL",
+      "L28",
+      "L19"
+    ],
+    "insideNodeCounter": 8,
+    "loadNodeCounter": 33
+  }
+}

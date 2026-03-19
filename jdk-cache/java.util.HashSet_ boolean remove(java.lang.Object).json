@@ -1,0 +1,71 @@
+{
+  "sig": "\u003cjava.util.HashSet: boolean remove(java.lang.Object)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Object parameter escapes to global scope",
+    "loaded object \u0027callee: load map from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Object parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load map from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load map from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load static PRESENT"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.HashSet: java.lang.Object PRESENT\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.HashSet: java.util.HashMap map\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P1",
+      "L1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 3
+  }
+}

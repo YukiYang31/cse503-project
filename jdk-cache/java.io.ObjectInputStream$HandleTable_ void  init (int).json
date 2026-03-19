@@ -1,0 +1,76 @@
+{
+  "sig": "\u003cjava.io.ObjectInputStream$HandleTable: void \u003cinit\u003e(int)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: java.lang.Object[] entries\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: byte[] status\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: java.io.ObjectInputStream$HandleTable$HandleList[] deps\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: byte[] status\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: int lowDep\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: java.io.ObjectInputStream$HandleTable$HandleList[] deps\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: java.lang.Object[] entries\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: int size\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 0
+  }
+}

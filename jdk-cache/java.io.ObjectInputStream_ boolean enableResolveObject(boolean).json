@@ -1,0 +1,56 @@
+{
+  "sig": "\u003cjava.io.ObjectInputStream: boolean enableResolveObject(boolean)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field enableResolve"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load static security"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load static SUBSTITUTION_PERMISSION"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.io.ObjectInputStream: java.io.SerializablePermission SUBSTITUTION_PERMISSION\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream: boolean enableResolve\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "L1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

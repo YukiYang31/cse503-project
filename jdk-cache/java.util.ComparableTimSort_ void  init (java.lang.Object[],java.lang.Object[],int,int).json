@@ -1,0 +1,112 @@
+{
+  "sig": "\u003cjava.util.ComparableTimSort: void \u003cinit\u003e(java.lang.Object[],java.lang.Object[],int,int)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Object[] parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Object[] parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ComparableTimSort: java.lang.Object[] tmp\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ComparableTimSort: java.lang.Object[] tmp\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ComparableTimSort: int[] runBase\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ComparableTimSort: int[] runLen\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ComparableTimSort: java.lang.Object[] a\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ComparableTimSort: java.lang.Object[] tmp\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ComparableTimSort: int tmpLen\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ComparableTimSort: int[] runBase\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ComparableTimSort: int tmpBase\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ComparableTimSort: int[] runLen\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ComparableTimSort: int minGallop\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ComparableTimSort: java.lang.Object[] a\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ComparableTimSort: int stackSize\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 0
+  }
+}

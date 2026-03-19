@@ -1,0 +1,58 @@
+{
+  "sig": "\u003cjava.lang.Class$Atomic: boolean casReflectionData(java.lang.Class,java.lang.ref.SoftReference,java.lang.ref.SoftReference)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Class parameter escapes to global scope",
+    "SoftReference parameter escapes to global scope",
+    "SoftReference parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Class parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "SoftReference parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "SoftReference parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static unsafe"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class$Atomic: jdk.internal.misc.Unsafe unsafe\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "P1",
+      "P2",
+      "L0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

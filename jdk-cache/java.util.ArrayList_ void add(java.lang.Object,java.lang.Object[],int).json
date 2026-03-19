@@ -76,11 +76,11 @@
         "node": "I0"
       },
       {
-        "node": "P0",
-        "field": "\u003cjava.util.ArrayList: int size\u003e"
+        "node": "P2"
       },
       {
-        "node": "P2"
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList: int size\u003e"
       }
     ],
     "globalEscaped": [],

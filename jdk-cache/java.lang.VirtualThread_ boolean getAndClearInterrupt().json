@@ -1,0 +1,109 @@
+{
+  "sig": "\u003cjava.lang.VirtualThread: boolean getAndClearInterrupt()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field interrupted",
+    "loaded object \u0027load interruptLock from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027load carrierThread from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load carrierThread from parameter this\u0027 via field interrupted"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load interruptLock from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load carrierThread from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new AssertionError"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.VirtualThread: java.lang.Thread carrierThread\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.VirtualThread: java.lang.Object interruptLock\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L4",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L1",
+        "field": "\u003cjava.lang.Thread: boolean interrupted\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.VirtualThread: boolean interrupted\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 5
+  }
+}

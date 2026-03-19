@@ -46,20 +46,17 @@
     "edges": [
       {
         "src": "GBL",
-        "field": "\u003cjava.lang.Throwable: java.util.List SUPPRESSED_SENTINEL\u003e",
         "target": "L2",
         "type": "OUTSIDE"
       },
       {
         "src": "GBL",
-        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
-        "target": "L5",
+        "target": "L1",
         "type": "OUTSIDE"
       },
       {
         "src": "GBL",
-        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
-        "target": "L1",
+        "target": "L5",
         "type": "OUTSIDE"
       },
       {
@@ -70,26 +67,22 @@
       },
       {
         "src": "I0",
-        "field": "\u003cjava.lang.Throwable: java.lang.Throwable cause\u003e",
-        "target": "I0",
-        "type": "INSIDE"
-      },
-      {
-        "src": "I0",
-        "field": "\u003cjava.lang.Throwable: java.util.List suppressedExceptions\u003e",
-        "target": "L2",
-        "type": "INSIDE"
-      },
-      {
-        "src": "I0",
-        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
         "target": "L1",
         "type": "INSIDE"
       },
       {
         "src": "I0",
-        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
         "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
         "type": "INSIDE"
       }
     ],

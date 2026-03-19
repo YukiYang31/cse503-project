@@ -1,0 +1,106 @@
+{
+  "sig": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry probeBackupLocations(java.lang.ClassValue$Entry[],java.lang.ClassValue)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates ClassValue$Entry[] parameter via field array element"
+  ],
+  "returnTargets": [
+    {
+      "id": "L1",
+      "kind": "LOAD",
+      "label": "array element from ClassValue$Entry[] parameter"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "ClassValue$Entry[] parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ClassValue parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "array element from ClassValue$Entry[] parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "array element from ClassValue$Entry[] parameter"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: load version from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "load static DEAD_ENTRY"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load classValue from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.ClassValue$Entry DEAD_ENTRY\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L3",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0"
+      },
+      {
+        "node": "L1",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "L0",
+      "L1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 5
+  }
+}

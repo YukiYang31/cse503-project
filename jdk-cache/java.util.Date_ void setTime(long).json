@@ -1,0 +1,33 @@
+{
+  "sig": "\u003cjava.util.Date: void setTime(long)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field fastTime",
+    "mutates this via field cdate"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Date: long fastTime\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Date: sun.util.calendar.BaseCalendar$Date cdate\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

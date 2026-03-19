@@ -1,0 +1,69 @@
+{
+  "sig": "\u003cjava.util.function.BinaryOperator: java.lang.Object lambda$minBy$0(java.util.Comparator,java.lang.Object,java.lang.Object)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "P1",
+      "kind": "PARAMETER",
+      "paramIndex": 1,
+      "label": "Object parameter"
+    },
+    {
+      "id": "P2",
+      "kind": "PARAMETER",
+      "paramIndex": 2,
+      "label": "Object parameter"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Comparator parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Object parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Object parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: load name from ObjectStreamClass$MemberSignature parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: load name from ObjectStreamClass$MemberSignature parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P1",
+        "field": "\u003cjava.io.ObjectStreamClass$MemberSignature: java.lang.String name\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "field": "\u003cjava.io.ObjectStreamClass$MemberSignature: java.lang.String name\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

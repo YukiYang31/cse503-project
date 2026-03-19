@@ -1,0 +1,59 @@
+{
+  "sig": "\u003cjava.io.PrintStream: void println(java.lang.String)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "String parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: load static lineSeparator"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "return from getClass"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "return from valueOf"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.String lineSeparator\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "L0",
+      "I1"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 1
+  }
+}

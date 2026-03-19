@@ -1,0 +1,44 @@
+{
+  "sig": "\u003cjava.lang.SecurityManager: void checkPermission(java.security.Permission,java.lang.Object)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Permission parameter escapes to global scope",
+    "Object parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Permission parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Object parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new SecurityException"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P1",
+      "P2"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

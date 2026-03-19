@@ -1,0 +1,169 @@
+{
+  "sig": "\u003cjava.io.ObjectInputStream$ValidationList: void register(java.io.ObjectInputValidation,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field list",
+    "ObjectInputValidation parameter escapes to global scope",
+    "loaded object \u0027load list from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load list from parameter this\u0027 via field next",
+    "loaded object \u0027load next from load list from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load next from load list from parameter this\u0027 via field next"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ObjectInputValidation parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load list from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load next from load list from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ObjectInputStream$ValidationList$Callback"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList$Callback: java.io.ObjectInputStream$ValidationList$Callback next\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList$Callback: java.io.ObjectInputStream$ValidationList$Callback next\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList$Callback: java.io.ObjectInputStream$ValidationList$Callback next\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList$Callback: java.io.ObjectInputStream$ValidationList$Callback next\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList$Callback: java.security.AccessControlContext acc\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList$Callback: java.io.ObjectInputStream$ValidationList$Callback next\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList$Callback: java.io.ObjectInputStream$ValidationList$Callback next\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList$Callback: java.io.ObjectInputValidation obj\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L0",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList$Callback: java.io.ObjectInputStream$ValidationList$Callback next\u003e"
+      },
+      {
+        "node": "L1",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList$Callback: java.io.ObjectInputStream$ValidationList$Callback next\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 5
+  }
+}

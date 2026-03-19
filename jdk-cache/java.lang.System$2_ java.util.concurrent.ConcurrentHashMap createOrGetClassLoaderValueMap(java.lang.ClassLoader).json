@@ -1,0 +1,66 @@
+{
+  "sig": "\u003cjava.lang.System$2: java.util.concurrent.ConcurrentHashMap createOrGetClassLoaderValueMap(java.lang.ClassLoader)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "ClassLoader parameter escapes to global scope",
+    "loaded object \u0027callee: load classLoaderValueMap from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "callee: load classLoaderValueMap from parameter this"
+    },
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "callee: new ConcurrentHashMap"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ClassLoader parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load classLoaderValueMap from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new ConcurrentHashMap"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P1",
+        "field": "\u003cjava.lang.ClassLoader: java.util.concurrent.ConcurrentHashMap classLoaderValueMap\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "GBL",
+      "P1",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 1
+  }
+}

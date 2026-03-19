@@ -1,0 +1,66 @@
+{
+  "sig": "\u003cjava.lang.System$LoggerFinder: java.lang.System$Logger getLocalizedLogger(java.lang.String,java.util.ResourceBundle,java.lang.Module)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "String parameter escapes to global scope",
+    "ResourceBundle parameter escapes to global scope",
+    "Module parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new LocalizedLoggerWrapper"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "String parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "ResourceBundle parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "Module parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new LocalizedLoggerWrapper"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "GBL",
+      "P1",
+      "P2",
+      "P3",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "sig": "\u003cjava.lang.constant.DynamicConstantDesc: java.lang.constant.ConstantDesc canonicalizeArrayVarHandle(java.lang.constant.DynamicConstantDesc)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "P0",
+      "kind": "PARAMETER",
+      "paramIndex": 0,
+      "label": "DynamicConstantDesc parameter"
+    },
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "DynamicConstantDesc parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load bootstrapArgs from DynamicConstantDesc parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load constantType from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load static CD_VarHandle"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "array element from load bootstrapArgs from DynamicConstantDesc parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.constant.ConstantDescs: java.lang.constant.ClassDesc CD_VarHandle\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.constant.DynamicConstantDesc: java.lang.constant.ConstantDesc[] bootstrapArgs\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.constant.DynamicConstantDesc: java.lang.constant.ClassDesc constantType\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "L3"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 4
+  }
+}

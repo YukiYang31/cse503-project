@@ -1,0 +1,695 @@
+{
+  "sig": "\u003cjava.lang.Thread: void sleep(java.time.Duration)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field state",
+    "writes to static field parkPermit",
+    "writes to static field interrupted",
+    "Duration parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new ThreadSleepEvent"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new AssertionError"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: new InterruptedException"
+      },
+      {
+        "id": "L21",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new AssertionError"
+      },
+      {
+        "id": "L20",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "callee: callee: new AssertionError"
+      },
+      {
+        "id": "L23",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load carrierThread from VirtualThread parameter"
+      },
+      {
+        "id": "I5",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new AssertionError"
+      },
+      {
+        "id": "L22",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I6",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new AssertionError"
+      },
+      {
+        "id": "L25",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I7",
+        "kind": "INSIDE",
+        "label": "callee: callee: new AssertionError"
+      },
+      {
+        "id": "L24",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L27",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static VTHREAD_SCOPE"
+      },
+      {
+        "id": "L26",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load carrierThread from parameter this"
+      },
+      {
+        "id": "L29",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L28",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Duration parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static NANOSECONDS"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load carrierThread from VirtualThread parameter"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: load interruptLock from parameter this"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: load carrierThread from parameter this"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: load interruptLock from parameter this"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: load carrierThread from parameter this"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L16",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load carrierThread from parameter this"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L19",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L25",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L29",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L24",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L22",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L26",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L21",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.VirtualThread: java.lang.Thread carrierThread\u003e",
+        "target": "L26",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.VirtualThread: java.lang.Thread carrierThread\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.VirtualThread: java.lang.Thread carrierThread\u003e",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.VirtualThread: java.lang.Thread carrierThread\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.VirtualThread: java.lang.Thread carrierThread\u003e",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.VirtualThread: java.lang.Thread carrierThread\u003e",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.VirtualThread: java.util.concurrent.ScheduledExecutorService UNPARKER\u003e",
+        "target": "L22",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.VirtualThread: java.lang.Object interruptLock\u003e",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.VirtualThread: java.lang.Object interruptLock\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.concurrent.TimeUnit: java.util.concurrent.TimeUnit NANOSECONDS\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.concurrent.TimeUnit: java.util.concurrent.TimeUnit NANOSECONDS\u003e",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.VirtualThread: jdk.internal.misc.Unsafe U\u003e",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.VirtualThread: jdk.internal.misc.Unsafe U\u003e",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.VirtualThread: jdk.internal.vm.ContinuationScope VTHREAD_SCOPE\u003e",
+        "target": "L27",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.VirtualThread: jdk.internal.vm.ContinuationScope VTHREAD_SCOPE\u003e",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L11",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L12",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L16",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L19",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L21",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L22",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L25",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L28",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "I3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L20",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L22",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L23",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L24",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L26",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L29",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "I6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "I7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "L7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "L8",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.VirtualThread: int state\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.VirtualThread: boolean parkPermit\u003e"
+      },
+      {
+        "node": "L7",
+        "field": "\u003cjava.lang.Thread: boolean interrupted\u003e"
+      },
+      {
+        "node": "L11",
+        "field": "\u003cjava.lang.Thread: boolean interrupted\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.VirtualThread: boolean interrupted\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "L0",
+      "L1",
+      "I0",
+      "I1",
+      "I2",
+      "I3",
+      "I4",
+      "L20",
+      "I5",
+      "L23",
+      "I6",
+      "L22",
+      "L14",
+      "I7",
+      "L13",
+      "GBL",
+      "L16",
+      "L27",
+      "L26",
+      "L18",
+      "L17"
+    ],
+    "insideNodeCounter": 9,
+    "loadNodeCounter": 30
+  }
+}

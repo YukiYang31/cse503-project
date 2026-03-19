@@ -118,19 +118,13 @@
       {
         "src": "GBL",
         "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
-        "target": "L2",
-        "type": "OUTSIDE"
-      },
-      {
-        "src": "GBL",
-        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
-        "target": "L3",
-        "type": "OUTSIDE"
-      },
-      {
-        "src": "GBL",
-        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
         "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L2",
         "type": "OUTSIDE"
       },
       {
@@ -142,19 +136,25 @@
       {
         "src": "GBL",
         "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
         "target": "L10",
         "type": "OUTSIDE"
       },
       {
         "src": "GBL",
         "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
-        "target": "L4",
+        "target": "L1",
         "type": "OUTSIDE"
       },
       {
         "src": "GBL",
         "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
-        "target": "L1",
+        "target": "L4",
         "type": "OUTSIDE"
       },
       {

@@ -1,0 +1,74 @@
+{
+  "sig": "\u003cjava.util.HashMap$KeySpliterator: java.util.HashMap$KeySpliterator trySplit()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "mutates this via field index",
+    "mutates this via field est",
+    "loaded object \u0027load current from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027load map from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new HashMap$KeySpliterator"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load current from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load map from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new HashMap$KeySpliterator"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.HashMap$KeySpliterator: java.util.HashMap map\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.HashMap$KeySpliterator: java.util.HashMap$Node current\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.HashMap$KeySpliterator: int index\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.HashMap$KeySpliterator: int est\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "L1",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 2
+  }
+}

@@ -1,0 +1,312 @@
+{
+  "sig": "\u003cjava.io.File: boolean mkdirs()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "mutates this via field array element",
+    "loaded object \u0027callee: load path from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load status from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load status from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: load static security"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load path from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: load status from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: load static FS"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: callee: new IOException"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: load static INVALID"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: new File"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: load static FS"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load status from parameter this"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: callee: return from substring"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static FS"
+      },
+      {
+        "id": "I5",
+        "kind": "INSIDE",
+        "label": "callee: new File"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static INVALID"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: load static FS"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: load static security"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: load static FS"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: load path from parameter this"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "callee: callee: load static INVALID"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: callee: load static FS"
+      },
+      {
+        "id": "L19",
+        "kind": "LOAD",
+        "label": "callee: load static FS"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.io.File: java.io.FileSystem FS\u003e",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.io.File: java.io.FileSystem FS\u003e",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.io.File: java.io.FileSystem FS\u003e",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.io.File: java.io.FileSystem FS\u003e",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.File: java.lang.String path\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L11",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "field": "\u003cjava.io.File: java.lang.String path\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "field": "\u003cjava.io.File: java.lang.String path\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "field": "\u003cjava.io.File: java.lang.String path\u003e",
+        "target": "I3",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "L0",
+      "L1",
+      "L3",
+      "I0",
+      "L5",
+      "I2",
+      "I3",
+      "L7",
+      "I5",
+      "L9",
+      "L14",
+      "L13",
+      "GBL",
+      "L15",
+      "L17",
+      "L19"
+    ],
+    "insideNodeCounter": 6,
+    "loadNodeCounter": 20
+  }
+}

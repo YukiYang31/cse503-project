@@ -1,0 +1,45 @@
+{
+  "sig": "\u003cjava.lang.ClassValue$Entry: void \u003cinit\u003e(java.lang.ClassValue$Version)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "ClassValue$Version parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ClassValue$Version parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

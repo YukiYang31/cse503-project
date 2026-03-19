@@ -1,0 +1,74 @@
+{
+  "sig": "\u003cjava.util.stream.StreamSpliterators$InfiniteSupplyingSpliterator$OfRef: void \u003cinit\u003e(long,java.util.function.Supplier)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates loaded object \u0027callee: load mag from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Supplier parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load mag from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.StreamSpliterators$InfiniteSupplyingSpliterator$OfRef: java.util.function.Supplier s\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.math.BigInteger: int signum\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e"
+      },
+      {
+        "node": "L0"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.StreamSpliterators$InfiniteSupplyingSpliterator$OfRef: java.util.function.Supplier s\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 1
+  }
+}

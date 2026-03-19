@@ -1,0 +1,58 @@
+{
+  "sig": "\u003cjava.io.ObjectStreamClass$DeserializationConstructorsCache$Key$Lookup: void \u003cinit\u003e(java.io.ObjectStreamField[])\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ObjectStreamField[] parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable$HandleList: int[] list\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$DeserializationConstructorsCache$Key$Lookup: java.io.ObjectStreamField[] fields\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable$HandleList: int size\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable$HandleList: int[] list\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$DeserializationConstructorsCache$Key$Lookup: java.io.ObjectStreamField[] fields\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

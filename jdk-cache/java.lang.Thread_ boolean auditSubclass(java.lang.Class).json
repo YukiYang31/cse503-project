@@ -1,0 +1,41 @@
+{
+  "sig": "\u003cjava.lang.Thread: boolean auditSubclass(java.lang.Class)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Class parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Class parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Thread$1"
+      }
+    ],
+    "edges": [
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.ObjectInputStream$1: java.lang.Class val$subcl\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

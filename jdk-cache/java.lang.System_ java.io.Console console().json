@@ -1,0 +1,50 @@
+{
+  "sig": "\u003cjava.lang.System: java.io.Console console()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field cons"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    },
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "load static cons"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static cons"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.io.Console cons\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.System: java.io.Console cons\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "GBL"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

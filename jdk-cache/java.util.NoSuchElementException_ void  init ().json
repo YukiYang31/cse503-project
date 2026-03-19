@@ -1,0 +1,124 @@
+{
+  "sig": "\u003cjava.util.NoSuchElementException: void \u003cinit\u003e()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load stackTrace from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load backtrace from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load stackTrace from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load backtrace from parameter this"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.util.List SUPPRESSED_SENTINEL\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Throwable: java.lang.Throwable cause\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Throwable: java.util.List suppressedExceptions\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Throwable: java.lang.Object backtrace\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L4",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Throwable: java.lang.Throwable cause\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Throwable: java.util.List suppressedExceptions\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 5
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "sig": "\u003cjava.util.HashMap: java.util.HashMap$Node replacementNode(java.util.HashMap$Node,java.util.HashMap$Node)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new HashMap$Node"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "HashMap$Node parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "HashMap$Node parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load key from HashMap$Node parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load value from HashMap$Node parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new HashMap$Node"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object key\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object key\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 2
+  }
+}

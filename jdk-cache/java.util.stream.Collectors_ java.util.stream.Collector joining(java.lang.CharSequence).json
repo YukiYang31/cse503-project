@@ -1,0 +1,54 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: java.util.stream.Collector joining(java.lang.CharSequence)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "CharSequence parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "callee: new Collectors$CollectorImpl"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "CharSequence parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load static CH_NOID"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new Collectors$CollectorImpl"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "GBL",
+      "L0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 1
+  }
+}

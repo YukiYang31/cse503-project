@@ -1,0 +1,387 @@
+{
+  "sig": "\u003cjava.lang.ModuleLayer: java.lang.ModuleLayer$Controller defineModulesWithManyLoaders(java.lang.module.Configuration,java.util.List,java.lang.ClassLoader)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Configuration parameter escapes to global scope",
+    "List parameter escapes to global scope",
+    "ClassLoader parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I6",
+      "kind": "INSIDE",
+      "label": "new ModuleLayer$Controller"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new LayerInstantiationException"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new ImmutableCollections$ListN"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: new NullPointerException"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "new LoaderPool"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "new ModuleLayer"
+      },
+      {
+        "id": "I5",
+        "kind": "INSIDE",
+        "label": "callee: new NullPointerException"
+      },
+      {
+        "id": "I6",
+        "kind": "INSIDE",
+        "label": "new ModuleLayer$Controller"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Configuration parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "List parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "ClassLoader parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static EMPTY_LIST"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: array element from Object[] parameter"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: load static security"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: load static security"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: load static GET_CLASSLOADER_PERMISSION"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: load static CREATE_CLASSLOADER_PERMISSION"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: callee: load static EMPTY_MAP"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.lang.RuntimePermission GET_CLASSLOADER_PERMISSION\u003e",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.lang.RuntimePermission CREATE_CLASSLOADER_PERMISSION\u003e",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "field": "\u003cjava.lang.ModuleLayer: java.lang.module.Configuration cf\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.Map nameToModule\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.Map nameToModule\u003e",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List parents\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List parents\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List parents\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List parents\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L12",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "I5",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "P1",
+      "P2",
+      "L0",
+      "I0",
+      "I1",
+      "I2",
+      "I3",
+      "I4",
+      "I5",
+      "L9",
+      "L11",
+      "I6",
+      "GBL"
+    ],
+    "insideNodeCounter": 7,
+    "loadNodeCounter": 16
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "sig": "\u003cjava.util.Arrays: int compareUnsigned(long[],long[])\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "long[] parameter escapes to global scope",
+    "long[] parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "long[] parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "long[] parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "P1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

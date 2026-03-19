@@ -1,0 +1,50 @@
+{
+  "sig": "\u003cjava.lang.constant.DynamicConstantDesc: java.lang.constant.DynamicConstantDesc of(java.lang.constant.DirectMethodHandleDesc,java.lang.constant.ConstantDesc[])\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "DirectMethodHandleDesc parameter escapes to global scope",
+    "ConstantDesc[] parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "callee: new DynamicConstantDesc$AnonymousDynamicConstantDesc"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "DirectMethodHandleDesc parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ConstantDesc[] parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new DynamicConstantDesc$AnonymousDynamicConstantDesc"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "GBL",
+      "P1",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

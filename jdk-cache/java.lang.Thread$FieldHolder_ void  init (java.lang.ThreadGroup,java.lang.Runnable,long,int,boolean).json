@@ -1,0 +1,67 @@
+{
+  "sig": "\u003cjava.lang.Thread$FieldHolder: void \u003cinit\u003e(java.lang.ThreadGroup,java.lang.Runnable,long,int,boolean)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ThreadGroup parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Runnable parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Thread$FieldHolder: java.lang.ThreadGroup group\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Thread$FieldHolder: java.lang.Runnable task\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Thread$FieldHolder: boolean daemon\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Thread$FieldHolder: long stackSize\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Thread$FieldHolder: int priority\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Thread$FieldHolder: java.lang.ThreadGroup group\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Thread$FieldHolder: java.lang.Runnable task\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

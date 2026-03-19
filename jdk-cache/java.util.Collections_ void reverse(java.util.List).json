@@ -1,0 +1,765 @@
+{
+  "sig": "\u003cjava.util.Collections: void reverse(java.util.List)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "List parameter escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load elementData from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load elementData from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load root from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load elementData from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load root from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load root from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load elementData from callee: load this$0 from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load elementData from callee: load this$0 from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new ArrayList$ListItr"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new ConcurrentModificationException"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: new ArrayList$ListItr"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: callee: new ConcurrentModificationException"
+      },
+      {
+        "id": "L21",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "callee: new ConcurrentModificationException"
+      },
+      {
+        "id": "L20",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L23",
+        "kind": "LOAD",
+        "label": "callee: callee: load root from load this$0 from parameter this"
+      },
+      {
+        "id": "I5",
+        "kind": "INSIDE",
+        "label": "callee: callee: new ConcurrentModificationException"
+      },
+      {
+        "id": "L22",
+        "kind": "LOAD",
+        "label": "callee: callee: load this$0 from parameter this"
+      },
+      {
+        "id": "I6",
+        "kind": "INSIDE",
+        "label": "callee: new NoSuchElementException"
+      },
+      {
+        "id": "I7",
+        "kind": "INSIDE",
+        "label": "callee: new ConcurrentModificationException"
+      },
+      {
+        "id": "L25",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L24",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I8",
+        "kind": "INSIDE",
+        "label": "callee: new ConcurrentModificationException"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L27",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load elementData from parameter this"
+      },
+      {
+        "id": "L26",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L29",
+        "kind": "LOAD",
+        "label": "callee: callee: load root from load this$0 from parameter this"
+      },
+      {
+        "id": "L28",
+        "kind": "LOAD",
+        "label": "callee: callee: load this$0 from parameter this"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "List parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load root from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load elementData from parameter this"
+      },
+      {
+        "id": "L30",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load root from parameter this"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load root from parameter this"
+      },
+      {
+        "id": "L32",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: load elementData from callee: load this$0 from parameter this"
+      },
+      {
+        "id": "L31",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: array element from load elementData from callee: load this$0 from parameter this"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L33",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load elementData from parameter this"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L16",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load elementData from parameter this"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "callee: array element from load elementData from callee: load root from load this$0 from parameter this"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: load elementData from callee: load root from load this$0 from parameter this"
+      },
+      {
+        "id": "L19",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayList$SubList: java.util.ArrayList root\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayList$SubList: java.util.ArrayList root\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayList$SubList: java.util.ArrayList root\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.ArrayList$Itr: java.util.ArrayList this$0\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.ArrayList$ListItr: java.util.ArrayList this$0\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L12",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L16",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "field": "\u003cjava.util.ArrayList$Itr: java.util.ArrayList this$0\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "field": "\u003cjava.util.ArrayList$ListItr: java.util.ArrayList this$0\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "I3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L6",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L10",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L11",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L23",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "L27",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L16",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L22",
+        "field": "\u003cjava.util.ArrayList$SubList: java.util.ArrayList root\u003e",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L19",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L20",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "I6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L21",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "L25",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "L26",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "L22",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "I7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "L23",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "L24",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "I8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "L28",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "L29",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "L30",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "L31",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "L32",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L25",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L29",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L30",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L24",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L32",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L22",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L26",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L21",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L29",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "L33",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L28",
+        "field": "\u003cjava.util.ArrayList$SubList: java.util.ArrayList root\u003e",
+        "target": "L29",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L15"
+      },
+      {
+        "node": "L7"
+      },
+      {
+        "node": "L33"
+      },
+      {
+        "node": "L27"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "I0",
+      "I1",
+      "I2",
+      "I3",
+      "I4",
+      "I5",
+      "I6",
+      "I7",
+      "I8"
+    ],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 3
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "sig": "\u003cjava.lang.System$LoggerFinder: java.lang.System$LoggerFinder lambda$accessProvider$0()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field service"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    },
+    {
+      "id": "L2",
+      "kind": "LOAD",
+      "label": "callee: callee: load static service"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: load static security"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load static LOGGERFINDER_PERMISSION"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: load static service"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: load static LOGGERFINDER_PERMISSION"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System$LoggerFinder: java.lang.RuntimePermission LOGGERFINDER_PERMISSION\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System$LoggerFinder: java.lang.RuntimePermission LOGGERFINDER_PERMISSION\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System$LoggerFinder: java.lang.System$LoggerFinder service\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.System$LoggerFinder: java.lang.System$LoggerFinder service\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "GBL",
+      "L1",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 4
+  }
+}

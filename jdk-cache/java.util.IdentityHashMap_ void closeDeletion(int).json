@@ -1,0 +1,49 @@
+{
+  "sig": "\u003cjava.util.IdentityHashMap: void closeDeletion(int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates loaded object \u0027load table from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load table from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "array element from load table from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "array element from load table from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.IdentityHashMap: java.lang.Object[] table\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L0"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

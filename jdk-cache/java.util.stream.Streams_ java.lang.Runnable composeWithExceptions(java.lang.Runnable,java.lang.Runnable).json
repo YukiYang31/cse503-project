@@ -1,0 +1,45 @@
+{
+  "sig": "\u003cjava.util.stream.Streams: java.lang.Runnable composeWithExceptions(java.lang.Runnable,java.lang.Runnable)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Runnable parameter escapes to global scope",
+    "Runnable parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new Streams$1"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Runnable parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Runnable parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Streams$1"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "P1",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

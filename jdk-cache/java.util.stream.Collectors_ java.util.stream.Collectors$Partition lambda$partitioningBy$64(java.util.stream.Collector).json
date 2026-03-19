@@ -1,0 +1,54 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: java.util.stream.Collectors$Partition lambda$partitioningBy$64(java.util.stream.Collector)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Collector parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new Collectors$Partition"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Collector parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Collectors$Partition"
+      }
+    ],
+    "edges": [
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.stream.Collectors$Partition: java.lang.Object forFalse\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.stream.Collectors$Partition: java.lang.Object forTrue\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "GBL"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

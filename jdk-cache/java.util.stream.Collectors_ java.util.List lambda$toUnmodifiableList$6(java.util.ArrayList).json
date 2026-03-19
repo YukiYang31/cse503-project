@@ -1,0 +1,54 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: java.util.List lambda$toUnmodifiableList$6(java.util.ArrayList)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "ArrayList parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load elementData from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "return from getClass"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: return from copyOf"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "GBL",
+      "I1"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 1
+  }
+}

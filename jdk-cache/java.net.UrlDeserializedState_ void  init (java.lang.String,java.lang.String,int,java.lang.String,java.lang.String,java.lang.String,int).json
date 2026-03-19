@@ -1,0 +1,111 @@
+{
+  "sig": "\u003cjava.net.UrlDeserializedState: void \u003cinit\u003e(java.lang.String,java.lang.String,int,java.lang.String,java.lang.String,java.lang.String,int)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "String parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "String parameter"
+      },
+      {
+        "id": "P4",
+        "kind": "PARAMETER",
+        "paramIndex": 4,
+        "label": "String parameter"
+      },
+      {
+        "id": "P5",
+        "kind": "PARAMETER",
+        "paramIndex": 5,
+        "label": "String parameter"
+      },
+      {
+        "id": "P6",
+        "kind": "PARAMETER",
+        "paramIndex": 6,
+        "label": "String parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.net.UrlDeserializedState: java.lang.String ref\u003e",
+        "target": "P6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.net.UrlDeserializedState: java.lang.String protocol\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.net.UrlDeserializedState: java.lang.String file\u003e",
+        "target": "P5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.net.UrlDeserializedState: java.lang.String authority\u003e",
+        "target": "P4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.net.UrlDeserializedState: java.lang.String host\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.UrlDeserializedState: int port\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.UrlDeserializedState: int hashCode\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.UrlDeserializedState: java.lang.String authority\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.UrlDeserializedState: java.lang.String protocol\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.UrlDeserializedState: java.lang.String file\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.UrlDeserializedState: java.lang.String ref\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.net.UrlDeserializedState: java.lang.String host\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

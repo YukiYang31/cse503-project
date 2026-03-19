@@ -1,0 +1,39 @@
+{
+  "sig": "\u003cjava.lang.System$2: long stringBuilderConcatPrepend(long,byte[],java.lang.StringBuilder)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "byte[] parameter escapes to global scope",
+    "StringBuilder parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "byte[] parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "StringBuilder parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P2",
+      "P3"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

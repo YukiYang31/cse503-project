@@ -1,0 +1,47 @@
+{
+  "sig": "\u003cjava.lang.module.ModuleDescriptor: java.lang.module.ModuleDescriptor read(java.io.InputStream)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "InputStream parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "callee: load descriptor from parameter this"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "InputStream parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load descriptor from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.module.ModuleReference: java.lang.module.ModuleDescriptor descriptor\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

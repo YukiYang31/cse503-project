@@ -1,0 +1,83 @@
+{
+  "sig": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag$MaskBuilder set(java.util.stream.StreamOpFlag$Type)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "StreamOpFlag$Type parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new StreamOpFlag$MaskBuilder"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "StreamOpFlag$Type parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new StreamOpFlag$MaskBuilder"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new EnumMap"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: return from valueOf"
+      }
+    ],
+    "edges": [
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.stream.StreamOpFlag$MaskBuilder: java.util.Map map\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "field": "\u003cjava.util.EnumMap: java.lang.Object[] vals\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "field": "\u003cjava.util.EnumMap: java.lang.Enum[] keyUniverse\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "GBL",
+      "P0",
+      "L1",
+      "I1",
+      "I3"
+    ],
+    "insideNodeCounter": 4,
+    "loadNodeCounter": 2
+  }
+}

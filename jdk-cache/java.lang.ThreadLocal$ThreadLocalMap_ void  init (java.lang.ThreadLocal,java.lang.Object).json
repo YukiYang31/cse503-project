@@ -1,0 +1,88 @@
+{
+  "sig": "\u003cjava.lang.ThreadLocal$ThreadLocalMap: void \u003cinit\u003e(java.lang.ThreadLocal,java.lang.Object)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "ThreadLocal parameter escapes to global scope",
+    "Object parameter escapes to global scope",
+    "mutates loaded object \u0027load table from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ThreadLocal parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Object parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load table from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new ThreadLocal$ThreadLocalMap$Entry"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ThreadLocal$ThreadLocalMap: java.lang.ThreadLocal$ThreadLocalMap$Entry[] table\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ThreadLocal$ThreadLocalMap: java.lang.ThreadLocal$ThreadLocalMap$Entry[] table\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ThreadLocal$ThreadLocalMap: int size\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ThreadLocal$ThreadLocalMap: int threshold\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ThreadLocal$ThreadLocalMap: java.lang.ThreadLocal$ThreadLocalMap$Entry[] table\u003e"
+      },
+      {
+        "node": "I0"
+      },
+      {
+        "node": "L0"
+      }
+    ],
+    "globalEscaped": [
+      "P1",
+      "P2",
+      "I1"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 1
+  }
+}

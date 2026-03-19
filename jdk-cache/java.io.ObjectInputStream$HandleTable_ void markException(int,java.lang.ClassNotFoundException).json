@@ -1,0 +1,293 @@
+{
+  "sig": "\u003cjava.io.ObjectInputStream$HandleTable: void markException(int,java.lang.ClassNotFoundException)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "ClassNotFoundException parameter escapes to global scope",
+    "loaded object \u0027load status from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load status from parameter this\u0027 via field array element",
+    "loaded object \u0027load entries from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load entries from parameter this\u0027 via field array element",
+    "loaded object \u0027load deps from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load deps from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load status from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load status from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load entries from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load entries from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load deps from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load deps from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "ClassNotFoundException parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load status from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load entries from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load deps from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "array element from load deps from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new InternalError"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: load list from parameter this"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new InternalError"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: array element from load deps from parameter this"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: load status from parameter this"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: load entries from parameter this"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: load deps from parameter this"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.util.List SUPPRESSED_SENTINEL\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: byte[] status\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: java.lang.Object[] entries\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: java.io.ObjectInputStream$HandleTable$HandleList[] deps\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L3",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable$HandleList: int[] list\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Throwable: java.lang.Throwable cause\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Throwable: java.util.List suppressedExceptions\u003e",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L11",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L8",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L9"
+      },
+      {
+        "node": "L7"
+      },
+      {
+        "node": "L8"
+      },
+      {
+        "node": "L1"
+      },
+      {
+        "node": "L2"
+      },
+      {
+        "node": "L0"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P2",
+      "I0",
+      "I1",
+      "L10"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 6
+  }
+}

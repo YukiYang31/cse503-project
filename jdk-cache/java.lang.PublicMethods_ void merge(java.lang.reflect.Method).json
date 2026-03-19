@@ -1,0 +1,287 @@
+{
+  "sig": "\u003cjava.lang.PublicMethods: void merge(java.lang.reflect.Method)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field unknown",
+    "mutates this via field methodCount",
+    "Method parameter escapes to global scope",
+    "mutates Method parameter via field array element",
+    "loaded object \u0027load map from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load method from PublicMethods$MethodList parameter\u0027 escapes to global scope",
+    "loaded object \u0027callee: load next from PublicMethods$MethodList parameter\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load next from PublicMethods$MethodList parameter\u0027 via field array element",
+    "loaded object \u0027callee: load next from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load next from load next from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load map from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Method parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load map from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load next from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: load next from load next from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new PublicMethods$Key"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: load method from PublicMethods$MethodList parameter"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: load next from PublicMethods$MethodList parameter"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new PublicMethods$MethodList"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: load next from parameter this"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: load next from load next from parameter this"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: load map from parameter this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.PublicMethods: java.util.Map map\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L2",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.ObjectStreamClass$MemberSignature: java.lang.String name\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.ObjectStreamClass$MemberSignature: java.lang.String signature\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.ObjectStreamClass$MemberSignature: java.lang.reflect.Member member\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L4",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L4",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L4",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L4",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L4",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L4",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L4",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L5",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L6",
+        "target": "L6",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L4"
+      },
+      {
+        "node": "GBL"
+      },
+      {
+        "node": "P1"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.PublicMethods: int methodCount\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "GBL",
+      "P1",
+      "L0",
+      "I0",
+      "L3",
+      "L4",
+      "I1",
+      "L7"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 8
+  }
+}

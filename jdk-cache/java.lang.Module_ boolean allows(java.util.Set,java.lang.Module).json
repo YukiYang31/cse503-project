@@ -1,0 +1,80 @@
+{
+  "sig": "\u003cjava.lang.Module: boolean allows(java.util.Set,java.lang.Module)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Set parameter escapes to global scope",
+    "Module parameter escapes to global scope",
+    "loaded object \u0027callee: load name from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Set parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Module parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static EVERYONE_MODULE"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load name from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load static ALL_UNNAMED_MODULE"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Module: java.lang.Module ALL_UNNAMED_MODULE\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Module: java.lang.Module EVERYONE_MODULE\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P1",
+      "P2",
+      "L0",
+      "L2"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 3
+  }
+}

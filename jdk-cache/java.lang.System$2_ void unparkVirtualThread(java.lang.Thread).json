@@ -1,0 +1,36 @@
+{
+  "sig": "\u003cjava.lang.System$2: void unparkVirtualThread(java.lang.Thread)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Thread parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Thread parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new WrongThreadException"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P1"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

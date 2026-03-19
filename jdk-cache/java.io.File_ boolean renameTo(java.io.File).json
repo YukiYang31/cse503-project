@@ -1,0 +1,201 @@
+{
+  "sig": "\u003cjava.io.File: boolean renameTo(java.io.File)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "mutates this via field array element",
+    "File parameter escapes to global scope",
+    "mutates File parameter via field array element",
+    "loaded object \u0027load path from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027load path from File parameter\u0027 escapes to global scope",
+    "loaded object \u0027callee: load status from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load status from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "File parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load static security"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load path from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load path from File parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new NullPointerException"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: load status from parameter this"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: load static FS"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: load static INVALID"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: load status from parameter this"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: load static FS"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: load static INVALID"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "load static FS"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.File: java.lang.String path\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.io.File: java.io.FileSystem FS\u003e",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.io.File: java.lang.String path\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L4",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0"
+      },
+      {
+        "node": "P1"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P1",
+      "L0",
+      "L1",
+      "L2",
+      "I0",
+      "L4",
+      "L7",
+      "L9"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 10
+  }
+}

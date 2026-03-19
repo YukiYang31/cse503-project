@@ -1,0 +1,97 @@
+{
+  "sig": "\u003cjava.io.ObjectStreamClass: java.io.ObjectStreamField[] getDefaultSerialFields(java.lang.Class)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Class parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "load static NO_FIELDS"
+    },
+    {
+      "id": "I1",
+      "kind": "INSIDE",
+      "label": "new array"
+    },
+    {
+      "id": "I2",
+      "kind": "INSIDE",
+      "label": "callee: return from copyOf"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Class parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static NO_FIELDS"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "array element from GBL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ArrayList"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static DEFAULTCAPACITY_EMPTY_ELEMENTDATA"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: return from copyOf"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.io.ObjectStreamClass: java.io.ObjectStreamField[] NO_FIELDS\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "L0",
+      "L1",
+      "I1",
+      "L4",
+      "I2"
+    ],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 1
+  }
+}

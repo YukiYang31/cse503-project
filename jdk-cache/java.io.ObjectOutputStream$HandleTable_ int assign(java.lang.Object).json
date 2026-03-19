@@ -1,0 +1,244 @@
+{
+  "sig": "\u003cjava.io.ObjectOutputStream$HandleTable: int assign(java.lang.Object)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field next",
+    "mutates this via field objs",
+    "mutates this via field size",
+    "mutates this via field spine",
+    "mutates this via field threshold",
+    "loaded object \u0027callee: load next from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load objs from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load spine from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: load objs from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: array element from callee: load objs from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: callee: load objs from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: callee: load next from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: load next from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: load spine from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Object parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load next from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load next from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: load objs from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: load spine from parameter this"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: load objs from parameter this"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: load objs from parameter this"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: array element from callee: load objs from parameter this"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: load objs from parameter this"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: load next from parameter this"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: load next from parameter this"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: load spine from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L9"
+      },
+      {
+        "node": "L7"
+      },
+      {
+        "node": "L8"
+      },
+      {
+        "node": "L10"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e"
+      },
+      {
+        "node": "L6"
+      },
+      {
+        "node": "L11"
+      },
+      {
+        "node": "L3"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int size\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int threshold\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "L1",
+      "L2",
+      "I0",
+      "I1"
+    ],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 12
+  }
+}

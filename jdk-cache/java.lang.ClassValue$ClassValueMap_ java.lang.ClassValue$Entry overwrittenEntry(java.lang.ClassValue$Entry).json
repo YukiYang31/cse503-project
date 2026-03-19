@@ -1,0 +1,76 @@
+{
+  "sig": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry overwrittenEntry(java.lang.ClassValue$Entry)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field cacheLoad",
+    "ClassValue$Entry parameter escapes to global scope",
+    "mutates ClassValue$Entry parameter via field list"
+  ],
+  "returnTargets": [
+    {
+      "id": "P1",
+      "kind": "PARAMETER",
+      "paramIndex": 1,
+      "label": "ClassValue$Entry parameter"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ClassValue$Entry parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load version from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: int cacheLoad\u003e"
+      },
+      {
+        "node": "P1",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

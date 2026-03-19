@@ -1,0 +1,25 @@
+{
+  "sig": "\u003cjava.lang.StringLatin1: int hashCode(byte[])\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "byte[] parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "byte[] parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

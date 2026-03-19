@@ -1,0 +1,71 @@
+{
+  "sig": "\u003cjava.util.DualPivotQuicksort$Merger: void forkMerger(java.lang.Object,int,java.lang.Object,int,int,java.lang.Object,int,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "Object parameter escapes to global scope",
+    "Object parameter escapes to global scope",
+    "Object parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Object parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "Object parameter"
+      },
+      {
+        "id": "P6",
+        "kind": "PARAMETER",
+        "paramIndex": 6,
+        "label": "Object parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new DualPivotQuicksort$Merger"
+      }
+    ],
+    "edges": [
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.DualPivotQuicksort$Merger: java.lang.Object a1\u003e",
+        "target": "P3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.DualPivotQuicksort$Merger: java.lang.Object a2\u003e",
+        "target": "P6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.DualPivotQuicksort$Merger: java.lang.Object dst\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: java.util.function.BiConsumer uniqKeysMapAccumulator(java.util.function.Function,java.util.function.Function)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Function parameter escapes to global scope",
+    "Function parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Function parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Function parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "P1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "sig": "\u003cjava.net.URLConnection: java.lang.String typeToPackageName(java.lang.String)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "I2",
+      "kind": "INSIDE",
+      "label": "new String"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "String parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static ROOT"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "return from toLowerCase"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "new String"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Locale: java.util.Locale ROOT\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "I1"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 1
+  }
+}

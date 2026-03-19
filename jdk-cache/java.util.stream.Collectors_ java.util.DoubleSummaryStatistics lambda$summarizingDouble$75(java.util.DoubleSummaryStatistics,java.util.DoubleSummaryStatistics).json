@@ -1,0 +1,66 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: java.util.DoubleSummaryStatistics lambda$summarizingDouble$75(java.util.DoubleSummaryStatistics,java.util.DoubleSummaryStatistics)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates DoubleSummaryStatistics parameter via field sum",
+    "mutates DoubleSummaryStatistics parameter via field max",
+    "mutates DoubleSummaryStatistics parameter via field simpleSum",
+    "mutates DoubleSummaryStatistics parameter via field sumCompensation",
+    "mutates DoubleSummaryStatistics parameter via field count",
+    "mutates DoubleSummaryStatistics parameter via field min"
+  ],
+  "returnTargets": [
+    {
+      "id": "P0",
+      "kind": "PARAMETER",
+      "paramIndex": 0,
+      "label": "DoubleSummaryStatistics parameter"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "DoubleSummaryStatistics parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "DoubleSummaryStatistics parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.DoubleSummaryStatistics: double sum\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.DoubleSummaryStatistics: double max\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.DoubleSummaryStatistics: double simpleSum\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.DoubleSummaryStatistics: double sumCompensation\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.DoubleSummaryStatistics: long count\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.DoubleSummaryStatistics: double min\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "sig": "\u003cjava.lang.StackWalker: void \u003cinit\u003e(java.util.EnumSet,int,java.lang.StackWalker$ExtendedOption,jdk.internal.vm.ContinuationScope,jdk.internal.vm.Continuation)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027callee: callee: load map from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "EnumSet parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "StackWalker$ExtendedOption parameter"
+      },
+      {
+        "id": "P4",
+        "kind": "PARAMETER",
+        "paramIndex": 4,
+        "label": "ContinuationScope parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static RETAIN_CLASS_REFERENCE"
+      },
+      {
+        "id": "P5",
+        "kind": "PARAMETER",
+        "paramIndex": 5,
+        "label": "Continuation parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load options from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.StackWalker$Option: java.lang.StackWalker$Option RETAIN_CLASS_REFERENCE\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.StackWalker: jdk.internal.vm.ContinuationScope contScope\u003e",
+        "target": "P4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.StackWalker: java.util.Set options\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.StackWalker: java.util.Set options\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.StackWalker: jdk.internal.vm.Continuation continuation\u003e",
+        "target": "P5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.StackWalker: java.lang.StackWalker$ExtendedOption extendedOption\u003e",
+        "target": "P3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.StackWalker: int estimateDepth\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.StackWalker: java.util.Set options\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.StackWalker: jdk.internal.vm.ContinuationScope contScope\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.StackWalker: boolean retainClassRef\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.StackWalker: jdk.internal.vm.Continuation continuation\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.StackWalker: java.lang.StackWalker$ExtendedOption extendedOption\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "L0",
+      "L2"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 3
+  }
+}

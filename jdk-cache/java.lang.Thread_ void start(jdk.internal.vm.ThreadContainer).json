@@ -1,0 +1,101 @@
+{
+  "sig": "\u003cjava.lang.Thread: void start(jdk.internal.vm.ThreadContainer)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "mutates this via field container",
+    "mutates this via field scopedValueBindings",
+    "ThreadContainer parameter escapes to global scope",
+    "loaded object \u0027load holder from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027load container from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ThreadContainer parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load holder from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load container from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: load scopedValueBindings from GBL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new IllegalThreadStateException"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Thread: jdk.internal.vm.ThreadContainer container\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Thread: jdk.internal.vm.ThreadContainer container\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Thread: java.lang.Object scopedValueBindings\u003e",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Thread: java.lang.Thread$FieldHolder holder\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Thread: java.lang.Object scopedValueBindings\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Thread: jdk.internal.vm.ThreadContainer container\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Thread: java.lang.Object scopedValueBindings\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P1"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 3
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "sig": "\u003cjava.lang.ref.ReferenceQueue: void \u003cinit\u003e()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027load lock from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ReentrantLock"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "load lock from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ref.ReferenceQueue: java.util.concurrent.locks.Condition notEmpty\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ref.ReferenceQueue: java.util.concurrent.locks.ReentrantLock lock\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ref.ReferenceQueue: java.util.concurrent.locks.ReentrantLock lock\u003e",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.util.List SUPPRESSED_SENTINEL\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Throwable: java.lang.Throwable cause\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Throwable: java.util.List suppressedExceptions\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L4",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ref.ReferenceQueue: java.util.concurrent.locks.Condition notEmpty\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ref.ReferenceQueue: long queueLength\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ref.ReferenceQueue: java.util.concurrent.locks.ReentrantLock lock\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I0",
+      "L5"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 6
+  }
+}

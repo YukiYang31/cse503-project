@@ -1,0 +1,40 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: java.util.Collection lambda$toCollection$3(java.util.Collection,java.util.Collection)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Collection parameter escapes to global scope",
+    "Collection parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "P0",
+      "kind": "PARAMETER",
+      "paramIndex": 0,
+      "label": "Collection parameter"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Collection parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Collection parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "P1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

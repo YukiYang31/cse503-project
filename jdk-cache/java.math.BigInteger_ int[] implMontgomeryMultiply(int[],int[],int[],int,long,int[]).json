@@ -1,0 +1,72 @@
+{
+  "sig": "\u003cjava.math.BigInteger: int[] implMontgomeryMultiply(int[],int[],int[],int,long,int[])\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "int[] parameter escapes to global scope",
+    "int[] parameter escapes to global scope",
+    "int[] parameter escapes to global scope",
+    "int[] parameter escapes to global scope",
+    "mutates int[] parameter via field array element"
+  ],
+  "returnTargets": [
+    {
+      "id": "P5",
+      "kind": "PARAMETER",
+      "paramIndex": 5,
+      "label": "int[] parameter"
+    },
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "callee: callee: new array"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "int[] parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "int[] parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "int[] parameter"
+      },
+      {
+        "id": "P5",
+        "kind": "PARAMETER",
+        "paramIndex": 5,
+        "label": "int[] parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P5"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P1",
+      "P2",
+      "P5",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

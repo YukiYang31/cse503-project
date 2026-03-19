@@ -1,0 +1,353 @@
+{
+  "sig": "\u003cjava.lang.Class: java.lang.reflect.Field[] privateGetPublicFields()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field declaredPublicFields",
+    "writes to static field publicFields",
+    "writes to static field declaredFields",
+    "writes to static field unknown",
+    "this escapes to global scope",
+    "loaded object \u0027callee: load reflectionData from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load reflectionData from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load reflectionData from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load reflectionData from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load reflectionData from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load reflectionData from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load reflectionData from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load reflectionData from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load reflectionData from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load reflectionData from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load reflectionData from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load reflectionData from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    },
+    {
+      "id": "L3",
+      "kind": "LOAD",
+      "label": "load publicFields from GBL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: callee: new Class$ReflectionData"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: new SoftReference"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "new LinkedHashSet"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new Class$ReflectionData"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new SoftReference"
+      },
+      {
+        "id": "I5",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new Class$ReflectionData"
+      },
+      {
+        "id": "I6",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new SoftReference"
+      },
+      {
+        "id": "I7",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load reflectionData from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static unsafe"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: load reflectionData from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "load publicFields from GBL"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: load reflectionData from parameter this"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static unsafe"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static unsafe"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load reflectionData from parameter this"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: load declaredPublicFields from GBL"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: load interfaces from GBL"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: array element from Field[] parameter"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: load reflectionData from parameter this"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load reflectionData from parameter this"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "array element from callee: load interfaces from GBL"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "array element from GBL"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: array element from Field[] parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class$ReflectionData: java.lang.reflect.Field[] declaredPublicFields\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class$ReflectionData: java.lang.reflect.Field[] declaredPublicFields\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class$ReflectionData: java.lang.reflect.Field[] publicFields\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class$ReflectionData: java.lang.reflect.Field[] publicFields\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class$ReflectionData: java.lang.reflect.Field[] declaredFields\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class$ReflectionData: java.lang.reflect.Field[] declaredFields\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Class$ReflectionData: java.lang.reflect.Field[] publicFields\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "field": "\u003cjava.lang.Class$ReflectionData: java.lang.reflect.Field[] declaredPublicFields\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "field": "\u003cjava.lang.Class$ReflectionData: java.lang.reflect.Field[] declaredFields\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "GBL",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.Class$ReflectionData: java.lang.reflect.Field[] declaredPublicFields\u003e"
+      },
+      {
+        "node": "L9"
+      },
+      {
+        "node": "L6"
+      },
+      {
+        "node": "L11"
+      },
+      {
+        "node": "I0",
+        "field": "\u003cjava.lang.Class$ReflectionData: java.lang.reflect.Field[] publicFields\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.Class$ReflectionData: java.lang.reflect.Field[] publicFields\u003e"
+      },
+      {
+        "node": "L4"
+      },
+      {
+        "node": "L2"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.Class$ReflectionData: java.lang.reflect.Field[] declaredFields\u003e"
+      },
+      {
+        "node": "L0"
+      },
+      {
+        "node": "GBL"
+      }
+    ],
+    "globalEscaped": [
+      "I0",
+      "I1",
+      "I2",
+      "I3",
+      "I4",
+      "I5",
+      "I6",
+      "I7",
+      "GBL",
+      "P0",
+      "L0",
+      "L1",
+      "L2",
+      "L3",
+      "L4",
+      "L5",
+      "L6",
+      "L10",
+      "L7",
+      "L8",
+      "L12",
+      "L9",
+      "L11",
+      "L14",
+      "L13",
+      "L15"
+    ],
+    "insideNodeCounter": 8,
+    "loadNodeCounter": 14
+  }
+}

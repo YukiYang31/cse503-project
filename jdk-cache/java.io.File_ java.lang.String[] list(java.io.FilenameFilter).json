@@ -1,0 +1,93 @@
+{
+  "sig": "\u003cjava.io.File: java.lang.String[] list(java.io.FilenameFilter)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field unknown",
+    "this escapes to global scope",
+    "FilenameFilter parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    },
+    {
+      "id": "I1",
+      "kind": "INSIDE",
+      "label": "new array"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "FilenameFilter parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "array element from GBL"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "array element from GBL"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: load table from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ArrayList"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: callee: return from getClass"
+      }
+    ],
+    "edges": [
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.HashMap: java.util.HashMap$Node[] table\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P1",
+      "L0",
+      "L1",
+      "I0",
+      "I2"
+    ],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 3
+  }
+}

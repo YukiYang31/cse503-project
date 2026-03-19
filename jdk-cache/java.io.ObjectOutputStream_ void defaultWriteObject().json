@@ -1,0 +1,252 @@
+{
+  "sig": "\u003cjava.io.ObjectOutputStream: void defaultWriteObject()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "loaded object \u0027load curContext from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load curContext from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load thread from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load obj from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load desc from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027load bout from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load bout from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load buf from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load curContext from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new NotActiveException"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: load obj from parameter this"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: load desc from parameter this"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "load bout from parameter this"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream: java.io.ObjectOutputStream$BlockDataOutputStream bout\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream: java.io.SerialCallbackContext curContext\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L7",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L7",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L7",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L7",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L7",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L7",
+        "target": "L11",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L7"
+      },
+      {
+        "node": "L8"
+      },
+      {
+        "node": "L11"
+      },
+      {
+        "node": "L0"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "I0",
+      "L5",
+      "L6",
+      "L8",
+      "L12",
+      "L9",
+      "L11"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 14
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: java.util.stream.Collectors$Partition lambda$partitioningBy$63(java.util.function.BinaryOperator,java.util.stream.Collectors$Partition,java.util.stream.Collectors$Partition)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new Collectors$Partition"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "BinaryOperator parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Collectors$Partition parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Collectors$Partition parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load forTrue from Collectors$Partition parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load forTrue from Collectors$Partition parameter"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static configLog"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Collectors$Partition"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static TRACE"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "load forFalse from Collectors$Partition parameter"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "load forFalse from Collectors$Partition parameter"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static configLog"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static TRACE"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.stream.Collectors$Partition: java.lang.Object forFalse\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.stream.Collectors$Partition: java.lang.Object forTrue\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "field": "\u003cjava.util.stream.Collectors$Partition: java.lang.Object forFalse\u003e",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "field": "\u003cjava.util.stream.Collectors$Partition: java.lang.Object forTrue\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.stream.Collectors$Partition: java.lang.Object forFalse\u003e",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.stream.Collectors$Partition: java.lang.Object forTrue\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "L2",
+      "L3",
+      "I1",
+      "I2",
+      "L6",
+      "L7"
+    ],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 8
+  }
+}

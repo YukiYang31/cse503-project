@@ -1,0 +1,86 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: java.util.Map lambda$partitioningBy$65(java.util.stream.Collector,java.util.stream.Collectors$Partition)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Collector parameter escapes to global scope",
+    "loaded object \u0027load forTrue from Collectors$Partition parameter\u0027 escapes to global scope",
+    "loaded object \u0027load forFalse from Collectors$Partition parameter\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new Collectors$Partition"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Collector parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Collectors$Partition parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load forTrue from Collectors$Partition parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load forFalse from Collectors$Partition parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Collectors$Partition"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.stream.Collectors$Partition: java.lang.Object forFalse\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.stream.Collectors$Partition: java.lang.Object forTrue\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.stream.Collectors$Partition: java.lang.Object forFalse\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.stream.Collectors$Partition: java.lang.Object forTrue\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "GBL",
+      "L0",
+      "L1"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 2
+  }
+}

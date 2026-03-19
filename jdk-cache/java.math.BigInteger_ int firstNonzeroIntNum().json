@@ -1,0 +1,40 @@
+{
+  "sig": "\u003cjava.math.BigInteger: int firstNonzeroIntNum()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field firstNonzeroIntNumPlusTwo"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load mag from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.math.BigInteger: int firstNonzeroIntNumPlusTwo\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "sig": "\u003cjava.lang.System$2: java.util.stream.Stream layers(java.lang.ModuleLayer)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "ModuleLayer parameter escapes to global scope",
+    "mutates ModuleLayer parameter via field allLayers",
+    "loaded object \u0027callee: load allLayers from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ModuleLayer parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load allLayers from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load parents from GBL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new ArrayList"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new HashSet"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: new ArrayDeque"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: callee: new Collections$UnmodifiableRandomAccessList"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List parents\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List allLayers\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List allLayers\u003e",
+        "target": "I3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List allLayers\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P1",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List allLayers\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "GBL",
+      "P1",
+      "L0",
+      "L1",
+      "I0",
+      "I1",
+      "I2",
+      "I3"
+    ],
+    "insideNodeCounter": 4,
+    "loadNodeCounter": 2
+  }
+}

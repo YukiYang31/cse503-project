@@ -1,0 +1,73 @@
+{
+  "sig": "\u003cjava.lang.Thread: java.lang.ThreadGroup getThreadGroup()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027load group from callee: callee: load holder from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "L2",
+      "kind": "LOAD",
+      "label": "callee: load static VTHREAD_GROUP"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: load holder from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load static TERMINATED"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: load static VTHREAD_GROUP"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Thread$State: java.lang.Thread$State TERMINATED\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Thread$Constants: java.lang.ThreadGroup VTHREAD_GROUP\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Thread: java.lang.Thread$FieldHolder holder\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.lang.Thread$FieldHolder: java.lang.ThreadGroup group\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 3
+  }
+}

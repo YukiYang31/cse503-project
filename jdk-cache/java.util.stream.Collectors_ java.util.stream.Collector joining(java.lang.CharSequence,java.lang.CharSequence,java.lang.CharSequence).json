@@ -1,0 +1,71 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: java.util.stream.Collector joining(java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "CharSequence parameter escapes to global scope",
+    "CharSequence parameter escapes to global scope",
+    "CharSequence parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new Collectors$CollectorImpl"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "CharSequence parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "CharSequence parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "CharSequence parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static CH_NOID"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Collectors$CollectorImpl"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.Collectors: java.util.Set CH_NOID\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "GBL",
+      "P1",
+      "P2",
+      "L0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 1
+  }
+}

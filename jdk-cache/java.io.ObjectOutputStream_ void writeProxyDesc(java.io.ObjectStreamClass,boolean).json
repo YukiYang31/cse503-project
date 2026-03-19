@@ -1,0 +1,3326 @@
+{
+  "sig": "\u003cjava.io.ObjectOutputStream: void writeProxyDesc(java.io.ObjectStreamClass,boolean)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field interfaces",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: load static security\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: load static security\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: load static security\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load static security\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load handles from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load handles from parameter this\u0027 via field pos",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load next from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load next from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load superDesc from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load classLoader from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: load next from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load next from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load next from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load next from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load parent from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load cl from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: load static security\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load spine from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load spine from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load superDesc from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load classLoader from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: load static security\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load static security\u0027 via field written",
+    "loaded object \u0027callee: callee: callee: callee: callee: load reflectionData from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load reflectionData from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: load objs from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load objs from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: load reflectionData from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: load reflectionData from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: array element from callee: callee: load interfaces from GBL\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: array element from callee: callee: load interfaces from GBL\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load dout from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load dout from parameter this\u0027 via field written",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: array element from GBL\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: array element from GBL\u0027 via field array element",
+    "mutates loaded object \u0027callee: callee: array element from GBL\u0027 via field pos",
+    "mutates loaded object \u0027callee: callee: array element from GBL\u0027 via field blkmode",
+    "loaded object \u0027callee: callee: callee: callee: callee: load static security\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load classLoader from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load classLoader from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load name from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load classLoader from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load parent from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load parent from parameter this\u0027 via field threshold",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load parent from parameter this\u0027 via field next",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load parent from parameter this\u0027 via field spine",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load parent from parameter this\u0027 via field objs",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load parent from parameter this\u0027 via field size",
+    "loaded object \u0027load bout from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load bout from parameter this\u0027 via field blkmode",
+    "mutates loaded object \u0027load bout from parameter this\u0027 via field pos",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK\u0027 via field pos",
+    "loaded object \u0027callee: callee: callee: callee: load classLoader from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load classLoader from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: load dout from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load dout from parameter this\u0027 via field written",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load dout from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load objs from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load objs from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load next from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: load static GET_CLASSLOADER_PERMISSION\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load static GET_CLASSLOADER_PERMISSION\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load bout from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load bout from parameter this\u0027 via field blkmode",
+    "mutates loaded object \u0027callee: callee: load bout from parameter this\u0027 via field pos",
+    "loaded object \u0027load handles from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load handles from parameter this\u0027 via field objs",
+    "mutates loaded object \u0027load handles from parameter this\u0027 via field threshold",
+    "mutates loaded object \u0027load handles from parameter this\u0027 via field next",
+    "mutates loaded object \u0027load handles from parameter this\u0027 via field spine",
+    "mutates loaded object \u0027load handles from parameter this\u0027 via field size",
+    "loaded object \u0027callee: callee: callee: callee: load objs from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load objs from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load next from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load static security\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load parent from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load parent from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load next from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load objs from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load objs from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load out from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load objs from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load objs from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load objs from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load spine from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load spine from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK\u0027 via field next",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK\u0027 via field objs",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK\u0027 via field size",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK\u0027 via field spine",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK\u0027 via field threshold",
+    "loaded object \u0027callee: callee: load objs from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: array element from callee: load objs from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: array element from callee: load objs from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load next from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load next from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load next from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load next from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load cl from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load spine from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load spine from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load classLoader from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: array element from callee: load objs from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: array element from callee: load objs from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load classLoader from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: load parent from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load reflectionData from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load reflectionData from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load reflectionData from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load reflectionData from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load writeBuffer from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load dout from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load dout from parameter this\u0027 via field written",
+    "loaded object \u0027callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load cbuf from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load dout from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load dout from parameter this\u0027 via field written",
+    "loaded object \u0027callee: callee: callee: load cbuf from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "this escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load out from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "L102",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static security"
+      },
+      {
+        "id": "L101",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static security"
+      },
+      {
+        "id": "L61",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L100",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L60",
+        "kind": "LOAD",
+        "label": "callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "L106",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L63",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "L105",
+        "kind": "LOAD",
+        "label": "callee: load handles from parameter this"
+      },
+      {
+        "id": "L62",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: callee: new InternalError"
+      },
+      {
+        "id": "L104",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L65",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load next from parameter this"
+      },
+      {
+        "id": "L64",
+        "kind": "LOAD",
+        "label": "callee: load superDesc from parameter this"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new Class$ReflectionData"
+      },
+      {
+        "id": "L103",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load classLoader from parameter this"
+      },
+      {
+        "id": "L67",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load next from parameter this"
+      },
+      {
+        "id": "I5",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new SoftReference"
+      },
+      {
+        "id": "L109",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "I6",
+        "kind": "INSIDE",
+        "label": "callee: callee: new UTFDataFormatException"
+      },
+      {
+        "id": "L66",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L108",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "I7",
+        "kind": "INSIDE",
+        "label": "callee: callee: new InternalError"
+      },
+      {
+        "id": "L69",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "I8",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new array"
+      },
+      {
+        "id": "L107",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load next from parameter this"
+      },
+      {
+        "id": "L68",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "I9",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new array"
+      },
+      {
+        "id": "L70",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load parent from parameter this"
+      },
+      {
+        "id": "L72",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load cl from parameter this"
+      },
+      {
+        "id": "L71",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static security"
+      },
+      {
+        "id": "L74",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static unsafe"
+      },
+      {
+        "id": "I11",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new InternalError"
+      },
+      {
+        "id": "I10",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new array"
+      },
+      {
+        "id": "L73",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L76",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static GET_CLASSLOADER_PERMISSION"
+      },
+      {
+        "id": "I13",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: callee: new SoftReference"
+      },
+      {
+        "id": "I12",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: callee: new Class$ReflectionData"
+      },
+      {
+        "id": "L75",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load spine from parameter this"
+      },
+      {
+        "id": "L78",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load interfaces from GBL"
+      },
+      {
+        "id": "I15",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new InternalError"
+      },
+      {
+        "id": "L77",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I14",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new UTFDataFormatException"
+      },
+      {
+        "id": "L79",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L120",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L124",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load superDesc from parameter this"
+      },
+      {
+        "id": "L81",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load classLoader from parameter this"
+      },
+      {
+        "id": "L80",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load reflectionData from parameter this"
+      },
+      {
+        "id": "L123",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static security"
+      },
+      {
+        "id": "L83",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L122",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load objs from parameter this"
+      },
+      {
+        "id": "L82",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load reflectionData from parameter this"
+      },
+      {
+        "id": "L121",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static security"
+      },
+      {
+        "id": "L128",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static GET_CLASSLOADER_PERMISSION"
+      },
+      {
+        "id": "L85",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from callee: callee: load interfaces from GBL"
+      },
+      {
+        "id": "L127",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L84",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load dout from parameter this"
+      },
+      {
+        "id": "L126",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static security"
+      },
+      {
+        "id": "L87",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from GBL"
+      },
+      {
+        "id": "L125",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L86",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load classLoader from parameter this"
+      },
+      {
+        "id": "L89",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load name from parameter this"
+      },
+      {
+        "id": "L88",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L129",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load classLoader from parameter this"
+      },
+      {
+        "id": "L90",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load parent from parameter this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load bout from parameter this"
+      },
+      {
+        "id": "L113",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L92",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load classLoader from parameter this"
+      },
+      {
+        "id": "L91",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load dout from parameter this"
+      },
+      {
+        "id": "L112",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load objs from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L111",
+        "kind": "LOAD",
+        "label": "callee: callee: load next from parameter this"
+      },
+      {
+        "id": "L94",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L110",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static GET_CLASSLOADER_PERMISSION"
+      },
+      {
+        "id": "L93",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "load handles from parameter this"
+      },
+      {
+        "id": "L96",
+        "kind": "LOAD",
+        "label": "callee: callee: load bout from parameter this"
+      },
+      {
+        "id": "L117",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load objs from parameter this"
+      },
+      {
+        "id": "L116",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static security"
+      },
+      {
+        "id": "L95",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: load next from parameter this"
+      },
+      {
+        "id": "L115",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L98",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load parent from parameter this"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: load next from parameter this"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: load objs from parameter this"
+      },
+      {
+        "id": "L97",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L114",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: load objs from parameter this"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load objs from parameter this"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: load spine from parameter this"
+      },
+      {
+        "id": "L99",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: load objs from parameter this"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from callee: load objs from parameter this"
+      },
+      {
+        "id": "L119",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: load next from parameter this"
+      },
+      {
+        "id": "L118",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load next from parameter this"
+      },
+      {
+        "id": "L16",
+        "kind": "LOAD",
+        "label": "callee: load cl from parameter this"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: callee: load spine from parameter this"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L19",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L21",
+        "kind": "LOAD",
+        "label": "callee: callee: load classLoader from parameter this"
+      },
+      {
+        "id": "L20",
+        "kind": "LOAD",
+        "label": "callee: callee: load static security"
+      },
+      {
+        "id": "L23",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static security"
+      },
+      {
+        "id": "L22",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static GET_CLASSLOADER_PERMISSION"
+      },
+      {
+        "id": "L25",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static security"
+      },
+      {
+        "id": "L24",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static security"
+      },
+      {
+        "id": "L27",
+        "kind": "LOAD",
+        "label": "callee: callee: load classLoader from parameter this"
+      },
+      {
+        "id": "L26",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load classLoader from parameter this"
+      },
+      {
+        "id": "L29",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load classLoader from parameter this"
+      },
+      {
+        "id": "L28",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load parent from parameter this"
+      },
+      {
+        "id": "L131",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static security"
+      },
+      {
+        "id": "L130",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: array element from callee: load objs from parameter this"
+      },
+      {
+        "id": "L134",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L133",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static GET_CLASSLOADER_PERMISSION"
+      },
+      {
+        "id": "L132",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load classLoader from parameter this"
+      },
+      {
+        "id": "L30",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static security"
+      },
+      {
+        "id": "L32",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load parent from parameter this"
+      },
+      {
+        "id": "L31",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static GET_CLASSLOADER_PERMISSION"
+      },
+      {
+        "id": "L34",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static unsafe"
+      },
+      {
+        "id": "L33",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load reflectionData from parameter this"
+      },
+      {
+        "id": "L36",
+        "kind": "LOAD",
+        "label": "callee: callee: load interfaces from GBL"
+      },
+      {
+        "id": "L35",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load reflectionData from parameter this"
+      },
+      {
+        "id": "L38",
+        "kind": "LOAD",
+        "label": "callee: callee: load writeBuffer from parameter this"
+      },
+      {
+        "id": "L37",
+        "kind": "LOAD",
+        "label": "callee: load dout from parameter this"
+      },
+      {
+        "id": "L39",
+        "kind": "LOAD",
+        "label": "callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L41",
+        "kind": "LOAD",
+        "label": "array element from callee: callee: load interfaces from GBL"
+      },
+      {
+        "id": "L40",
+        "kind": "LOAD",
+        "label": "array element from GBL"
+      },
+      {
+        "id": "L43",
+        "kind": "LOAD",
+        "label": "callee: callee: load classLoader from parameter this"
+      },
+      {
+        "id": "L42",
+        "kind": "LOAD",
+        "label": "callee: load name from parameter this"
+      },
+      {
+        "id": "L45",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L44",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load dout from parameter this"
+      },
+      {
+        "id": "L47",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load parent from parameter this"
+      },
+      {
+        "id": "L46",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L49",
+        "kind": "LOAD",
+        "label": "callee: callee: load classLoader from parameter this"
+      },
+      {
+        "id": "L48",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ObjectStreamClass parameter"
+      },
+      {
+        "id": "L50",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load parent from parameter this"
+      },
+      {
+        "id": "L52",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static security"
+      },
+      {
+        "id": "L51",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static security"
+      },
+      {
+        "id": "L54",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load classLoader from parameter this"
+      },
+      {
+        "id": "L53",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static GET_CLASSLOADER_PERMISSION"
+      },
+      {
+        "id": "L56",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L55",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L58",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L57",
+        "kind": "LOAD",
+        "label": "callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L59",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load out from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "L105",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L108",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L105",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L109",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L105",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "L111",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L105",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] hbuf\u003e",
+        "target": "L106",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L105",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "L108",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L105",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e",
+        "target": "L106",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L21",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L21",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I3",
+        "field": "\u003cjava.lang.Throwable: java.lang.Throwable cause\u003e",
+        "target": "I3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "field": "\u003cjava.lang.Throwable: java.util.List suppressedExceptions\u003e",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L19",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L64",
+        "field": "\u003cjava.io.ObjectStreamClass: java.io.ObjectStreamClass superDesc\u003e",
+        "target": "L110",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L64",
+        "field": "\u003cjava.io.ObjectStreamClass: java.io.ObjectStreamClass superDesc\u003e",
+        "target": "L124",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L64",
+        "field": "\u003cjava.io.ObjectStreamClass: java.lang.Class cl\u003e",
+        "target": "L115",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L64",
+        "field": "\u003cjava.io.ObjectStreamClass: java.lang.Class cl\u003e",
+        "target": "L72",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L20",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I4",
+        "field": "\u003cjava.lang.Class$ReflectionData: java.lang.Class[] interfaces\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L23",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L48",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "I6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L44",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L45",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L22",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I7",
+        "field": "\u003cjava.lang.Throwable: java.lang.Throwable cause\u003e",
+        "target": "I7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "field": "\u003cjava.lang.Throwable: java.util.List suppressedExceptions\u003e",
+        "target": "L62",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L61",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L63",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L25",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L24",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L27",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L32",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L26",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L29",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L28",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L131",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L70",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L70",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L134",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L134",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L133",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L72",
+        "field": "\u003cjava.lang.Class: java.lang.ref.SoftReference reflectionData\u003e",
+        "target": "L82",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L72",
+        "field": "\u003cjava.lang.Class: java.lang.ref.SoftReference reflectionData\u003e",
+        "target": "L80",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L72",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L129",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L132",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L71",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L74",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I11",
+        "field": "\u003cjava.lang.Throwable: java.lang.Throwable cause\u003e",
+        "target": "I11",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I11",
+        "field": "\u003cjava.lang.Throwable: java.util.List suppressedExceptions\u003e",
+        "target": "L119",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I11",
+        "field": "\u003cjava.lang.Throwable: java.util.List suppressedExceptions\u003e",
+        "target": "I10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I11",
+        "field": "\u003cjava.lang.Throwable: java.util.List suppressedExceptions\u003e",
+        "target": "L73",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I11",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "I9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I11",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L125",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I11",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L127",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I11",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L77",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I11",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L79",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L30",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L73",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L76",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L32",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L32",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I12",
+        "field": "\u003cjava.lang.Throwable: java.lang.Throwable cause\u003e",
+        "target": "I12",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I12",
+        "field": "\u003cjava.lang.Class$ReflectionData: java.lang.Class[] interfaces\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I12",
+        "field": "\u003cjava.lang.Throwable: java.util.List suppressedExceptions\u003e",
+        "target": "I8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I12",
+        "field": "\u003cjava.lang.Throwable: java.util.List suppressedExceptions\u003e",
+        "target": "L104",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I12",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L96",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I12",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L99",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L31",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L78",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I15",
+        "field": "\u003cjava.lang.Throwable: java.lang.Throwable cause\u003e",
+        "target": "I15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I15",
+        "field": "\u003cjava.lang.Throwable: java.util.List suppressedExceptions\u003e",
+        "target": "L120",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I15",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L118",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I15",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L113",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L34",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L77",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I14",
+        "target": "I8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I14",
+        "target": "L91",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I14",
+        "target": "L94",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I14",
+        "target": "I14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I14",
+        "target": "L88",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L36",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L79",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L37",
+        "field": "\u003cjava.io.DataOutputStream: byte[] writeBuffer\u003e",
+        "target": "L38",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L37",
+        "field": "\u003cjava.io.DataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L39",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L124",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L129",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L123",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L134",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L123",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L123",
+        "field": "\u003cjava.io.DataOutputStream: byte[] writeBuffer\u003e",
+        "target": "L116",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L123",
+        "field": "\u003cjava.io.DataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L124",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L121",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L128",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L85",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L41",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L84",
+        "field": "\u003cjava.io.DataOutputStream: byte[] writeBuffer\u003e",
+        "target": "L81",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L84",
+        "field": "\u003cjava.io.DataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L83",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L40",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L126",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L126",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L126",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L87",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L87",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L71",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L87",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L91",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L87",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L97",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L87",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L88",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L87",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L93",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L87",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L132",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L87",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L83",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L87",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L87",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] hbuf\u003e",
+        "target": "L92",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L87",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] hbuf\u003e",
+        "target": "L134",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L87",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] hbuf\u003e",
+        "target": "L85",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L87",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] hbuf\u003e",
+        "target": "L86",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L43",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L47",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L86",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L90",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L42",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L89",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L45",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L88",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L44",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L44",
+        "field": "\u003cjava.io.DataOutputStream: byte[] writeBuffer\u003e",
+        "target": "L45",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L44",
+        "field": "\u003cjava.io.DataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L46",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L47",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L47",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L129",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L70",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L129",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L129",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L49",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L50",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L48",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L91",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L94",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L45",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L44",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L88",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.lang.RuntimePermission GET_CLASSLOADER_PERMISSION\u003e",
+        "target": "L48",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.lang.RuntimePermission GET_CLASSLOADER_PERMISSION\u003e",
+        "target": "L120",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.lang.RuntimePermission GET_CLASSLOADER_PERMISSION\u003e",
+        "target": "L110",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.lang.RuntimePermission GET_CLASSLOADER_PERMISSION\u003e",
+        "target": "L133",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.lang.RuntimePermission GET_CLASSLOADER_PERMISSION\u003e",
+        "target": "L80",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.lang.RuntimePermission GET_CLASSLOADER_PERMISSION\u003e",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.lang.RuntimePermission GET_CLASSLOADER_PERMISSION\u003e",
+        "target": "L53",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.lang.RuntimePermission GET_CLASSLOADER_PERMISSION\u003e",
+        "target": "L94",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.lang.RuntimePermission GET_CLASSLOADER_PERMISSION\u003e",
+        "target": "L84",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.lang.RuntimePermission GET_CLASSLOADER_PERMISSION\u003e",
+        "target": "L128",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.lang.RuntimePermission GET_CLASSLOADER_PERMISSION\u003e",
+        "target": "L76",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.lang.RuntimePermission GET_CLASSLOADER_PERMISSION\u003e",
+        "target": "L22",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class$ReflectionData: java.lang.Class[] interfaces\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class$ReflectionData: java.lang.Class[] interfaces\u003e",
+        "target": "L36",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class$ReflectionData: java.lang.Class[] interfaces\u003e",
+        "target": "L78",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.util.List SUPPRESSED_SENTINEL\u003e",
+        "target": "L120",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.util.List SUPPRESSED_SENTINEL\u003e",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.util.List SUPPRESSED_SENTINEL\u003e",
+        "target": "L104",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.util.List SUPPRESSED_SENTINEL\u003e",
+        "target": "L62",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.util.List SUPPRESSED_SENTINEL\u003e",
+        "target": "L73",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.util.List SUPPRESSED_SENTINEL\u003e",
+        "target": "L119",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L63",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L96",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L113",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L125",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L61",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L127",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L118",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L79",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L99",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L77",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L25",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L70",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L131",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L121",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L82",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L123",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L101",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L30",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L52",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L78",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L24",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L76",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L44",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L88",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L71",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L91",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L102",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L114",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L126",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L51",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L116",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L45",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.SecurityManager security\u003e",
+        "target": "L118",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class$Atomic: jdk.internal.misc.Unsafe unsafe\u003e",
+        "target": "L74",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class$Atomic: jdk.internal.misc.Unsafe unsafe\u003e",
+        "target": "L34",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L26",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L29",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L81",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L93",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L132",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L121",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L133",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L123",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L113",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L74",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L103",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L128",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L46",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L21",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L54",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L48",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream: java.io.ObjectOutputStream$BlockDataOutputStream bout\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream: java.io.ObjectOutputStream$BlockDataOutputStream bout\u003e",
+        "target": "L96",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream: java.io.ObjectOutputStream$BlockDataOutputStream bout\u003e",
+        "target": "L113",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream: java.io.ObjectOutputStream$BlockDataOutputStream bout\u003e",
+        "target": "L105",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream: java.io.ObjectOutputStream$BlockDataOutputStream bout\u003e",
+        "target": "L87",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream: java.io.ObjectOutputStream$HandleTable handles\u003e",
+        "target": "L90",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream: java.io.ObjectOutputStream$HandleTable handles\u003e",
+        "target": "L105",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream: java.io.ObjectOutputStream$HandleTable handles\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream: java.io.ObjectOutputStream$HandleTable handles\u003e",
+        "target": "L99",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.io.ObjectStreamClass: java.io.ObjectStreamClass superDesc\u003e",
+        "target": "L64",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.io.ObjectStreamClass: java.lang.Class cl\u003e",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L90",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L90",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L90",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "I8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L90",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "L112",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L90",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "L94",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L90",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "L95",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L90",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "L117",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L90",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "I9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L90",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "L100",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L90",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "L102",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L90",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "L103",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L90",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "L98",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L90",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e",
+        "target": "L122",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L90",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e",
+        "target": "L101",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L90",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e",
+        "target": "I10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L90",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e",
+        "target": "L107",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L92",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L98",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L113",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L126",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L113",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.DataOutputStream dout\u003e",
+        "target": "L123",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L113",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L120",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L113",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L123",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L113",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L118",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L113",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] hbuf\u003e",
+        "target": "L114",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: char[] cbuf\u003e",
+        "target": "L47",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: char[] cbuf\u003e",
+        "target": "L43",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.DataOutputStream dout\u003e",
+        "target": "L37",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.DataOutputStream dout\u003e",
+        "target": "L44",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L59",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L41",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L50",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L56",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L54",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L49",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L37",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L48",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L60",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L52",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L51",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L57",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L44",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] hbuf\u003e",
+        "target": "L58",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] hbuf\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] hbuf\u003e",
+        "target": "L48",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] hbuf\u003e",
+        "target": "L53",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] hbuf\u003e",
+        "target": "L40",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] hbuf\u003e",
+        "target": "L55",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L91",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L91",
+        "field": "\u003cjava.io.DataOutputStream: byte[] writeBuffer\u003e",
+        "target": "L88",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L91",
+        "field": "\u003cjava.io.DataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L93",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L94",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L50",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L50",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.DataOutputStream dout\u003e",
+        "target": "L91",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.DataOutputStream dout\u003e",
+        "target": "L84",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: char[] cbuf\u003e",
+        "target": "L90",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: char[] cbuf\u003e",
+        "target": "L86",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L92",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L100",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L101",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L91",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L102",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L114",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L94",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L84",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] buf\u003e",
+        "target": "L68",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L69",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L85",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L103",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L97",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L115",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L98",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] hbuf\u003e",
+        "target": "L110",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] hbuf\u003e",
+        "target": "L94",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] hbuf\u003e",
+        "target": "L95",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] hbuf\u003e",
+        "target": "L127",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] hbuf\u003e",
+        "target": "L87",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] hbuf\u003e",
+        "target": "L66",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L116",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L115",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L124",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L98",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "L98",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L99",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "I8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L99",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "L104",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L99",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "L67",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L99",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "L107",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L99",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e",
+        "target": "L65",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L99",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "I9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L99",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "L122",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L99",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "L112",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L99",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "L125",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L99",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e",
+        "target": "L117",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L99",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e",
+        "target": "L130",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L99",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e",
+        "target": "I10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L99",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e",
+        "target": "L75",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L99",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e",
+        "target": "L119",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L16",
+        "field": "\u003cjava.lang.Class: java.lang.ref.SoftReference reflectionData\u003e",
+        "target": "L35",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L16",
+        "field": "\u003cjava.lang.Class: java.lang.ref.SoftReference reflectionData\u003e",
+        "target": "L33",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L16",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L27",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L19",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L4",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e"
+      },
+      {
+        "node": "L91",
+        "field": "\u003cjava.io.DataOutputStream: int written\u003e"
+      },
+      {
+        "node": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: boolean blkmode\u003e"
+      },
+      {
+        "node": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: boolean blkmode\u003e"
+      },
+      {
+        "node": "L99",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e"
+      },
+      {
+        "node": "L12"
+      },
+      {
+        "node": "L127"
+      },
+      {
+        "node": "L107"
+      },
+      {
+        "node": "L48"
+      },
+      {
+        "node": "L52"
+      },
+      {
+        "node": "L8"
+      },
+      {
+        "node": "L119"
+      },
+      {
+        "node": "L92"
+      },
+      {
+        "node": "L60"
+      },
+      {
+        "node": "L40"
+      },
+      {
+        "node": "L80"
+      },
+      {
+        "node": "L44",
+        "field": "\u003cjava.io.DataOutputStream: int written\u003e"
+      },
+      {
+        "node": "L4",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int threshold\u003e"
+      },
+      {
+        "node": "L90",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int threshold\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.Class$ReflectionData: java.lang.Class[] interfaces\u003e"
+      },
+      {
+        "node": "L84",
+        "field": "\u003cjava.io.DataOutputStream: int written\u003e"
+      },
+      {
+        "node": "L90",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e"
+      },
+      {
+        "node": "L99",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e"
+      },
+      {
+        "node": "L4",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] next\u003e"
+      },
+      {
+        "node": "L67"
+      },
+      {
+        "node": "L35"
+      },
+      {
+        "node": "L4",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e"
+      },
+      {
+        "node": "L15"
+      },
+      {
+        "node": "L75"
+      },
+      {
+        "node": "L87"
+      },
+      {
+        "node": "L11"
+      },
+      {
+        "node": "L55"
+      },
+      {
+        "node": "L1"
+      },
+      {
+        "node": "L51"
+      },
+      {
+        "node": "L120"
+      },
+      {
+        "node": "L95"
+      },
+      {
+        "node": "L90",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e"
+      },
+      {
+        "node": "L100"
+      },
+      {
+        "node": "L0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: int pos\u003e"
+      },
+      {
+        "node": "L91"
+      },
+      {
+        "node": "L112"
+      },
+      {
+        "node": "L99",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int size\u003e"
+      },
+      {
+        "node": "L117"
+      },
+      {
+        "node": "L14"
+      },
+      {
+        "node": "L58"
+      },
+      {
+        "node": "L87",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: int pos\u003e"
+      },
+      {
+        "node": "L99",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int[] spine\u003e"
+      },
+      {
+        "node": "L86"
+      },
+      {
+        "node": "L10"
+      },
+      {
+        "node": "L98"
+      },
+      {
+        "node": "L66"
+      },
+      {
+        "node": "L109"
+      },
+      {
+        "node": "L82"
+      },
+      {
+        "node": "L99",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int threshold\u003e"
+      },
+      {
+        "node": "L94"
+      },
+      {
+        "node": "L90",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: java.lang.Object[] objs\u003e"
+      },
+      {
+        "node": "L37",
+        "field": "\u003cjava.io.DataOutputStream: int written\u003e"
+      },
+      {
+        "node": "L101"
+      },
+      {
+        "node": "L4",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int size\u003e"
+      },
+      {
+        "node": "L123",
+        "field": "\u003cjava.io.DataOutputStream: int written\u003e"
+      },
+      {
+        "node": "L90",
+        "field": "\u003cjava.io.ObjectOutputStream$HandleTable: int size\u003e"
+      },
+      {
+        "node": "L87",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: boolean blkmode\u003e"
+      },
+      {
+        "node": "L49"
+      },
+      {
+        "node": "L106"
+      },
+      {
+        "node": "L13"
+      },
+      {
+        "node": "L113",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: int pos\u003e"
+      },
+      {
+        "node": "L96",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: int pos\u003e"
+      },
+      {
+        "node": "L85"
+      },
+      {
+        "node": "L53"
+      },
+      {
+        "node": "L97"
+      },
+      {
+        "node": "L65"
+      },
+      {
+        "node": "L33"
+      },
+      {
+        "node": "L3"
+      },
+      {
+        "node": "L130"
+      },
+      {
+        "node": "L110"
+      },
+      {
+        "node": "L134"
+      },
+      {
+        "node": "L105",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: int pos\u003e"
+      },
+      {
+        "node": "L102"
+      },
+      {
+        "node": "L122"
+      },
+      {
+        "node": "L114"
+      }
+    ],
+    "globalEscaped": [
+      "L100",
+      "I0",
+      "I1",
+      "L106",
+      "I3",
+      "I4",
+      "L103",
+      "L64",
+      "I5",
+      "I6",
+      "L66",
+      "I7",
+      "L69",
+      "L108",
+      "I8",
+      "L107",
+      "I9",
+      "L72",
+      "L71",
+      "I11",
+      "L74",
+      "I10",
+      "L73",
+      "I13",
+      "L76",
+      "I12",
+      "I15",
+      "L78",
+      "I14",
+      "L77",
+      "L79",
+      "L120",
+      "L81",
+      "L124",
+      "L80",
+      "L123",
+      "L83",
+      "L82",
+      "L121",
+      "L85",
+      "L128",
+      "L84",
+      "L127",
+      "L87",
+      "L126",
+      "L86",
+      "L89",
+      "L88",
+      "L129",
+      "L92",
+      "L113",
+      "L1",
+      "L91",
+      "L2",
+      "L94",
+      "L93",
+      "L110",
+      "L117",
+      "L95",
+      "L116",
+      "L6",
+      "L98",
+      "L115",
+      "L7",
+      "L97",
+      "L114",
+      "L118",
+      "L16",
+      "L18",
+      "L17",
+      "L19",
+      "L21",
+      "L20",
+      "L23",
+      "L22",
+      "L25",
+      "L24",
+      "L27",
+      "L26",
+      "L29",
+      "L131",
+      "L134",
+      "L133",
+      "L132",
+      "L30",
+      "L31",
+      "L34",
+      "L33",
+      "L36",
+      "L35",
+      "L38",
+      "L37",
+      "L39",
+      "L41",
+      "L40",
+      "L42",
+      "L45",
+      "L44",
+      "L46",
+      "GBL",
+      "L48",
+      "P0",
+      "L50",
+      "L54",
+      "L53",
+      "L56",
+      "L55",
+      "L58",
+      "L59"
+    ],
+    "insideNodeCounter": 16,
+    "loadNodeCounter": 135
+  }
+}

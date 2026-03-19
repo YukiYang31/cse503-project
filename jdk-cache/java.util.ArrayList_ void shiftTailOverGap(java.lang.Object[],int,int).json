@@ -1,0 +1,41 @@
+{
+  "sig": "\u003cjava.util.ArrayList: void shiftTailOverGap(java.lang.Object[],int,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field size",
+    "Object[] parameter escapes to global scope",
+    "mutates Object[] parameter via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Object[] parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P1"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList: int size\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

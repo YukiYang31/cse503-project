@@ -1,0 +1,155 @@
+{
+  "sig": "\u003cjava.util.stream.SpinedBuffer$OfLong$1Splitr: void \u003cinit\u003e(java.util.stream.SpinedBuffer$OfLong,int,int,int,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027callee: load curChunk from SpinedBuffer$OfPrimitive parameter\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "SpinedBuffer$OfLong parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load spine from SpinedBuffer$OfPrimitive parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load curChunk from SpinedBuffer$OfPrimitive parameter"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new AssertionError"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfLong$1Splitr: java.util.stream.SpinedBuffer$OfLong this$0\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive$BaseSpliterator: java.util.stream.SpinedBuffer$OfPrimitive this$0\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive$BaseSpliterator: java.lang.Object splChunk\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: java.lang.Object curChunk\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: java.lang.Object[] spine\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L3",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive$BaseSpliterator: java.lang.Object splChunk\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive$BaseSpliterator: int lastSpineIndex\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfLong$1Splitr: java.util.stream.SpinedBuffer$OfLong this$0\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive$BaseSpliterator: java.util.stream.SpinedBuffer$OfPrimitive this$0\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive$BaseSpliterator: int lastSpineElementFence\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive$BaseSpliterator: int splSpineIndex\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive$BaseSpliterator: int splElementIndex\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 4
+  }
+}

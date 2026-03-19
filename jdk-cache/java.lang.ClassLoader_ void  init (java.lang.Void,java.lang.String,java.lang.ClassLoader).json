@@ -1,0 +1,245 @@
+{
+  "sig": "\u003cjava.lang.ClassLoader: void \u003cinit\u003e(java.lang.Void,java.lang.String,java.lang.ClassLoader)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "String parameter escapes to global scope",
+    "ClassLoader parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Void parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "String parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "ClassLoader parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load static loaderTypes"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ArrayList"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new ProtectionDomain"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "new CodeSource"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "new ConcurrentHashMap"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "new Module"
+      },
+      {
+        "id": "I5",
+        "kind": "INSIDE",
+        "label": "return from getClass"
+      },
+      {
+        "id": "I6",
+        "kind": "INSIDE",
+        "label": "new ConcurrentHashMap"
+      },
+      {
+        "id": "I7",
+        "kind": "INSIDE",
+        "label": "new Object"
+      },
+      {
+        "id": "I8",
+        "kind": "INSIDE",
+        "label": "new ConcurrentHashMap"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassLoader$ParallelLoaders: java.util.Set loaderTypes\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.Object assertionLock\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.Object assertionLock\u003e",
+        "target": "I7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e",
+        "target": "P3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.String name\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.String nameAndId\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.concurrent.ConcurrentHashMap packages\u003e",
+        "target": "I3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.Module unnamedModule\u003e",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.concurrent.ConcurrentHashMap parallelLockMap\u003e",
+        "target": "I6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.security.ProtectionDomain defaultDomain\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.ArrayList classes\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.concurrent.ConcurrentHashMap package2certs\u003e",
+        "target": "I8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader: jdk.internal.loader.NativeLibraries libraries\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "field": "\u003cjava.lang.Module: java.lang.ClassLoader loader\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.Object assertionLock\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.concurrent.ConcurrentHashMap package2certs\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader: boolean defaultAssertionStatus\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.String name\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.ClassLoader parent\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.concurrent.ConcurrentHashMap packages\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.String nameAndId\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.Map packageAssertionStatus\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.Map classAssertionStatus\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.concurrent.ConcurrentHashMap parallelLockMap\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader: jdk.internal.loader.NativeLibraries libraries\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.ArrayList classes\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.security.ProtectionDomain defaultDomain\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.Module unnamedModule\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "L0",
+      "I1",
+      "I2",
+      "I5"
+    ],
+    "insideNodeCounter": 9,
+    "loadNodeCounter": 1
+  }
+}

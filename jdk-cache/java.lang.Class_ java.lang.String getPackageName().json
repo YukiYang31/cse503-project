@@ -1,0 +1,112 @@
+{
+  "sig": "\u003cjava.lang.Class: java.lang.String getPackageName()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "mutates this via field packageName",
+    "loaded object \u0027load packageName from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load componentType from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load name from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "load packageName from parameter this"
+    },
+    {
+      "id": "I1",
+      "kind": "INSIDE",
+      "label": "return from intern"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load packageName from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: load componentType from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: load name from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "return from substring"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "return from intern"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Class: java.lang.Class componentType\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Class: java.lang.String packageName\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Class: java.lang.String packageName\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.lang.Class: java.lang.Class componentType\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Class: java.lang.String packageName\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "L1"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 3
+  }
+}

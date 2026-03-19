@@ -1,0 +1,44 @@
+{
+  "sig": "\u003cjava.util.ArrayList: void \u003cclinit\u003e()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field EMPTY_ELEMENTDATA",
+    "writes to static field DEFAULTCAPACITY_EMPTY_ELEMENTDATA"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new array"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] EMPTY_ELEMENTDATA\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I0",
+      "I1"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 0
+  }
+}

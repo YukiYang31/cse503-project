@@ -1,0 +1,284 @@
+{
+  "sig": "\u003cjava.lang.Class: java.util.List getDeclaredPublicMethods(java.lang.String,java.lang.Class[])\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field unknown",
+    "this escapes to global scope",
+    "loaded object \u0027callee: callee: load reflectionData from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load reflectionData from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load reflectionData from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load reflectionData from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [
+    {
+      "id": "I3",
+      "kind": "INSIDE",
+      "label": "new ArrayList"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "String parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Class[] parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: load reflectionData from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static unsafe"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load reflectionData from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: load declaredPublicMethods from GBL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new Class$ReflectionData"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: load static reflectionFactory"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new SoftReference"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: new ReflectionFactory$GetReflectionFactoryAction"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: load name from parameter this"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "new ArrayList"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "array element from GBL"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "array element from callee: load declaredPublicMethods from GBL"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L3",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L5",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L6",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L10",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L7",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L8",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L9",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Module: java.lang.String name\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L2"
+      },
+      {
+        "node": "L0"
+      },
+      {
+        "node": "GBL"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "L0",
+      "L1",
+      "L2",
+      "I0",
+      "L3",
+      "I1",
+      "L4",
+      "I2",
+      "L5",
+      "L6",
+      "I3",
+      "L10",
+      "L7",
+      "L8",
+      "L9",
+      "GBL"
+    ],
+    "insideNodeCounter": 4,
+    "loadNodeCounter": 8
+  }
+}

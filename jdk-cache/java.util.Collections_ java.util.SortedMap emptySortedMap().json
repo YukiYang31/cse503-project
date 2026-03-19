@@ -1,0 +1,37 @@
+{
+  "sig": "\u003cjava.util.Collections: java.util.SortedMap emptySortedMap()\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "load static EMPTY_NAVIGABLE_MAP"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static EMPTY_NAVIGABLE_MAP"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Collections$UnmodifiableNavigableMap: java.util.Collections$UnmodifiableNavigableMap$EmptyNavigableMap EMPTY_NAVIGABLE_MAP\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

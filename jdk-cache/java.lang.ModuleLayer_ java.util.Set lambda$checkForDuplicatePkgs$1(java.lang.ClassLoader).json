@@ -1,0 +1,32 @@
+{
+  "sig": "\u003cjava.lang.ModuleLayer: java.util.Set lambda$checkForDuplicatePkgs$1(java.lang.ClassLoader)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new HashSet"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "ClassLoader parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new HashSet"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: void lambda$summarizingLong$72(java.util.function.ToLongFunction,java.util.LongSummaryStatistics,java.lang.Object)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "ToLongFunction parameter escapes to global scope",
+    "mutates LongSummaryStatistics parameter via field max",
+    "mutates LongSummaryStatistics parameter via field min",
+    "mutates LongSummaryStatistics parameter via field sum",
+    "mutates LongSummaryStatistics parameter via field count",
+    "Object parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "ToLongFunction parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "LongSummaryStatistics parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Object parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P1",
+        "field": "\u003cjava.util.LongSummaryStatistics: long max\u003e"
+      },
+      {
+        "node": "P1",
+        "field": "\u003cjava.util.LongSummaryStatistics: long min\u003e"
+      },
+      {
+        "node": "P1",
+        "field": "\u003cjava.util.LongSummaryStatistics: long sum\u003e"
+      },
+      {
+        "node": "P1",
+        "field": "\u003cjava.util.LongSummaryStatistics: long count\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P2"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

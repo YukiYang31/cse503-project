@@ -1,0 +1,64 @@
+{
+  "sig": "\u003cjava.util.Date: long UTC(int,int,int,int,int,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field jcal"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: load static jcal"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Date"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Date: sun.util.calendar.BaseCalendar gcal\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Date: sun.util.calendar.BaseCalendar jcal\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.Date: sun.util.calendar.BaseCalendar jcal\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "GBL",
+      "L0",
+      "I0"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 2
+  }
+}

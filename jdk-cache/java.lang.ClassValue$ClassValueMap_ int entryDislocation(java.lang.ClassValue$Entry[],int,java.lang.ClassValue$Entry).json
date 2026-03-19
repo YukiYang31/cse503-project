@@ -1,0 +1,47 @@
+{
+  "sig": "\u003cjava.lang.ClassValue$ClassValueMap: int entryDislocation(java.lang.ClassValue$Entry[],int,java.lang.ClassValue$Entry)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "ClassValue$Entry parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "ClassValue$Entry[] parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "ClassValue$Entry parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: load classValue from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P2"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

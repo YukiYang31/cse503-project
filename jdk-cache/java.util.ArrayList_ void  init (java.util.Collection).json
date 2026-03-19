@@ -1,0 +1,82 @@
+{
+  "sig": "\u003cjava.util.ArrayList: void \u003cinit\u003e(java.util.Collection)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Collection parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Collection parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static EMPTY_ELEMENTDATA"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "return from copyOf"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] EMPTY_ELEMENTDATA\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList: int size\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P1"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 1
+  }
+}

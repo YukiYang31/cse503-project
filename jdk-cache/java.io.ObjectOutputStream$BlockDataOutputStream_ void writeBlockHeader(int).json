@@ -1,0 +1,55 @@
+{
+  "sig": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: void writeBlockHeader(int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027load out from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load hbuf from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load out from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: java.io.OutputStream out\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectOutputStream$BlockDataOutputStream: byte[] hbuf\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L0"
+      }
+    ],
+    "globalEscaped": [
+      "L0",
+      "L1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

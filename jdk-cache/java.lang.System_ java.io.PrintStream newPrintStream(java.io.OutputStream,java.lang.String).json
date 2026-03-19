@@ -1,0 +1,509 @@
+{
+  "sig": "\u003cjava.lang.System: java.io.PrintStream newPrintStream(java.io.OutputStream,java.lang.String)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "OutputStream parameter escapes to global scope",
+    "String parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new PrintStream"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new PrintStream"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new BufferedOutputStream"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new Object"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: callee: new IllegalArgumentException"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "I5",
+        "kind": "INSIDE",
+        "label": "callee: callee: new Object"
+      },
+      {
+        "id": "I6",
+        "kind": "INSIDE",
+        "label": "callee: new OutputStreamWriter"
+      },
+      {
+        "id": "I7",
+        "kind": "INSIDE",
+        "label": "callee: callee: new OutputStreamWriter"
+      },
+      {
+        "id": "I8",
+        "kind": "INSIDE",
+        "label": "callee: new BufferedWriter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "I9",
+        "kind": "INSIDE",
+        "label": "callee: callee: new BufferedWriter"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "OutputStream parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "String parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "load static INSTANCE"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I10",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new IllegalArgumentException"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: load charOut from parameter this"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: load charOut from parameter this"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      }
+    ],
+    "edges": [
+      {
+        "src": "I9",
+        "target": "I9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "target": "L10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "target": "L8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "field": "\u003cjava.io.BufferedWriter: java.io.Writer out\u003e",
+        "target": "I7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "field": "\u003cjava.io.BufferedWriter: java.io.Writer out\u003e",
+        "target": "L12",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "field": "\u003cjava.io.BufferedWriter: char[] cb\u003e",
+        "target": "I10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.nio.cs.UTF_8: sun.nio.cs.UTF_8 INSTANCE\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.PrintStream: jdk.internal.misc.InternalLock lock\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.PrintStream: java.io.BufferedWriter textOut\u003e",
+        "target": "I8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.PrintStream: java.io.BufferedWriter textOut\u003e",
+        "target": "I9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.PrintStream: java.nio.charset.Charset charset\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.PrintStream: java.nio.charset.Charset charset\u003e",
+        "target": "L6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.FilterOutputStream: java.io.OutputStream out\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.PrintStream: java.io.OutputStreamWriter charOut\u003e",
+        "target": "I6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.PrintStream: java.io.OutputStreamWriter charOut\u003e",
+        "target": "I7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.FilterOutputStream: java.lang.Object closeLock\u003e",
+        "target": "I6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.FilterOutputStream: java.lang.Object closeLock\u003e",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "field": "\u003cjava.io.BufferedOutputStream: jdk.internal.misc.InternalLock lock\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "field": "\u003cjava.io.BufferedOutputStream: byte[] buf\u003e",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "field": "\u003cjava.io.FilterOutputStream: java.io.OutputStream out\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "field": "\u003cjava.io.FilterOutputStream: java.lang.Object closeLock\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I10",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I10",
+        "target": "I10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I10",
+        "target": "L10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I10",
+        "target": "L13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "target": "I3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "field": "\u003cjava.io.OutputStreamWriter: sun.nio.cs.StreamEncoder se\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "L6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "target": "I7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "field": "\u003cjava.io.OutputStreamWriter: sun.nio.cs.StreamEncoder se\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "I8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "L9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "L11",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "L8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "field": "\u003cjava.io.BufferedWriter: java.io.Writer out\u003e",
+        "target": "I6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "field": "\u003cjava.io.BufferedWriter: java.io.Writer out\u003e",
+        "target": "L7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "field": "\u003cjava.io.BufferedWriter: char[] cb\u003e",
+        "target": "I9",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P1",
+      "I0",
+      "L3",
+      "I10",
+      "I3",
+      "L6",
+      "L7",
+      "I5",
+      "L12",
+      "I6",
+      "I7",
+      "I8",
+      "GBL",
+      "I9"
+    ],
+    "insideNodeCounter": 11,
+    "loadNodeCounter": 15
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "sig": "\u003cjava.util.Spliterators$IntArraySpliterator: boolean tryAdvance(java.util.function.IntConsumer)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field index",
+    "mutates IntConsumer parameter via field nextElement",
+    "mutates IntConsumer parameter via field valueReady",
+    "loaded object \u0027load array from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "IntConsumer parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load array from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new NullPointerException"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Spliterators$IntArraySpliterator: int[] array\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L4",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P1",
+        "field": "\u003cjava.util.Spliterators$2Adapter: int nextElement\u003e"
+      },
+      {
+        "node": "P1",
+        "field": "\u003cjava.util.Spliterators$2Adapter: boolean valueReady\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Spliterators$IntArraySpliterator: int index\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 5
+  }
+}

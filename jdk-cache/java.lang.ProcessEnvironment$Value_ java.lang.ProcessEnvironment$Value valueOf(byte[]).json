@@ -1,0 +1,59 @@
+{
+  "sig": "\u003cjava.lang.ProcessEnvironment$Value: java.lang.ProcessEnvironment$Value valueOf(byte[])\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "byte[] parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new ProcessEnvironment$Value"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "byte[] parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static JNU_CHARSET"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ProcessEnvironment$Value"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new String"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ProcessImpl: java.nio.charset.Charset JNU_CHARSET\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "I0",
+      "I1"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 1
+  }
+}

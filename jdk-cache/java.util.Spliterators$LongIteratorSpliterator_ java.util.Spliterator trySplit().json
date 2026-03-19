@@ -1,0 +1,70 @@
+{
+  "sig": "\u003cjava.util.Spliterators$LongIteratorSpliterator: java.util.Spliterator trySplit()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field batch",
+    "mutates this via field est",
+    "loaded object \u0027callee: load it from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I1",
+      "kind": "INSIDE",
+      "label": "callee: new Spliterators$LongArraySpliterator"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load it from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new Spliterators$LongArraySpliterator"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Spliterators$LongIteratorSpliterator: java.util.PrimitiveIterator$OfLong it\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I1",
+        "field": "\u003cjava.util.Spliterators$LongArraySpliterator: long[] array\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Spliterators$LongIteratorSpliterator: int batch\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Spliterators$LongIteratorSpliterator: long est\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "L0"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 1
+  }
+}

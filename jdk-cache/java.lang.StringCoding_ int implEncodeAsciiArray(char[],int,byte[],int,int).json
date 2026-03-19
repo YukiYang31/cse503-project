@@ -1,0 +1,33 @@
+{
+  "sig": "\u003cjava.lang.StringCoding: int implEncodeAsciiArray(char[],int,byte[],int,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates byte[] parameter via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "char[] parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "byte[] parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P2"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

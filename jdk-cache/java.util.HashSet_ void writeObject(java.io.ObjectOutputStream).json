@@ -1,0 +1,498 @@
+{
+  "sig": "\u003cjava.util.HashSet: void writeObject(java.io.ObjectOutputStream)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027callee: load bout from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load bout from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load bout from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load writeBuffer from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load dout from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load dout from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load keySet from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "ObjectOutputStream parameter escapes to global scope",
+    "loaded object \u0027callee: load curContext from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load curContext from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load obj from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load desc from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load bout from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load bout from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027load map from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load map from parameter this\u0027 via field keySet",
+    "loaded object \u0027callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load bout from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load bout from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load table from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load writeBuffer from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load dout from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load dout from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load out from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new NotActiveException"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new HashMap$KeySet"
+      },
+      {
+        "id": "L21",
+        "kind": "LOAD",
+        "label": "callee: load bout from parameter this"
+      },
+      {
+        "id": "L20",
+        "kind": "LOAD",
+        "label": "callee: load bout from parameter this"
+      },
+      {
+        "id": "L23",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load writeBuffer from parameter this"
+      },
+      {
+        "id": "L22",
+        "kind": "LOAD",
+        "label": "callee: callee: load dout from parameter this"
+      },
+      {
+        "id": "L25",
+        "kind": "LOAD",
+        "label": "callee: load keySet from parameter this"
+      },
+      {
+        "id": "L24",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L27",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load handles from parameter this"
+      },
+      {
+        "id": "L26",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load subs from parameter this"
+      },
+      {
+        "id": "L29",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L28",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ObjectOutputStream parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load curContext from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L30",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: load obj from parameter this"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: load desc from parameter this"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L32",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L31",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: load bout from parameter this"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L33",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "load map from parameter this"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L16",
+        "kind": "LOAD",
+        "label": "callee: load bout from parameter this"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: load table from parameter this"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load writeBuffer from parameter this"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: callee: load dout from parameter this"
+      },
+      {
+        "id": "L19",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load out from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "L16",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.HashSet: java.util.HashMap map\u003e",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L21",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.io.ObjectOutputStream: java.io.ObjectOutputStream$BlockDataOutputStream bout\u003e",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L21",
+        "target": "L22",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L8",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L8",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L8",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L8",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L8",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L8",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L22",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L22",
+        "target": "L24",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "field": "\u003cjava.util.HashMap: java.util.HashMap$Node[] table\u003e",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "field": "\u003cjava.util.HashMap: java.util.Set keySet\u003e",
+        "target": "L25",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "field": "\u003cjava.util.HashMap: java.util.Set keySet\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L16"
+      },
+      {
+        "node": "L27"
+      },
+      {
+        "node": "L17"
+      },
+      {
+        "node": "L28"
+      },
+      {
+        "node": "L12"
+      },
+      {
+        "node": "L9"
+      },
+      {
+        "node": "L26"
+      },
+      {
+        "node": "L8"
+      },
+      {
+        "node": "L31"
+      },
+      {
+        "node": "L21"
+      },
+      {
+        "node": "L32"
+      },
+      {
+        "node": "L22"
+      },
+      {
+        "node": "L14",
+        "field": "\u003cjava.util.HashMap: java.util.Set keySet\u003e"
+      },
+      {
+        "node": "L0"
+      }
+    ],
+    "globalEscaped": [
+      "I0",
+      "I1",
+      "L20",
+      "L23",
+      "L22",
+      "L25",
+      "L24",
+      "GBL",
+      "L27",
+      "L26",
+      "L29",
+      "L28",
+      "P1",
+      "L30",
+      "L5",
+      "L6",
+      "L10",
+      "L32",
+      "L31",
+      "L12",
+      "L9",
+      "L11",
+      "L33",
+      "L14",
+      "L18",
+      "L17",
+      "L19"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 26
+  }
+}

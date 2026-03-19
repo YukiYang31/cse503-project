@@ -1,0 +1,103 @@
+{
+  "sig": "\u003cjava.lang.VersionProps: java.util.Optional build()\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "callee: load static EMPTY"
+    },
+    {
+      "id": "I1",
+      "kind": "INSIDE",
+      "label": "callee: new Optional"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load static EMPTY"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "return from valueOf"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new Optional"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: callee: new NullPointerException"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "I2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "I2"
+    ],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 3
+  }
+}

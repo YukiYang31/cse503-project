@@ -1,0 +1,100 @@
+{
+  "sig": "\u003cjava.lang.ModuleLayer: void \u003cinit\u003e(java.lang.module.Configuration,java.util.List,java.util.function.Function)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "Configuration parameter escapes to global scope",
+    "List parameter escapes to global scope",
+    "Function parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Configuration parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "List parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "Function parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load static EMPTY_MAP"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ModuleLayer: java.lang.module.Configuration cf\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.Map nameToModule\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.Map nameToModule\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List parents\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ModuleLayer: java.lang.module.Configuration cf\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.List parents\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ModuleLayer: java.util.Map nameToModule\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P1",
+      "P3"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

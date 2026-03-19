@@ -1,0 +1,79 @@
+{
+  "sig": "\u003cjava.util.Locale: java.util.Locale getInstance(sun.util.locale.BaseLocale,sun.util.locale.LocaleExtensions)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "BaseLocale parameter escapes to global scope",
+    "LocaleExtensions parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "BaseLocale parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "LocaleExtensions parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static LOCALECACHE"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load static LOCALECACHE"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Locale$LocaleKey"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Locale$Cache: java.util.Locale$Cache LOCALECACHE\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Locale$Cache: java.util.Locale$Cache LOCALECACHE\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Locale: java.util.Map CONSTANT_LOCALES\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "P1",
+      "L0",
+      "L1",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 2
+  }
+}

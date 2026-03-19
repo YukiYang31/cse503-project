@@ -1,0 +1,63 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: java.util.stream.Collector summarizingDouble(java.util.function.ToDoubleFunction)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "ToDoubleFunction parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new Collectors$CollectorImpl"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "ToDoubleFunction parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static CH_ID"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Collectors$CollectorImpl"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.Collectors: java.util.Set CH_ID\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 1
+  }
+}

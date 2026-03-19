@@ -1,0 +1,35 @@
+{
+  "sig": "\u003cjava.util.DualPivotQuicksort: void countingSort(byte[],int,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates byte[] parameter via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "byte[] parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P0"
+      },
+      {
+        "node": "I0"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,1941 @@
+{
+  "sig": "\u003cjava.lang.ClassValue: java.lang.Object get(java.lang.Class)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field list",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load cacheArray from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load cacheArray from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load version from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load version from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load identity from ClassValue parameter\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load cacheArray from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load cacheArray from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load value from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load value from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: load value from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load value from parameter this\u0027 via field list",
+    "loaded object \u0027callee: callee: callee: load value from parameter this\u0027 escapes to global scope",
+    "this escapes to global scope",
+    "Class parameter escapes to global scope",
+    "mutates Class parameter via field classValueMap",
+    "loaded object \u0027callee: callee: callee: callee: load version from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load version from parameter this\u0027 via field list",
+    "loaded object \u0027callee: load classValueMap from Class parameter\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load promise from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load promise from parameter this\u0027 via field list",
+    "loaded object \u0027callee: load static EMPTY_CACHE\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load static EMPTY_CACHE\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load promise from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: load cacheArray from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load cacheArray from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load version from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: load cacheArray from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load cacheArray from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load cacheArray from parameter this\u0027 via field list",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load version from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load version from parameter this\u0027 via field list",
+    "loaded object \u0027callee: callee: callee: load classValueMap from Class parameter\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load classValueMap from Class parameter\u0027 via field list",
+    "mutates loaded object \u0027callee: callee: callee: load classValueMap from Class parameter\u0027 via field cacheLoad",
+    "mutates loaded object \u0027callee: callee: callee: load classValueMap from Class parameter\u0027 via field cacheLoadLimit",
+    "mutates loaded object \u0027callee: callee: callee: load classValueMap from Class parameter\u0027 via field cacheArray",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: load cacheArray from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load classValueMap from Class parameter\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load classValueMap from Class parameter\u0027 via field cacheLoad",
+    "mutates loaded object \u0027callee: callee: callee: callee: load classValueMap from Class parameter\u0027 via field cacheLoadLimit",
+    "mutates loaded object \u0027callee: callee: callee: callee: load classValueMap from Class parameter\u0027 via field cacheArray",
+    "loaded object \u0027callee: callee: callee: callee: load version from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    },
+    {
+      "id": "L70",
+      "kind": "LOAD",
+      "label": "callee: callee: callee: callee: callee: load value from parameter this"
+    },
+    {
+      "id": "L94",
+      "kind": "LOAD",
+      "label": "callee: callee: callee: callee: load promise from parameter this"
+    },
+    {
+      "id": "L4",
+      "kind": "LOAD",
+      "label": "callee: callee: callee: load value from parameter this"
+    },
+    {
+      "id": "I4",
+      "kind": "INSIDE",
+      "label": "callee: callee: callee: callee: callee: callee: new AssertionError"
+    },
+    {
+      "id": "L45",
+      "kind": "LOAD",
+      "label": "callee: callee: callee: callee: callee: callee: load value from parameter this"
+    },
+    {
+      "id": "L44",
+      "kind": "LOAD",
+      "label": "callee: callee: callee: callee: load value from parameter this"
+    },
+    {
+      "id": "I8",
+      "kind": "INSIDE",
+      "label": "callee: callee: callee: callee: callee: callee: new AssertionError"
+    },
+    {
+      "id": "L24",
+      "kind": "LOAD",
+      "label": "callee: callee: callee: callee: callee: load value from parameter this"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "L61",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load version from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new AssertionError"
+      },
+      {
+        "id": "L60",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: array element from ClassValue$Entry[] parameter"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new ClassValue$Entry"
+      },
+      {
+        "id": "L63",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load cacheArray from parameter this"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: callee: new AssertionError"
+      },
+      {
+        "id": "L62",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L65",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new ClassValue$Entry"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: callee: new AssertionError"
+      },
+      {
+        "id": "L64",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load version from parameter this"
+      },
+      {
+        "id": "L67",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load version from parameter this"
+      },
+      {
+        "id": "I5",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new ClassValue$Entry"
+      },
+      {
+        "id": "I6",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new AssertionError"
+      },
+      {
+        "id": "L66",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: array element from ClassValue$Entry[] parameter"
+      },
+      {
+        "id": "I7",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new ClassValue$Entry"
+      },
+      {
+        "id": "L69",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I8",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: callee: new AssertionError"
+      },
+      {
+        "id": "L68",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "I9",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new AssertionError"
+      },
+      {
+        "id": "L70",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load value from parameter this"
+      },
+      {
+        "id": "L72",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L71",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L74",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static CRITICAL_SECTION"
+      },
+      {
+        "id": "L73",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L76",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L75",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load classValueMap from Class parameter"
+      },
+      {
+        "id": "L78",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L77",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load classValueMap from Class parameter"
+      },
+      {
+        "id": "L79",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L81",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L80",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L83",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L82",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: array element from ClassValue$Entry[] parameter"
+      },
+      {
+        "id": "L85",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load value from parameter this"
+      },
+      {
+        "id": "L84",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load version from parameter this"
+      },
+      {
+        "id": "L87",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load value from parameter this"
+      },
+      {
+        "id": "L86",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L89",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L88",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L90",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load version from parameter this"
+      },
+      {
+        "id": "L92",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load promise from parameter this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load classValueMap from Class parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load static EMPTY_CACHE"
+      },
+      {
+        "id": "L91",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from ClassValue$Entry[] parameter"
+      },
+      {
+        "id": "L94",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load promise from parameter this"
+      },
+      {
+        "id": "L93",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: load version from parameter this"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load value from parameter this"
+      },
+      {
+        "id": "L96",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L95",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L98",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load version from parameter this"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L97",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load version from parameter this"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: array element from ClassValue$Entry[] parameter"
+      },
+      {
+        "id": "L16",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load version from parameter this"
+      },
+      {
+        "id": "L19",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: array element from ClassValue$Entry[] parameter"
+      },
+      {
+        "id": "L21",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L20",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load cacheArray from parameter this"
+      },
+      {
+        "id": "L23",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load version from parameter this"
+      },
+      {
+        "id": "L22",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L25",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L24",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load value from parameter this"
+      },
+      {
+        "id": "L27",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load value from parameter this"
+      },
+      {
+        "id": "L26",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L29",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L28",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L30",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: array element from callee: load cacheArray from parameter this"
+      },
+      {
+        "id": "L32",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L31",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load cacheArray from parameter this"
+      },
+      {
+        "id": "L34",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L33",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L36",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from ClassValue$Entry[] parameter"
+      },
+      {
+        "id": "L35",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load value from parameter this"
+      },
+      {
+        "id": "L38",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load version from parameter this"
+      },
+      {
+        "id": "L37",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from ClassValue$Entry[] parameter"
+      },
+      {
+        "id": "L39",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load version from parameter this"
+      },
+      {
+        "id": "L41",
+        "kind": "LOAD",
+        "label": "callee: callee: load static DEAD_ENTRY"
+      },
+      {
+        "id": "L40",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load version from parameter this"
+      },
+      {
+        "id": "L43",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L42",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load identity from ClassValue parameter"
+      },
+      {
+        "id": "L45",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load value from parameter this"
+      },
+      {
+        "id": "L44",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load value from parameter this"
+      },
+      {
+        "id": "L47",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L46",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L49",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: array element from ClassValue$Entry[] parameter"
+      },
+      {
+        "id": "L48",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Class parameter"
+      },
+      {
+        "id": "L50",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load cacheArray from parameter this"
+      },
+      {
+        "id": "L52",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L51",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: array element from ClassValue$Entry[] parameter"
+      },
+      {
+        "id": "L54",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load version from parameter this"
+      },
+      {
+        "id": "L53",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load version from parameter this"
+      },
+      {
+        "id": "L56",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: array element from ClassValue$Entry[] parameter"
+      },
+      {
+        "id": "L55",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L58",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L57",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      },
+      {
+        "id": "L59",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load classValue from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "L82",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L86",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L47",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L48",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L84",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L87",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L89",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L45",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L91",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L93",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "I8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L41",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L43",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L80",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L76",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L78",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "L87",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L81",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L96",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L97",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L79",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L21",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L65",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L67",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I3",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "L94",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L86",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L83",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L25",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L87",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L88",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L89",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L91",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L26",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L28",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L29",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L22",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L47",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L48",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L39",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "I6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L45",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L46",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "L45",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L68",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L64",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "L69",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "I8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "L32",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "L33",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "target": "I9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "target": "L71",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "target": "L72",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "target": "L73",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L39",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L25",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L69",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L47",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L29",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L80",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L96",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L72",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L84",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L78",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L46",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L32",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L76",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L88",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L26",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L48",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L81",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L71",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L93",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L91",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L97",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L73",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L45",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L79",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L87",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L33",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue: java.lang.Object CRITICAL_SECTION\u003e",
+        "target": "L74",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Entry[] EMPTY_CACHE\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue: jdk.internal.misc.Unsafe UNSAFE\u003e",
+        "target": "L79",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L59",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L29",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L82",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L52",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L74",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L86",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L62",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L34",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L68",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L76",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L22",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L58",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L41",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L97",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L83",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L95",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L89",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L57",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L65",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L43",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L21",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "L55",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "L27",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "L92",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "L85",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "L94",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "L35",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "L24",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.ClassValue$Entry DEAD_ENTRY\u003e",
+        "target": "L26",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.ClassValue$Entry DEAD_ENTRY\u003e",
+        "target": "L41",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.ClassValue$Entry DEAD_ENTRY\u003e",
+        "target": "L86",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.ClassValue$Entry DEAD_ENTRY\u003e",
+        "target": "L77",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L28",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L26",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L39",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L90",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L40",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Identity identity\u003e",
+        "target": "L93",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Identity identity\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.lang.Class: java.lang.ClassValue$ClassValueMap classValueMap\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.lang.Class: java.lang.ClassValue$ClassValueMap classValueMap\u003e",
+        "target": "L75",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.lang.Class: java.lang.ClassValue$ClassValueMap classValueMap\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.lang.Class: java.lang.ClassValue$ClassValueMap classValueMap\u003e",
+        "target": "L77",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L90",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue$Entry promise\u003e",
+        "target": "L92",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L90",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue$Entry promise\u003e",
+        "target": "L94",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L92",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "L27",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L92",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "L24",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L2",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L94",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "L27",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L94",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "L24",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L52",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L54",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L95",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L98",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L76",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L77",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L7",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L96",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L75",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "I8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L75",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "L63",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L75",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L75",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L75",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "L50",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L75",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "L95",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L75",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "L84",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L75",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L75",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L75",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "L44",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L34",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L38",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L12",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L9",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L9",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L77",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "I8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L77",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "L63",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L77",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L77",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L77",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "L50",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L77",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "L95",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L77",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "L84",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L77",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L77",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L77",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e",
+        "target": "L44",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L58",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L53",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L16",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L16",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L37",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "L44",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L59",
+        "field": "\u003cjava.lang.ClassValue: java.lang.ClassValue$Version version\u003e",
+        "target": "L61",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L75",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L7",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L85",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L51",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L77",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: int cacheLoad\u003e"
+      },
+      {
+        "node": "L19",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L75",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: int cacheLoad\u003e"
+      },
+      {
+        "node": "L77",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: int cacheLoadLimit\u003e"
+      },
+      {
+        "node": "L13",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L49",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L75",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: int cacheLoadLimit\u003e"
+      },
+      {
+        "node": "L37",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L20"
+      },
+      {
+        "node": "P1",
+        "field": "\u003cjava.lang.Class: java.lang.ClassValue$ClassValueMap classValueMap\u003e"
+      },
+      {
+        "node": "L44"
+      },
+      {
+        "node": "L90",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L75",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e"
+      },
+      {
+        "node": "L4"
+      },
+      {
+        "node": "L92",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L50"
+      },
+      {
+        "node": "L77",
+        "field": "\u003cjava.lang.ClassValue$ClassValueMap: java.lang.ClassValue$Entry[] cacheArray\u003e"
+      },
+      {
+        "node": "L98",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L78",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L12",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L56",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L6",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L66",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L4",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L60",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L30",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L14",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L24",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L63"
+      },
+      {
+        "node": "L81",
+        "field": "\u003cjava.io.ObjectInputStream$ValidationList: java.io.ObjectInputStream$ValidationList$Callback list\u003e"
+      },
+      {
+        "node": "L1"
+      },
+      {
+        "node": "L95"
+      }
+    ],
+    "globalEscaped": [
+      "L81",
+      "I0",
+      "L82",
+      "L60",
+      "I1",
+      "L85",
+      "I2",
+      "L84",
+      "I3",
+      "I4",
+      "L42",
+      "I5",
+      "I6",
+      "L66",
+      "I7",
+      "I8",
+      "L24",
+      "GBL",
+      "I9",
+      "L49",
+      "P0",
+      "P1",
+      "L90",
+      "L92",
+      "L2",
+      "L94",
+      "L93",
+      "L4",
+      "L30",
+      "L51",
+      "L6",
+      "L98",
+      "L7",
+      "L75",
+      "L12",
+      "L56",
+      "L78",
+      "L77",
+      "L36",
+      "L14",
+      "L79",
+      "L13",
+      "L37",
+      "L39",
+      "L19"
+    ],
+    "insideNodeCounter": 10,
+    "loadNodeCounter": 99
+  }
+}

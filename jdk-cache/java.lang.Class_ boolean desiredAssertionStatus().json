@@ -1,0 +1,124 @@
+{
+  "sig": "\u003cjava.lang.Class: boolean desiredAssertionStatus()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "loaded object \u0027load classLoader from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027load assertionLock from load classLoader from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027load classAssertionStatus from load classLoader from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load name from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load assertionLock from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load classAssertionStatus from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load packageAssertionStatus from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load classLoader from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load assertionLock from load classLoader from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load classAssertionStatus from load classLoader from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: load name from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: return from substring"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: load assertionLock from parameter this"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: load classAssertionStatus from parameter this"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: load packageAssertionStatus from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Class: java.lang.String name\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Class: java.lang.ClassLoader classLoader\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.Object assertionLock\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.Object assertionLock\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.Map classAssertionStatus\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.Map classAssertionStatus\u003e",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.Map packageAssertionStatus\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "GBL",
+      "L3",
+      "I0",
+      "L5",
+      "L6"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 7
+  }
+}

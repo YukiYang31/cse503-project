@@ -1,0 +1,84 @@
+{
+  "sig": "\u003cjava.io.File: java.io.File getParentFile()\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "I2",
+      "kind": "INSIDE",
+      "label": "new File"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load path from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load static FS"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: return from substring"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "return from getClass"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "new File"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.io.File: java.io.FileSystem FS\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.File: java.lang.String path\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I2",
+        "field": "\u003cjava.io.File: java.lang.String path\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "field": "\u003cjava.io.File: java.lang.String path\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "L1",
+      "I0"
+    ],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 2
+  }
+}

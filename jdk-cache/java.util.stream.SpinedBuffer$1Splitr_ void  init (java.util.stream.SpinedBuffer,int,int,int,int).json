@@ -1,0 +1,145 @@
+{
+  "sig": "\u003cjava.util.stream.SpinedBuffer$1Splitr: void \u003cinit\u003e(java.util.stream.SpinedBuffer,int,int,int,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027load curChunk from SpinedBuffer parameter\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "SpinedBuffer parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load spine from SpinedBuffer parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load curChunk from SpinedBuffer parameter"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new AssertionError"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$1Splitr: java.util.stream.SpinedBuffer this$0\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$1Splitr: java.lang.Object[] splChunk\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.stream.SpinedBuffer: java.lang.Object[] curChunk\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.stream.SpinedBuffer: java.lang.Object[][] spine\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$1Splitr: int lastSpineElementFence\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$1Splitr: int lastSpineIndex\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$1Splitr: java.util.stream.SpinedBuffer this$0\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$1Splitr: int splSpineIndex\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$1Splitr: java.lang.Object[] splChunk\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$1Splitr: int splElementIndex\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 6
+  }
+}

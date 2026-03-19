@@ -1,0 +1,69 @@
+{
+  "sig": "\u003cjava.util.stream.IntPipeline: void \u003cinit\u003e(java.util.function.Supplier,int,boolean)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Supplier parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.AbstractPipeline: java.util.stream.AbstractPipeline sourceStage\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.AbstractPipeline: java.util.function.Supplier sourceSupplier\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.AbstractPipeline: int depth\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.AbstractPipeline: java.util.stream.AbstractPipeline previousStage\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.AbstractPipeline: int combinedFlags\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.AbstractPipeline: java.util.stream.AbstractPipeline sourceStage\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.AbstractPipeline: int sourceOrOpFlags\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.AbstractPipeline: java.util.function.Supplier sourceSupplier\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.AbstractPipeline: boolean parallel\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

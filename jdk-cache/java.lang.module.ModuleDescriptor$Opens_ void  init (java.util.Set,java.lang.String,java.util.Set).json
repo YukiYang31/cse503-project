@@ -1,0 +1,134 @@
+{
+  "sig": "\u003cjava.lang.module.ModuleDescriptor$Opens: void \u003cinit\u003e(java.util.Set,java.lang.String,java.util.Set)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Set parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "String parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "Set parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: load static EMPTY_SET"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: load static EMPTY_SET"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Opens: java.util.Set targets\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Opens: java.util.Set targets\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Opens: java.util.Set targets\u003e",
+        "target": "P3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Opens: java.lang.String source\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Opens: java.util.Set mods\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Opens: java.util.Set mods\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Opens: java.util.Set mods\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.ImmutableCollections: java.util.ImmutableCollections$SetN EMPTY_SET\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.ImmutableCollections: java.util.ImmutableCollections$SetN EMPTY_SET\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Opens: java.util.Set targets\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Opens: java.util.Set mods\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Opens: java.lang.String source\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I1",
+      "I3"
+    ],
+    "insideNodeCounter": 4,
+    "loadNodeCounter": 2
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "sig": "\u003cjava.math.BigInteger: java.math.BigInteger[] divideAndRemainderKnuth(java.math.BigInteger)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027load mag from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027load mag from BigInteger parameter\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new array"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "BigInteger parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load mag from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load mag from BigInteger parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new MutableBigInteger"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "new MutableBigInteger"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "new MutableBigInteger"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "I0"
+      }
+    ],
+    "globalEscaped": [
+      "GBL",
+      "L0",
+      "L1",
+      "I1",
+      "I2",
+      "I3"
+    ],
+    "insideNodeCounter": 4,
+    "loadNodeCounter": 2
+  }
+}

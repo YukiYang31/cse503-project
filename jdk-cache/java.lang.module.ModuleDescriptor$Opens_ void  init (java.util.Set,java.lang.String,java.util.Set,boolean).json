@@ -1,0 +1,71 @@
+{
+  "sig": "\u003cjava.lang.module.ModuleDescriptor$Opens: void \u003cinit\u003e(java.util.Set,java.lang.String,java.util.Set,boolean)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Set parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "String parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "Set parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Opens: java.util.Set targets\u003e",
+        "target": "P3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Opens: java.lang.String source\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Opens: java.util.Set mods\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Opens: java.util.Set targets\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Opens: java.util.Set mods\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Opens: java.lang.String source\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

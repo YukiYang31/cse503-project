@@ -1,0 +1,63 @@
+{
+  "sig": "\u003cjava.util.Date: sun.util.calendar.BaseCalendar getCalendarSystem(sun.util.calendar.BaseCalendar$Date)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "BaseCalendar$Date parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "load static jcal"
+    },
+    {
+      "id": "L1",
+      "kind": "LOAD",
+      "label": "load static gcal"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "BaseCalendar$Date parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static jcal"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load static gcal"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Date: sun.util.calendar.BaseCalendar gcal\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Date: sun.util.calendar.BaseCalendar jcal\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

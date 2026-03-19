@@ -1,0 +1,54 @@
+{
+  "sig": "\u003cjava.lang.SecurityManager: void invalidatePackageAccessCache()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field packageAccessValid",
+    "writes to static field packageDefinitionValid"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static packageAccessLock"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load static packageDefinitionLock"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.SecurityManager: java.lang.Object packageAccessLock\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.SecurityManager: java.lang.Object packageDefinitionLock\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.SecurityManager: boolean packageAccessValid\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.SecurityManager: boolean packageDefinitionValid\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

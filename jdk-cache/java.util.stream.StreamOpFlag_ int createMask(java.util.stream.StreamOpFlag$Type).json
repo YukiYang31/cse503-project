@@ -1,0 +1,71 @@
+{
+  "sig": "\u003cjava.util.stream.StreamOpFlag: int createMask(java.util.stream.StreamOpFlag$Type)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "StreamOpFlag$Type parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "StreamOpFlag$Type parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load static $VALUES"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "array element from GBL"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load maskTable from callee: load static $VALUES"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "load maskTable from array element from GBL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag[] $VALUES\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "L0",
+      "L2",
+      "L3"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

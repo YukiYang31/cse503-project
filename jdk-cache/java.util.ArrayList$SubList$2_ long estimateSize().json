@@ -1,0 +1,45 @@
+{
+  "sig": "\u003cjava.util.ArrayList$SubList$2: long estimateSize()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field expectedModCount",
+    "mutates this via field fence"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load this$0 from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayList$SubList$2: java.util.ArrayList$SubList this$0\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList$SubList$2: int expectedModCount\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList$SubList$2: int fence\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

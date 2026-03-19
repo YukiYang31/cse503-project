@@ -1,0 +1,105 @@
+{
+  "sig": "\u003cjava.lang.ref.ReferenceQueue: java.lang.ref.Reference poll0()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field head",
+    "mutates this via field queueLength",
+    "mutates loaded object \u0027load head from parameter this\u0027 via field queue",
+    "mutates loaded object \u0027load head from parameter this\u0027 via field next"
+  ],
+  "returnTargets": [
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "load head from parameter this"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load head from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load static NULL"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load next from load head from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.ref.ReferenceQueue: java.lang.ref.ReferenceQueue NULL\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ref.ReferenceQueue: java.lang.ref.Reference head\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ref.ReferenceQueue: java.lang.ref.Reference head\u003e",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.lang.ref.Reference: java.lang.ref.Reference next\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.lang.ref.Reference: java.lang.ref.Reference next\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.lang.ref.Reference: java.lang.ref.ReferenceQueue queue\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ref.ReferenceQueue: java.lang.ref.Reference head\u003e"
+      },
+      {
+        "node": "L0",
+        "field": "\u003cjava.lang.ref.Reference: java.lang.ref.ReferenceQueue queue\u003e"
+      },
+      {
+        "node": "L0",
+        "field": "\u003cjava.lang.ref.Reference: java.lang.ref.Reference next\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ref.ReferenceQueue: long queueLength\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 3
+  }
+}

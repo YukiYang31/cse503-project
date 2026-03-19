@@ -1,0 +1,109 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: java.util.stream.Collector partitioningBy(java.util.function.Predicate)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Predicate parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I1",
+      "kind": "INSIDE",
+      "label": "callee: new Collectors$CollectorImpl"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Predicate parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load static CH_ID"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load static IDENTITY_FINISH"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: load static CH_ID"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new Collectors$CollectorImpl"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new Collectors$CollectorImpl"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.Collectors: java.util.Set CH_ID\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.Collectors: java.util.Set CH_ID\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.Collectors: java.util.Set CH_NOID\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.Collector$Characteristics: java.util.stream.Collector$Characteristics IDENTITY_FINISH\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "GBL",
+      "P0",
+      "L1",
+      "I0",
+      "I1"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 3
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "sig": "\u003cjava.lang.ClassLoader: void clearAssertionStatus()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field defaultAssertionStatus",
+    "mutates this via field packageAssertionStatus",
+    "mutates this via field classAssertionStatus"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load assertionLock from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new HashMap"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new HashMap"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.lang.Object assertionLock\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.Map classAssertionStatus\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.Map packageAssertionStatus\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader: boolean defaultAssertionStatus\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.Map packageAssertionStatus\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.Map classAssertionStatus\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 1
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "sig": "\u003cjava.util.Spliterator$OfInt: java.util.Spliterator trySplit()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field index",
+    "mutates this via field estimatedSize"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "callee: new Spliterators$IntArraySpliterator"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load array from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new Spliterators$IntArraySpliterator"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Spliterators$IntArraySpliterator: int[] array\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.Spliterators$IntArraySpliterator: int[] array\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Spliterators$IntArraySpliterator: int index\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Spliterators$IntArraySpliterator: long estimatedSize\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 1
+  }
+}

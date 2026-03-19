@@ -1,0 +1,53 @@
+{
+  "sig": "\u003cjava.util.Optional: void ifPresentOrElse(java.util.function.Consumer,java.lang.Runnable)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Consumer parameter escapes to global scope",
+    "Runnable parameter escapes to global scope",
+    "loaded object \u0027load value from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Consumer parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Runnable parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load value from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Optional: java.lang.Object value\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P1",
+      "P2",
+      "L0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

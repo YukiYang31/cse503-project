@@ -1,0 +1,40 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: java.lang.StringBuilder lambda$joining$10(java.lang.StringBuilder,java.lang.StringBuilder)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "StringBuilder parameter escapes to global scope",
+    "StringBuilder parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "P0",
+      "kind": "PARAMETER",
+      "paramIndex": 0,
+      "label": "StringBuilder parameter"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "StringBuilder parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "StringBuilder parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "P1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

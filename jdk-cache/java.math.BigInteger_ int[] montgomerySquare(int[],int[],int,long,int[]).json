@@ -1,0 +1,75 @@
+{
+  "sig": "\u003cjava.math.BigInteger: int[] montgomerySquare(int[],int[],int,long,int[])\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "int[] parameter escapes to global scope",
+    "int[] parameter escapes to global scope",
+    "int[] parameter escapes to global scope",
+    "mutates int[] parameter via field array element"
+  ],
+  "returnTargets": [
+    {
+      "id": "P4",
+      "kind": "PARAMETER",
+      "paramIndex": 4,
+      "label": "int[] parameter"
+    },
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "callee: new array"
+    },
+    {
+      "id": "I1",
+      "kind": "INSIDE",
+      "label": "callee: callee: new array"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "int[] parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "int[] parameter"
+      },
+      {
+        "id": "P4",
+        "kind": "PARAMETER",
+        "paramIndex": 4,
+        "label": "int[] parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P4"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P1",
+      "P4",
+      "I0",
+      "I1"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 0
+  }
+}

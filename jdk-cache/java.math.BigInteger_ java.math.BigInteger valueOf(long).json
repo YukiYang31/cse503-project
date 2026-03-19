@@ -1,0 +1,80 @@
+{
+  "sig": "\u003cjava.math.BigInteger: java.math.BigInteger valueOf(long)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "load static ZERO"
+    },
+    {
+      "id": "L1",
+      "kind": "LOAD",
+      "label": "array element from load static negConst"
+    },
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new BigInteger"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static ZERO"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "array element from load static posConst"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new BigInteger"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger ZERO\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger[] negConst\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger[] posConst\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 2
+  }
+}

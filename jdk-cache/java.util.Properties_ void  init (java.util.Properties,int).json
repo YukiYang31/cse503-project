@@ -1,0 +1,104 @@
+{
+  "sig": "\u003cjava.util.Properties: void \u003cinit\u003e(java.util.Properties,int)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Properties parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static UNSAFE"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ConcurrentHashMap"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Properties: jdk.internal.misc.Unsafe UNSAFE\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Properties: java.util.Properties defaults\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: java.lang.Object[] entries\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: byte[] status\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: java.io.ObjectInputStream$HandleTable$HandleList[] deps\u003e",
+        "target": "I3",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Properties: java.util.Properties defaults\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "L0"
+    ],
+    "insideNodeCounter": 4,
+    "loadNodeCounter": 1
+  }
+}

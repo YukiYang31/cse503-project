@@ -1,0 +1,37 @@
+{
+  "sig": "\u003cjava.util.HexFormat: java.lang.String escapeNL(java.lang.String)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "I1",
+      "kind": "INSIDE",
+      "label": "return from replace"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "String parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "return from replace"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "return from replace"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 0
+  }
+}

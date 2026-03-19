@@ -1,0 +1,124 @@
+{
+  "sig": "\u003cjava.util.LinkedHashMap: void transferLinks(java.util.LinkedHashMap$Entry,java.util.LinkedHashMap$Entry)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field tail",
+    "mutates this via field head",
+    "mutates LinkedHashMap$Entry parameter via field before",
+    "mutates LinkedHashMap$Entry parameter via field after",
+    "mutates loaded object \u0027load before from LinkedHashMap$Entry parameter\u0027 via field after",
+    "mutates loaded object \u0027load after from LinkedHashMap$Entry parameter\u0027 via field before"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "LinkedHashMap$Entry parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "LinkedHashMap$Entry parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load before from LinkedHashMap$Entry parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load after from LinkedHashMap$Entry parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.LinkedHashMap: java.util.LinkedHashMap$Entry tail\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.LinkedHashMap: java.util.LinkedHashMap$Entry head\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.LinkedHashMap$Entry: java.util.LinkedHashMap$Entry before\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.LinkedHashMap$Entry: java.util.LinkedHashMap$Entry after\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "field": "\u003cjava.util.LinkedHashMap$Entry: java.util.LinkedHashMap$Entry before\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P2",
+        "field": "\u003cjava.util.LinkedHashMap$Entry: java.util.LinkedHashMap$Entry after\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.LinkedHashMap$Entry: java.util.LinkedHashMap$Entry after\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.util.LinkedHashMap$Entry: java.util.LinkedHashMap$Entry before\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P2",
+        "field": "\u003cjava.util.LinkedHashMap$Entry: java.util.LinkedHashMap$Entry before\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.LinkedHashMap: java.util.LinkedHashMap$Entry tail\u003e"
+      },
+      {
+        "node": "P2",
+        "field": "\u003cjava.util.LinkedHashMap$Entry: java.util.LinkedHashMap$Entry after\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.LinkedHashMap: java.util.LinkedHashMap$Entry head\u003e"
+      },
+      {
+        "node": "L0",
+        "field": "\u003cjava.util.LinkedHashMap$Entry: java.util.LinkedHashMap$Entry after\u003e"
+      },
+      {
+        "node": "L1",
+        "field": "\u003cjava.util.LinkedHashMap$Entry: java.util.LinkedHashMap$Entry before\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

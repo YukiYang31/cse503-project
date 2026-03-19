@@ -1,0 +1,216 @@
+{
+  "sig": "\u003cjava.lang.Module: void initExports(java.lang.Module,java.util.Map)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Module parameter escapes to global scope",
+    "mutates Module parameter via field exportedPackages",
+    "Map parameter escapes to global scope",
+    "loaded object \u0027callee: load descriptor from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load exports from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load map from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load map from parameter this\u0027 via field keySet",
+    "loaded object \u0027callee: callee: load keySet from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Module parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Map parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load descriptor from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load exports from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: load map from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new HashMap"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: load keySet from parameter this"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: load source from parameter this"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: new HashMap$KeySet"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "new HashSet"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: load targets from parameter this"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: load targets from parameter this"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: callee: new HashMap$KeySet"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: load map from parameter this"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: load keySet from parameter this"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: load map from parameter this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Exports: java.lang.String source\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Exports: java.util.Set targets\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.module.ModuleDescriptor$Exports: java.util.Set targets\u003e",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Module: java.util.Set EVERYONE_SET\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Module: java.lang.module.ModuleDescriptor descriptor\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Module: java.util.Map exportedPackages\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.lang.module.ModuleDescriptor: java.util.Set exports\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.util.HashSet: java.util.HashMap map\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L2",
+        "field": "\u003cjava.util.HashMap: java.util.Set keySet\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L2",
+        "field": "\u003cjava.util.HashMap: java.util.Set keySet\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L6",
+        "field": "\u003cjava.util.HashSet: java.util.HashMap map\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L7",
+        "field": "\u003cjava.util.HashMap: java.util.Set keySet\u003e",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L7",
+        "field": "\u003cjava.util.HashMap: java.util.Set keySet\u003e",
+        "target": "I3",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Module: java.util.Map exportedPackages\u003e"
+      },
+      {
+        "node": "L2",
+        "field": "\u003cjava.util.HashMap: java.util.Set keySet\u003e"
+      },
+      {
+        "node": "L7",
+        "field": "\u003cjava.util.HashMap: java.util.Set keySet\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P1",
+      "L2",
+      "L3",
+      "I1",
+      "L4",
+      "I2",
+      "I3",
+      "L6",
+      "L7",
+      "L8",
+      "L9",
+      "GBL"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 4
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "sig": "\u003cjava.util.Hashtable: void addEntry(int,java.lang.Object,java.lang.Object,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field count",
+    "mutates this via field modCount",
+    "Object parameter escapes to global scope",
+    "Object parameter escapes to global scope",
+    "mutates loaded object \u0027load table from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Object parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "Object parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load table from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "array element from load table from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Hashtable$Entry"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Hashtable: java.util.Hashtable$Entry[] table\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Hashtable: int count\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Hashtable: int modCount\u003e"
+      },
+      {
+        "node": "L0"
+      }
+    ],
+    "globalEscaped": [
+      "P2",
+      "P3",
+      "L1",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 2
+  }
+}

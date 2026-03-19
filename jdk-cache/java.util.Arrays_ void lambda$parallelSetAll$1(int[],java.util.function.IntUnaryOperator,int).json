@@ -1,0 +1,36 @@
+{
+  "sig": "\u003cjava.util.Arrays: void lambda$parallelSetAll$1(int[],java.util.function.IntUnaryOperator,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates int[] parameter via field array element",
+    "IntUnaryOperator parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "int[] parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "IntUnaryOperator parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P0"
+      }
+    ],
+    "globalEscaped": [
+      "P1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

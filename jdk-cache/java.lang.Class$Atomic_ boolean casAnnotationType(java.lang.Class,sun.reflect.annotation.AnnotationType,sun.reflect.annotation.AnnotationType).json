@@ -1,0 +1,58 @@
+{
+  "sig": "\u003cjava.lang.Class$Atomic: boolean casAnnotationType(java.lang.Class,sun.reflect.annotation.AnnotationType,sun.reflect.annotation.AnnotationType)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Class parameter escapes to global scope",
+    "AnnotationType parameter escapes to global scope",
+    "AnnotationType parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Class parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "AnnotationType parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "AnnotationType parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static unsafe"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Class$Atomic: jdk.internal.misc.Unsafe unsafe\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "P1",
+      "P2",
+      "L0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

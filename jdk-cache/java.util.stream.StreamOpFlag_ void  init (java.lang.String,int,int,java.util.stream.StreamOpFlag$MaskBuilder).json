@@ -1,0 +1,118 @@
+{
+  "sig": "\u003cjava.util.stream.StreamOpFlag: void \u003cinit\u003e(java.lang.String,int,int,java.util.stream.StreamOpFlag$MaskBuilder)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027callee: load map from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "String parameter"
+      },
+      {
+        "id": "P4",
+        "kind": "PARAMETER",
+        "paramIndex": 4,
+        "label": "StreamOpFlag$MaskBuilder parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: load static $VALUES"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: array element from GBL"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: load map from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: return from valueOf"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag$Type: java.util.stream.StreamOpFlag$Type[] $VALUES\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Enum: java.lang.String name\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P4",
+        "field": "\u003cjava.util.stream.StreamOpFlag$MaskBuilder: java.util.Map map\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int bitPosition\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int clear\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int preserve\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Enum: java.lang.String name\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Enum: int ordinal\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int set\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "L0",
+      "L1",
+      "L2",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 3
+  }
+}

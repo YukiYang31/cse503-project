@@ -1,0 +1,47 @@
+{
+  "sig": "\u003cjava.util.Collections: java.util.SequencedSet unmodifiableSequencedSet(java.util.SequencedSet)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "SequencedSet parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "P0",
+      "kind": "PARAMETER",
+      "paramIndex": 0,
+      "label": "SequencedSet parameter"
+    },
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new Collections$UnmodifiableSequencedSet"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "SequencedSet parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Collections$UnmodifiableSequencedSet"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

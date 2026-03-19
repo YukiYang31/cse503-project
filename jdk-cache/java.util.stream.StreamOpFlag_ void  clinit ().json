@@ -1,0 +1,1144 @@
+{
+  "sig": "\u003cjava.util.stream.StreamOpFlag: void \u003cclinit\u003e()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field STREAM_MASK",
+    "writes to static field INITIAL_OPS_VALUE",
+    "writes to static field FLAG_MASK",
+    "writes to static field IS_DISTINCT",
+    "writes to static field TERMINAL_OP_MASK",
+    "writes to static field NOT_DISTINCT",
+    "writes to static field SORTED",
+    "writes to static field DISTINCT",
+    "writes to static field SHORT_CIRCUIT",
+    "writes to static field ORDERED",
+    "writes to static field IS_SORTED",
+    "writes to static field NOT_SORTED",
+    "writes to static field OP_MASK",
+    "writes to static field SIZED",
+    "writes to static field $VALUES",
+    "writes to static field NOT_ORDERED",
+    "writes to static field SPLITERATOR_CHARACTERISTICS_MASK",
+    "writes to static field IS_SIZE_ADJUSTING",
+    "writes to static field FLAG_MASK_NOT",
+    "writes to static field SIZE_ADJUSTING",
+    "writes to static field IS_SHORT_CIRCUIT",
+    "writes to static field NOT_SIZED",
+    "writes to static field IS_ORDERED",
+    "writes to static field UPSTREAM_TERMINAL_OP_MASK",
+    "writes to static field FLAG_MASK_IS",
+    "writes to static field IS_SIZED"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "L61",
+        "kind": "LOAD",
+        "label": "callee: load maskTable from array element from GBL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new StreamOpFlag"
+      },
+      {
+        "id": "L60",
+        "kind": "LOAD",
+        "label": "callee: load maskTable from callee: load static $VALUES"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new StreamOpFlag$MaskBuilder"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: new EnumMap"
+      },
+      {
+        "id": "L62",
+        "kind": "LOAD",
+        "label": "callee: callee: load static $VALUES"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "L65",
+        "kind": "LOAD",
+        "label": "callee: load maskTable from array element from GBL"
+      },
+      {
+        "id": "L64",
+        "kind": "LOAD",
+        "label": "callee: load maskTable from callee: load static $VALUES"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "callee: callee: return from valueOf"
+      },
+      {
+        "id": "I5",
+        "kind": "INSIDE",
+        "label": "callee: return from valueOf"
+      },
+      {
+        "id": "L66",
+        "kind": "LOAD",
+        "label": "callee: callee: load static $VALUES"
+      },
+      {
+        "id": "I6",
+        "kind": "INSIDE",
+        "label": "callee: return from valueOf"
+      },
+      {
+        "id": "I7",
+        "kind": "INSIDE",
+        "label": "callee: callee: return from valueOf"
+      },
+      {
+        "id": "I8",
+        "kind": "INSIDE",
+        "label": "new StreamOpFlag"
+      },
+      {
+        "id": "I9",
+        "kind": "INSIDE",
+        "label": "callee: new StreamOpFlag$MaskBuilder"
+      },
+      {
+        "id": "I11",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "I10",
+        "kind": "INSIDE",
+        "label": "callee: new EnumMap"
+      },
+      {
+        "id": "I13",
+        "kind": "INSIDE",
+        "label": "callee: return from valueOf"
+      },
+      {
+        "id": "I12",
+        "kind": "INSIDE",
+        "label": "callee: callee: return from valueOf"
+      },
+      {
+        "id": "I15",
+        "kind": "INSIDE",
+        "label": "callee: callee: return from valueOf"
+      },
+      {
+        "id": "I14",
+        "kind": "INSIDE",
+        "label": "callee: return from valueOf"
+      },
+      {
+        "id": "I17",
+        "kind": "INSIDE",
+        "label": "callee: new StreamOpFlag$MaskBuilder"
+      },
+      {
+        "id": "I16",
+        "kind": "INSIDE",
+        "label": "new StreamOpFlag"
+      },
+      {
+        "id": "I19",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "I18",
+        "kind": "INSIDE",
+        "label": "callee: new EnumMap"
+      },
+      {
+        "id": "I20",
+        "kind": "INSIDE",
+        "label": "callee: callee: return from valueOf"
+      },
+      {
+        "id": "I22",
+        "kind": "INSIDE",
+        "label": "callee: return from valueOf"
+      },
+      {
+        "id": "I21",
+        "kind": "INSIDE",
+        "label": "callee: return from valueOf"
+      },
+      {
+        "id": "I24",
+        "kind": "INSIDE",
+        "label": "callee: return from valueOf"
+      },
+      {
+        "id": "I23",
+        "kind": "INSIDE",
+        "label": "callee: return from valueOf"
+      },
+      {
+        "id": "I26",
+        "kind": "INSIDE",
+        "label": "new StreamOpFlag"
+      },
+      {
+        "id": "I25",
+        "kind": "INSIDE",
+        "label": "callee: callee: return from valueOf"
+      },
+      {
+        "id": "I28",
+        "kind": "INSIDE",
+        "label": "callee: new EnumMap"
+      },
+      {
+        "id": "I27",
+        "kind": "INSIDE",
+        "label": "callee: new StreamOpFlag$MaskBuilder"
+      },
+      {
+        "id": "I29",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static SPLITERATOR"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load static STREAM"
+      },
+      {
+        "id": "I31",
+        "kind": "INSIDE",
+        "label": "callee: return from valueOf"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "I30",
+        "kind": "INSIDE",
+        "label": "callee: callee: return from valueOf"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "load static OP"
+      },
+      {
+        "id": "I33",
+        "kind": "INSIDE",
+        "label": "callee: callee: return from valueOf"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "I32",
+        "kind": "INSIDE",
+        "label": "callee: return from valueOf"
+      },
+      {
+        "id": "I35",
+        "kind": "INSIDE",
+        "label": "callee: new StreamOpFlag$MaskBuilder"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static $VALUES"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "I34",
+        "kind": "INSIDE",
+        "label": "new StreamOpFlag"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from GBL"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "I37",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static $VALUES"
+      },
+      {
+        "id": "I36",
+        "kind": "INSIDE",
+        "label": "callee: new EnumMap"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "I39",
+        "kind": "INSIDE",
+        "label": "callee: return from valueOf"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from GBL"
+      },
+      {
+        "id": "I38",
+        "kind": "INSIDE",
+        "label": "callee: callee: return from valueOf"
+      },
+      {
+        "id": "L16",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "load static TERMINAL_OP"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L19",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "I40",
+        "kind": "INSIDE",
+        "label": "callee: callee: return from valueOf"
+      },
+      {
+        "id": "I42",
+        "kind": "INSIDE",
+        "label": "callee: new StreamOpFlag$MaskBuilder"
+      },
+      {
+        "id": "I41",
+        "kind": "INSIDE",
+        "label": "new StreamOpFlag"
+      },
+      {
+        "id": "I44",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "I43",
+        "kind": "INSIDE",
+        "label": "callee: new EnumMap"
+      },
+      {
+        "id": "L21",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "I46",
+        "kind": "INSIDE",
+        "label": "callee: callee: return from valueOf"
+      },
+      {
+        "id": "L20",
+        "kind": "LOAD",
+        "label": "load static UPSTREAM_TERMINAL_OP"
+      },
+      {
+        "id": "I45",
+        "kind": "INSIDE",
+        "label": "callee: callee: return from valueOf"
+      },
+      {
+        "id": "L23",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from GBL"
+      },
+      {
+        "id": "I47",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      },
+      {
+        "id": "L22",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static $VALUES"
+      },
+      {
+        "id": "L25",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L24",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L27",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L26",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L29",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from GBL"
+      },
+      {
+        "id": "L28",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static $VALUES"
+      },
+      {
+        "id": "L30",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L32",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L31",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L34",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from GBL"
+      },
+      {
+        "id": "L33",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static $VALUES"
+      },
+      {
+        "id": "L36",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L35",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L38",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from GBL"
+      },
+      {
+        "id": "L37",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static $VALUES"
+      },
+      {
+        "id": "L39",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L41",
+        "kind": "LOAD",
+        "label": "callee: load static SORTED"
+      },
+      {
+        "id": "L40",
+        "kind": "LOAD",
+        "label": "callee: load static DISTINCT"
+      },
+      {
+        "id": "L43",
+        "kind": "LOAD",
+        "label": "callee: load static SIZED"
+      },
+      {
+        "id": "L42",
+        "kind": "LOAD",
+        "label": "callee: load static ORDERED"
+      },
+      {
+        "id": "L45",
+        "kind": "LOAD",
+        "label": "callee: load static SIZE_ADJUSTING"
+      },
+      {
+        "id": "L44",
+        "kind": "LOAD",
+        "label": "callee: load static SHORT_CIRCUIT"
+      },
+      {
+        "id": "L46",
+        "kind": "LOAD",
+        "label": "callee: callee: load static $VALUES"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L49",
+        "kind": "LOAD",
+        "label": "callee: load maskTable from array element from GBL"
+      },
+      {
+        "id": "L48",
+        "kind": "LOAD",
+        "label": "callee: load maskTable from callee: load static $VALUES"
+      },
+      {
+        "id": "L50",
+        "kind": "LOAD",
+        "label": "callee: callee: load static $VALUES"
+      },
+      {
+        "id": "L52",
+        "kind": "LOAD",
+        "label": "callee: load maskTable from callee: load static $VALUES"
+      },
+      {
+        "id": "L54",
+        "kind": "LOAD",
+        "label": "callee: callee: load static $VALUES"
+      },
+      {
+        "id": "L53",
+        "kind": "LOAD",
+        "label": "callee: load maskTable from array element from GBL"
+      },
+      {
+        "id": "L56",
+        "kind": "LOAD",
+        "label": "callee: load maskTable from callee: load static $VALUES"
+      },
+      {
+        "id": "L58",
+        "kind": "LOAD",
+        "label": "callee: callee: load static $VALUES"
+      },
+      {
+        "id": "L57",
+        "kind": "LOAD",
+        "label": "callee: load maskTable from array element from GBL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "L50",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "L52",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I42",
+        "field": "\u003cjava.util.stream.StreamOpFlag$MaskBuilder: java.util.Map map\u003e",
+        "target": "I43",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I41",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "L39",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I41",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "I43",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "L8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "field": "\u003cjava.util.stream.StreamOpFlag$MaskBuilder: java.util.Map map\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L62",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "L64",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I43",
+        "field": "\u003cjava.util.EnumMap: java.lang.Object[] vals\u003e",
+        "target": "I44",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I43",
+        "field": "\u003cjava.util.EnumMap: java.lang.Enum[] keyUniverse\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I10",
+        "field": "\u003cjava.util.EnumMap: java.lang.Object[] vals\u003e",
+        "target": "I11",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I10",
+        "field": "\u003cjava.util.EnumMap: java.lang.Enum[] keyUniverse\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "field": "\u003cjava.util.EnumMap: java.lang.Object[] vals\u003e",
+        "target": "I3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "field": "\u003cjava.util.EnumMap: java.lang.Enum[] keyUniverse\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L54",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "L56",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I35",
+        "field": "\u003cjava.util.stream.StreamOpFlag$MaskBuilder: java.util.Map map\u003e",
+        "target": "I36",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I34",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "I36",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I34",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "L35",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I26",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "L30",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I26",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "I28",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I36",
+        "field": "\u003cjava.util.EnumMap: java.lang.Object[] vals\u003e",
+        "target": "I37",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I36",
+        "field": "\u003cjava.util.EnumMap: java.lang.Enum[] keyUniverse\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L58",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "L60",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I28",
+        "field": "\u003cjava.util.EnumMap: java.lang.Object[] vals\u003e",
+        "target": "I29",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I28",
+        "field": "\u003cjava.util.EnumMap: java.lang.Enum[] keyUniverse\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I17",
+        "field": "\u003cjava.util.stream.StreamOpFlag$MaskBuilder: java.util.Map map\u003e",
+        "target": "I18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L46",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "L48",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I27",
+        "field": "\u003cjava.util.stream.StreamOpFlag$MaskBuilder: java.util.Map map\u003e",
+        "target": "I28",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I16",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "I18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I16",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "L24",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "I10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.Map maskTable\u003e",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "field": "\u003cjava.util.stream.StreamOpFlag$MaskBuilder: java.util.Map map\u003e",
+        "target": "I10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag$Type: java.util.stream.StreamOpFlag$Type TERMINAL_OP\u003e",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag[] $VALUES\u003e",
+        "target": "L50",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag[] $VALUES\u003e",
+        "target": "L62",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag[] $VALUES\u003e",
+        "target": "L54",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag[] $VALUES\u003e",
+        "target": "L66",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag[] $VALUES\u003e",
+        "target": "L46",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag[] $VALUES\u003e",
+        "target": "L58",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag SORTED\u003e",
+        "target": "L41",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag DISTINCT\u003e",
+        "target": "L40",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag SIZED\u003e",
+        "target": "L43",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag$Type: java.util.stream.StreamOpFlag$Type SPLITERATOR\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag SHORT_CIRCUIT\u003e",
+        "target": "L44",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag ORDERED\u003e",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag$Type: java.util.stream.StreamOpFlag$Type STREAM\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag$Type: java.util.stream.StreamOpFlag$Type OP\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag$Type: java.util.stream.StreamOpFlag$Type[] $VALUES\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag$Type: java.util.stream.StreamOpFlag$Type[] $VALUES\u003e",
+        "target": "L22",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag$Type: java.util.stream.StreamOpFlag$Type[] $VALUES\u003e",
+        "target": "L33",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag$Type: java.util.stream.StreamOpFlag$Type[] $VALUES\u003e",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag$Type: java.util.stream.StreamOpFlag$Type[] $VALUES\u003e",
+        "target": "L37",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag$Type: java.util.stream.StreamOpFlag$Type[] $VALUES\u003e",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag SIZE_ADJUSTING\u003e",
+        "target": "L45",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag$Type: java.util.stream.StreamOpFlag$Type UPSTREAM_TERMINAL_OP\u003e",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I18",
+        "field": "\u003cjava.util.EnumMap: java.lang.Object[] vals\u003e",
+        "target": "I19",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I18",
+        "field": "\u003cjava.util.EnumMap: java.lang.Enum[] keyUniverse\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int STREAM_MASK\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int INITIAL_OPS_VALUE\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int FLAG_MASK\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int IS_DISTINCT\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int TERMINAL_OP_MASK\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int NOT_DISTINCT\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag SORTED\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag DISTINCT\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag SHORT_CIRCUIT\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag ORDERED\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int IS_SORTED\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int NOT_SORTED\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int OP_MASK\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag SIZED\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag[] $VALUES\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int NOT_ORDERED\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int SPLITERATOR_CHARACTERISTICS_MASK\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int IS_SIZE_ADJUSTING\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int FLAG_MASK_NOT\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag SIZE_ADJUSTING\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int IS_SHORT_CIRCUIT\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int NOT_SIZED\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int IS_ORDERED\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int UPSTREAM_TERMINAL_OP_MASK\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int FLAG_MASK_IS\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: int IS_SIZED\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I40",
+      "L61",
+      "I0",
+      "I41",
+      "L60",
+      "I2",
+      "I43",
+      "L62",
+      "L21",
+      "I46",
+      "L65",
+      "I4",
+      "L20",
+      "I45",
+      "L64",
+      "I5",
+      "L23",
+      "I6",
+      "L22",
+      "I47",
+      "L66",
+      "I7",
+      "L25",
+      "I8",
+      "L24",
+      "L27",
+      "L26",
+      "L29",
+      "L28",
+      "L30",
+      "I10",
+      "I13",
+      "L32",
+      "I12",
+      "L31",
+      "I15",
+      "L34",
+      "I14",
+      "L33",
+      "L36",
+      "I16",
+      "L35",
+      "L38",
+      "I18",
+      "L37",
+      "L39",
+      "I20",
+      "I22",
+      "I21",
+      "I24",
+      "I23",
+      "I26",
+      "I25",
+      "I28",
+      "L46",
+      "GBL",
+      "L49",
+      "L48",
+      "L0",
+      "L1",
+      "L2",
+      "I31",
+      "L50",
+      "L3",
+      "I30",
+      "L4",
+      "I33",
+      "L52",
+      "L5",
+      "I32",
+      "L6",
+      "L10",
+      "L54",
+      "L7",
+      "I34",
+      "L53",
+      "L8",
+      "L12",
+      "L56",
+      "L9",
+      "L11",
+      "I36",
+      "L14",
+      "I39",
+      "L58",
+      "L13",
+      "I38",
+      "L57",
+      "L16",
+      "L15",
+      "L18",
+      "L17",
+      "L19"
+    ],
+    "insideNodeCounter": 48,
+    "loadNodeCounter": 68
+  }
+}

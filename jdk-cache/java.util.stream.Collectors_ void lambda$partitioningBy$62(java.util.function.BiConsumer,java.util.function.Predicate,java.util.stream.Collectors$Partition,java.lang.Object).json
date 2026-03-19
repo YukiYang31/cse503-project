@@ -1,0 +1,67 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: void lambda$partitioningBy$62(java.util.function.BiConsumer,java.util.function.Predicate,java.util.stream.Collectors$Partition,java.lang.Object)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "BiConsumer parameter escapes to global scope",
+    "Predicate parameter escapes to global scope",
+    "Object parameter escapes to global scope",
+    "loaded object \u0027load forFalse from Collectors$Partition parameter\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "BiConsumer parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Predicate parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Collectors$Partition parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "Object parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load forTrue from Collectors$Partition parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P2",
+        "field": "\u003cjava.util.stream.Collectors$Partition: java.lang.Object forFalse\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "field": "\u003cjava.util.stream.Collectors$Partition: java.lang.Object forTrue\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "P1",
+      "P3",
+      "L0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

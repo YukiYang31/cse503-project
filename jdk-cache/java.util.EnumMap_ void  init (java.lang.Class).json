@@ -1,0 +1,88 @@
+{
+  "sig": "\u003cjava.util.EnumMap: void \u003cinit\u003e(java.lang.Class)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Class parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Class parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load keyUniverse from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.EnumMap: java.lang.Object[] vals\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.EnumMap: java.lang.Enum[] keyUniverse\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.EnumMap: java.lang.Enum[] keyUniverse\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.EnumMap: java.lang.Class keyType\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.EnumMap: java.lang.Object[] vals\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.EnumMap: java.lang.Enum[] keyUniverse\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.EnumMap: java.lang.Class keyType\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.EnumMap: int size\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "GBL",
+      "P1"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 1
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "sig": "\u003cjava.util.Spliterators$IteratorSpliterator: long estimateSize()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field it",
+    "mutates this via field est",
+    "loaded object \u0027load collection from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load it from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load collection from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Spliterators$IteratorSpliterator: java.util.Iterator it\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Spliterators$IteratorSpliterator: java.util.Iterator it\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Spliterators$IteratorSpliterator: java.util.Collection collection\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Spliterators$IteratorSpliterator: java.util.Iterator it\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Spliterators$IteratorSpliterator: long est\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "L1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

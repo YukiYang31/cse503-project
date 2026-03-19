@@ -1,0 +1,155 @@
+{
+  "sig": "\u003cjava.io.ObjectInputStream$HandleTable: int assign(java.lang.Object)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field size",
+    "mutates this via field status",
+    "mutates this via field deps",
+    "mutates this via field entries",
+    "mutates loaded object \u0027load entries from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load entries from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load entries from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load status from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load status from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load deps from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Object parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load entries from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load entries from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: load status from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: load deps from parameter this"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: byte[] status\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: byte[] status\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: java.lang.Object[] entries\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: java.lang.Object[] entries\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: java.lang.Object[] entries\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: java.io.ObjectInputStream$HandleTable$HandleList[] deps\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: java.io.ObjectInputStream$HandleTable$HandleList[] deps\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: int size\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: byte[] status\u003e"
+      },
+      {
+        "node": "I0"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: java.io.ObjectInputStream$HandleTable$HandleList[] deps\u003e"
+      },
+      {
+        "node": "I1"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectInputStream$HandleTable: java.lang.Object[] entries\u003e"
+      },
+      {
+        "node": "L1"
+      },
+      {
+        "node": "L2"
+      },
+      {
+        "node": "L0"
+      }
+    ],
+    "globalEscaped": [
+      "L1",
+      "L2",
+      "L3",
+      "I0",
+      "I1",
+      "I2"
+    ],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 4
+  }
+}

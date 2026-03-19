@@ -1,0 +1,60 @@
+{
+  "sig": "\u003cjava.lang.constant.DynamicConstantDesc: java.lang.constant.ConstantDesc canonicalizeNull(java.lang.constant.DynamicConstantDesc)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "P0",
+      "kind": "PARAMETER",
+      "paramIndex": 0,
+      "label": "DynamicConstantDesc parameter"
+    },
+    {
+      "id": "L1",
+      "kind": "LOAD",
+      "label": "load static NULL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "DynamicConstantDesc parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load bootstrapArgs from DynamicConstantDesc parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load static NULL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.constant.ConstantDescs: java.lang.constant.ConstantDesc NULL\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.constant.DynamicConstantDesc: java.lang.constant.ConstantDesc[] bootstrapArgs\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

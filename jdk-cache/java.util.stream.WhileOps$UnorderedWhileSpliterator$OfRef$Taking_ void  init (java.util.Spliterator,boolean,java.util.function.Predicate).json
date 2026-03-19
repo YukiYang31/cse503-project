@@ -1,0 +1,78 @@
+{
+  "sig": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator$OfRef$Taking: void \u003cinit\u003e(java.util.Spliterator,boolean,java.util.function.Predicate)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Spliterator parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "Predicate parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: callee: new AtomicBoolean"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator: java.util.Spliterator s\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator: java.util.concurrent.atomic.AtomicBoolean cancel\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator$OfRef: java.util.function.Predicate p\u003e",
+        "target": "P3",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator: java.util.Spliterator s\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator: boolean takeOrDrop\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator$OfRef: java.util.function.Predicate p\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator: boolean noSplitting\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator: java.util.concurrent.atomic.AtomicBoolean cancel\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

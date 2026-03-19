@@ -1,0 +1,63 @@
+{
+  "sig": "\u003cjava.lang.Terminator: void setup()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field handler"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static handler"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Terminator$1"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new Signal"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "new Signal"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "new Signal"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Terminator: jdk.internal.misc.Signal$Handler handler\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.Terminator: jdk.internal.misc.Signal$Handler handler\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I0",
+      "I1",
+      "I2",
+      "I3"
+    ],
+    "insideNodeCounter": 4,
+    "loadNodeCounter": 1
+  }
+}

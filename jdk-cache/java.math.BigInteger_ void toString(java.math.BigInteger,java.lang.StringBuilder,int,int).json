@@ -1,0 +1,231 @@
+{
+  "sig": "\u003cjava.math.BigInteger: void toString(java.math.BigInteger,java.lang.StringBuilder,int,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field powerCache",
+    "writes to static field unknown",
+    "BigInteger parameter escapes to global scope",
+    "mutates BigInteger parameter via field bitLengthPlusOne",
+    "StringBuilder parameter escapes to global scope",
+    "loaded object \u0027load mag from BigInteger parameter\u0027 escapes to global scope",
+    "loaded object \u0027callee: load mag from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load mag from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load static ZERO\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "BigInteger parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "StringBuilder parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load mag from BigInteger parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load static logCache"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new AssertionError"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: load static powerCache"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: array element from array element from load static powerCache"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: callee: new MutableBigInteger"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: load mag from BigInteger parameter"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: callee: new MutableBigInteger"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: load mag from parameter this"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: load static ZERO"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: load mag from BigInteger parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger ZERO\u003e",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger[][] powerCache\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: double[] logCache\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L5",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L5",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger[][] powerCache\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.math.BigInteger: int bitLengthPlusOne\u003e"
+      },
+      {
+        "node": "GBL"
+      }
+    ],
+    "globalEscaped": [
+      "GBL",
+      "P0",
+      "P1",
+      "L3",
+      "I0",
+      "I1",
+      "L5",
+      "I2",
+      "I3",
+      "I4",
+      "L8",
+      "L9"
+    ],
+    "insideNodeCounter": 5,
+    "loadNodeCounter": 10
+  }
+}

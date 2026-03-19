@@ -1,0 +1,89 @@
+{
+  "sig": "\u003cjava.util.ArrayPrefixHelpers$DoubleCumulateTask: void \u003cinit\u003e(java.util.ArrayPrefixHelpers$DoubleCumulateTask,java.util.function.DoubleBinaryOperator,double[],int,int,int,int,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "ArrayPrefixHelpers$DoubleCumulateTask parameter escapes to global scope",
+    "DoubleBinaryOperator parameter escapes to global scope",
+    "double[] parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ArrayPrefixHelpers$DoubleCumulateTask parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "DoubleBinaryOperator parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "double[] parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayPrefixHelpers$DoubleCumulateTask: double[] array\u003e",
+        "target": "P3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayPrefixHelpers$DoubleCumulateTask: java.util.function.DoubleBinaryOperator function\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayPrefixHelpers$DoubleCumulateTask: int origin\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayPrefixHelpers$DoubleCumulateTask: int lo\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayPrefixHelpers$DoubleCumulateTask: int threshold\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayPrefixHelpers$DoubleCumulateTask: double[] array\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayPrefixHelpers$DoubleCumulateTask: int fence\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayPrefixHelpers$DoubleCumulateTask: int hi\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayPrefixHelpers$DoubleCumulateTask: java.util.function.DoubleBinaryOperator function\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

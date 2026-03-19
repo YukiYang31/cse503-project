@@ -1,0 +1,48 @@
+{
+  "sig": "\u003cjava.util.Arrays: java.lang.String deepToString(java.lang.Object[])\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Object[] parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I2",
+      "kind": "INSIDE",
+      "label": "callee: new String"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Object[] parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new StringBuilder"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new HashSet"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: new String"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "I0",
+      "I1"
+    ],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 0
+  }
+}

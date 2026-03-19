@@ -1,0 +1,56 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: java.util.IntSummaryStatistics lambda$summarizingInt$71(java.util.IntSummaryStatistics,java.util.IntSummaryStatistics)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates IntSummaryStatistics parameter via field max",
+    "mutates IntSummaryStatistics parameter via field sum",
+    "mutates IntSummaryStatistics parameter via field min",
+    "mutates IntSummaryStatistics parameter via field count"
+  ],
+  "returnTargets": [
+    {
+      "id": "P0",
+      "kind": "PARAMETER",
+      "paramIndex": 0,
+      "label": "IntSummaryStatistics parameter"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "IntSummaryStatistics parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "IntSummaryStatistics parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.IntSummaryStatistics: int max\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.IntSummaryStatistics: long sum\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.IntSummaryStatistics: int min\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.IntSummaryStatistics: long count\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

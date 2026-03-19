@@ -1,0 +1,112 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors$CollectorImpl: void \u003cinit\u003e(java.util.function.Supplier,java.util.function.BiConsumer,java.util.function.BinaryOperator,java.util.function.Function,java.util.Set)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "Supplier parameter escapes to global scope",
+    "BiConsumer parameter escapes to global scope",
+    "BinaryOperator parameter escapes to global scope",
+    "Function parameter escapes to global scope",
+    "Set parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Supplier parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "BiConsumer parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "BinaryOperator parameter"
+      },
+      {
+        "id": "P4",
+        "kind": "PARAMETER",
+        "paramIndex": 4,
+        "label": "Function parameter"
+      },
+      {
+        "id": "P5",
+        "kind": "PARAMETER",
+        "paramIndex": 5,
+        "label": "Set parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.Collectors$CollectorImpl: java.util.function.Function finisher\u003e",
+        "target": "P4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.Collectors$CollectorImpl: java.util.function.BiConsumer accumulator\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.Collectors$CollectorImpl: java.util.function.Supplier supplier\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.Collectors$CollectorImpl: java.util.Set characteristics\u003e",
+        "target": "P5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.Collectors$CollectorImpl: java.util.function.BinaryOperator combiner\u003e",
+        "target": "P3",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.Collectors$CollectorImpl: java.util.function.Function finisher\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.Collectors$CollectorImpl: java.util.function.Supplier supplier\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.Collectors$CollectorImpl: java.util.function.BiConsumer accumulator\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.Collectors$CollectorImpl: java.util.function.BinaryOperator combiner\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.Collectors$CollectorImpl: java.util.Set characteristics\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

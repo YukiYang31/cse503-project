@@ -1,0 +1,43 @@
+{
+  "sig": "\u003cjava.util.stream.DoublePipeline$Head: java.util.Spliterator lazySpliterator(java.util.function.Supplier)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Supplier parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "callee: new StreamSpliterators$DelegatingSpliterator$OfDouble"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Supplier parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new StreamSpliterators$DelegatingSpliterator$OfDouble"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P1",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

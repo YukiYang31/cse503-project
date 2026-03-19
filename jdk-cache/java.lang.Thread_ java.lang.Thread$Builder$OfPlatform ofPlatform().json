@@ -1,0 +1,26 @@
+{
+  "sig": "\u003cjava.lang.Thread: java.lang.Thread$Builder$OfPlatform ofPlatform()\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new ThreadBuilders$PlatformThreadBuilder"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ThreadBuilders$PlatformThreadBuilder"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "sig": "\u003cjava.lang.ClassLoader: void resetArchivedStates()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field classLoaderValueMap",
+    "loaded object \u0027load parallelLockMap from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027load packages from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027load package2certs from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load classes from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: load elementData from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load parallelLockMap from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load packages from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load package2certs from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "load classes from parameter this"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: load elementData from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.concurrent.ConcurrentHashMap packages\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.concurrent.ConcurrentHashMap parallelLockMap\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.ArrayList classes\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.concurrent.ConcurrentHashMap package2certs\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L3",
+        "target": "L4",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassLoader: java.util.concurrent.ConcurrentHashMap classLoaderValueMap\u003e"
+      },
+      {
+        "node": "L3"
+      },
+      {
+        "node": "L4"
+      }
+    ],
+    "globalEscaped": [
+      "L0",
+      "L1",
+      "L2"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 5
+  }
+}

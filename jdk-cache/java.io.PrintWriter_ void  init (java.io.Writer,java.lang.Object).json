@@ -1,0 +1,64 @@
+{
+  "sig": "\u003cjava.io.PrintWriter: void \u003cinit\u003e(java.io.Writer,java.lang.Object)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "Writer parameter escapes to global scope",
+    "Object parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Writer parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Object parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.PrintWriter: java.io.Writer out\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.PrintWriter: boolean autoFlush\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.PrintWriter: java.io.PrintStream psOut\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.PrintWriter: java.io.Writer out\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.PrintWriter: boolean trouble\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P2"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "sig": "\u003cjava.util.stream.StreamOpFlag: int createFlagMask()\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load static $VALUES"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "array element from GBL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamOpFlag: java.util.stream.StreamOpFlag[] $VALUES\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "L0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "sig": "\u003cjava.lang.Class: sun.reflect.generics.repository.ClassRepository getGenericInfo()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "mutates this via field genericInfo",
+    "loaded object \u0027load genericInfo from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    },
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "load genericInfo from parameter this"
+    },
+    {
+      "id": "L1",
+      "kind": "LOAD",
+      "label": "load static NONE"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load genericInfo from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load static NONE"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003csun.reflect.generics.repository.ClassRepository: sun.reflect.generics.repository.ClassRepository NONE\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Class: sun.reflect.generics.repository.ClassRepository genericInfo\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Class: sun.reflect.generics.repository.ClassRepository genericInfo\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Class: sun.reflect.generics.repository.ClassRepository genericInfo\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Class: sun.reflect.generics.repository.ClassRepository genericInfo\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "GBL"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

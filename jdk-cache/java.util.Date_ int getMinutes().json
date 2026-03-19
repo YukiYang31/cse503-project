@@ -1,0 +1,91 @@
+{
+  "sig": "\u003cjava.util.Date: int getMinutes()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field jcal",
+    "this escapes to global scope",
+    "mutates this via field cdate",
+    "loaded object \u0027callee: load cdate from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load cdate from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: load static jcal"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: load static gcal"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Date: sun.util.calendar.BaseCalendar gcal\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Date: sun.util.calendar.BaseCalendar gcal\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Date: sun.util.calendar.BaseCalendar jcal\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Date: sun.util.calendar.BaseCalendar$Date cdate\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Date: sun.util.calendar.BaseCalendar$Date cdate\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.Date: sun.util.calendar.BaseCalendar jcal\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Date: sun.util.calendar.BaseCalendar$Date cdate\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "GBL",
+      "P0",
+      "L0",
+      "L1",
+      "L2"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 3
+  }
+}

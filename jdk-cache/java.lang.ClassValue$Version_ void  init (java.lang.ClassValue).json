@@ -1,0 +1,66 @@
+{
+  "sig": "\u003cjava.lang.ClassValue$Version: void \u003cinit\u003e(java.lang.ClassValue)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "ClassValue parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ClassValue parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ClassValue$Entry"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue$Entry promise\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.ClassValue$Entry: java.lang.Object value\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue classValue\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.ClassValue$Version: java.lang.ClassValue$Entry promise\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "sig": "\u003cjava.io.ObjectStreamClass: java.security.ProtectionDomain noPermissionsDomain()\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "I1",
+      "kind": "INSIDE",
+      "label": "new ProtectionDomain"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Permissions"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new ProtectionDomain"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "I0",
+      "I1"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 0
+  }
+}

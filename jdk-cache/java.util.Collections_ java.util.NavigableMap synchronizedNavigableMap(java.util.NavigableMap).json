@@ -1,0 +1,37 @@
+{
+  "sig": "\u003cjava.util.Collections: java.util.NavigableMap synchronizedNavigableMap(java.util.NavigableMap)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "NavigableMap parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new Collections$SynchronizedNavigableMap"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "NavigableMap parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Collections$SynchronizedNavigableMap"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "sig": "\u003cjava.lang.System$2: java.lang.Class defineClass(java.lang.ClassLoader,java.lang.Class,java.lang.String,byte[],java.security.ProtectionDomain,boolean,int,java.lang.Object)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "ClassLoader parameter escapes to global scope",
+    "Class parameter escapes to global scope",
+    "String parameter escapes to global scope",
+    "byte[] parameter escapes to global scope",
+    "ProtectionDomain parameter escapes to global scope",
+    "Object parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ClassLoader parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Class parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "String parameter"
+      },
+      {
+        "id": "P4",
+        "kind": "PARAMETER",
+        "paramIndex": 4,
+        "label": "byte[] parameter"
+      },
+      {
+        "id": "P5",
+        "kind": "PARAMETER",
+        "paramIndex": 5,
+        "label": "ProtectionDomain parameter"
+      },
+      {
+        "id": "P8",
+        "kind": "PARAMETER",
+        "paramIndex": 8,
+        "label": "Object parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5",
+      "P8"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

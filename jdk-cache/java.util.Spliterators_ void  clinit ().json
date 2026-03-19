@@ -1,0 +1,66 @@
+{
+  "sig": "\u003cjava.util.Spliterators: void \u003cclinit\u003e()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field EMPTY_INT_SPLITERATOR",
+    "writes to static field EMPTY_DOUBLE_SPLITERATOR",
+    "writes to static field EMPTY_SPLITERATOR",
+    "writes to static field EMPTY_LONG_SPLITERATOR"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Spliterators$EmptySpliterator$OfRef"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new Spliterators$EmptySpliterator$OfInt"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "new Spliterators$EmptySpliterator$OfLong"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "new Spliterators$EmptySpliterator$OfDouble"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.Spliterators: java.util.Spliterator$OfInt EMPTY_INT_SPLITERATOR\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.Spliterators: java.util.Spliterator$OfDouble EMPTY_DOUBLE_SPLITERATOR\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.Spliterators: java.util.Spliterator EMPTY_SPLITERATOR\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.Spliterators: java.util.Spliterator$OfLong EMPTY_LONG_SPLITERATOR\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I0",
+      "I1",
+      "I2",
+      "I3"
+    ],
+    "insideNodeCounter": 4,
+    "loadNodeCounter": 0
+  }
+}

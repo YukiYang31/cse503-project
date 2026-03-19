@@ -1,0 +1,31 @@
+{
+  "sig": "\u003cjava.lang.System$2: long stringBuilderConcatMix(long,java.lang.StringBuilder)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "StringBuilder parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "StringBuilder parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P2"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

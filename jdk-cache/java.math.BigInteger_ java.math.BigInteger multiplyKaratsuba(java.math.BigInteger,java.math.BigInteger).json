@@ -1,0 +1,1414 @@
+{
+  "sig": "\u003cjava.math.BigInteger: java.math.BigInteger multiplyKaratsuba(java.math.BigInteger,java.math.BigInteger)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "BigInteger parameter escapes to global scope",
+    "BigInteger parameter escapes to global scope",
+    "loaded object \u0027load mag from BigInteger parameter\u0027 escapes to global scope",
+    "loaded object \u0027load mag from BigInteger parameter\u0027 escapes to global scope",
+    "loaded object \u0027callee: load mag from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load mag from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load mag from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load mag from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load mag from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load mag from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load mag from BigInteger parameter\u0027 escapes to global scope",
+    "loaded object \u0027callee: load mag from BigInteger parameter\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I20",
+      "kind": "INSIDE",
+      "label": "callee: new BigInteger"
+    },
+    {
+      "id": "I22",
+      "kind": "INSIDE",
+      "label": "callee: callee: new array"
+    },
+    {
+      "id": "I21",
+      "kind": "INSIDE",
+      "label": "callee: callee: new array"
+    },
+    {
+      "id": "L21",
+      "kind": "LOAD",
+      "label": "callee: load static ZERO"
+    },
+    {
+      "id": "I24",
+      "kind": "INSIDE",
+      "label": "callee: callee: new array"
+    },
+    {
+      "id": "I23",
+      "kind": "INSIDE",
+      "label": "callee: new BigInteger"
+    },
+    {
+      "id": "I26",
+      "kind": "INSIDE",
+      "label": "callee: new BigInteger"
+    },
+    {
+      "id": "L22",
+      "kind": "LOAD",
+      "label": "callee: load mag from parameter this"
+    },
+    {
+      "id": "I25",
+      "kind": "INSIDE",
+      "label": "callee: callee: new array"
+    },
+    {
+      "id": "I28",
+      "kind": "INSIDE",
+      "label": "callee: callee: new BigInteger"
+    },
+    {
+      "id": "L24",
+      "kind": "LOAD",
+      "label": "callee: load static ZERO"
+    },
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    },
+    {
+      "id": "L27",
+      "kind": "LOAD",
+      "label": "callee: load static ZERO"
+    },
+    {
+      "id": "I29",
+      "kind": "INSIDE",
+      "label": "callee: new BigInteger"
+    },
+    {
+      "id": "L29",
+      "kind": "LOAD",
+      "label": "callee: callee: load static ZERO"
+    },
+    {
+      "id": "L28",
+      "kind": "LOAD",
+      "label": "callee: load static ZERO"
+    },
+    {
+      "id": "I30",
+      "kind": "INSIDE",
+      "label": "callee: callee: new array"
+    },
+    {
+      "id": "L30",
+      "kind": "LOAD",
+      "label": "callee: callee: array element from load static negConst"
+    },
+    {
+      "id": "I32",
+      "kind": "INSIDE",
+      "label": "callee: new BigInteger"
+    },
+    {
+      "id": "I15",
+      "kind": "INSIDE",
+      "label": "callee: callee: new array"
+    },
+    {
+      "id": "I14",
+      "kind": "INSIDE",
+      "label": "callee: new BigInteger"
+    },
+    {
+      "id": "L33",
+      "kind": "LOAD",
+      "label": "callee: load static ZERO"
+    },
+    {
+      "id": "I17",
+      "kind": "INSIDE",
+      "label": "callee: new BigInteger"
+    },
+    {
+      "id": "I16",
+      "kind": "INSIDE",
+      "label": "callee: callee: new BigInteger"
+    },
+    {
+      "id": "L16",
+      "kind": "LOAD",
+      "label": "callee: load static ZERO"
+    },
+    {
+      "id": "I19",
+      "kind": "INSIDE",
+      "label": "callee: callee: new array"
+    },
+    {
+      "id": "I18",
+      "kind": "INSIDE",
+      "label": "callee: callee: new array"
+    },
+    {
+      "id": "L18",
+      "kind": "LOAD",
+      "label": "callee: callee: array element from load static negConst"
+    },
+    {
+      "id": "L17",
+      "kind": "LOAD",
+      "label": "callee: callee: load static ZERO"
+    },
+    {
+      "id": "L19",
+      "kind": "LOAD",
+      "label": "callee: load mag from parameter this"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new BigInteger"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new BigInteger"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: new BigInteger"
+      },
+      {
+        "id": "L21",
+        "kind": "LOAD",
+        "label": "callee: load static ZERO"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new BigInteger"
+      },
+      {
+        "id": "L20",
+        "kind": "LOAD",
+        "label": "callee: load mag from BigInteger parameter"
+      },
+      {
+        "id": "I5",
+        "kind": "INSIDE",
+        "label": "callee: new BigInteger"
+      },
+      {
+        "id": "L23",
+        "kind": "LOAD",
+        "label": "callee: load mag from BigInteger parameter"
+      },
+      {
+        "id": "L22",
+        "kind": "LOAD",
+        "label": "callee: load mag from parameter this"
+      },
+      {
+        "id": "I6",
+        "kind": "INSIDE",
+        "label": "callee: new array"
+      },
+      {
+        "id": "I7",
+        "kind": "INSIDE",
+        "label": "callee: new BigInteger"
+      },
+      {
+        "id": "L25",
+        "kind": "LOAD",
+        "label": "callee: load mag from parameter this"
+      },
+      {
+        "id": "I8",
+        "kind": "INSIDE",
+        "label": "callee: new BigInteger"
+      },
+      {
+        "id": "L24",
+        "kind": "LOAD",
+        "label": "callee: load static ZERO"
+      },
+      {
+        "id": "I9",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "L27",
+        "kind": "LOAD",
+        "label": "callee: load static ZERO"
+      },
+      {
+        "id": "L26",
+        "kind": "LOAD",
+        "label": "callee: load mag from BigInteger parameter"
+      },
+      {
+        "id": "L29",
+        "kind": "LOAD",
+        "label": "callee: callee: load static ZERO"
+      },
+      {
+        "id": "L28",
+        "kind": "LOAD",
+        "label": "callee: load static ZERO"
+      },
+      {
+        "id": "I11",
+        "kind": "INSIDE",
+        "label": "callee: new BigInteger"
+      },
+      {
+        "id": "L30",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from load static negConst"
+      },
+      {
+        "id": "I10",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "L32",
+        "kind": "LOAD",
+        "label": "callee: load mag from BigInteger parameter"
+      },
+      {
+        "id": "I13",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "I12",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "L31",
+        "kind": "LOAD",
+        "label": "callee: load mag from parameter this"
+      },
+      {
+        "id": "I15",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "L34",
+        "kind": "LOAD",
+        "label": "callee: load mag from parameter this"
+      },
+      {
+        "id": "I14",
+        "kind": "INSIDE",
+        "label": "callee: new BigInteger"
+      },
+      {
+        "id": "L33",
+        "kind": "LOAD",
+        "label": "callee: load static ZERO"
+      },
+      {
+        "id": "I17",
+        "kind": "INSIDE",
+        "label": "callee: new BigInteger"
+      },
+      {
+        "id": "I16",
+        "kind": "INSIDE",
+        "label": "callee: callee: new BigInteger"
+      },
+      {
+        "id": "I19",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "I18",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "I20",
+        "kind": "INSIDE",
+        "label": "callee: new BigInteger"
+      },
+      {
+        "id": "I22",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "I21",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "I24",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "I23",
+        "kind": "INSIDE",
+        "label": "callee: new BigInteger"
+      },
+      {
+        "id": "I26",
+        "kind": "INSIDE",
+        "label": "callee: new BigInteger"
+      },
+      {
+        "id": "I25",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "I28",
+        "kind": "INSIDE",
+        "label": "callee: callee: new BigInteger"
+      },
+      {
+        "id": "I27",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "I29",
+        "kind": "INSIDE",
+        "label": "callee: new BigInteger"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "BigInteger parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "BigInteger parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load mag from BigInteger parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load mag from BigInteger parameter"
+      },
+      {
+        "id": "I31",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: load mag from parameter this"
+      },
+      {
+        "id": "I30",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load mag from parameter this"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: load mag from parameter this"
+      },
+      {
+        "id": "I32",
+        "kind": "INSIDE",
+        "label": "callee: new BigInteger"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: load static ZERO"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: load mag from parameter this"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: load mag from parameter this"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load mag from parameter this"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: load static ZERO"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: load mag from parameter this"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: load static ZERO"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: load mag from BigInteger parameter"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: load mag from BigInteger parameter"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: load mag from parameter this"
+      },
+      {
+        "id": "L16",
+        "kind": "LOAD",
+        "label": "callee: load static ZERO"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: load static ZERO"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from load static negConst"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: callee: load static ZERO"
+      },
+      {
+        "id": "L19",
+        "kind": "LOAD",
+        "label": "callee: load mag from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "I20",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I20",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I20",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I20",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I19",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I20",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L19",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I20",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I21",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I20",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I22",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I20",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L22",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I21",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I21",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I20",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I24",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I24",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I23",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L21",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L21",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L26",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L21",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L21",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L34",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L21",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L22",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I3",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I3",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I23",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I25",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I23",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I24",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I26",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I27",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L22",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L22",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L34",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I28",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I27",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I28",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I26",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I7",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L24",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L24",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L26",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L24",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L24",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L34",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I8",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L27",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L27",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L27",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L34",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I9",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I9",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L25",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L26",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L34",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L32",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L22",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger ZERO\u003e",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger ZERO\u003e",
+        "target": "L27",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger ZERO\u003e",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger ZERO\u003e",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger ZERO\u003e",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger ZERO\u003e",
+        "target": "L29",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger ZERO\u003e",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger ZERO\u003e",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger ZERO\u003e",
+        "target": "L24",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger ZERO\u003e",
+        "target": "L21",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger ZERO\u003e",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger ZERO\u003e",
+        "target": "L33",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger[] negConst\u003e",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: java.math.BigInteger[] negConst\u003e",
+        "target": "L29",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I29",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I30",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I29",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I31",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L29",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L29",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L34",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L28",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L28",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L34",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I30",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I30",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I29",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L30",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L30",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L34",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I11",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I12",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I11",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I29",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I19",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L19",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I21",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I20",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I31",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I23",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I22",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I25",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I24",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L22",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L34",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I27",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I26",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I30",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L5",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I12",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I12",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I11",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L33",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L34",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I14",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L9",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I17",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I17",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I19",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I17",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L19",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I16",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I16",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L16",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L16",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L25",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L16",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L16",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L34",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I18",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I18",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "I17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L25",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L34",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L25",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L34",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L19",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L19",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L34",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "I20",
+      "I0",
+      "I1",
+      "I22",
+      "I2",
+      "I21",
+      "I3",
+      "I24",
+      "I4",
+      "I23",
+      "I5",
+      "I6",
+      "I25",
+      "L22",
+      "I7",
+      "I8",
+      "I27",
+      "I9",
+      "GBL",
+      "I29",
+      "L28",
+      "P0",
+      "P1",
+      "L2",
+      "I31",
+      "I30",
+      "L4",
+      "I11",
+      "L5",
+      "I10",
+      "L6",
+      "I13",
+      "I12",
+      "L8",
+      "L12",
+      "I15",
+      "L9",
+      "I14",
+      "I17",
+      "L16",
+      "I19",
+      "L15",
+      "I18",
+      "L19"
+    ],
+    "insideNodeCounter": 33,
+    "loadNodeCounter": 35
+  }
+}

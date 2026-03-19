@@ -1,0 +1,38 @@
+{
+  "sig": "\u003cjava.lang.Module: java.util.Map lambda$implAddExportsOrOpens$0(java.lang.Module,java.lang.Module)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new ConcurrentHashMap"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Module parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Module parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ConcurrentHashMap"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,1408 @@
+{
+  "sig": "\u003cjava.io.ObjectStreamClass: void writeNonProxy(java.io.ObjectOutputStream)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates loaded object \u0027callee: load handles from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: load bout from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027load fields from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load dout from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load dout from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: load bout from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load writeBuffer from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load writeBuffer from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load writeBuffer from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load out from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load dout from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load dout from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: load bout from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load out from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load out from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: load dout from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load dout from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: load bout from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load out from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load dout from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load dout from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load out from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load objs from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load handles from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: callee: callee: callee: load spine from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load next from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "this escapes to global scope",
+    "mutates this via field array element",
+    "loaded object \u0027load name from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load bout from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load dout from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load dout from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load next from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load objs from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: array element from callee: load objs from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: load buf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: callee: load bout from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load objs from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load hbuf from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: load next from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load spine from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: callee: callee: callee: callee: callee: load buf from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load suid from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: callee: callee: callee: load out from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load dout from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load dout from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027callee: load bout from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load writeBuffer from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "L61",
+        "kind": "LOAD",
+        "label": "callee: load handles from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new UTFDataFormatException"
+      },
+      {
+        "id": "L60",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L63",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new ObjectStreamClass$1"
+      },
+      {
+        "id": "L62",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new UTFDataFormatException"
+      },
+      {
+        "id": "L21",
+        "kind": "LOAD",
+        "label": "callee: load bout from parameter this"
+      },
+      {
+        "id": "L65",
+        "kind": "LOAD",
+        "label": "callee: callee: load next from parameter this"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new array"
+      },
+      {
+        "id": "L64",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new array"
+      },
+      {
+        "id": "L20",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L67",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "I5",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new array"
+      },
+      {
+        "id": "L23",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L22",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L66",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "I6",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new UTFDataFormatException"
+      },
+      {
+        "id": "L25",
+        "kind": "LOAD",
+        "label": "load fields from parameter this"
+      },
+      {
+        "id": "L69",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L68",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L24",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L27",
+        "kind": "LOAD",
+        "label": "callee: callee: load dout from parameter this"
+      },
+      {
+        "id": "L26",
+        "kind": "LOAD",
+        "label": "callee: load bout from parameter this"
+      },
+      {
+        "id": "L29",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L28",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load writeBuffer from parameter this"
+      },
+      {
+        "id": "L70",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load writeBuffer from parameter this"
+      },
+      {
+        "id": "L72",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L71",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L30",
+        "kind": "LOAD",
+        "label": "array element from load fields from parameter this"
+      },
+      {
+        "id": "L74",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L73",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L76",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load dout from parameter this"
+      },
+      {
+        "id": "L32",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L31",
+        "kind": "LOAD",
+        "label": "callee: load bout from parameter this"
+      },
+      {
+        "id": "L75",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L34",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L78",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L33",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L77",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load dout from parameter this"
+      },
+      {
+        "id": "L36",
+        "kind": "LOAD",
+        "label": "callee: load bout from parameter this"
+      },
+      {
+        "id": "L35",
+        "kind": "LOAD",
+        "label": "callee: load name from parameter this"
+      },
+      {
+        "id": "L79",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L38",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load dout from parameter this"
+      },
+      {
+        "id": "L37",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load cbuf from parameter this"
+      },
+      {
+        "id": "L39",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L81",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load next from parameter this"
+      },
+      {
+        "id": "L80",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L83",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load objs from parameter this"
+      },
+      {
+        "id": "L82",
+        "kind": "LOAD",
+        "label": "callee: callee: load handles from parameter this"
+      },
+      {
+        "id": "L85",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load spine from parameter this"
+      },
+      {
+        "id": "L41",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load cbuf from parameter this"
+      },
+      {
+        "id": "L84",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load next from parameter this"
+      },
+      {
+        "id": "L40",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L43",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L42",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L45",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L44",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L47",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L46",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L49",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L48",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ObjectOutputStream parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load name from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load bout from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load cbuf from parameter this"
+      },
+      {
+        "id": "L50",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load dout from parameter this"
+      },
+      {
+        "id": "L52",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load objs from parameter this"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L51",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load next from parameter this"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load cbuf from parameter this"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L54",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load objs from parameter this"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L53",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: array element from callee: load objs from parameter this"
+      },
+      {
+        "id": "L56",
+        "kind": "LOAD",
+        "label": "callee: callee: load bout from parameter this"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load hbuf from parameter this"
+      },
+      {
+        "id": "L55",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load objs from parameter this"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L58",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load next from parameter this"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load buf from parameter this"
+      },
+      {
+        "id": "L57",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load spine from parameter this"
+      },
+      {
+        "id": "L16",
+        "kind": "LOAD",
+        "label": "callee: load suid from parameter this"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load out from parameter this"
+      },
+      {
+        "id": "L59",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load cbuf from parameter this"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "callee: callee: load dout from parameter this"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: load bout from parameter this"
+      },
+      {
+        "id": "L19",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load writeBuffer from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass: java.lang.String name\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass: java.io.ObjectStreamField[] fields\u003e",
+        "target": "L25",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L26",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L82",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L61",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L67",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L56",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "target": "L21",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.io.ObjectOutputStream: java.io.ObjectOutputStream$BlockDataOutputStream bout\u003e",
+        "target": "L36",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.io.ObjectOutputStream: java.io.ObjectOutputStream$BlockDataOutputStream bout\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L61",
+        "target": "L63",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L61",
+        "target": "L64",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L61",
+        "target": "L62",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L61",
+        "target": "L65",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L82",
+        "target": "L58",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L82",
+        "target": "I3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L82",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L82",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L82",
+        "target": "L81",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L82",
+        "target": "L85",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L82",
+        "target": "L52",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L82",
+        "target": "L53",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L82",
+        "target": "L83",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L82",
+        "target": "L84",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L82",
+        "target": "L51",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L82",
+        "target": "L57",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L82",
+        "target": "L54",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L82",
+        "target": "L55",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L3",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L3",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L30",
+        "target": "L35",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "P0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L38",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L39",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "L42",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L76",
+        "target": "L74",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L76",
+        "target": "L68",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L21",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L21",
+        "target": "L24",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L21",
+        "target": "L22",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L31",
+        "target": "L34",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L31",
+        "target": "L32",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L31",
+        "target": "L33",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L56",
+        "target": "L69",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L56",
+        "target": "L59",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L56",
+        "target": "L70",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L56",
+        "target": "L71",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L56",
+        "target": "L60",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L56",
+        "target": "L80",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L56",
+        "target": "L75",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L56",
+        "target": "L72",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L56",
+        "target": "L73",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L56",
+        "target": "L67",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L56",
+        "target": "L78",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L56",
+        "target": "L79",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L56",
+        "target": "L76",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L56",
+        "target": "L66",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L56",
+        "target": "L77",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L67",
+        "target": "L69",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L67",
+        "target": "L71",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L67",
+        "target": "L73",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L67",
+        "target": "L77",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L77",
+        "target": "L70",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L77",
+        "target": "L78",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "I6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L76",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L67",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "target": "L68",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L36",
+        "target": "L38",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L36",
+        "target": "L49",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L36",
+        "target": "L47",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L36",
+        "target": "L37",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L36",
+        "target": "L48",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L36",
+        "target": "L41",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L36",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L36",
+        "target": "L50",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L36",
+        "target": "L45",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L36",
+        "target": "L46",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L36",
+        "target": "L43",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L36",
+        "target": "L44",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L38",
+        "target": "L39",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L38",
+        "target": "L40",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L27",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L27",
+        "target": "L29",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L38",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L39",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L42",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L67",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L68",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L76",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L26",
+        "target": "L27",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L18",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L12"
+      },
+      {
+        "node": "L56"
+      },
+      {
+        "node": "L24"
+      },
+      {
+        "node": "L36"
+      },
+      {
+        "node": "L48"
+      },
+      {
+        "node": "L8"
+      },
+      {
+        "node": "L64"
+      },
+      {
+        "node": "L32"
+      },
+      {
+        "node": "L76"
+      },
+      {
+        "node": "L44"
+      },
+      {
+        "node": "L60"
+      },
+      {
+        "node": "L80"
+      },
+      {
+        "node": "P0"
+      },
+      {
+        "node": "L27"
+      },
+      {
+        "node": "L67"
+      },
+      {
+        "node": "L79"
+      },
+      {
+        "node": "L9"
+      },
+      {
+        "node": "L47"
+      },
+      {
+        "node": "L31"
+      },
+      {
+        "node": "L75"
+      },
+      {
+        "node": "L43"
+      },
+      {
+        "node": "L11"
+      },
+      {
+        "node": "L55"
+      },
+      {
+        "node": "L71"
+      },
+      {
+        "node": "L1"
+      },
+      {
+        "node": "L51"
+      },
+      {
+        "node": "L38"
+      },
+      {
+        "node": "L18"
+      },
+      {
+        "node": "L34"
+      },
+      {
+        "node": "L78"
+      },
+      {
+        "node": "L46"
+      },
+      {
+        "node": "L58"
+      },
+      {
+        "node": "L26"
+      },
+      {
+        "node": "L42"
+      },
+      {
+        "node": "L54"
+      },
+      {
+        "node": "L22"
+      },
+      {
+        "node": "L66"
+      },
+      {
+        "node": "L70"
+      },
+      {
+        "node": "L82"
+      },
+      {
+        "node": "L62"
+      },
+      {
+        "node": "L17"
+      },
+      {
+        "node": "L13"
+      },
+      {
+        "node": "L57"
+      },
+      {
+        "node": "L69"
+      },
+      {
+        "node": "L7"
+      },
+      {
+        "node": "L85"
+      },
+      {
+        "node": "L53"
+      },
+      {
+        "node": "L21"
+      },
+      {
+        "node": "L77"
+      },
+      {
+        "node": "L3"
+      },
+      {
+        "node": "L61"
+      },
+      {
+        "node": "L73"
+      }
+    ],
+    "globalEscaped": [
+      "I0",
+      "L60",
+      "I1",
+      "L63",
+      "I2",
+      "L62",
+      "I3",
+      "L20",
+      "I4",
+      "L23",
+      "I5",
+      "L67",
+      "L22",
+      "I6",
+      "L69",
+      "L68",
+      "L27",
+      "L29",
+      "L28",
+      "L70",
+      "L72",
+      "L71",
+      "L30",
+      "L74",
+      "L73",
+      "L32",
+      "L76",
+      "L75",
+      "L78",
+      "L33",
+      "L77",
+      "L79",
+      "L38",
+      "L39",
+      "L80",
+      "L83",
+      "L40",
+      "L84",
+      "L43",
+      "L42",
+      "L45",
+      "L46",
+      "L49",
+      "L50",
+      "L3",
+      "L4",
+      "L5",
+      "L10",
+      "L7",
+      "L8",
+      "L11",
+      "L14",
+      "L15",
+      "L18",
+      "L19"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 30
+  }
+}

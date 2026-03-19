@@ -1,0 +1,307 @@
+{
+  "sig": "\u003cjava.io.ObjectStreamClass$FieldReflector: void \u003cinit\u003e(java.io.ObjectStreamField[])\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027load types from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load readKeys from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027load writeKeys from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load type from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load offsets from parameter this\u0027 via field array element",
+    "mutates loaded object \u0027load typeCodes from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ObjectStreamField[] parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "array element from ObjectStreamField[] parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load types from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load static UNSAFE"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "load readKeys from parameter this"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "load writeKeys from parameter this"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: load type from parameter this"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "new ArrayList"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static DEFAULTCAPACITY_EMPTY_ELEMENTDATA"
+      },
+      {
+        "id": "I5",
+        "kind": "INSIDE",
+        "label": "new HashSet"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "load offsets from parameter this"
+      },
+      {
+        "id": "I6",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "load typeCodes from parameter this"
+      },
+      {
+        "id": "I7",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: return from copyOf"
+      },
+      {
+        "id": "I8",
+        "kind": "INSIDE",
+        "label": "callee: return from copyOf"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load static DEFAULTCAPACITY_EMPTY_ELEMENTDATA"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA\u003e",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: jdk.internal.misc.Unsafe UNSAFE\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: java.io.ObjectStreamField[] fields\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: long[] readKeys\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: long[] readKeys\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: int[] offsets\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: int[] offsets\u003e",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: char[] typeCodes\u003e",
+        "target": "I3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: char[] typeCodes\u003e",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: java.lang.Class[] types\u003e",
+        "target": "I8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: java.lang.Class[] types\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: java.lang.Class[] types\u003e",
+        "target": "I6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: long[] writeKeys\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: long[] writeKeys\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.io.ObjectStreamField: java.lang.reflect.Field field\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.io.ClassCache$CacheRef: java.lang.Class type\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I4",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "I8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "I7",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: int numPrimFields\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: long[] writeKeys\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: java.lang.Class[] types\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: char[] typeCodes\u003e"
+      },
+      {
+        "node": "L9"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: java.io.ObjectStreamField[] fields\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: int[] offsets\u003e"
+      },
+      {
+        "node": "L8"
+      },
+      {
+        "node": "I2"
+      },
+      {
+        "node": "I3"
+      },
+      {
+        "node": "I0"
+      },
+      {
+        "node": "L3"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.ObjectStreamClass$FieldReflector: long[] readKeys\u003e"
+      },
+      {
+        "node": "I1"
+      },
+      {
+        "node": "L4"
+      }
+    ],
+    "globalEscaped": [
+      "L0",
+      "L1",
+      "L2",
+      "I6",
+      "I8"
+    ],
+    "insideNodeCounter": 9,
+    "loadNodeCounter": 2
+  }
+}

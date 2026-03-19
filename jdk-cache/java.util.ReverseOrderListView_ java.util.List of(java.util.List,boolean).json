@@ -1,0 +1,55 @@
+{
+  "sig": "\u003cjava.util.ReverseOrderListView: java.util.List of(java.util.List,boolean)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "load base from List parameter"
+    },
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new ReverseOrderListView$Rand"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "List parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load base from List parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ReverseOrderListView"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ReverseOrderListView: java.util.List base\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.ReverseOrderListView: java.util.List base\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 1
+  }
+}

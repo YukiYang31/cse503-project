@@ -1,0 +1,45 @@
+{
+  "sig": "\u003cjava.net.URL: void checkSpecifyHandler(java.lang.SecurityManager)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "SecurityManager parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static SPECIFY_HANDLER_PERMISSION"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003csun.security.util.SecurityConstants: java.net.NetPermission SPECIFY_HANDLER_PERMISSION\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "L0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

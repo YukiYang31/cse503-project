@@ -1,0 +1,61 @@
+{
+  "sig": "\u003cjava.lang.constant.DynamicConstantDesc: java.lang.constant.DynamicConstantDesc ofNamed(java.lang.constant.DirectMethodHandleDesc,java.lang.String,java.lang.constant.ClassDesc,java.lang.constant.ConstantDesc[])\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "DirectMethodHandleDesc parameter escapes to global scope",
+    "String parameter escapes to global scope",
+    "ClassDesc parameter escapes to global scope",
+    "ConstantDesc[] parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new DynamicConstantDesc$AnonymousDynamicConstantDesc"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "DirectMethodHandleDesc parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "String parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "ClassDesc parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "ConstantDesc[] parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new DynamicConstantDesc$AnonymousDynamicConstantDesc"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "P1",
+      "P2",
+      "P3",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "sig": "\u003cjava.lang.module.Configuration: java.util.Set reads(java.lang.module.ResolvedModule)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "ResolvedModule parameter escapes to global scope",
+    "loaded object \u0027load graph from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    },
+    {
+      "id": "L1",
+      "kind": "LOAD",
+      "label": "callee: callee: load static EMPTY_SET"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ResolvedModule parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load graph from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: load static EMPTY_SET"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.ImmutableCollections: java.util.ImmutableCollections$SetN EMPTY_SET\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.module.Configuration: java.util.Map graph\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P1",
+      "L0",
+      "I1"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 2
+  }
+}

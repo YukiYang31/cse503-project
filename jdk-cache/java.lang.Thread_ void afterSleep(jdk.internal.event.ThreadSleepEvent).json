@@ -1,0 +1,25 @@
+{
+  "sig": "\u003cjava.lang.Thread: void afterSleep(jdk.internal.event.ThreadSleepEvent)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "ThreadSleepEvent parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "ThreadSleepEvent parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

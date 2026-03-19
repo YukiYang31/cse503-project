@@ -62,87 +62,63 @@
     "edges": [
       {
         "src": "GBL",
-        "field": "\u003cjava.lang.Throwable: java.util.List SUPPRESSED_SENTINEL\u003e",
-        "target": "L1",
-        "type": "OUTSIDE"
-      },
-      {
-        "src": "GBL",
-        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
-        "target": "L4",
-        "type": "OUTSIDE"
-      },
-      {
-        "src": "GBL",
-        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
         "target": "L0",
         "type": "OUTSIDE"
       },
       {
-        "src": "P0",
-        "field": "\u003cjava.lang.Throwable: java.lang.Throwable cause\u003e",
-        "target": "P2",
-        "type": "INSIDE"
-      },
-      {
-        "src": "P0",
-        "field": "\u003cjava.lang.Throwable: java.lang.Throwable cause\u003e",
-        "target": "P0",
-        "type": "INSIDE"
-      },
-      {
-        "src": "P0",
-        "field": "\u003cjava.lang.Throwable: java.util.List suppressedExceptions\u003e",
+        "src": "GBL",
         "target": "L1",
-        "type": "INSIDE"
+        "type": "OUTSIDE"
       },
       {
-        "src": "P0",
-        "field": "\u003cjava.lang.Throwable: java.lang.Object backtrace\u003e",
-        "target": "L3",
+        "src": "GBL",
+        "target": "L4",
         "type": "OUTSIDE"
       },
       {
         "src": "P0",
-        "field": "\u003cjava.lang.Throwable: java.lang.String detailMessage\u003e",
         "target": "P1",
         "type": "INSIDE"
       },
       {
         "src": "P0",
-        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
         "target": "L2",
         "type": "OUTSIDE"
       },
       {
         "src": "P0",
-        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
         "target": "L0",
         "type": "INSIDE"
       },
       {
         "src": "P0",
-        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
         "target": "L4",
         "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L3",
+        "type": "OUTSIDE"
       }
     ],
     "mutatedFields": [
       {
-        "node": "P0",
-        "field": "\u003cjava.lang.Throwable: java.lang.Throwable cause\u003e"
-      },
-      {
-        "node": "P0",
-        "field": "\u003cjava.lang.Throwable: java.lang.String detailMessage\u003e"
-      },
-      {
-        "node": "P0",
-        "field": "\u003cjava.lang.Throwable: java.util.List suppressedExceptions\u003e"
-      },
-      {
-        "node": "P0",
-        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e"
+        "node": "P0"
       }
     ],
     "globalEscaped": [

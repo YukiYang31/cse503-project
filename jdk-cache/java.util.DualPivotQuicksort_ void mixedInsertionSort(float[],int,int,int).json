@@ -1,0 +1,27 @@
+{
+  "sig": "\u003cjava.util.DualPivotQuicksort: void mixedInsertionSort(float[],int,int,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates float[] parameter via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "float[] parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P0"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

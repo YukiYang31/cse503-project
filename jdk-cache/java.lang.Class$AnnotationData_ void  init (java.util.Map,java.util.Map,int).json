@@ -1,0 +1,59 @@
+{
+  "sig": "\u003cjava.lang.Class$AnnotationData: void \u003cinit\u003e(java.util.Map,java.util.Map,int)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Map parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Map parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Class$AnnotationData: java.util.Map annotations\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.Class$AnnotationData: java.util.Map declaredAnnotations\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Class$AnnotationData: java.util.Map declaredAnnotations\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Class$AnnotationData: java.util.Map annotations\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.Class$AnnotationData: int redefinedCount\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "sig": "\u003cjava.lang.Shutdown: void runHooks()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field currentRunningHook"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static lock"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load static hooks"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "array element from load static hooks"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Shutdown: java.lang.Object lock\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Shutdown: java.lang.Runnable[] hooks\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.Shutdown: int currentRunningHook\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "L2"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

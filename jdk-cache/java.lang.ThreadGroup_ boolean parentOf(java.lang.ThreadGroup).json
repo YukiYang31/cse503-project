@@ -1,0 +1,45 @@
+{
+  "sig": "\u003cjava.lang.ThreadGroup: boolean parentOf(java.lang.ThreadGroup)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ThreadGroup parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load parent from ThreadGroup parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P1",
+        "field": "\u003cjava.lang.ThreadGroup: java.lang.ThreadGroup parent\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.lang.ThreadGroup: java.lang.ThreadGroup parent\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

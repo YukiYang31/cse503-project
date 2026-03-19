@@ -1,0 +1,33 @@
+{
+  "sig": "\u003cjava.util.OptionalInt: void \u003cclinit\u003e()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field EMPTY"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new OptionalInt"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.OptionalInt: java.util.OptionalInt EMPTY\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

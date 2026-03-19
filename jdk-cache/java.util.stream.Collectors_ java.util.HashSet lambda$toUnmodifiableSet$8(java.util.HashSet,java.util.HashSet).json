@@ -1,0 +1,46 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors: java.util.HashSet lambda$toUnmodifiableSet$8(java.util.HashSet,java.util.HashSet)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "HashSet parameter escapes to global scope",
+    "HashSet parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "P0",
+      "kind": "PARAMETER",
+      "paramIndex": 0,
+      "label": "HashSet parameter"
+    },
+    {
+      "id": "P1",
+      "kind": "PARAMETER",
+      "paramIndex": 1,
+      "label": "HashSet parameter"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "HashSet parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "HashSet parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "P1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

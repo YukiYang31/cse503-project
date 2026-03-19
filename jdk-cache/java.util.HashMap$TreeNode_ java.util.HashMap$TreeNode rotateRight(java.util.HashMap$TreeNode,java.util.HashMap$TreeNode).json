@@ -1,0 +1,168 @@
+{
+  "sig": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode rotateRight(java.util.HashMap$TreeNode,java.util.HashMap$TreeNode)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates HashMap$TreeNode parameter via field left",
+    "mutates HashMap$TreeNode parameter via field parent",
+    "mutates loaded object \u0027load left from HashMap$TreeNode parameter\u0027 via field red",
+    "mutates loaded object \u0027load left from HashMap$TreeNode parameter\u0027 via field parent",
+    "mutates loaded object \u0027load left from HashMap$TreeNode parameter\u0027 via field right",
+    "mutates loaded object \u0027load right from load left from HashMap$TreeNode parameter\u0027 via field parent",
+    "mutates loaded object \u0027load parent from HashMap$TreeNode parameter\u0027 via field right",
+    "mutates loaded object \u0027load parent from HashMap$TreeNode parameter\u0027 via field left"
+  ],
+  "returnTargets": [
+    {
+      "id": "P0",
+      "kind": "PARAMETER",
+      "paramIndex": 0,
+      "label": "HashMap$TreeNode parameter"
+    },
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "load left from HashMap$TreeNode parameter"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "HashMap$TreeNode parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "HashMap$TreeNode parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load left from HashMap$TreeNode parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load right from load left from HashMap$TreeNode parameter"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load parent from HashMap$TreeNode parameter"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "load right from load parent from HashMap$TreeNode parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode parent\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode parent\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode left\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode left\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode right\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode right\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode parent\u003e",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode parent\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L2",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode right\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L2",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode right\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L2",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode left\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L0",
+        "field": "\u003cjava.util.HashMap$TreeNode: boolean red\u003e"
+      },
+      {
+        "node": "P1",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode left\u003e"
+      },
+      {
+        "node": "L2",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode right\u003e"
+      },
+      {
+        "node": "L0",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode parent\u003e"
+      },
+      {
+        "node": "L0",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode right\u003e"
+      },
+      {
+        "node": "P1",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode parent\u003e"
+      },
+      {
+        "node": "L2",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode left\u003e"
+      },
+      {
+        "node": "L1",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode parent\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 4
+  }
+}

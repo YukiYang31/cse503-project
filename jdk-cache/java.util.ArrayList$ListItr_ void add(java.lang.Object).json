@@ -1,0 +1,213 @@
+{
+  "sig": "\u003cjava.util.ArrayList$ListItr: void add(java.lang.Object)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "mutates this via field lastRet",
+    "mutates this via field expectedModCount",
+    "mutates this via field cursor",
+    "loaded object \u0027load this$0 from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load this$0 from parameter this\u0027 via field modCount",
+    "mutates loaded object \u0027load this$0 from parameter this\u0027 via field size",
+    "mutates loaded object \u0027load this$0 from parameter this\u0027 via field elementData",
+    "loaded object \u0027callee: load elementData from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load elementData from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load elementData from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Object parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load this$0 from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ConcurrentModificationException"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: return from copyOf"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load elementData from parameter this"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load static DEFAULTCAPACITY_EMPTY_ELEMENTDATA"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayList$ListItr: java.util.ArrayList this$0\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L4",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L0",
+        "field": "\u003cjava.util.ArrayList: int modCount\u003e"
+      },
+      {
+        "node": "L0",
+        "field": "\u003cjava.util.ArrayList: int size\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList$ListItr: int lastRet\u003e"
+      },
+      {
+        "node": "L4"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList$ListItr: int expectedModCount\u003e"
+      },
+      {
+        "node": "L0",
+        "field": "\u003cjava.util.ArrayList: java.lang.Object[] elementData\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList$ListItr: int cursor\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "L0",
+      "I0",
+      "L4",
+      "I1"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 7
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "sig": "\u003cjava.util.Collections: java.util.NavigableMap unmodifiableNavigableMap(java.util.NavigableMap)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "NavigableMap parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "P0",
+      "kind": "PARAMETER",
+      "paramIndex": 0,
+      "label": "NavigableMap parameter"
+    },
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new Collections$UnmodifiableNavigableMap"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "NavigableMap parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Collections$UnmodifiableNavigableMap"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

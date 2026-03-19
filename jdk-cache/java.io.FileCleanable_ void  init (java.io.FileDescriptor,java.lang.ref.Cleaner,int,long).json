@@ -1,0 +1,50 @@
+{
+  "sig": "\u003cjava.io.FileCleanable: void \u003cinit\u003e(java.io.FileDescriptor,java.lang.ref.Cleaner,int,long)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "FileDescriptor parameter escapes to global scope",
+    "Cleaner parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "FileDescriptor parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Cleaner parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.FileCleanable: int fd\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.FileCleanable: long handle\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P1",
+      "P2"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

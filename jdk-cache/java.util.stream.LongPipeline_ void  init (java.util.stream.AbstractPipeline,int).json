@@ -1,0 +1,216 @@
+{
+  "sig": "\u003cjava.util.stream.LongPipeline: void \u003cinit\u003e(java.util.stream.AbstractPipeline,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates AbstractPipeline parameter via field nextStage",
+    "mutates AbstractPipeline parameter via field linkedOrConsumed",
+    "loaded object \u0027callee: load sourceStage from AbstractPipeline parameter\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load sourceStage from AbstractPipeline parameter\u0027 via field sourceAnyStateful",
+    "loaded object \u0027callee: load sourceStage from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load sourceStage from parameter this\u0027 via field sourceAnyStateful"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "AbstractPipeline parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load sourceStage from AbstractPipeline parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new IllegalStateException"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: load sourceStage from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.util.List SUPPRESSED_SENTINEL\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.util.List SUPPRESSED_SENTINEL\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] UNASSIGNED_STACK\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.AbstractPipeline: java.util.stream.AbstractPipeline previousStage\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.AbstractPipeline: java.util.stream.AbstractPipeline sourceStage\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.AbstractPipeline: java.util.stream.AbstractPipeline sourceStage\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.stream.AbstractPipeline: java.util.stream.AbstractPipeline sourceStage\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.stream.AbstractPipeline: java.util.stream.AbstractPipeline nextStage\u003e",
+        "target": "P0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Throwable: java.lang.Throwable cause\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Throwable: java.util.List suppressedExceptions\u003e",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Throwable: java.util.List suppressedExceptions\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.lang.Throwable: java.lang.StackTraceElement[] stackTrace\u003e",
+        "target": "L4",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L4",
+        "field": "\u003cjava.util.stream.AbstractPipeline: boolean sourceAnyStateful\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.AbstractPipeline: int depth\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.AbstractPipeline: java.util.stream.AbstractPipeline previousStage\u003e"
+      },
+      {
+        "node": "L0",
+        "field": "\u003cjava.util.stream.AbstractPipeline: boolean sourceAnyStateful\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.AbstractPipeline: int combinedFlags\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.AbstractPipeline: int sourceOrOpFlags\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.AbstractPipeline: java.util.stream.AbstractPipeline sourceStage\u003e"
+      },
+      {
+        "node": "P1",
+        "field": "\u003cjava.util.stream.AbstractPipeline: java.util.stream.AbstractPipeline nextStage\u003e"
+      },
+      {
+        "node": "P1",
+        "field": "\u003cjava.util.stream.AbstractPipeline: boolean linkedOrConsumed\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 5
+  }
+}

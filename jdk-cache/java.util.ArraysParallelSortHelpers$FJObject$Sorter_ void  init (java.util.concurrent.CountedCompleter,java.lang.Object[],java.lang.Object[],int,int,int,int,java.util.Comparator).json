@@ -1,0 +1,102 @@
+{
+  "sig": "\u003cjava.util.ArraysParallelSortHelpers$FJObject$Sorter: void \u003cinit\u003e(java.util.concurrent.CountedCompleter,java.lang.Object[],java.lang.Object[],int,int,int,int,java.util.Comparator)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope",
+    "CountedCompleter parameter escapes to global scope",
+    "Object[] parameter escapes to global scope",
+    "Object[] parameter escapes to global scope",
+    "Comparator parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "CountedCompleter parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Object[] parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "Object[] parameter"
+      },
+      {
+        "id": "P8",
+        "kind": "PARAMETER",
+        "paramIndex": 8,
+        "label": "Comparator parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArraysParallelSortHelpers$FJObject$Sorter: java.lang.Object[] a\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArraysParallelSortHelpers$FJObject$Sorter: java.lang.Object[] w\u003e",
+        "target": "P3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArraysParallelSortHelpers$FJObject$Sorter: java.util.Comparator comparator\u003e",
+        "target": "P8",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArraysParallelSortHelpers$FJObject$Sorter: int base\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArraysParallelSortHelpers$FJObject$Sorter: java.lang.Object[] a\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArraysParallelSortHelpers$FJObject$Sorter: int size\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArraysParallelSortHelpers$FJObject$Sorter: java.util.Comparator comparator\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArraysParallelSortHelpers$FJObject$Sorter: int gran\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArraysParallelSortHelpers$FJObject$Sorter: java.lang.Object[] w\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArraysParallelSortHelpers$FJObject$Sorter: int wbase\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

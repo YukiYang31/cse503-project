@@ -1,0 +1,38 @@
+{
+  "sig": "\u003cjava.util.Formatter: java.lang.Appendable nonNullAppendable(java.lang.Appendable)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "P0",
+      "kind": "PARAMETER",
+      "paramIndex": 0,
+      "label": "Appendable parameter"
+    },
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new StringBuilder"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Appendable parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new StringBuilder"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

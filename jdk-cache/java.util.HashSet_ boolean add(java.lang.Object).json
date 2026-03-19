@@ -1,0 +1,858 @@
+{
+  "sig": "\u003cjava.util.HashSet: boolean add(java.lang.Object)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field value",
+    "loaded object \u0027callee: callee: callee: load next from array element from HashMap$Node[] parameter\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load next from array element from HashMap$Node[] parameter\u0027 via field next",
+    "Object parameter escapes to global scope",
+    "loaded object \u0027callee: callee: callee: callee: load value from HashMap$Node parameter\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: callee: load value from HashMap$Node parameter\u0027 via field next",
+    "loaded object \u0027callee: callee: load value from GBL\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load value from GBL\u0027 via field array element",
+    "loaded object \u0027load map from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load map from parameter this\u0027 via field table",
+    "mutates loaded object \u0027load map from parameter this\u0027 via field size",
+    "mutates loaded object \u0027load map from parameter this\u0027 via field modCount",
+    "mutates loaded object \u0027load map from parameter this\u0027 via field threshold",
+    "loaded object \u0027callee: callee: load table from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load table from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load table from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load table from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load key from load next from array element from callee: load table from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load key from load next from array element from callee: load table from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load key from load next from array element from load table from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load key from load next from array element from load table from parameter this\u0027 via field next"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new array"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new HashMap$Node"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new HashMap$TreeNode"
+      },
+      {
+        "id": "L21",
+        "kind": "LOAD",
+        "label": "callee: callee: load value from load next from array element from load table from parameter this"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new array"
+      },
+      {
+        "id": "L20",
+        "kind": "LOAD",
+        "label": "callee: callee: load value from load next from array element from callee: load table from parameter this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Object parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load map from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load static PRESENT"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: load table from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load table from parameter this"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: array element from load table from parameter this"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load next from array element from load table from parameter this"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load next from load next from array element from load table from parameter this"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: load next from array element from callee: load table from parameter this"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from load table from parameter this"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: load key from array element from load table from parameter this"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from callee: load table from parameter this"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: load key from load next from array element from callee: load table from parameter this"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: callee: load key from array element from callee: load table from parameter this"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: load key from load next from array element from load table from parameter this"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: callee: load next from array element from load table from parameter this"
+      },
+      {
+        "id": "L16",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load next from array element from HashMap$Node[] parameter"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: load value from HashMap$Node parameter"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "callee: callee: load value from array element from load table from parameter this"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: callee: load value from GBL"
+      },
+      {
+        "id": "L19",
+        "kind": "LOAD",
+        "label": "callee: callee: load value from array element from callee: load table from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.HashSet: java.util.HashMap map\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.HashMap: java.util.HashMap$Node[] table\u003e",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.HashMap: java.util.HashMap$Node[] table\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.HashMap: java.util.HashMap$Node[] table\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.HashMap: java.util.HashMap$Node[] table\u003e",
+        "target": "I3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.HashMap: java.util.HashMap$Node[] table\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.HashMap: java.util.HashMap$Node[] table\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.HashMap: java.util.HashMap$Node[] table\u003e",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L19",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L20",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L4",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I2",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$TreeNode prev\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "field": "\u003cjava.util.HashMap$TreeNode: java.util.HashMap$Node next\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L5",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L5",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L5",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L5",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L10",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object key\u003e",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L10",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L10",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L10",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L10",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L6",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L6",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L6",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L6",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L20",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L20",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L20",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L19",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L20",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L20",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L20",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L7",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object key\u003e",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L7",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L7",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L7",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L7",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L8",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object key\u003e",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L8",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L8",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L8",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L8",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L11",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object key\u003e",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L11",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L11",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object key\u003e",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L16",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object key\u003e",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L13",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e",
+        "target": "L21",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L13",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L16",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object key\u003e",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L16",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L16",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L16",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L16",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L16",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L16",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.HashSet: java.lang.Object PRESENT\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object key\u003e",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L16",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L19",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L20",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L19",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L19",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L19",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L19",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L19",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L19",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e",
+        "target": "L20",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e"
+      },
+      {
+        "node": "L18",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e"
+      },
+      {
+        "node": "L16",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e"
+      },
+      {
+        "node": "L13",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e"
+      },
+      {
+        "node": "L5",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e"
+      },
+      {
+        "node": "L7",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e"
+      },
+      {
+        "node": "L13",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e"
+      },
+      {
+        "node": "L1",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e"
+      },
+      {
+        "node": "L2"
+      },
+      {
+        "node": "L7",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e"
+      },
+      {
+        "node": "L15",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e"
+      },
+      {
+        "node": "L0",
+        "field": "\u003cjava.util.HashMap: java.util.HashMap$Node[] table\u003e"
+      },
+      {
+        "node": "L0",
+        "field": "\u003cjava.util.HashMap: int size\u003e"
+      },
+      {
+        "node": "L17"
+      },
+      {
+        "node": "L19",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e"
+      },
+      {
+        "node": "L20",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e"
+      },
+      {
+        "node": "L8",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e"
+      },
+      {
+        "node": "L10",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e"
+      },
+      {
+        "node": "L4",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e"
+      },
+      {
+        "node": "L14",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e"
+      },
+      {
+        "node": "L6",
+        "field": "\u003cjava.util.HashMap$Node: java.util.HashMap$Node next\u003e"
+      },
+      {
+        "node": "L11"
+      },
+      {
+        "node": "L3"
+      },
+      {
+        "node": "L0",
+        "field": "\u003cjava.util.HashMap: int modCount\u003e"
+      },
+      {
+        "node": "L0",
+        "field": "\u003cjava.util.HashMap: int threshold\u003e"
+      },
+      {
+        "node": "L8",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e"
+      },
+      {
+        "node": "L10",
+        "field": "\u003cjava.util.HashMap$Node: java.lang.Object value\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P1",
+      "L0",
+      "L1",
+      "L2",
+      "L3",
+      "I0",
+      "L4",
+      "I1",
+      "I2",
+      "I3",
+      "L7",
+      "L8",
+      "L14",
+      "L16",
+      "L15",
+      "L18"
+    ],
+    "insideNodeCounter": 4,
+    "loadNodeCounter": 22
+  }
+}

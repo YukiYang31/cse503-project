@@ -1,0 +1,48 @@
+{
+  "sig": "\u003cjava.net.InetAddress: java.net.InetAddress getByAddress(byte[])\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "byte[] parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I1",
+      "kind": "INSIDE",
+      "label": "callee: new UnknownHostException"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "byte[] parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: return from substring"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new UnknownHostException"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "GBL",
+      "P0",
+      "I0",
+      "I1"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "sig": "\u003cjava.util.stream.Streams: java.lang.Runnable composedClose(java.util.stream.BaseStream,java.util.stream.BaseStream)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "BaseStream parameter escapes to global scope",
+    "BaseStream parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new Streams$2"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "BaseStream parameter"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "BaseStream parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Streams$2"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "P1",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

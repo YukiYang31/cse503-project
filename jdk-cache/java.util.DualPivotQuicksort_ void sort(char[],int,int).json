@@ -1,0 +1,30 @@
+{
+  "sig": "\u003cjava.util.DualPivotQuicksort: void sort(char[],int,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "char[] parameter escapes to global scope",
+    "mutates char[] parameter via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "char[] parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P0"
+      }
+    ],
+    "globalEscaped": [
+      "P0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

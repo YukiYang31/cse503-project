@@ -1,0 +1,60 @@
+{
+  "sig": "\u003cjava.util.stream.DoublePipeline$Head: java.util.stream.BaseStream unordered()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "P0",
+      "kind": "PARAMETER",
+      "paramIndex": 0,
+      "label": "this"
+    },
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "callee: new DoublePipeline$7"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load static DOUBLE_VALUE"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new DoublePipeline$7"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.stream.StreamShape: java.util.stream.StreamShape DOUBLE_VALUE\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "L0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 1
+  }
+}

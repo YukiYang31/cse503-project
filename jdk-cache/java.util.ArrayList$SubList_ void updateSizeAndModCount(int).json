@@ -1,0 +1,72 @@
+{
+  "sig": "\u003cjava.util.ArrayList$SubList: void updateSizeAndModCount(int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field size",
+    "mutates this via field modCount",
+    "mutates loaded object \u0027load parent from parameter this\u0027 via field modCount",
+    "mutates loaded object \u0027load parent from parameter this\u0027 via field size"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load root from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load parent from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayList$SubList: java.util.ArrayList root\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.ArrayList$SubList: java.util.ArrayList$SubList parent\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "field": "\u003cjava.util.ArrayList$SubList: java.util.ArrayList$SubList parent\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList$SubList: int size\u003e"
+      },
+      {
+        "node": "L1",
+        "field": "\u003cjava.util.ArrayList$SubList: int modCount\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.ArrayList$SubList: int modCount\u003e"
+      },
+      {
+        "node": "L1",
+        "field": "\u003cjava.util.ArrayList$SubList: int size\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

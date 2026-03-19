@@ -1,0 +1,47 @@
+{
+  "sig": "\u003cjava.util.stream.Collectors$1OptionalBox: void \u003cinit\u003e(java.util.function.BinaryOperator)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "BinaryOperator parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.Collectors$1OptionalBox: java.util.function.BinaryOperator val$op\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.Collectors$1OptionalBox: java.lang.Object value\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.Collectors$1OptionalBox: java.util.function.BinaryOperator val$op\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.Collectors$1OptionalBox: boolean present\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

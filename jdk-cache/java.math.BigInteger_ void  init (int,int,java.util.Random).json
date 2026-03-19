@@ -1,0 +1,67 @@
+{
+  "sig": "\u003cjava.math.BigInteger: void \u003cinit\u003e(int,int,java.util.Random)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Random parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "Random parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load mag from GBL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new ArithmeticException"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.math.BigInteger: int signum\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.math.BigInteger: int[] mag\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P3"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 1
+  }
+}

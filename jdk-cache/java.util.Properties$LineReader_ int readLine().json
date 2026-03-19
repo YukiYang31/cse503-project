@@ -1,0 +1,126 @@
+{
+  "sig": "\u003cjava.util.Properties$LineReader: int readLine()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field inOff",
+    "mutates this via field inLimit",
+    "mutates this via field lineBuf",
+    "loaded object \u0027load inStream from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load inByteBuf from parameter this\u0027 via field array element",
+    "loaded object \u0027load inCharBuf from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027load lineBuf from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load lineBuf from parameter this\u0027 via field array element",
+    "loaded object \u0027load reader from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load inStream from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load inByteBuf from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load inCharBuf from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "load lineBuf from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "load reader from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Properties$LineReader: java.io.InputStream inStream\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Properties$LineReader: java.io.Reader reader\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Properties$LineReader: char[] lineBuf\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Properties$LineReader: char[] lineBuf\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Properties$LineReader: char[] inCharBuf\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Properties$LineReader: byte[] inByteBuf\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L3"
+      },
+      {
+        "node": "I0"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Properties$LineReader: int inOff\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Properties$LineReader: int inLimit\u003e"
+      },
+      {
+        "node": "L1"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Properties$LineReader: char[] lineBuf\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "L0",
+      "L2",
+      "L3",
+      "I0",
+      "L4"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 5
+  }
+}

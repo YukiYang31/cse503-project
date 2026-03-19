@@ -1,0 +1,58 @@
+{
+  "sig": "\u003cjava.util.HashMap: void reinitialize()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field table",
+    "mutates this via field modCount",
+    "mutates this via field keySet",
+    "mutates this via field entrySet",
+    "mutates this via field values",
+    "mutates this via field threshold",
+    "mutates this via field size"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.HashMap: java.util.HashMap$Node[] table\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.HashMap: int modCount\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.HashMap: java.util.Set keySet\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.HashMap: java.util.Set entrySet\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.HashMap: java.util.Collection values\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.HashMap: int threshold\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.HashMap: int size\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "sig": "\u003cjava.lang.Module$ArchivedData: void archive()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field archivedData"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Module$ArchivedData"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.Module$ArchivedData: java.lang.Module$ArchivedData archivedData\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

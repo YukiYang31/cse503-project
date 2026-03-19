@@ -1,0 +1,47 @@
+{
+  "sig": "\u003cjava.util.Collections: java.util.SortedSet unmodifiableSortedSet(java.util.SortedSet)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "SortedSet parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "P0",
+      "kind": "PARAMETER",
+      "paramIndex": 0,
+      "label": "SortedSet parameter"
+    },
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new Collections$UnmodifiableSortedSet"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "SortedSet parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Collections$UnmodifiableSortedSet"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

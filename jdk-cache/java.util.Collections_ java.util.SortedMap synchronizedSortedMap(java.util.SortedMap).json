@@ -1,0 +1,37 @@
+{
+  "sig": "\u003cjava.util.Collections: java.util.SortedMap synchronizedSortedMap(java.util.SortedMap)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "SortedMap parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new Collections$SynchronizedSortedMap"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "SortedMap parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new Collections$SynchronizedSortedMap"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 0
+  }
+}

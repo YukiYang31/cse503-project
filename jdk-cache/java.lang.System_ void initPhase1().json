@@ -1,0 +1,1830 @@
+{
+  "sig": "\u003cjava.lang.System: void initPhase1()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field lineSeparator",
+    "writes to static field props",
+    "writes to static field initialIn",
+    "writes to static field handler",
+    "writes to static field notSupportedJnuEncoding"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "L61",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L60",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new System$2"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new Properties"
+      },
+      {
+        "id": "L63",
+        "kind": "LOAD",
+        "label": "callee: load map from parameter this"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "new FileInputStream"
+      },
+      {
+        "id": "L62",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: new Object"
+      },
+      {
+        "id": "L65",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "callee: new NullPointerException"
+      },
+      {
+        "id": "L64",
+        "kind": "LOAD",
+        "label": "callee: load defaults from parameter this"
+      },
+      {
+        "id": "I5",
+        "kind": "INSIDE",
+        "label": "callee: callee: new ArrayList"
+      },
+      {
+        "id": "L67",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I6",
+        "kind": "INSIDE",
+        "label": "new FileOutputStream"
+      },
+      {
+        "id": "L66",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I7",
+        "kind": "INSIDE",
+        "label": "callee: new Object"
+      },
+      {
+        "id": "L69",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I8",
+        "kind": "INSIDE",
+        "label": "callee: new NullPointerException"
+      },
+      {
+        "id": "L68",
+        "kind": "LOAD",
+        "label": "callee: load static INSTANCE"
+      },
+      {
+        "id": "I9",
+        "kind": "INSIDE",
+        "label": "callee: callee: new ArrayList"
+      },
+      {
+        "id": "L70",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L72",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L71",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L74",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I11",
+        "kind": "INSIDE",
+        "label": "callee: new Object"
+      },
+      {
+        "id": "I10",
+        "kind": "INSIDE",
+        "label": "new FileOutputStream"
+      },
+      {
+        "id": "L73",
+        "kind": "LOAD",
+        "label": "callee: callee: load charOut from parameter this"
+      },
+      {
+        "id": "L76",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I13",
+        "kind": "INSIDE",
+        "label": "callee: callee: new ArrayList"
+      },
+      {
+        "id": "L75",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load charOut from parameter this"
+      },
+      {
+        "id": "I12",
+        "kind": "INSIDE",
+        "label": "callee: new NullPointerException"
+      },
+      {
+        "id": "I15",
+        "kind": "INSIDE",
+        "label": "callee: new PrintStream"
+      },
+      {
+        "id": "L78",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I14",
+        "kind": "INSIDE",
+        "label": "new BufferedInputStream"
+      },
+      {
+        "id": "L77",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I17",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new Object"
+      },
+      {
+        "id": "L79",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I16",
+        "kind": "INSIDE",
+        "label": "callee: new BufferedOutputStream"
+      },
+      {
+        "id": "I19",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new array"
+      },
+      {
+        "id": "I18",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new IllegalArgumentException"
+      },
+      {
+        "id": "L80",
+        "kind": "LOAD",
+        "label": "callee: load static handler"
+      },
+      {
+        "id": "I20",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new Object"
+      },
+      {
+        "id": "I22",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new OutputStreamWriter"
+      },
+      {
+        "id": "I21",
+        "kind": "INSIDE",
+        "label": "callee: callee: new OutputStreamWriter"
+      },
+      {
+        "id": "I24",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new BufferedWriter"
+      },
+      {
+        "id": "I23",
+        "kind": "INSIDE",
+        "label": "callee: callee: new BufferedWriter"
+      },
+      {
+        "id": "I26",
+        "kind": "INSIDE",
+        "label": "callee: new PrintStream"
+      },
+      {
+        "id": "I25",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: new IllegalArgumentException"
+      },
+      {
+        "id": "I28",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: new Object"
+      },
+      {
+        "id": "I27",
+        "kind": "INSIDE",
+        "label": "callee: new BufferedOutputStream"
+      },
+      {
+        "id": "I29",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new IllegalArgumentException"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "I31",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new Object"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "I30",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new array"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "I33",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new OutputStreamWriter"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: load static VENDOR_VERSION"
+      },
+      {
+        "id": "I32",
+        "kind": "INSIDE",
+        "label": "callee: callee: new OutputStreamWriter"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "I35",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new BufferedWriter"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "I34",
+        "kind": "INSIDE",
+        "label": "callee: callee: new BufferedWriter"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "I37",
+        "kind": "INSIDE",
+        "label": "callee: new Terminator$1"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: load static VENDOR_URL_BUG"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "I36",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: callee: callee: new IllegalArgumentException"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "I39",
+        "kind": "INSIDE",
+        "label": "callee: new Signal"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "I38",
+        "kind": "INSIDE",
+        "label": "callee: new Signal"
+      },
+      {
+        "id": "L16",
+        "kind": "LOAD",
+        "label": "callee: load map from parameter this"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "load static props"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "callee: callee: load map from parameter this"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: load defaults from parameter this"
+      },
+      {
+        "id": "L19",
+        "kind": "LOAD",
+        "label": "callee: load map from parameter this"
+      },
+      {
+        "id": "I40",
+        "kind": "INSIDE",
+        "label": "callee: new Signal"
+      },
+      {
+        "id": "L21",
+        "kind": "LOAD",
+        "label": "load static in"
+      },
+      {
+        "id": "L20",
+        "kind": "LOAD",
+        "label": "callee: load defaults from parameter this"
+      },
+      {
+        "id": "L23",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L22",
+        "kind": "LOAD",
+        "label": "callee: callee: load static security"
+      },
+      {
+        "id": "L25",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L24",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L27",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L29",
+        "kind": "LOAD",
+        "label": "load static out"
+      },
+      {
+        "id": "L28",
+        "kind": "LOAD",
+        "label": "callee: callee: load otherParents from parameter this"
+      },
+      {
+        "id": "L30",
+        "kind": "LOAD",
+        "label": "callee: callee: load static security"
+      },
+      {
+        "id": "L32",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L31",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L33",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L36",
+        "kind": "LOAD",
+        "label": "callee: callee: load otherParents from parameter this"
+      },
+      {
+        "id": "L35",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L38",
+        "kind": "LOAD",
+        "label": "callee: callee: load static security"
+      },
+      {
+        "id": "L37",
+        "kind": "LOAD",
+        "label": "load static err"
+      },
+      {
+        "id": "L39",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L41",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L40",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L43",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L45",
+        "kind": "LOAD",
+        "label": "load static initialIn"
+      },
+      {
+        "id": "L44",
+        "kind": "LOAD",
+        "label": "callee: callee: load otherParents from parameter this"
+      },
+      {
+        "id": "L47",
+        "kind": "LOAD",
+        "label": "callee: load defaults from parameter this"
+      },
+      {
+        "id": "L46",
+        "kind": "LOAD",
+        "label": "callee: load map from parameter this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L49",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L48",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L50",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L52",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "L51",
+        "kind": "LOAD",
+        "label": "callee: load static INSTANCE"
+      },
+      {
+        "id": "L54",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L53",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L56",
+        "kind": "LOAD",
+        "label": "callee: callee: load charOut from parameter this"
+      },
+      {
+        "id": "L55",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L58",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load charOut from parameter this"
+      },
+      {
+        "id": "L57",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "L59",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "I20",
+        "target": "L51",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I20",
+        "target": "I20",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I20",
+        "target": "L52",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I20",
+        "target": "L53",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I22",
+        "target": "L52",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I22",
+        "target": "L53",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I22",
+        "target": "I22",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I22",
+        "target": "L55",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I22",
+        "field": "\u003cjava.io.OutputStreamWriter: sun.nio.cs.StreamEncoder se\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I21",
+        "field": "\u003cjava.io.OutputStreamWriter: sun.nio.cs.StreamEncoder se\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "field": "\u003cjava.io.FileOutputStream: java.io.FileDescriptor fd\u003e",
+        "target": "L21",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I2",
+        "field": "\u003cjava.io.FileOutputStream: java.lang.Object closeLock\u003e",
+        "target": "I3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I24",
+        "target": "L59",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I24",
+        "target": "L54",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I24",
+        "target": "I24",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I24",
+        "target": "L57",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I24",
+        "field": "\u003cjava.io.BufferedWriter: java.io.Writer out\u003e",
+        "target": "L58",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I24",
+        "field": "\u003cjava.io.BufferedWriter: java.io.Writer out\u003e",
+        "target": "I22",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I24",
+        "field": "\u003cjava.io.BufferedWriter: char[] cb\u003e",
+        "target": "I25",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L21",
+        "field": "\u003cjava.io.FileDescriptor: java.io.Closeable parent\u003e",
+        "target": "L27",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L21",
+        "field": "\u003cjava.io.FileDescriptor: java.io.Closeable parent\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L21",
+        "field": "\u003cjava.io.FileDescriptor: java.util.List otherParents\u003e",
+        "target": "L28",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L21",
+        "field": "\u003cjava.io.FileDescriptor: java.util.List otherParents\u003e",
+        "target": "I5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I23",
+        "target": "L59",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I23",
+        "target": "L60",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I23",
+        "target": "I23",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I23",
+        "target": "L57",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I23",
+        "field": "\u003cjava.io.BufferedWriter: java.io.Writer out\u003e",
+        "target": "I21",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I23",
+        "field": "\u003cjava.io.BufferedWriter: java.io.Writer out\u003e",
+        "target": "L56",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I23",
+        "field": "\u003cjava.io.BufferedWriter: char[] cb\u003e",
+        "target": "I24",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L25",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L27",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L23",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "I4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "L24",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I26",
+        "field": "\u003cjava.io.PrintStream: jdk.internal.misc.InternalLock lock\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I26",
+        "field": "\u003cjava.io.PrintStream: java.io.BufferedWriter textOut\u003e",
+        "target": "I34",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I26",
+        "field": "\u003cjava.io.PrintStream: java.io.BufferedWriter textOut\u003e",
+        "target": "I35",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I26",
+        "field": "\u003cjava.io.PrintStream: java.nio.charset.Charset charset\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I26",
+        "field": "\u003cjava.io.PrintStream: java.nio.charset.Charset charset\u003e",
+        "target": "L72",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I26",
+        "field": "\u003cjava.io.FilterOutputStream: java.io.OutputStream out\u003e",
+        "target": "I27",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I26",
+        "field": "\u003cjava.io.PrintStream: java.io.OutputStreamWriter charOut\u003e",
+        "target": "I32",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I26",
+        "field": "\u003cjava.io.PrintStream: java.io.OutputStreamWriter charOut\u003e",
+        "target": "I33",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I26",
+        "field": "\u003cjava.io.FilterOutputStream: java.lang.Object closeLock\u003e",
+        "target": "I32",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I26",
+        "field": "\u003cjava.io.FilterOutputStream: java.lang.Object closeLock\u003e",
+        "target": "I31",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I25",
+        "target": "L61",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I25",
+        "target": "L62",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I25",
+        "target": "I25",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I25",
+        "target": "L54",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "field": "\u003cjava.io.FileOutputStream: java.io.FileDescriptor fd\u003e",
+        "target": "L29",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I6",
+        "field": "\u003cjava.io.FileOutputStream: java.lang.Object closeLock\u003e",
+        "target": "I7",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I27",
+        "field": "\u003cjava.io.BufferedOutputStream: jdk.internal.misc.InternalLock lock\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I27",
+        "field": "\u003cjava.io.BufferedOutputStream: byte[] buf\u003e",
+        "target": "I30",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I27",
+        "field": "\u003cjava.io.FilterOutputStream: java.io.OutputStream out\u003e",
+        "target": "I10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I27",
+        "field": "\u003cjava.io.FilterOutputStream: java.lang.Object closeLock\u003e",
+        "target": "I28",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "I8",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "L31",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "L32",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "I6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "L33",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I8",
+        "target": "L35",
+        "type": "INSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L27",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L49",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L39",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L25",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L69",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L59",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L70",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L60",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L30",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L52",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L74",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L50",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L72",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L40",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L62",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L78",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L24",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L68",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L32",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L54",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L76",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L22",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L66",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L38",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L48",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L71",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L41",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L31",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L53",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L61",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L51",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L23",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L67",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L35",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L57",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L79",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L43",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L65",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L33",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L55",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L77",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.nio.cs.UTF_8: sun.nio.cs.UTF_8 INSTANCE\u003e",
+        "target": "L51",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003csun.nio.cs.UTF_8: sun.nio.cs.UTF_8 INSTANCE\u003e",
+        "target": "L68",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.util.Properties props\u003e",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.VersionProps: java.lang.String VENDOR_URL_BUG\u003e",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.io.FileDescriptor: java.io.FileDescriptor err\u003e",
+        "target": "L37",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.io.FileDescriptor: java.io.FileDescriptor in\u003e",
+        "target": "L21",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.io.FileDescriptor: java.io.FileDescriptor out\u003e",
+        "target": "L29",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.Terminator: jdk.internal.misc.Signal$Handler handler\u003e",
+        "target": "L80",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.System: java.io.InputStream initialIn\u003e",
+        "target": "L45",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.VersionProps: java.lang.String VENDOR_VERSION\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I29",
+        "target": "I29",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I29",
+        "target": "L65",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I29",
+        "target": "L66",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I29",
+        "target": "L67",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L29",
+        "field": "\u003cjava.io.FileDescriptor: java.io.Closeable parent\u003e",
+        "target": "I6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L29",
+        "field": "\u003cjava.io.FileDescriptor: java.io.Closeable parent\u003e",
+        "target": "L35",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L29",
+        "field": "\u003cjava.io.FileDescriptor: java.util.List otherParents\u003e",
+        "target": "L36",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L29",
+        "field": "\u003cjava.io.FileDescriptor: java.util.List otherParents\u003e",
+        "target": "I9",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I31",
+        "target": "L69",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I31",
+        "target": "L70",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I31",
+        "target": "I31",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I31",
+        "target": "L68",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I33",
+        "target": "L69",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I33",
+        "target": "L70",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I33",
+        "target": "L72",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I33",
+        "target": "I33",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I33",
+        "field": "\u003cjava.io.OutputStreamWriter: sun.nio.cs.StreamEncoder se\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I32",
+        "field": "\u003cjava.io.OutputStreamWriter: sun.nio.cs.StreamEncoder se\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I10",
+        "field": "\u003cjava.io.FileOutputStream: java.io.FileDescriptor fd\u003e",
+        "target": "L37",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I10",
+        "field": "\u003cjava.io.FileOutputStream: java.lang.Object closeLock\u003e",
+        "target": "I11",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I35",
+        "target": "L71",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I35",
+        "target": "L74",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I35",
+        "target": "L76",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I35",
+        "target": "I35",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I35",
+        "field": "\u003cjava.io.BufferedWriter: java.io.Writer out\u003e",
+        "target": "L75",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I35",
+        "field": "\u003cjava.io.BufferedWriter: java.io.Writer out\u003e",
+        "target": "I33",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I35",
+        "field": "\u003cjava.io.BufferedWriter: char[] cb\u003e",
+        "target": "I36",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I34",
+        "target": "L74",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I34",
+        "target": "I34",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I34",
+        "target": "L76",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I34",
+        "target": "L77",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I34",
+        "field": "\u003cjava.io.BufferedWriter: java.io.Writer out\u003e",
+        "target": "I32",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I34",
+        "field": "\u003cjava.io.BufferedWriter: java.io.Writer out\u003e",
+        "target": "L73",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I34",
+        "field": "\u003cjava.io.BufferedWriter: char[] cb\u003e",
+        "target": "I35",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I12",
+        "target": "L39",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I12",
+        "target": "I10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I12",
+        "target": "L40",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I12",
+        "target": "L41",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I12",
+        "target": "I12",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I12",
+        "target": "L43",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I15",
+        "field": "\u003cjava.io.PrintStream: jdk.internal.misc.InternalLock lock\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I15",
+        "field": "\u003cjava.io.PrintStream: java.io.BufferedWriter textOut\u003e",
+        "target": "I23",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I15",
+        "field": "\u003cjava.io.PrintStream: java.io.BufferedWriter textOut\u003e",
+        "target": "I24",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I15",
+        "field": "\u003cjava.io.PrintStream: java.nio.charset.Charset charset\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I15",
+        "field": "\u003cjava.io.PrintStream: java.nio.charset.Charset charset\u003e",
+        "target": "L55",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I15",
+        "field": "\u003cjava.io.FilterOutputStream: java.io.OutputStream out\u003e",
+        "target": "I16",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I15",
+        "field": "\u003cjava.io.PrintStream: java.io.OutputStreamWriter charOut\u003e",
+        "target": "I21",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I15",
+        "field": "\u003cjava.io.PrintStream: java.io.OutputStreamWriter charOut\u003e",
+        "target": "I22",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I15",
+        "field": "\u003cjava.io.FilterOutputStream: java.lang.Object closeLock\u003e",
+        "target": "I21",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I15",
+        "field": "\u003cjava.io.FilterOutputStream: java.lang.Object closeLock\u003e",
+        "target": "I20",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I36",
+        "target": "L71",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I36",
+        "target": "I36",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I36",
+        "target": "L78",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I36",
+        "target": "L79",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I14",
+        "field": "\u003cjava.io.FilterInputStream: java.io.InputStream in\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I16",
+        "field": "\u003cjava.io.BufferedOutputStream: jdk.internal.misc.InternalLock lock\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I16",
+        "field": "\u003cjava.io.BufferedOutputStream: byte[] buf\u003e",
+        "target": "I19",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I16",
+        "field": "\u003cjava.io.FilterOutputStream: java.io.OutputStream out\u003e",
+        "target": "I6",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I16",
+        "field": "\u003cjava.io.FilterOutputStream: java.lang.Object closeLock\u003e",
+        "target": "I17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I18",
+        "target": "I18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I18",
+        "target": "L48",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I18",
+        "target": "L49",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I18",
+        "target": "L50",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L37",
+        "field": "\u003cjava.io.FileDescriptor: java.io.Closeable parent\u003e",
+        "target": "I10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L37",
+        "field": "\u003cjava.io.FileDescriptor: java.io.Closeable parent\u003e",
+        "target": "L43",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L37",
+        "field": "\u003cjava.io.FileDescriptor: java.util.List otherParents\u003e",
+        "target": "I13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L37",
+        "field": "\u003cjava.io.FileDescriptor: java.util.List otherParents\u003e",
+        "target": "L44",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L47",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L63",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L20",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L64",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L46",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "field": "\u003cjava.util.Properties: java.util.concurrent.ConcurrentHashMap map\u003e",
+        "target": "L18",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.String lineSeparator\u003e"
+      },
+      {
+        "node": "L21",
+        "field": "\u003cjava.io.FileDescriptor: java.io.Closeable parent\u003e"
+      },
+      {
+        "node": "L37",
+        "field": "\u003cjava.io.FileDescriptor: java.util.List otherParents\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.System: java.util.Properties props\u003e"
+      },
+      {
+        "node": "L37",
+        "field": "\u003cjava.io.FileDescriptor: java.io.Closeable parent\u003e"
+      },
+      {
+        "node": "L21",
+        "field": "\u003cjava.io.FileDescriptor: java.util.List otherParents\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.System: java.io.InputStream initialIn\u003e"
+      },
+      {
+        "node": "L29",
+        "field": "\u003cjava.io.FileDescriptor: java.io.Closeable parent\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.Terminator: jdk.internal.misc.Signal$Handler handler\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.lang.System: java.lang.String notSupportedJnuEncoding\u003e"
+      },
+      {
+        "node": "L29",
+        "field": "\u003cjava.io.FileDescriptor: java.util.List otherParents\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "I40",
+      "I0",
+      "I1",
+      "L63",
+      "I2",
+      "L20",
+      "I4",
+      "L64",
+      "I5",
+      "I6",
+      "I8",
+      "L68",
+      "L27",
+      "I9",
+      "L28",
+      "L72",
+      "I10",
+      "L73",
+      "I13",
+      "I12",
+      "L75",
+      "I15",
+      "I14",
+      "L36",
+      "L35",
+      "I18",
+      "I20",
+      "I22",
+      "I21",
+      "L43",
+      "I24",
+      "I23",
+      "L45",
+      "I26",
+      "L44",
+      "I25",
+      "L47",
+      "L46",
+      "GBL",
+      "I29",
+      "L0",
+      "L1",
+      "L2",
+      "I31",
+      "L3",
+      "L4",
+      "I33",
+      "L5",
+      "L51",
+      "I32",
+      "L6",
+      "L10",
+      "I35",
+      "L7",
+      "I34",
+      "L8",
+      "L12",
+      "L56",
+      "I37",
+      "L9",
+      "L11",
+      "L55",
+      "I36",
+      "L14",
+      "L58",
+      "I39",
+      "L13",
+      "I38",
+      "L16",
+      "L18",
+      "L17",
+      "L19"
+    ],
+    "insideNodeCounter": 41,
+    "loadNodeCounter": 81
+  }
+}
