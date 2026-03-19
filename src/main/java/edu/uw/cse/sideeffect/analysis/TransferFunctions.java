@@ -460,6 +460,22 @@ public class TransferFunctions {
      * Otherwise → conservatively mark as side-effecting.
      */
     private void handleInvoke(AbstractInvokeExpr invokeExpr, Local returnVar, PointsToGraph graph) {
+        // Handle invokedynamic: StringConcatFactory.makeConcatWithConstants is side-effect-free
+        // (Java 9+ compiles string concatenation with '+' to this bootstrap method)
+        if (invokeExpr instanceof JDynamicInvokeExpr dynamicInvoke) {
+            String bootstrapName = dynamicInvoke.getBootstrapMethodSignature().getName();
+            if ("makeConcatWithConstants".equals(bootstrapName) || "makeConcat".equals(bootstrapName)) {
+                if (config.debug) System.out.println("Debug== string concat invokedynamic (side-effect-free): " + bootstrapName);
+                if (returnVar != null && returnVar.getType() instanceof ReferenceType) {
+                    InsideNode freshReturn = nextInsideNode(graph, "string concat result");
+                    graph.strongUpdate(returnVar, Set.of(freshReturn));
+                    if (config.debug) System.out.println("Debug==   return value: " + returnVar.getName() + " -> " + freshReturn.getId());
+                }
+                return;
+            }
+            // Other invokedynamic: fall through to conservative handling below
+        }
+
         MethodSignature methodSig = invokeExpr.getMethodSignature();
 
         if (SafeMethods.isSafe(methodSig)) {

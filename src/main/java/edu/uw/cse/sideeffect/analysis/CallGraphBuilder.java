@@ -70,6 +70,9 @@ public class CallGraphBuilder {
         JavaView jrtView = new JavaView(new JrtFileSystemAnalysisInputLocation());
         Set<JavaSootClass> discoveredClasses = new LinkedHashSet<>(initialClasses);
         Queue<JavaSootClass> pendingClasses = new ArrayDeque<>(initialClasses);
+        // Collect external edges (to SafeMethods, cached library methods, forbidden packages)
+        // for debug visualization — these methods aren't analyzed but edges should appear in the call graph
+        Map<String, Set<String>> externalEdges = new HashMap<>();
         int jdkClassesDiscovered = 0;
         int MAX_DISCOVERED_CLASSES = 200; // cap to prevent runaway BFS
 
@@ -83,21 +86,34 @@ public class CallGraphBuilder {
                 } catch (Exception e) {
                     continue;
                 }
+                String callerSig = m.getSignature().toString();
                 for (Stmt stmt : body.getStmtGraph().getStmts()) {
                     AbstractInvokeExpr invokeExpr = extractInvokeExpr(stmt);
                     if (invokeExpr == null) continue;
 
                     MethodSignature calleeSig = invokeExpr.getMethodSignature();
 
-                    // Stop condition: SafeMethods
-                    if (SafeMethods.isSafe(calleeSig)) continue;
+                    // Stop condition: SafeMethods — record external edge for visualization
+                    if (SafeMethods.isSafe(calleeSig)) {
+                        externalEdges.computeIfAbsent(callerSig, k -> new HashSet<>())
+                                .add(calleeSig.toString() + " [safe]");
+                        continue;
+                    }
 
-                    // Stop condition: already in library cache
-                    if (LibrarySummaryCache.contains(calleeSig.toString())) continue;
+                    // Stop condition: already in library cache — record external edge
+                    if (LibrarySummaryCache.contains(calleeSig.toString())) {
+                        externalEdges.computeIfAbsent(callerSig, k -> new HashSet<>())
+                                .add(calleeSig.toString() + " [cached]");
+                        continue;
+                    }
 
                     // Stop condition: forbidden package (check before resolving)
                     String declClassName = calleeSig.getDeclClassType().getFullyQualifiedName();
-                    if (isForbiddenClassName(declClassName)) continue;
+                    if (isForbiddenClassName(declClassName)) {
+                        externalEdges.computeIfAbsent(callerSig, k -> new HashSet<>())
+                                .add(calleeSig.toString() + " [forbidden]");
+                        continue;
+                    }
 
                     // Resolve to the declared class only (no CHA/subtypes)
                     // Try user view first, then JRT view
@@ -138,7 +154,7 @@ public class CallGraphBuilder {
         }
 
         // Now run the existing call graph construction on the expanded class set
-        return buildCallGraphAndOrder(discoveredClasses, initialClasses, view, config);
+        return buildCallGraphAndOrder(discoveredClasses, initialClasses, view, config, externalEdges);
     }
 
     /**
@@ -146,7 +162,7 @@ public class CallGraphBuilder {
      */
     public static Result computeBottomUpOrder(
             Collection<JavaSootClass> classes, AnalysisConfig config) {
-        return buildCallGraphAndOrder(classes, classes, null, config);
+        return buildCallGraphAndOrder(classes, classes, null, config, Collections.emptyMap());
     }
 
     /**
@@ -156,7 +172,8 @@ public class CallGraphBuilder {
             Collection<? extends JavaSootClass> allClasses,
             Collection<? extends JavaSootClass> inputClasses,
             JavaView view,
-            AnalysisConfig config) {
+            AnalysisConfig config,
+            Map<String, Set<String>> externalEdges) {
 
         // Collect all concrete methods and build signature-to-method map
         Map<String, JavaSootMethod> methodBySig = new LinkedHashMap<>();
@@ -237,16 +254,30 @@ public class CallGraphBuilder {
                     System.out.println("Debug==   " + entry.getKey() + " -> " + entry.getValue());
                 }
             }
+            // Print external edges (calls to SafeMethods, cached library methods, forbidden packages)
+            if (!externalEdges.isEmpty()) {
+                System.out.println("\nDebug== External edges (JDK/library calls not in analysis scope):");
+                for (var entry : externalEdges.entrySet()) {
+                    if (!entry.getValue().isEmpty()) {
+                        System.out.println("Debug==   " + entry.getKey() + " -> " + entry.getValue());
+                    }
+                }
+            }
             System.out.println("\nDebug== Override graph (base -> overrides):");
             for (var entry : overrideGraph.entrySet()) {
                 System.out.println("Debug==   " + entry.getKey() + " overridden by " + entry.getValue());
             }
         }
 
-        // Snapshot the raw call graph before override augmentation
+        // Snapshot the raw call graph before override augmentation, including external edges
         Map<String, Set<String>> rawCallGraph = new HashMap<>();
         for (var e : callGraph.entrySet()) {
             rawCallGraph.put(e.getKey(), new HashSet<>(e.getValue()));
+        }
+        // Merge external edges into raw call graph for visualization
+        for (var e : externalEdges.entrySet()) {
+            rawCallGraph.computeIfAbsent(e.getKey(), k -> new HashSet<>())
+                    .addAll(e.getValue());
         }
 
         // Augment call graph with override edges

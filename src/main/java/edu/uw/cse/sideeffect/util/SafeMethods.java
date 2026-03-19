@@ -89,27 +89,20 @@ public class SafeMethods {
         SAFE_METHOD_SIGNATURES.add("java.lang.Number#doubleValue");
         SAFE_METHOD_SIGNATURES.add("java.lang.Number#floatValue");
 
-        // Collections query methods
+        // Collections query methods (primitive/boolean returns only — no methods returning
+        // pre-existing references, backed views, or iterators)
         SAFE_METHOD_SIGNATURES.add("java.util.Collection#size");
         SAFE_METHOD_SIGNATURES.add("java.util.Collection#isEmpty");
         SAFE_METHOD_SIGNATURES.add("java.util.Collection#contains");
-        SAFE_METHOD_SIGNATURES.add("java.util.Collection#iterator");
-        SAFE_METHOD_SIGNATURES.add("java.util.List#get");
         SAFE_METHOD_SIGNATURES.add("java.util.List#indexOf");
-        SAFE_METHOD_SIGNATURES.add("java.util.Map#get");
         SAFE_METHOD_SIGNATURES.add("java.util.Map#containsKey");
         SAFE_METHOD_SIGNATURES.add("java.util.Map#containsValue");
         SAFE_METHOD_SIGNATURES.add("java.util.Map#size");
         SAFE_METHOD_SIGNATURES.add("java.util.Map#isEmpty");
-        SAFE_METHOD_SIGNATURES.add("java.util.Map#keySet");
-        SAFE_METHOD_SIGNATURES.add("java.util.Map#values");
-        SAFE_METHOD_SIGNATURES.add("java.util.Map#entrySet");
 
-        // Arrays
+        // Arrays (only methods that return fresh objects or primitives)
         SAFE_METHOD_SIGNATURES.add("java.util.Arrays#copyOf");
-        SAFE_METHOD_SIGNATURES.add("java.util.Arrays#sort");
         SAFE_METHOD_SIGNATURES.add("java.util.Arrays#toString");
-        SAFE_METHOD_SIGNATURES.add("java.util.Arrays#asList");
 
         // System
         SAFE_METHOD_SIGNATURES.add("java.lang.System#identityHashCode");
