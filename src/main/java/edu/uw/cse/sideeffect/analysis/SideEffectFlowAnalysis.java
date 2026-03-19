@@ -5,6 +5,8 @@ import edu.uw.cse.sideeffect.graph.PointsToGraph;
 import edu.uw.cse.sideeffect.output.DebugHtmlWriter;
 import edu.uw.cse.sideeffect.util.NodeMerger;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import sootup.core.graph.StmtGraph;
 import sootup.core.jimple.common.stmt.Stmt;
 import sootup.core.model.Body;
@@ -41,12 +43,19 @@ public class SideEffectFlowAnalysis extends ForwardFlowAnalysis<PointsToGraph> {
     public SideEffectFlowAnalysis(StmtGraph<?> cfg, Body body, AnalysisConfig config,
                                boolean isStatic, DebugHtmlWriter debugWriter,
                                List<String> paramTypeNames, SummaryCache summaryCache) {
+        this(cfg, body, config, isStatic, debugWriter, paramTypeNames, summaryCache, null);
+    }
+
+    public SideEffectFlowAnalysis(StmtGraph<?> cfg, Body body, AnalysisConfig config,
+                               boolean isStatic, DebugHtmlWriter debugWriter,
+                               List<String> paramTypeNames, SummaryCache summaryCache,
+                               Map<String, Set<String>> overrideGraph) {
         super(cfg);
         this.config = config;
         this.body = body;
         this.isStatic = isStatic;
         this.debugWriter = debugWriter;
-        this.transfer = new TransferFunctions(config, isStatic, paramTypeNames, summaryCache, debugWriter);
+        this.transfer = new TransferFunctions(config, isStatic, paramTypeNames, summaryCache, overrideGraph, debugWriter);
         execute();
     }
 

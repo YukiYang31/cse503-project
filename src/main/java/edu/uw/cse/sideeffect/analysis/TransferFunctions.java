@@ -43,6 +43,7 @@ public class TransferFunctions {
     private final boolean isStaticMethod;
     private final List<String> paramTypeNames; // nullable — falls back to index-based labels
     private final SummaryCache summaryCache; // nullable — null means intra-procedural only
+    private final Map<String, Set<String>> overrideGraph; // base sig → override sigs (nullable)
     private final DebugHtmlWriter debugWriter; // nullable — null means no debug output
 
     /**
@@ -56,25 +57,33 @@ public class TransferFunctions {
     public static final String RETURN_VAR_NAME = "$RETURN";
 
     public TransferFunctions(AnalysisConfig config, boolean isStaticMethod) {
-        this(config, isStaticMethod, null, null, null);
+        this(config, isStaticMethod, null, null, null, null);
     }
 
     public TransferFunctions(AnalysisConfig config, boolean isStaticMethod, List<String> paramTypeNames) {
-        this(config, isStaticMethod, paramTypeNames, null, null);
+        this(config, isStaticMethod, paramTypeNames, null, null, null);
     }
 
     public TransferFunctions(AnalysisConfig config, boolean isStaticMethod,
                               List<String> paramTypeNames, SummaryCache summaryCache) {
-        this(config, isStaticMethod, paramTypeNames, summaryCache, null);
+        this(config, isStaticMethod, paramTypeNames, summaryCache, null, null);
     }
 
     public TransferFunctions(AnalysisConfig config, boolean isStaticMethod,
                               List<String> paramTypeNames, SummaryCache summaryCache,
                               DebugHtmlWriter debugWriter) {
+        this(config, isStaticMethod, paramTypeNames, summaryCache, null, debugWriter);
+    }
+
+    public TransferFunctions(AnalysisConfig config, boolean isStaticMethod,
+                              List<String> paramTypeNames, SummaryCache summaryCache,
+                              Map<String, Set<String>> overrideGraph,
+                              DebugHtmlWriter debugWriter) {
         this.config = config;
         this.isStaticMethod = isStaticMethod;
         this.paramTypeNames = paramTypeNames;
         this.summaryCache = summaryCache;
+        this.overrideGraph = overrideGraph;
         this.debugWriter = debugWriter;
     }
 
@@ -494,35 +503,39 @@ public class TransferFunctions {
         // Tier 2: Inter-procedural — check summary cache for callee summary
         String fullSig = methodSig.toString();
         String subSig = methodSig.getSubSignature().toString();
+        // Try full signature first (exact match)
         MethodSummary calleeSummary = summaryCache != null ? summaryCache.lookup(fullSig, subSig) : null;
 
         // Apply summary if found
         if (calleeSummary != null) {
-            // For virtual/interface calls: apply ALL override summaries (union semantics).
-            // A virtual dispatch to A.m() could resolve to B.m() at runtime, so the
-            // analysis must be conservative over all known implementations.
+            applySummaryToState(calleeSummary, invokeExpr, returnVar, graph, methodSig);
+
+            // For virtual/interface calls: also apply override summaries (scoped to override graph).
+            // A virtual dispatch to Base.m() could resolve to Derived.m() at runtime, so the
+            // analysis must be conservative over all known overriding implementations.
             boolean isVirtualDispatch = (invokeExpr instanceof JVirtualInvokeExpr)
                                      || (invokeExpr instanceof JInterfaceInvokeExpr);
-            if (isVirtualDispatch && summaryCache != null) {
-                List<MethodSummary> allSummaries = summaryCache.lookupAllBySubSignature(subSig);
-                if (allSummaries.size() > 1) {
-                    if (config.debug) System.out.println("Debug== virtual dispatch union: applying "
-                        + allSummaries.size() + " summaries for sub-sig " + subSig);
-                    Set<Node> unionReturn = new HashSet<>();
-                    for (MethodSummary s : allSummaries) {
-                        applySummaryToState(s, invokeExpr, returnVar, graph, methodSig);
-                        if (returnVar != null && returnVar.getType() instanceof ReferenceType) {
-                            unionReturn.addAll(graph.pointsTo(returnVar));
+            if (isVirtualDispatch && overrideGraph != null && summaryCache != null) {
+                Set<String> overrides = overrideGraph.get(fullSig);
+                if (overrides != null && !overrides.isEmpty()) {
+                    Set<Node> unionReturn = new HashSet<>(
+                        returnVar != null && returnVar.getType() instanceof ReferenceType
+                            ? graph.pointsTo(returnVar) : Set.of());
+                    for (String overrideSig : overrides) {
+                        MethodSummary overrideSummary = summaryCache.lookup(overrideSig, null);
+                        if (overrideSummary != null) {
+                            if (config.debug) System.out.println("Debug== override dispatch: also applying " + overrideSig);
+                            applySummaryToState(overrideSummary, invokeExpr, returnVar, graph, methodSig);
+                            if (returnVar != null && returnVar.getType() instanceof ReferenceType) {
+                                unionReturn.addAll(graph.pointsTo(returnVar));
+                            }
                         }
                     }
-                    // Set return var to the union of all summaries' return targets
                     if (returnVar != null && !unionReturn.isEmpty()) {
                         graph.strongUpdate(returnVar, unionReturn);
                     }
-                    return;
                 }
             }
-            applySummaryToState(calleeSummary, invokeExpr, returnVar, graph, methodSig);
             return;
         }
 

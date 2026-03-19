@@ -177,15 +177,12 @@ public class CallGraphBuilder {
 
         // Collect all concrete methods and build signature-to-method map
         Map<String, JavaSootMethod> methodBySig = new LinkedHashMap<>();
-        Map<String, JavaSootMethod> methodBySubSig = new LinkedHashMap<>();
 
         for (JavaSootClass cls : allClasses) {
             for (JavaSootMethod method : cls.getMethods()) {
                 if (!method.isConcrete()) continue;
                 String sig = method.getSignature().toString();
                 methodBySig.put(sig, method);
-                String subSig = method.getSignature().getSubSignature().toString();
-                methodBySubSig.put(subSig, method);
             }
         }
 
@@ -230,14 +227,10 @@ public class CallGraphBuilder {
 
                     MethodSignature calleeMSig = invokeExpr.getMethodSignature();
                     String calleeFullSig = calleeMSig.toString();
-                    String calleeSubSig = calleeMSig.getSubSignature().toString();
 
-                    // Try exact match first
+                    // Only add edge if we have the exact target method
                     if (methodBySig.containsKey(calleeFullSig)) {
                         callees.add(calleeFullSig);
-                    } else if (methodBySubSig.containsKey(calleeSubSig)) {
-                        // Virtual/interface dispatch: resolve via sub-signature
-                        callees.add(methodBySubSig.get(calleeSubSig).getSignature().toString());
                     }
                 }
             } catch (Exception e) {

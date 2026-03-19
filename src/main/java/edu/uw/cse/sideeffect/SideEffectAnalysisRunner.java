@@ -547,7 +547,7 @@ public class SideEffectAnalysisRunner {
 
                 // Run the forward flow analysis (with inter-procedural cache)
                 SideEffectFlowAnalysis analysis = new SideEffectFlowAnalysis(
-                    cfg, body, config, method.isStatic(), debugWriter, paramTypeNames, cache);
+                    cfg, body, config, method.isStatic(), debugWriter, paramTypeNames, cache, overrideGraph);
 
                 // Get the exit graph
                 PointsToGraph exitGraph = analysis.getExitGraph();

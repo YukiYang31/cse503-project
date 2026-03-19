@@ -6,10 +6,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-import java.util.HexFormat;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -82,8 +79,8 @@ public class LibrarySummaryCache {
     private static void writeToDisk(String fullSig, MethodSummary summary) {
         try {
             Files.createDirectories(CACHE_DIR);
-            String hash = sha256(fullSig);
-            Path file = CACHE_DIR.resolve(hash + ".json");
+            String fileName = sanitizeFileName(fullSig);
+            Path file = CACHE_DIR.resolve(fileName + ".json");
             JsonObject obj = MethodSummarySerializer.serialize(summary);
             Files.writeString(file, GSON.toJson(obj), StandardCharsets.UTF_8);
         } catch (IOException e) {
@@ -91,14 +88,18 @@ public class LibrarySummaryCache {
         }
     }
 
-    private static String sha256(String input) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hash = md.digest(input.getBytes(StandardCharsets.UTF_8));
-            return HexFormat.of().formatHex(hash);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+    /**
+     * Convert a method signature to a readable, filesystem-safe filename.
+     * e.g. "&lt;java.util.ArrayList: boolean add(java.lang.Object)&gt;"
+     *   → "java.util.ArrayList_boolean_add(java.lang.Object)"
+     */
+    private static String sanitizeFileName(String sig) {
+        return sig.replace('<', ' ')
+                  .replace('>', ' ')
+                  .replace(':', '_')
+                  .replace('/', '_')
+                  .replace('\\', '_')
+                  .trim();
     }
 
     /** Return the number of entries currently in memory. */
