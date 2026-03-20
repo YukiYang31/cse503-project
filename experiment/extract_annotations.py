@@ -501,9 +501,202 @@ def extract_method_after_annotation(lines, ann_line_idx):
     return method_name, param_str, has_body, method_start
 
 
+def extract_all_methods(clean_lines, lines, class_spans, package_name, imports, filepath):
+    """
+    Extract ALL method declarations from a file, regardless of annotations.
+    Returns a list of entries with annotation="" (unannotated).
+    """
+    # Keywords that look like method calls but aren't method declarations
+    KEYWORDS = {
+        'if', 'while', 'for', 'switch', 'catch', 'synchronized', 'try',
+        'assert', 'throw', 'return', 'else', 'do', 'new', 'super', 'this',
+    }
+
+    # Pattern to find potential method declarations:
+    # [modifiers] [type-params] [return-type] method-name(
+    # We look for identifier( that's preceded by at least some declaration context
+    METHOD_PATTERN = re.compile(
+        r'(?:^|(?<=\s))'
+        r'(\w+)\s*\(',
+    )
+
+    results = []
+
+    for line_idx, clean_line in enumerate(clean_lines):
+        # Skip lines outside any class
+        class_idx = find_enclosing_class(line_idx, class_spans)
+        if class_idx is None:
+            continue
+
+        # Skip lines that are class/interface/enum declarations themselves
+        if re.search(r'\b(?:class|interface|enum)\s+\w+', clean_line):
+            continue
+
+        # Skip annotation-only lines
+        stripped = clean_line.strip()
+        if not stripped or stripped.startswith('@'):
+            continue
+
+        # Find all potential method name( patterns on this line
+        for m in METHOD_PATTERN.finditer(clean_line):
+            method_name = m.group(1)
+
+            # Skip keywords
+            if method_name in KEYWORDS:
+                continue
+
+            # Check that this looks like a declaration, not a call.
+            # A declaration has modifiers/return-type before the method name.
+            before = clean_line[:m.start()].strip()
+            # Strip annotations from the before part
+            before_clean = strip_annotations(before).strip()
+
+            # Get the enclosing class's simple name
+            enclosing_class_simple = class_spans[class_idx][2]
+
+            # Constructor: method_name matches class name, no return type needed
+            is_constructor = (method_name == enclosing_class_simple)
+
+            if is_constructor:
+                # Constructor: before should be empty or only modifiers
+                if before_clean:
+                    tokens = before_clean.split()
+                    modifiers = {'public', 'protected', 'private', 'static', 'final',
+                                 'abstract', 'synchronized', 'native', 'strictfp', 'default'}
+                    # All tokens before constructor name should be modifiers or type params
+                    non_mod = [t for t in tokens if t not in modifiers and not t.startswith('<')]
+                    if non_mod:
+                        # Has a return type → not a constructor, it's a regular method
+                        # where the method name happens to match the class name
+                        is_constructor = False
+            else:
+                # Regular method: must have at least a return type before the name
+                if not before_clean:
+                    continue
+                tokens = before_clean.split()
+                modifiers = {'public', 'protected', 'private', 'static', 'final',
+                             'abstract', 'synchronized', 'native', 'strictfp', 'default'}
+                # Strip modifiers and optional type params to find return type
+                non_mod = [t for t in tokens if t not in modifiers and not t.startswith('<')]
+                if not non_mod:
+                    # Only modifiers, no return type → not a method declaration
+                    continue
+
+                # Check the return type looks like a type (not a random word)
+                return_type_token = non_mod[-1]
+                # Erase generics for checking
+                rt_clean = erase_generics(return_type_token).strip()
+                if not rt_clean:
+                    continue
+                # Must look like a type: starts with uppercase, or is a primitive, or has dots/arrays
+                primitives = {'int', 'long', 'short', 'byte', 'char', 'boolean', 'float', 'double', 'void'}
+                if not (rt_clean[0].isupper() or rt_clean in primitives or '.' in rt_clean or '[]' in rt_clean):
+                    continue
+
+            # Now extract the full parameter list (balance parens across lines)
+            # Start from the opening paren position
+            open_paren_col = m.end() - 1  # position of '('
+            paren_depth = 0
+            found_open = False
+            full_decl = ''
+            decl_end_line = line_idx
+
+            for li in range(line_idx, min(line_idx + 20, len(lines))):
+                full_decl += ' ' + lines[li]
+                for ch in lines[li] if li > line_idx else lines[li][open_paren_col:]:
+                    if ch == '(':
+                        paren_depth += 1
+                        found_open = True
+                    elif ch == ')':
+                        paren_depth -= 1
+                        if found_open and paren_depth == 0:
+                            decl_end_line = li
+                            break
+                if found_open and paren_depth == 0:
+                    break
+
+            if not found_open or paren_depth != 0:
+                continue
+
+            # Check what follows the closing paren: { means has body, ; means abstract/native
+            has_body = False
+            found_terminator = False
+            paren_d = 0
+            found_close = False
+            for li in range(line_idx, min(decl_end_line + 5, len(lines))):
+                for ch in (lines[li] if li > line_idx else lines[li][open_paren_col:]):
+                    if ch == '(':
+                        paren_d += 1
+                    elif ch == ')':
+                        paren_d -= 1
+                        if paren_d == 0:
+                            found_close = True
+                    elif found_close:
+                        if ch == '{':
+                            has_body = True
+                            found_terminator = True
+                            break
+                        elif ch == ';':
+                            has_body = False
+                            found_terminator = True
+                            break
+                if found_terminator:
+                    break
+
+            if not found_terminator:
+                continue
+
+            # Extract parameter string from the ORIGINAL source
+            # Re-extract using original lines
+            param_text = ''
+            pd = 0
+            collecting = False
+            for li in range(line_idx, min(decl_end_line + 1, len(lines))):
+                start_col = open_paren_col if li == line_idx else 0
+                for ci, ch in enumerate(lines[li][start_col:], start_col):
+                    if ch == '(':
+                        pd += 1
+                        if pd == 1:
+                            collecting = True
+                            continue
+                    elif ch == ')':
+                        pd -= 1
+                        if pd == 0:
+                            collecting = False
+                            break
+                    if collecting:
+                        param_text += ch
+
+            # Build the entry
+            fq_class = get_fq_class_name(class_spans, class_idx, package_name)
+            canonical_method = '<init>' if is_constructor else method_name
+
+            param_types = parse_method_params(param_text, package_name, imports)
+
+            param_key = ','.join(param_types)
+            canonical_key = f"{fq_class}.{canonical_method}({param_key})"
+
+            results.append({
+                'file': filepath.name,
+                'class_name': fq_class,
+                'method_name': canonical_method,
+                'params': param_types,
+                'annotation': '',
+                'has_body': has_body,
+                'canonical_key': canonical_key,
+                'source_line': line_idx + 1,
+            })
+
+            # Only take the first match per line
+            break
+
+    return results
+
+
 def parse_file(filepath):
     """
     Parse a single .java file and extract all @Pure/@SideEffectFree annotated methods.
+    If the file has any annotations, also extract all unannotated methods.
     """
     with open(filepath, 'r', encoding='utf-8') as f:
         source = f.read()
@@ -534,7 +727,7 @@ def parse_file(filepath):
     class_spans = find_class_spans(clean_lines)
 
     # Scan for @Pure and @SideEffectFree annotations
-    results = []
+    annotated_results = []
     i = 0
     while i < len(clean_lines):
         line = clean_lines[i].strip()
@@ -571,7 +764,7 @@ def parse_file(filepath):
         param_key = ','.join(param_types)
         canonical_key = f"{fq_class}.{canonical_method}({param_key})"
 
-        results.append({
+        annotated_results.append({
             'file': filepath.name,
             'class_name': fq_class,
             'method_name': canonical_method,
@@ -584,7 +777,20 @@ def parse_file(filepath):
 
         i = method_line_idx + 1 if method_line_idx > i else i + 1
 
-    return results
+    # If this file has annotations, also extract all unannotated methods
+    if annotated_results:
+        all_methods = extract_all_methods(
+            clean_lines, lines, class_spans, package_name, imports, filepath
+        )
+        # Build set of canonical keys from annotated results
+        annotated_keys = {r['canonical_key'] for r in annotated_results}
+
+        # Add unannotated methods (not already in annotated set)
+        for method in all_methods:
+            if method['canonical_key'] not in annotated_keys:
+                annotated_results.append(method)
+
+    return annotated_results
 
 
 def main():
@@ -611,13 +817,15 @@ def main():
     # Summary
     pure_count = sum(1 for a in all_annotations if a['annotation'] == 'Pure')
     sef_count = sum(1 for a in all_annotations if a['annotation'] == 'SideEffectFree')
+    unannotated_count = sum(1 for a in all_annotations if a['annotation'] == '')
     with_body = sum(1 for a in all_annotations if a['has_body'])
     without_body = sum(1 for a in all_annotations if not a['has_body'])
 
     print(f"\nFiles with annotations: {files_with_annotations}")
-    print(f"Total annotated methods: {len(all_annotations)}")
+    print(f"Total methods extracted: {len(all_annotations)}")
     print(f"  @Pure: {pure_count}")
     print(f"  @SideEffectFree: {sef_count}")
+    print(f"  Unannotated (implicitly side-effecting): {unannotated_count}")
     print(f"  With body (concrete): {with_body}")
     print(f"  Without body (abstract/interface): {without_body}")
 
@@ -630,7 +838,8 @@ def main():
     # Print sample entries
     print("\nSample entries:")
     for entry in all_annotations[:10]:
-        print(f"  {entry['canonical_key']}  @{entry['annotation']}  body={entry['has_body']}")
+        ann_str = f"@{entry['annotation']}" if entry['annotation'] else "(unannotated)"
+        print(f"  {entry['canonical_key']}  {ann_str}  body={entry['has_body']}")
 
 
 if __name__ == '__main__':
