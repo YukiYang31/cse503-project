@@ -1,0 +1,39 @@
+{
+  "sig": "\u003cjava.util.Collections$ReverseComparator: int compare(java.lang.Comparable,java.lang.Comparable)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Comparable parameter escapes to global scope",
+    "Comparable parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Comparable parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Comparable parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P1",
+      "P2"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

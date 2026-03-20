@@ -1,0 +1,60 @@
+{
+  "sig": "\u003cjava.util.stream.SpinedBuffer$OfInt: void arrayForEach(java.lang.Object,int,int,java.lang.Object)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Object parameter escapes to global scope",
+    "mutates Object parameter via field elementIndex",
+    "loaded object \u0027callee: callee: load curChunk from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load curChunk from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Object parameter"
+      },
+      {
+        "id": "P4",
+        "kind": "PARAMETER",
+        "paramIndex": 4,
+        "label": "Object parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: load curChunk from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P4",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfInt: java.lang.Object curChunk\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P4",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfInt: int elementIndex\u003e"
+      },
+      {
+        "node": "L0"
+      }
+    ],
+    "globalEscaped": [
+      "P4"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

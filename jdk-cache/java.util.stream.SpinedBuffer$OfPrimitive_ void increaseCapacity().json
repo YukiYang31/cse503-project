@@ -1,0 +1,212 @@
+{
+  "sig": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: void increaseCapacity()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field unknown",
+    "this escapes to global scope",
+    "mutates this via field spine",
+    "mutates this via field priorElementCount",
+    "loaded object \u0027callee: load priorElementCount from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load spine from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: callee: load priorElementCount from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load priorElementCount from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load spine from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load spine from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load spine from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load spine from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load curChunk from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load priorElementCount from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load spine from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: array element from load spine from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: load priorElementCount from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: return from copyOf"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: load spine from parameter this"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: return from copyOf"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from load spine from parameter this"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: callee: load spine from parameter this"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: array element from callee: load spine from parameter this"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: callee: load curChunk from parameter this"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: array element from GBL"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: array element from callee: load spine from parameter this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: java.lang.Object curChunk\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: java.lang.Object curChunk\u003e",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: java.lang.Object curChunk\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: long[] priorElementCount\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: long[] priorElementCount\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: long[] priorElementCount\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: long[] priorElementCount\u003e",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: java.lang.Object[] spine\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: java.lang.Object[] spine\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: java.lang.Object[] spine\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: java.lang.Object[] spine\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: java.lang.Object[] spine\u003e",
+        "target": "L6",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: java.lang.Object[] spine\u003e"
+      },
+      {
+        "node": "L6"
+      },
+      {
+        "node": "L3"
+      },
+      {
+        "node": "L4"
+      },
+      {
+        "node": "GBL"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: long[] priorElementCount\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "L0",
+      "L2",
+      "L3",
+      "L5",
+      "L10",
+      "L8",
+      "L9"
+    ],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 11
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "sig": "\u003cjava.util.LinkedHashMap: void reinitialize()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field array element",
+    "mutates this via field tail",
+    "mutates this via field head"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P0"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.LinkedHashMap: java.util.LinkedHashMap$Entry tail\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.LinkedHashMap: java.util.LinkedHashMap$Entry head\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,151 @@
+{
+  "sig": "\u003cjava.util.AbstractMap$2$1: void \u003cinit\u003e(java.util.AbstractMap$2)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027load this$0 from AbstractMap$2 parameter\u0027 escapes to global scope",
+    "mutates loaded object \u0027load this$0 from AbstractMap$2 parameter\u0027 via field array element",
+    "loaded object \u0027load this$0 from load this$1 from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load this$0 from load this$1 from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load entrySet from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load this$0 from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "AbstractMap$2 parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load this$1 from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load this$0 from AbstractMap$2 parameter"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load this$0 from load this$1 from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: load entrySet from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: callee: new LinkedHashMap$LinkedEntrySet"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: new LinkedHashMap$LinkedEntryIterator"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: load this$0 from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.AbstractMap$2$1: java.util.AbstractMap$2 this$1\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.AbstractMap$2$1: java.util.AbstractMap$2 this$1\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.AbstractMap$2$1: java.util.Iterator i\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.AbstractMap$2: java.util.AbstractMap this$0\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.AbstractMap$2: java.util.AbstractMap this$0\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L1",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L1",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L2",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L2",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L3",
+        "field": "\u003cjava.util.LinkedHashMap$LinkedEntrySet: java.util.LinkedHashMap this$0\u003e",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I1",
+        "field": "\u003cjava.util.LinkedHashMap$LinkedEntrySet: java.util.LinkedHashMap this$0\u003e",
+        "target": "L4",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.AbstractMap$2$1: java.util.AbstractMap$2 this$1\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.AbstractMap$2$1: java.util.Iterator i\u003e"
+      },
+      {
+        "node": "L1"
+      },
+      {
+        "node": "L2"
+      }
+    ],
+    "globalEscaped": [
+      "L1",
+      "L2",
+      "I0"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 5
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "sig": "\u003cjava.util.LinkedHashMap$LinkedEntrySet: java.util.SequencedCollection reversed()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027callee: load this$0 from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load this$0 from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load entrySet from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "L1",
+      "kind": "LOAD",
+      "label": "callee: callee: load entrySet from parameter this"
+    },
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "callee: new LinkedHashMap$LinkedEntrySet"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load this$0 from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: load entrySet from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: new LinkedHashMap$LinkedEntrySet"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.LinkedHashMap$LinkedEntrySet: java.util.LinkedHashMap this$0\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.LinkedHashMap$LinkedEntrySet: java.util.LinkedHashMap this$0\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "L0"
+      }
+    ],
+    "globalEscaped": [
+      "L0",
+      "I0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 2
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "sig": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: void inflateSpine()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field unknown",
+    "this escapes to global scope",
+    "mutates this via field spine",
+    "mutates this via field priorElementCount",
+    "loaded object \u0027load spine from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027load spine from parameter this\u0027 via field array element",
+    "loaded object \u0027load curChunk from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load spine from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load curChunk from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: java.lang.Object curChunk\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: long[] priorElementCount\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: java.lang.Object[] spine\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: java.lang.Object[] spine\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: java.lang.Object[] spine\u003e"
+      },
+      {
+        "node": "L0"
+      },
+      {
+        "node": "GBL"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfPrimitive: long[] priorElementCount\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0"
+    ],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 2
+  }
+}

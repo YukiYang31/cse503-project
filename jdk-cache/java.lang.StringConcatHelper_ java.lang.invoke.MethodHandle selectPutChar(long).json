@@ -1,0 +1,43 @@
+{
+  "sig": "\u003cjava.lang.StringConcatHelper: java.lang.invoke.MethodHandle selectPutChar(long)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "L0",
+      "kind": "LOAD",
+      "label": "load static PUTCHAR_LATIN1_MH"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static PUTCHAR_LATIN1_MH"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.StringConcatHelper$LateInit: java.lang.invoke.MethodHandle PUTCHAR_LATIN1_MH\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.StringConcatHelper$LateInit: java.lang.invoke.MethodHandle PUTCHAR_UTF16_MH\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

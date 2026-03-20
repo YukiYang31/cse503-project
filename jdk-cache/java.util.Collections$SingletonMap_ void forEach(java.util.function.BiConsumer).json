@@ -1,0 +1,58 @@
+{
+  "sig": "\u003cjava.util.Collections$SingletonMap: void forEach(java.util.function.BiConsumer)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "BiConsumer parameter escapes to global scope",
+    "loaded object \u0027load k from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027load v from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "BiConsumer parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load k from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load v from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$SingletonMap: java.lang.Object k\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$SingletonMap: java.lang.Object v\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P1",
+      "L0",
+      "L1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

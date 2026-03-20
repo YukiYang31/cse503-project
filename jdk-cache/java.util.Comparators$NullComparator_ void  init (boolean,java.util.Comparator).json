@@ -1,0 +1,43 @@
+{
+  "sig": "\u003cjava.util.Comparators$NullComparator: void \u003cinit\u003e(boolean,java.util.Comparator)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Comparator parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Comparators$NullComparator: java.util.Comparator real\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Comparators$NullComparator: boolean nullFirst\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Comparators$NullComparator: java.util.Comparator real\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "sig": "\u003cjava.util.AbstractMap$SimpleImmutableEntry: void \u003cinit\u003e(java.util.Map$Entry)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Map$Entry parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Map$Entry parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.AbstractMap$SimpleImmutableEntry: java.lang.Object value\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.AbstractMap$SimpleImmutableEntry: java.lang.Object key\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.AbstractMap$SimpleImmutableEntry: java.lang.Object value\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.AbstractMap$SimpleImmutableEntry: java.lang.Object key\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P1"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

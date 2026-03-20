@@ -1,0 +1,69 @@
+{
+  "sig": "\u003cjava.lang.PublicMethods$Key: void \u003cinit\u003e(java.lang.reflect.Method)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Method parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Method parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static reflectionFactory"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.lang.PublicMethods$Key: jdk.internal.reflect.ReflectionFactory reflectionFactory\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.PublicMethods$Key: java.lang.String name\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.lang.PublicMethods$Key: java.lang.Class[] ptypes\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.PublicMethods$Key: java.lang.String name\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.lang.PublicMethods$Key: java.lang.Class[] ptypes\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P1",
+      "L0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

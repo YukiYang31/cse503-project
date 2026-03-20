@@ -1,0 +1,212 @@
+{
+  "sig": "\u003cjava.util.Collections$CheckedCollection: java.util.Collection checkedCopyOf(java.util.Collection)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field zeroLengthElementArray",
+    "loaded object \u0027callee: load zeroLengthElementArray from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load type from parameter this\u0027 escapes to global scope",
+    "loaded object \u0027callee: load q from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "I4",
+      "kind": "INSIDE",
+      "label": "callee: new Arrays$ArrayList"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Collection parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load zeroLengthElementArray from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "array element from GBL"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: load q from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "return from getClass"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: load static SUPPRESSED_SENTINEL"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "return from getClass"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "return from getClass"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: callee: callee: callee: load static UNASSIGNED_STACK"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "return from copyOf"
+      },
+      {
+        "id": "I4",
+        "kind": "INSIDE",
+        "label": "callee: new Arrays$ArrayList"
+      },
+      {
+        "id": "I5",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new NullPointerException"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L5",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$CheckedCollection: java.lang.Object[] zeroLengthElementArray\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$CheckedCollection: java.lang.Object[] zeroLengthElementArray\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$CheckedCollection: java.lang.Class type\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.Collections$AsLIFOQueue: java.util.Deque q\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I4",
+        "target": "I3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L5",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I5",
+        "target": "I5",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Collections$CheckedCollection: java.lang.Object[] zeroLengthElementArray\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "GBL",
+      "L0",
+      "L1",
+      "L2",
+      "I0",
+      "L3",
+      "L4",
+      "L5",
+      "I5"
+    ],
+    "insideNodeCounter": 6,
+    "loadNodeCounter": 6
+  }
+}

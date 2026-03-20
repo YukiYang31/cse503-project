@@ -1,0 +1,67 @@
+{
+  "sig": "\u003cjava.util.stream.LongStream$2: void \u003cinit\u003e(long,int,java.util.function.LongUnaryOperator,long,java.util.function.LongPredicate)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "LongUnaryOperator parameter"
+      },
+      {
+        "id": "P5",
+        "kind": "PARAMETER",
+        "paramIndex": 5,
+        "label": "LongPredicate parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.LongStream$2: java.util.function.LongUnaryOperator val$next\u003e",
+        "target": "P3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.LongStream$2: java.util.function.LongPredicate val$hasNext\u003e",
+        "target": "P5",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.LongStream$2: java.util.function.LongUnaryOperator val$next\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Spliterators$AbstractDoubleSpliterator: long est\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Spliterators$AbstractDoubleSpliterator: int characteristics\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.LongStream$2: java.util.function.LongPredicate val$hasNext\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.LongStream$2: long val$seed\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

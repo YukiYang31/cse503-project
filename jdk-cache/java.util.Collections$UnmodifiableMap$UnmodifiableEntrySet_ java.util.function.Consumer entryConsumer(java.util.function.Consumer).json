@@ -1,0 +1,34 @@
+{
+  "sig": "\u003cjava.util.Collections$UnmodifiableMap$UnmodifiableEntrySet: java.util.function.Consumer entryConsumer(java.util.function.Consumer)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "Consumer parameter escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "Consumer parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

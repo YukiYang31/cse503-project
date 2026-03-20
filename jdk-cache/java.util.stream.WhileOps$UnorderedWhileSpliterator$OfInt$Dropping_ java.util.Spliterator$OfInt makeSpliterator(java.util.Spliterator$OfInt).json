@@ -1,0 +1,79 @@
+{
+  "sig": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator$OfInt$Dropping: java.util.Spliterator$OfInt makeSpliterator(java.util.Spliterator$OfInt)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new WhileOps$UnorderedWhileSpliterator$OfInt$Dropping"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Spliterator$OfInt parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: load cancel from WhileOps$UnorderedWhileSpliterator parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load p from WhileOps$UnorderedWhileSpliterator$OfInt parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new WhileOps$UnorderedWhileSpliterator$OfInt$Dropping"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator: java.util.concurrent.atomic.AtomicBoolean cancel\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator$OfInt: java.util.function.IntPredicate p\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator: java.util.Spliterator s\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator: java.util.concurrent.atomic.AtomicBoolean cancel\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator$OfInt: java.util.function.IntPredicate p\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 2
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "sig": "\u003cjava.util.Collections$UnmodifiableMap$UnmodifiableEntrySet$1: void \u003cinit\u003e(java.util.Collections$UnmodifiableMap$UnmodifiableEntrySet)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027load c from Collections$UnmodifiableMap$UnmodifiableEntrySet parameter\u0027 escapes to global scope",
+    "loaded object \u0027load c from load this$0 from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Collections$UnmodifiableMap$UnmodifiableEntrySet parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load this$0 from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load c from Collections$UnmodifiableMap$UnmodifiableEntrySet parameter"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load c from load this$0 from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$UnmodifiableMap$UnmodifiableEntrySet$1: java.util.Iterator i\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$UnmodifiableMap$UnmodifiableEntrySet$1: java.util.Collections$UnmodifiableMap$UnmodifiableEntrySet this$0\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$UnmodifiableMap$UnmodifiableEntrySet$1: java.util.Collections$UnmodifiableMap$UnmodifiableEntrySet this$0\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.Collections$UnmodifiableMap$UnmodifiableEntrySet: java.util.Collection c\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.Collections$UnmodifiableMap$UnmodifiableEntrySet: java.util.Collection c\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Collections$UnmodifiableMap$UnmodifiableEntrySet$1: java.util.Collections$UnmodifiableMap$UnmodifiableEntrySet this$0\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Collections$UnmodifiableMap$UnmodifiableEntrySet$1: java.util.Iterator i\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "L1",
+      "L2"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 3
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "sig": "\u003cjava.util.Random: void resetSeed(long)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "this escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static unsafe"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: load seed from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new AtomicLong"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: new AtomicLong"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.Random: jdk.internal.misc.Unsafe unsafe\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.Random: java.util.concurrent.atomic.AtomicLong seed\u003e",
+        "target": "I2",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "L0",
+      "L1",
+      "I0",
+      "I2"
+    ],
+    "insideNodeCounter": 3,
+    "loadNodeCounter": 2
+  }
+}

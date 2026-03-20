@@ -1,0 +1,79 @@
+{
+  "sig": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator$OfLong$Dropping: java.util.Spliterator$OfLong makeSpliterator(java.util.Spliterator$OfLong)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [
+    {
+      "id": "I0",
+      "kind": "INSIDE",
+      "label": "new WhileOps$UnorderedWhileSpliterator$OfLong$Dropping"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Spliterator$OfLong parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: callee: load cancel from WhileOps$UnorderedWhileSpliterator parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load p from WhileOps$UnorderedWhileSpliterator$OfLong parameter"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new WhileOps$UnorderedWhileSpliterator$OfLong$Dropping"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator$OfLong: java.util.function.LongPredicate p\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator: java.util.concurrent.atomic.AtomicBoolean cancel\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator$OfLong: java.util.function.LongPredicate p\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator: java.util.Spliterator s\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I0",
+        "field": "\u003cjava.util.stream.WhileOps$UnorderedWhileSpliterator: java.util.concurrent.atomic.AtomicBoolean cancel\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 2
+  }
+}

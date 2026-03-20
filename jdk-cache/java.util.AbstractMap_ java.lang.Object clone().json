@@ -1,0 +1,45 @@
+{
+  "sig": "\u003cjava.util.AbstractMap: java.lang.Object clone()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field keySet",
+    "writes to static field values",
+    "this escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "GBL",
+      "kind": "GLOBAL"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.AbstractMap: java.util.Set keySet\u003e"
+      },
+      {
+        "node": "GBL",
+        "field": "\u003cjava.util.AbstractMap: java.util.Collection values\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "P0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

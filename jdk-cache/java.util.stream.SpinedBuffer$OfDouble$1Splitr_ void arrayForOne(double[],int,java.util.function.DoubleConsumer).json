@@ -1,0 +1,60 @@
+{
+  "sig": "\u003cjava.util.stream.SpinedBuffer$OfDouble$1Splitr: void arrayForOne(double[],int,java.util.function.DoubleConsumer)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "DoubleConsumer parameter escapes to global scope",
+    "mutates DoubleConsumer parameter via field elementIndex",
+    "loaded object \u0027callee: load curChunk from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load curChunk from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "double[] parameter"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "DoubleConsumer parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load curChunk from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P3",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfDouble: java.lang.Object curChunk\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P3",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfDouble: int elementIndex\u003e"
+      },
+      {
+        "node": "L0"
+      }
+    ],
+    "globalEscaped": [
+      "P3"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

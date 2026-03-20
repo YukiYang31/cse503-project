@@ -1,0 +1,60 @@
+{
+  "sig": "\u003cjava.util.stream.SpinedBuffer$OfLong: void arrayForEach(long[],int,int,java.util.function.LongConsumer)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "LongConsumer parameter escapes to global scope",
+    "mutates LongConsumer parameter via field elementIndex",
+    "loaded object \u0027callee: load curChunk from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load curChunk from parameter this\u0027 via field array element"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "long[] parameter"
+      },
+      {
+        "id": "P4",
+        "kind": "PARAMETER",
+        "paramIndex": 4,
+        "label": "LongConsumer parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load curChunk from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P4",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfLong: java.lang.Object curChunk\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P4",
+        "field": "\u003cjava.util.stream.SpinedBuffer$OfLong: int elementIndex\u003e"
+      },
+      {
+        "node": "L0"
+      }
+    ],
+    "globalEscaped": [
+      "P4"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

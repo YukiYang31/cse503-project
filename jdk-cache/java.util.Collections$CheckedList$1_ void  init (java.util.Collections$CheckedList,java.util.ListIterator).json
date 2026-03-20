@@ -1,0 +1,55 @@
+{
+  "sig": "\u003cjava.util.Collections$CheckedList$1: void \u003cinit\u003e(java.util.Collections$CheckedList,java.util.ListIterator)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Collections$CheckedList parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "ListIterator parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$CheckedList$1: java.util.ListIterator val$i\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$CheckedList$1: java.util.Collections$CheckedList this$0\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Collections$CheckedList$1: java.util.Collections$CheckedList this$0\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Collections$CheckedList$1: java.util.ListIterator val$i\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

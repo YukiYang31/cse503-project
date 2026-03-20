@@ -1,0 +1,98 @@
+{
+  "sig": "\u003cjava.io.DataInputStream: void \u003cinit\u003e(java.io.InputStream)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "InputStream parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static EMPTY_BYTE_ARRAY"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load static EMPTY_CHAR_ARRAY"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "new array"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.io.DataInputStream: char[] EMPTY_CHAR_ARRAY\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "field": "\u003cjava.io.DataInputStream: byte[] EMPTY_BYTE_ARRAY\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.DataInputStream: byte[] readBuffer\u003e",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.DataInputStream: byte[] bytearr\u003e",
+        "target": "L0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.io.DataInputStream: char[] chararr\u003e",
+        "target": "L1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.DataInputStream: byte[] bytearr\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.DataInputStream: byte[] readBuffer\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.io.DataInputStream: char[] chararr\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 1,
+    "loadNodeCounter": 2
+  }
+}

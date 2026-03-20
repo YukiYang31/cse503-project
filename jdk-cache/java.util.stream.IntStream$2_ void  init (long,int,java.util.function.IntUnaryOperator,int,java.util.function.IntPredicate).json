@@ -1,0 +1,67 @@
+{
+  "sig": "\u003cjava.util.stream.IntStream$2: void \u003cinit\u003e(long,int,java.util.function.IntUnaryOperator,int,java.util.function.IntPredicate)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P3",
+        "kind": "PARAMETER",
+        "paramIndex": 3,
+        "label": "IntUnaryOperator parameter"
+      },
+      {
+        "id": "P5",
+        "kind": "PARAMETER",
+        "paramIndex": 5,
+        "label": "IntPredicate parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.IntStream$2: java.util.function.IntUnaryOperator val$next\u003e",
+        "target": "P3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.IntStream$2: java.util.function.IntPredicate val$hasNext\u003e",
+        "target": "P5",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Spliterators$AbstractDoubleSpliterator: long est\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Spliterators$AbstractDoubleSpliterator: int characteristics\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.IntStream$2: int val$seed\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.IntStream$2: java.util.function.IntUnaryOperator val$next\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.IntStream$2: java.util.function.IntPredicate val$hasNext\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

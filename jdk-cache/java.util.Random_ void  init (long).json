@@ -1,0 +1,63 @@
+{
+  "sig": "\u003cjava.util.Random: void \u003cinit\u003e(long)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027callee: load seed from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load seed from parameter this"
+      },
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "return from getClass"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "new AtomicLong"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Random: java.util.concurrent.atomic.AtomicLong seed\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Random: java.util.concurrent.atomic.AtomicLong seed\u003e",
+        "target": "I1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Random: java.util.concurrent.atomic.AtomicLong seed\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Random: boolean haveNextNextGaussian\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "L0",
+      "I1"
+    ],
+    "insideNodeCounter": 2,
+    "loadNodeCounter": 1
+  }
+}

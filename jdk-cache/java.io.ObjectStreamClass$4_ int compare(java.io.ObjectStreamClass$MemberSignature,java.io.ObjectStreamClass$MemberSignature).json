@@ -1,0 +1,56 @@
+{
+  "sig": "\u003cjava.io.ObjectStreamClass$4: int compare(java.io.ObjectStreamClass$MemberSignature,java.io.ObjectStreamClass$MemberSignature)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "ObjectStreamClass$MemberSignature parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "ObjectStreamClass$MemberSignature parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load signature from ObjectStreamClass$MemberSignature parameter"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load signature from ObjectStreamClass$MemberSignature parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P1",
+        "field": "\u003cjava.io.ObjectStreamClass$MemberSignature: java.lang.String signature\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "field": "\u003cjava.io.ObjectStreamClass$MemberSignature: java.lang.String signature\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

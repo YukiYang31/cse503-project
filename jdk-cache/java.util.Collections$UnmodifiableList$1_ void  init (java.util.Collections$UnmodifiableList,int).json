@@ -1,0 +1,96 @@
+{
+  "sig": "\u003cjava.util.Collections$UnmodifiableList$1: void \u003cinit\u003e(java.util.Collections$UnmodifiableList,int)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "loaded object \u0027load list from Collections$UnmodifiableList parameter\u0027 escapes to global scope",
+    "loaded object \u0027load list from load this$0 from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Collections$UnmodifiableList parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load this$0 from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "load list from Collections$UnmodifiableList parameter"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "load list from load this$0 from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$UnmodifiableList$1: java.util.ListIterator i\u003e",
+        "target": "GBL",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$UnmodifiableList$1: java.util.Collections$UnmodifiableList this$0\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$UnmodifiableList$1: java.util.Collections$UnmodifiableList this$0\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P1",
+        "field": "\u003cjava.util.Collections$UnmodifiableList: java.util.List list\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.Collections$UnmodifiableList: java.util.List list\u003e",
+        "target": "L2",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Collections$UnmodifiableList$1: java.util.ListIterator i\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Collections$UnmodifiableList$1: java.util.Collections$UnmodifiableList this$0\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Collections$UnmodifiableList$1: int val$index\u003e"
+      }
+    ],
+    "globalEscaped": [
+      "L1",
+      "L2"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 3
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "sig": "\u003cjava.util.stream.Streams$ConcatSpliterator$OfLong: void \u003cinit\u003e(java.util.Spliterator$OfLong,java.util.Spliterator$OfLong)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Spliterator$OfLong parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Spliterator$OfLong parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.Streams$ConcatSpliterator: java.util.Spliterator bSpliterator\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.stream.Streams$ConcatSpliterator: java.util.Spliterator aSpliterator\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.Streams$ConcatSpliterator: java.util.Spliterator bSpliterator\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.Streams$ConcatSpliterator: boolean unsized\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.Streams$ConcatSpliterator: java.util.Spliterator aSpliterator\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.stream.Streams$ConcatSpliterator: boolean beforeSplit\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

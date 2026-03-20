@@ -1,0 +1,75 @@
+{
+  "sig": "\u003cjava.util.Collections$CheckedNavigableSet: void \u003cinit\u003e(java.util.NavigableSet,java.lang.Class)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "NavigableSet parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Class parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$CheckedMap$CheckedEntrySet: java.lang.Class valueType\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$CheckedNavigableSet: java.util.NavigableSet ns\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$CheckedMap$CheckedEntrySet: java.util.Set s\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$CheckedSortedSet: java.util.SortedSet ss\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Collections$CheckedNavigableSet: java.util.NavigableSet ns\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Collections$CheckedMap$CheckedEntrySet: java.lang.Class valueType\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Collections$CheckedMap$CheckedEntrySet: java.util.Set s\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Collections$CheckedSortedSet: java.util.SortedSet ss\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "sig": "\u003cjava.util.HashMap$HashMapSpliterator: long estimateSize()\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "mutates this via field est",
+    "mutates this via field fence",
+    "mutates this via field expectedModCount"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load map from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: load table from load map from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.HashMap$HashMapSpliterator: java.util.HashMap map\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L0",
+        "field": "\u003cjava.util.HashMap: java.util.HashMap$Node[] table\u003e",
+        "target": "L1",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.HashMap$HashMapSpliterator: int est\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.HashMap$HashMapSpliterator: int fence\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.HashMap$HashMapSpliterator: int expectedModCount\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 2
+  }
+}

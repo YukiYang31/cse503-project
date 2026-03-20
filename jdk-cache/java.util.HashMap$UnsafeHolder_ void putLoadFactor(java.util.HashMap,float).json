@@ -1,0 +1,42 @@
+{
+  "sig": "\u003cjava.util.HashMap$UnsafeHolder: void putLoadFactor(java.util.HashMap,float)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "HashMap parameter escapes to global scope"
+  ],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "HashMap parameter"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "load static unsafe"
+      }
+    ],
+    "edges": [
+      {
+        "src": "GBL",
+        "field": "\u003cjava.util.HashMap$UnsafeHolder: jdk.internal.misc.Unsafe unsafe\u003e",
+        "target": "L0",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [],
+    "globalEscaped": [
+      "P0",
+      "L0"
+    ],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 1
+  }
+}

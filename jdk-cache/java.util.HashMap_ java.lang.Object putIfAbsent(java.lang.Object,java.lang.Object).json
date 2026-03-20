@@ -1,0 +1,1160 @@
+{
+  "sig": "\u003cjava.util.HashMap: java.lang.Object putIfAbsent(java.lang.Object,java.lang.Object)\u003e",
+  "result": "SIDE_EFFECTING",
+  "reasons": [
+    "writes to static field unknown",
+    "this escapes to global scope",
+    "mutates this via field array element",
+    "Object parameter escapes to global scope",
+    "Object parameter escapes to global scope",
+    "mutates Object parameter via field array element",
+    "loaded object \u0027callee: load table from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load table from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: load table from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load table from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load key from load next from array element from load table from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load key from load next from array element from load table from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load next from array element from callee: load table from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load next from array element from callee: load table from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load next from array element from load table from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load next from array element from load table from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load key from load next from array element from callee: load table from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load key from load next from array element from callee: load table from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: callee: callee: load value from HashMap$Node parameter\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: callee: load value from HashMap$Node parameter\u0027 via field array element",
+    "loaded object \u0027callee: callee: load next from array element from HashMap$Node[] parameter\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: callee: load next from array element from HashMap$Node[] parameter\u0027 via field array element",
+    "loaded object \u0027callee: load value from GBL\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load value from GBL\u0027 via field array element",
+    "loaded object \u0027callee: load value from array element from callee: load table from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load value from array element from callee: load table from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load value from load next from array element from callee: load table from parameter this\u0027 escapes to global scope",
+    "mutates loaded object \u0027callee: load value from load next from array element from callee: load table from parameter this\u0027 via field array element",
+    "loaded object \u0027callee: load value from load next from array element from load table from parameter this\u0027 escapes to global scope"
+  ],
+  "returnTargets": [
+    {
+      "id": "L16",
+      "kind": "LOAD",
+      "label": "callee: load value from GBL"
+    },
+    {
+      "id": "L15",
+      "kind": "LOAD",
+      "label": "callee: load value from array element from load table from parameter this"
+    },
+    {
+      "id": "P2",
+      "kind": "PARAMETER",
+      "paramIndex": 2,
+      "label": "Object parameter"
+    },
+    {
+      "id": "L18",
+      "kind": "LOAD",
+      "label": "callee: load value from array element from callee: load table from parameter this"
+    },
+    {
+      "id": "L17",
+      "kind": "LOAD",
+      "label": "callee: load value from load next from array element from callee: load table from parameter this"
+    },
+    {
+      "id": "L19",
+      "kind": "LOAD",
+      "label": "callee: load value from load next from array element from load table from parameter this"
+    },
+    {
+      "id": "I1",
+      "kind": "INSIDE",
+      "label": "callee: callee: new HashMap$Node"
+    },
+    {
+      "id": "L10",
+      "kind": "LOAD",
+      "label": "callee: load key from load next from array element from load table from parameter this"
+    },
+    {
+      "id": "L14",
+      "kind": "LOAD",
+      "label": "callee: callee: callee: load value from HashMap$Node parameter"
+    },
+    {
+      "id": "L13",
+      "kind": "LOAD",
+      "label": "callee: callee: load next from array element from HashMap$Node[] parameter"
+    }
+  ],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "I0",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "I1",
+        "kind": "INSIDE",
+        "label": "callee: callee: new HashMap$Node"
+      },
+      {
+        "id": "I2",
+        "kind": "INSIDE",
+        "label": "callee: callee: callee: new HashMap$TreeNode"
+      },
+      {
+        "id": "I3",
+        "kind": "INSIDE",
+        "label": "callee: callee: new array"
+      },
+      {
+        "id": "GBL",
+        "kind": "GLOBAL"
+      },
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Object parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Object parameter"
+      },
+      {
+        "id": "L0",
+        "kind": "LOAD",
+        "label": "callee: load table from parameter this"
+      },
+      {
+        "id": "L1",
+        "kind": "LOAD",
+        "label": "callee: callee: load table from parameter this"
+      },
+      {
+        "id": "L2",
+        "kind": "LOAD",
+        "label": "callee: callee: array element from load table from parameter this"
+      },
+      {
+        "id": "L3",
+        "kind": "LOAD",
+        "label": "callee: callee: load next from array element from load table from parameter this"
+      },
+      {
+        "id": "L4",
+        "kind": "LOAD",
+        "label": "callee: callee: load next from load next from array element from load table from parameter this"
+      },
+      {
+        "id": "L5",
+        "kind": "LOAD",
+        "label": "callee: array element from load table from parameter this"
+      },
+      {
+        "id": "L10",
+        "kind": "LOAD",
+        "label": "callee: load key from load next from array element from load table from parameter this"
+      },
+      {
+        "id": "L6",
+        "kind": "LOAD",
+        "label": "callee: array element from callee: load table from parameter this"
+      },
+      {
+        "id": "L7",
+        "kind": "LOAD",
+        "label": "callee: load next from array element from callee: load table from parameter this"
+      },
+      {
+        "id": "L12",
+        "kind": "LOAD",
+        "label": "callee: load next from array element from load table from parameter this"
+      },
+      {
+        "id": "L8",
+        "kind": "LOAD",
+        "label": "callee: load key from array element from load table from parameter this"
+      },
+      {
+        "id": "L11",
+        "kind": "LOAD",
+        "label": "callee: load key from load next from array element from callee: load table from parameter this"
+      },
+      {
+        "id": "L9",
+        "kind": "LOAD",
+        "label": "callee: load key from array element from callee: load table from parameter this"
+      },
+      {
+        "id": "L14",
+        "kind": "LOAD",
+        "label": "callee: callee: callee: load value from HashMap$Node parameter"
+      },
+      {
+        "id": "L13",
+        "kind": "LOAD",
+        "label": "callee: callee: load next from array element from HashMap$Node[] parameter"
+      },
+      {
+        "id": "L16",
+        "kind": "LOAD",
+        "label": "callee: load value from GBL"
+      },
+      {
+        "id": "L15",
+        "kind": "LOAD",
+        "label": "callee: load value from array element from load table from parameter this"
+      },
+      {
+        "id": "L18",
+        "kind": "LOAD",
+        "label": "callee: load value from array element from callee: load table from parameter this"
+      },
+      {
+        "id": "L17",
+        "kind": "LOAD",
+        "label": "callee: load value from load next from array element from callee: load table from parameter this"
+      },
+      {
+        "id": "L19",
+        "kind": "LOAD",
+        "label": "callee: load value from load next from array element from load table from parameter this"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L0",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L1",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "I3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "I0",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P2",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P2",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P2",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P2",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P2",
+        "target": "L10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P2",
+        "target": "L13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P2",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P2",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "P2",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L2",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L2",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L2",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L2",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L2",
+        "target": "L3",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L3",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L3",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L3",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L3",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "I1",
+        "target": "L13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L4",
+        "target": "L2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L4",
+        "target": "L3",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L4",
+        "target": "L4",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L4",
+        "target": "L4",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L5",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L5",
+        "target": "L15",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L5",
+        "target": "L8",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L5",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L5",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "I2",
+        "target": "I2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L6",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L6",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L6",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L6",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L6",
+        "target": "L9",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "L10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "L13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L10",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L7",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L7",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L7",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L7",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L7",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L12",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L11",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L11",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L11",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L14",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "L10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "L13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L13",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "L16",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "GBL",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L18",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L15",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L18",
+        "target": "L11",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L14",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L15",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L17",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L14",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L17",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L18",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L19",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "I1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L10",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L13",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L7",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L12",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L13",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L10",
+        "type": "OUTSIDE"
+      },
+      {
+        "src": "L17",
+        "target": "L11",
+        "type": "OUTSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0"
+      },
+      {
+        "node": "L16"
+      },
+      {
+        "node": "L17"
+      },
+      {
+        "node": "L18"
+      },
+      {
+        "node": "GBL"
+      },
+      {
+        "node": "L12"
+      },
+      {
+        "node": "L13"
+      },
+      {
+        "node": "L14"
+      },
+      {
+        "node": "L15"
+      },
+      {
+        "node": "L7"
+      },
+      {
+        "node": "L10"
+      },
+      {
+        "node": "L5"
+      },
+      {
+        "node": "L6"
+      },
+      {
+        "node": "L11"
+      },
+      {
+        "node": "L3"
+      },
+      {
+        "node": "L4"
+      },
+      {
+        "node": "L1"
+      },
+      {
+        "node": "L2"
+      },
+      {
+        "node": "L0"
+      },
+      {
+        "node": "P2"
+      }
+    ],
+    "globalEscaped": [
+      "P0",
+      "P1",
+      "P2",
+      "L0",
+      "L1",
+      "L2",
+      "I0",
+      "I1",
+      "L5",
+      "I2",
+      "L6",
+      "I3",
+      "L10",
+      "L14",
+      "L13",
+      "L15",
+      "L18",
+      "L17"
+    ],
+    "insideNodeCounter": 4,
+    "loadNodeCounter": 20
+  }
+}

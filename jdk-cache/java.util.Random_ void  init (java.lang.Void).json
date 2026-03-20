@@ -1,0 +1,36 @@
+{
+  "sig": "\u003cjava.util.Random: void \u003cinit\u003e(java.lang.Void)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "Void parameter"
+      }
+    ],
+    "edges": [],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Random: java.util.concurrent.atomic.AtomicLong seed\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Random: boolean haveNextNextGaussian\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "sig": "\u003cjava.util.Collections$SynchronizedNavigableMap: void \u003cinit\u003e(java.util.NavigableMap,java.lang.Object)\u003e",
+  "result": "SIDE_EFFECT_FREE",
+  "reasons": [],
+  "returnTargets": [],
+  "exitGraph": {
+    "nodes": [
+      {
+        "id": "P0",
+        "kind": "PARAMETER",
+        "paramIndex": 0,
+        "label": "this"
+      },
+      {
+        "id": "P1",
+        "kind": "PARAMETER",
+        "paramIndex": 1,
+        "label": "NavigableMap parameter"
+      },
+      {
+        "id": "P2",
+        "kind": "PARAMETER",
+        "paramIndex": 2,
+        "label": "Object parameter"
+      }
+    ],
+    "edges": [
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$SynchronizedSortedMap: java.util.SortedMap sm\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$SynchronizedMap: java.lang.Object mutex\u003e",
+        "target": "P2",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$SynchronizedMap: java.util.Map m\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      },
+      {
+        "src": "P0",
+        "field": "\u003cjava.util.Collections$SynchronizedNavigableMap: java.util.NavigableMap nm\u003e",
+        "target": "P1",
+        "type": "INSIDE"
+      }
+    ],
+    "mutatedFields": [
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Collections$SynchronizedMap: java.lang.Object mutex\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Collections$SynchronizedSortedMap: java.util.SortedMap sm\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Collections$SynchronizedMap: java.util.Map m\u003e"
+      },
+      {
+        "node": "P0",
+        "field": "\u003cjava.util.Collections$SynchronizedNavigableMap: java.util.NavigableMap nm\u003e"
+      }
+    ],
+    "globalEscaped": [],
+    "insideNodeCounter": 0,
+    "loadNodeCounter": 0
+  }
+}
