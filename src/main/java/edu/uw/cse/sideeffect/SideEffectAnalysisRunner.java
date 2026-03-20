@@ -290,6 +290,29 @@ public class SideEffectAnalysisRunner {
             if (filteredBatch.size() == 1) {
                 JavaSootMethod method = filteredBatch.get(0);
                 if (!method.isConcrete()) continue;
+
+                // Check cache first
+                String fullSig = method.getSignature().toString();
+                String subSig = method.getSignature().getSubSignature().toString();
+                MethodSummary cached = cache.lookup(fullSig, subSig);
+
+                if (cached != null) {
+                    if (config.debug) System.out.println("Debug== CACHE-HIT: " + fullSig);
+                    methodsDone++;
+                    printProgress(methodsDone, totalMethods);
+
+                    String methodSig = method.getSignature().toString();
+                    if (userMethodSigs.contains(methodSig)
+                            && (config.methodFilter == null || method.getName().equals(config.methodFilter))) {
+                        summaries.add(cached);
+                    }
+                    if (config.timing) {
+                        timer.addMethodTiming(new TimingRecorder.MethodTiming(
+                                fullSig, cached.getResult().name(), "cached", 0, 0, 0, 0, 0));
+                    }
+                    continue;
+                }
+
                 MethodSummary summary;
                 if (config.methodTimeoutSecs > 0) {
                     ExecutorService exec = Executors.newSingleThreadExecutor();
@@ -328,6 +351,39 @@ public class SideEffectAnalysisRunner {
                     }
                 }
             } else {
+                // Check if whole SCC is cached
+                boolean allCached = true;
+                for (JavaSootMethod m : filteredBatch) {
+                    if (m.isConcrete()) {
+                        if (cache.lookup(m.getSignature().toString(), m.getSignature().getSubSignature().toString()) == null) {
+                            allCached = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (allCached) {
+                    if (config.debug) System.out.println("Debug== CACHE-HIT: SCC batch of size " + filteredBatch.size());
+                    for (JavaSootMethod method : filteredBatch) {
+                        if (!method.isConcrete()) continue;
+                        methodsDone++;
+
+                        String mSig = method.getSignature().toString();
+                        MethodSummary cached = cache.lookup(mSig, method.getSignature().getSubSignature().toString());
+
+                        if (userMethodSigs.contains(mSig)
+                                && (config.methodFilter == null || method.getName().equals(config.methodFilter))) {
+                            if (cached != null) summaries.add(cached);
+                        }
+                        if (config.timing) {
+                            timer.addMethodTiming(new TimingRecorder.MethodTiming(
+                                    mSig, cached != null ? cached.getResult().name() : "UNKNOWN", "cached", 0, 0, 0, 0, 0));
+                        }
+                    }
+                    printProgress(methodsDone, totalMethods);
+                    continue;
+                }
+
                 // SCC (mutually recursive methods): iterate until summaries stabilize
                 if (config.debug) {
                     List<String> names = filteredBatch.stream()
