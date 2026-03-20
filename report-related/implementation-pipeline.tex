@@ -1,0 +1,59 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    node distance=1.1cm, 
+    artifact/.style={rectangle, draw, fill=blue!5, font=\footnotesize, inner sep=4pt, align=center},
+    process/.style={rectangle, draw, fill=orange!5, font=\footnotesize\itshape, inner sep=4pt, align=center},
+    verdict/.style={rectangle, draw, fill=green!10, rounded corners, font=\footnotesize\bfseries, inner sep=4pt, align=center},
+    arrow/.style={thick, ->, >=stealth}
+]
+
+% --- FIRST LINE ---
+\node (bytecode) [artifact] {.class\\bytecode};
+\node (soot)     [artifact, right=of bytecode, xshift=0.4cm] {Jimple};
+\node (callgen)  [artifact, right=of soot, xshift=0.5cm, yshift=0.8cm] {Call Graph};
+\node (overridegen) [artifact, right=of soot,xshift=0.3cm, yshift=-0.8cm] {Override Graph};
+\node (cg)       [artifact, right=of soot, xshift=3.6cm, ] {Merged Graph};
+\node (jdk_cache) [artifact, above=of callgen, fill=gray!10] {JDK Summary\\Cache};
+
+% --- SECOND LINE (Positioned below the CallGraph) ---
+\node (loop)     [artifact, right=of cg, xshift=1.2cm] {Batch Order};
+\node (ptg)      [artifact, below=of loop, yshift=-0.5cm] {Points-to\\Graph and\\Write Set};
+
+% Final split outputs
+\node (verdict)  [artifact,  left=of ptg, xshift=-4.5cm] {Verdict};
+\node (summary)  [artifact, left=of verdict, xshift=-1.0cm, fill=gray!10] {MethodSummary\\(Local Cached)};
+
+% --- PATHS ---
+% Top row connections
+\draw [arrow] (bytecode) -- node[above, font=\scriptsize\ttfamily] {SootUp} (soot);
+\draw [arrow] (soot) -- (callgen);
+\draw [arrow] (soot) -- (overridegen);
+\draw [arrow] (jdk_cache.south) -- (callgen.north);
+\draw [arrow] (callgen) -- (cg);
+\draw [arrow] (overridegen) -- (cg);
+
+% Connection between rows (The "Snake" turn)
+\draw [arrow] (cg) -- node[above, font=\scriptsize\ttfamily, align=center] {Tarjan's SCC}(loop);
+
+% Bottom row connections (Moving right to left)
+\draw [arrow] (loop) -- node[above, font=\scriptsize\ttfamily, align=center] {dataflow analysis}  (ptg);
+\draw [arrow] (ptg) -- node[above, font=\scriptsize\ttfamily, align=center] {side effect inference} (verdict);
+
+% Caching connection
+\draw [arrow] (verdict) -- (summary);
+\draw [arrow, dashed] (summary.west) 
+    -- ++(-2.3,0) 
+    -- ++(0,5.9) 
+    -- ([yshift=0.3cm]jdk_cache.north) 
+    node[midway, above, font=\small] {if is JDK method} 
+    -- (jdk_cache.north);
+
+% Feedback loop back to the loop node for next method
+\draw [arrow, dashed, gray] (verdict.north) -- (loop.south)
+    node[pos=0.5, above, font=\tiny, black] {iterate};
+
+\end{tikzpicture}
+\caption{Flow Chart of Implementation}
+\label{fig:implement-flowchart}
+\end{figure}
