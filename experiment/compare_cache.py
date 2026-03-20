@@ -135,7 +135,7 @@ def main():
 
         # Cache vs Randoop
         if cache_sef and in_randoop:
-            randoop_cat = "Both SEF"
+            randoop_cat = "Match (Both SEF)"
         elif not cache_sef and not in_randoop:
             randoop_cat = "Both Side-Effecting"
         elif in_randoop and not cache_sef:
@@ -210,18 +210,18 @@ def main():
     ann_mismatches = [r for r in rows if r["category"] == "Annotated Mismatch"]
     if ann_mismatches:
         print(f"\n--- Annotated Mismatches (tool says SE, JDK says SEF) ---")
-        for r in ann_mismatches:
-            print(f"  {r['canonical_key']}")
-            print(f"    annotation={r['jdk_annotation']}  randoop_sef={r['randoop_sef']}")
-            print(f"    reasons: {r['reasons']}")
+        # for r in ann_mismatches:
+        #     print(f"  {r['canonical_key']}")
+        #     print(f"    annotation={r['jdk_annotation']}  randoop_sef={r['randoop_sef']}")
+        #     print(f"    reasons: {r['reasons']}")
 
     # Unannotated Mismatch details
     unann_mismatches = [r for r in rows if r["category"] == "Unannotated Mismatch"]
     if unann_mismatches:
         print(f"\n--- Unannotated Mismatches (tool says SEF, no JDK annotation) ---")
-        for r in unann_mismatches:
-            randoop_flag = " [Randoop also SEF]" if r["randoop_sef"] else " [Randoop says SE]"
-            print(f"  {r['canonical_key']}{randoop_flag}")
+        # for r in unann_mismatches:
+        #     randoop_flag = " [Randoop also SEF]" if r["randoop_sef"] else " [Randoop says SE]"
+        #     print(f"  {r['canonical_key']}{randoop_flag}")
 
     # Red alerts
     red_alerts = [r for r in rows if r["red_alert"]]
@@ -242,7 +242,7 @@ def main():
     rcats = {}
     for r in comparable:
         rcats[r["randoop_vs_cache"]] = rcats.get(r["randoop_vs_cache"], 0) + 1
-    for cat in ["Both SEF", "Both Side-Effecting", "Randoop Only SEF", "Ours Only SEF"]:
+    for cat in ["Match (Both SEF)", "Randoop Only SEF", "Ours Only SEF", "Both Side-Effecting"]:
         count = rcats.get(cat, 0)
         if count > 0:
             print(f"  {cat:25s}: {count:5d}")
