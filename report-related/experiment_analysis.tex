@@ -1,5 +1,5 @@
 \section{Evaluation}
-
+\textcolor{red}{For Mike: A lot of the previous and unadressed corrections in this section have to do with the fact that we were using on-demand analysis in inter-file handling. We have since changed that (and are still in the process of) but haven't rerun the experiment yet. The numbers currently make no sense, and same for much of the text now. }
 We evaluate our side-effect analysis tool to answer three primary research questions regarding its scalability, correctness, and practical utility in downstream software engineering tasks.
 
 
@@ -13,18 +13,14 @@ We evaluate our side-effect analysis tool to answer three primary research quest
 
 \subsection{Experimental Setup}
 
-\paragraph{Benchmark.}
+\paragraph{Benchmark}
 We evaluate our side-effect analysis tool on the \texttt{java.util} package of the OpenJDK standard library. It contains 128 source files comprising 451 classes and 5,305 methods.
 This package exercises the full spectrum of Java idioms (generics, inner classes, iterators, concurrent data structures). 
 
-\paragraph{Implementation.}
+\paragraph{Implementation}
 We loaded the \texttt{java.util} package from JDK 21 runtime bytecode via SootUp's \newline \texttt{JrtFileSystemAnalysisInputLocation}.
-This avoids the need to compile JDK source files standalone and ensures the analyzed bytecode matches the production JDK exactly.
 Each file is analyzed independently: per-file setup includes IR loading, call graph construction within the file, and then method-by-method dataflow analysis in bottom-up call-graph order.
-Cross-file callees are resolved on demand from the JDK runtime image, with bounded depth (5 levels), a per-method budget (10 on-demand analyses), and a graph size guard (20 nodes) to prevent exponential blowup.
-
-
-
+Cross-file callees are resolved on demand from the JDK runtime image, with bounded depth (5 levels), a per-method budget (10 on-demand analyses), and a graph size guard (20 nodes) \textcolor{red}{(For Mike: This will be taken out once we finish reimplementing inter-file.)}to prevent blowup.
 
 
 
@@ -40,8 +36,8 @@ We report \emph{analysis time} broken down by pipeline phase. For each method, w
 \item \textit{analysis time}: the time required to run the entire analysis, 
 \item \textit{compilation/SootUp IR loading time}: the time for javac to compile and load from SootUp.  
 \item \textit{call graph time}: the time required to generate the call graph,
-\item \textit{dataflow analysis time}: the time required to construct a point-to graph at the end of the method from Jimple code, and
-\item \textit{verification time}: time to determine side-effect information from point-to graph 
+\item \textit{dataflow analysis time}: the time required to walk through the method and obtain a point-to graph at the exit point, and
+\item \textit{verification time}: time to determine side-effect information from the point-to graph 
 \end{itemize}
 
 
@@ -62,7 +58,7 @@ The actual dataflow analysis accounts for only 12.4\%, and the side-effect check
 IR Loading          &    9.1 &  2.7\% \\
 Call Graph          &  270.6 & 81.8\% \\
 Dataflow Analysis   &   41.1 & 12.4\% \\
-Side-Effect Check   &    0.3 &  0.1\% \\
+Side-Effect Inference   &    0.3 &  0.1\% \\
 Overhead            &    9.5 &  2.9\% \\
 \midrule
 \textbf{Total}      & \textbf{330.6} & \textbf{100.0\%} \\
@@ -73,18 +69,18 @@ Overhead            &    9.5 &  2.9\% \\
 \paragraph{Per-file timing.}
 Of the 128 files, 122 complete successfully; the remaining 6 exceed the 2-minute timeout.
 Among the successful files, the median per-file time is 2.7 seconds (mean 2.6s, max 7.3s for \texttt{Formatter.java}).
-This demonstrates that the analysis is practical for standard-library-scale code: the vast majority of files complete in under 8 seconds.
+This demonstrates that the analysis is practical for standard-library-scale code: the rest of the files complete in under 8 seconds.
 
 \paragraph{Timeouts.}
 Six files exceed the 2-minute per-file timeout, accounting for 111 methods that receive no verdict.
 Table~\ref{tab:timeouts} lists these files.
 The common thread is large class hierarchies with deep virtual dispatch: \texttt{TreeMap.java} alone contains 54 annotated methods across numerous inner classes (\texttt{NavigableSubMap}, \texttt{AscendingSubMap}, etc.), each requiring call graph construction over a complex inheritance chain.
 \texttt{HashMap.java} and \texttt{List.java} similarly involve extensive inner-class structures.
-The bottleneck is call graph construction (81.8\% of total time), which scales with the number of virtual dispatch targets that must be resolved.
+The bottleneck is graph merging in the interprocedural calls. Further investigation is needed. 
 
 \begin{table}[h]
 \centering
-\caption{Files that exceeded the 2-minute timeout.}
+\caption{Files that exceeded the 2-minute timeout. \textcolor{red}{This will change because we are not timing out by file, but by method, and the updated table will make more sense.}}
 \label{tab:timeouts}
 \begin{tabular}{lrr}
 \toprule
@@ -128,12 +124,12 @@ $> 1$~s           &     6 & 100.0\% \\
 The points-to graph size is a key driver of analysis cost.
 The median method produces a graph with 6 nodes and 4 edges; 48.4\% of methods have 5 or fewer nodes.
 However, the distribution has a long tail: 5.4\% of methods exceed 100 nodes, with a maximum of 1,494 nodes.
-The Pearson correlation between graph edge count and analysis time is $r = 0.35$, confirming that graph size is a moderate predictor of cost.
+The Pearson correlation between graph edge count and analysis time is $r = 0.35$, confirming that graph size is a moderate predictor of cost. \textcolor{red}{For Mike: This will also be irrelevant once on-demand calls are removed.}
 Jimple statement count, by contrast, is a poor predictor ($r = 0.03$), suggesting that the analysis cost is dominated by inter-procedural graph instantiation rather than intraprocedural statement processing.
 
 \paragraph{Scalability assessment.}
 The analysis successfully handles 122 of 128 files (95.3\%) within the 2-minute per-file timeout, covering 5,194 of 5,305 methods (97.9\%).
-The performance guards (depth limit, per-method budget, graph size bound) prevent exponential blowup on complex methods while preserving precision for the vast majority of simpler methods.
+The performance guards (depth limit, per-method budget, graph size bound) prevent exponential blowup on complex methods.
 However, the dominance of call graph construction time (81.8\%) suggests that for larger codebases, optimizing the call graph phase (e.g., via caching across files or using pre-computed call graphs) would yield the largest performance improvement.
 
 
@@ -145,10 +141,17 @@ However, the dominance of call graph construction time (81.8\%) suggests that fo
 \paragraph{Ground truth.}
 We extract \texttt{@Pure} and \texttt{@SideEffectFree} annotations from the Checker Framework Annotated JDK source files using a custom parser that handles inner classes, receiver parameters, generic erasure, and abstract methods.
 In the Checker Framework's type system, \texttt{@Pure} implies both \texttt{@SideEffectFree} and \texttt{@Deterministic}; for our purposes, both annotations indicate methods that should be side-effect-free.
-Across the 67 files that contain annotations, we extract 887 annotated methods (506 \texttt{@Pure}, 381 \texttt{@SideEffectFree}). We classify each method's verdict against the ground truth into one of six categories (Table~\ref{tab:categories}). Since our ground truth relies on the Checker Framework's manual annotations, which may themselves contain errors or omissions.
-We treat them as an incomplete but reliable positive signal: if a method is annotated \texttt{@Pure} or \texttt{@SideEffectFree}, we trust that it is indeed side-effect-free.
-However, the absence of an annotation does not imply the method is side-effecting.
-This is why we report \emph{annotation deficit} rather than standard recall.
+Across the 67 files that contain annotations, we extract 871 annotated methods (501 \texttt{@Pure}, 370 \texttt{@SideEffectFree}).
+To enable a more complete evaluation, we also extract all \emph{unannotated} method declarations from these same 67 files---an additional 3,775 methods.
+Methods that lack a \texttt{@Pure} or \texttt{@SideEffectFree} annotation in an otherwise-annotated file are treated as \emph{implicitly side-effecting}: the Checker Framework team reviewed the file and chose not to mark them.
+This yields a ground truth of 4,646 methods total.
+
+We classify each method's verdict against the ground truth into the categories shown in Table~\ref{tab:categories}.
+Since the Checker Framework annotations may themselves contain errors or omissions,
+we treat them as an incomplete but reliable positive signal: if a method is annotated \texttt{@Pure} or \texttt{@SideEffectFree}, we consider it side-effect-free.
+If there is a mismatch between the annotation and our result, we further do a manual check to see which is correct.
+On the other hand, the absence of an annotation is a weaker signal---it \emph{suggests} side-effecting behavior, but the Checker Framework team may simply have not yet annotated the method.
+We use this signal cautiously and validate it with a secondary oracle (Randoop, discussed below).
 
 \begin{table}[H]
 \centering
@@ -159,12 +162,10 @@ This is why we report \emph{annotation deficit} rather than standard recall.
 \textbf{Category} & \textbf{Definition} \\
 \midrule
 Match & JDK annotated pure/SEF; tool agrees (SIDE\_EFFECT\_FREE) \\
-Tool False Positive & JDK annotated pure/SEF; tool disagrees (SIDE\_EFFECTING) \\
-Annotation Deficit & Not annotated; tool says SIDE\_EFFECT\_FREE (file has other annotations) \\
-File Not Annotated & Tool says SIDE\_EFFECT\_FREE; entire file has no annotations \\
+Annotated Mismatch & JDK annotated pure/SEF; tool disagrees (SIDE\_EFFECTING) \\
+Unannotated Mismatch & Not annotated; tool says SIDE\_EFFECT\_FREE \\
 Both Side-Effecting & Not annotated; tool says SIDE\_EFFECTING \\
-Timeout & File exceeded the 2-minute time limit; all methods in that file unresolved \\
-Not Analyzed & Annotated but tool did not analyze (abstract/interface method) \\
+Not In Cache & Method exists in ground truth but was not analyzed by the tool \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -173,131 +174,163 @@ Not Analyzed & Annotated but tool did not analyze (abstract/interface method) \\
 
 
 \paragraph{Overall results.}
-Table~\ref{tab:results} presents the aggregate classification of all 5,305 methods across the six categories.
+We compare the tool's cached verdicts for \texttt{java.util} methods against the expanded ground truth.
+Of the 4,646 ground-truth methods, 1,142 overlap with the tool's cache (the remaining 3,441 were not reached during analysis).
+Table~\ref{tab:results} presents the classification of these 1,142 overlapping methods.
 
 \begin{table}[h]
 \centering
-\caption{Classification of 5,305 \texttt{java.util} methods against JDK annotations.}
+\caption{Classification of 1,142 \texttt{java.util} methods with cached verdicts against the expanded ground truth (871 annotated + 3,775 unannotated methods from 67 annotated files).}
 \label{tab:results}
 \begin{tabular}{lrr}
 \toprule
 \textbf{Category} & \textbf{Count} & \textbf{\%} \\
 \midrule
-Both Side-Effecting   & 2,177 & 41.0\% \\
-Annotation Deficit    & 1,338 & 25.2\% \\
-File Not Annotated    &   903 & 17.0\% \\
-Match                 &   384 &  7.2\% \\
-Tool False Positive   &   297 &  5.6\% \\
-Timeout               &   111 &  2.1\% \\
-Not Analyzed          &    95 &  1.8\% \\
+Match                 &    98 &  8.6\% \\
+Annotated Mismatch    &   117 & 10.2\% \\
+Unannotated Mismatch  &   316 & 27.7\% \\
+Both Side-Effecting   &   611 & 53.5\% \\
 \midrule
-\textbf{Total}        & \textbf{5,305} & \textbf{100.0\%} \\
+\textbf{Total (in cache)} & \textbf{1,142} & \textbf{100.0\%} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
+The ``Both Side-Effecting'' category (611 methods, 53.5\%) represents methods where the tool and the ground truth agree that the method is side-effecting---the tool correctly identifies mutations or escapes, and the Checker Framework team chose not to annotate them.
+
 \paragraph{Precision on annotated methods.}
-Of the 887 annotated methods, 95 are abstract or interface methods that our tool does not analyze (it operates on concrete method bodies), and 111 are in files that exceeded the 2-minute timeout.
-Among the 681 annotated methods that are actually analyzed, our tool agrees with the annotation for 384 methods (\textbf{56.4\% agreement rate}) and produces a false positive (incorrectly reports side-effecting) for 297 methods (43.6\%).
-Note that the timed-out files include heavily annotated classes such as \texttt{TreeMap} (54 annotated methods) and \texttt{HashMap} (23 annotated methods); successfully analyzing these files would likely improve the overall agreement rate, as many of their annotated methods are simple accessors (e.g., \texttt{size()}, \texttt{isEmpty()}).
+Of the 871 annotated methods, 215 are present in the tool's cache.
+Among these, our tool agrees with the annotation for 98 methods (\textbf{45.6\% agreement rate}) and conservatively reports side-effecting for 117 methods (54.4\%).
+The remaining 656 annotated methods were not reached during analysis---these reside in files that were either not processed or whose methods fell outside the call graph scope.
 
+While our tool successfully identifies simple read-only accessors (e.g., \texttt{size()}, \texttt{isEmpty()}, \texttt{hashCode()}) as side-effect-free, it struggles with more complex methods.
+Methods such as \texttt{iterator()}, \texttt{toArray()}, and \texttt{toString()} trigger conservative fallbacks in the analysis, leading to false positives.
 
-A closer examination of this gap reveals that while our tool successfully identifies simple read-only accessors (e.g., \texttt{size()}, \texttt{isEmpty()}, and \texttt{hashCode()}) as side-effect-free, it struggles with more intricate methods. Complex control flows in methods such as \texttt{iterator()}, \texttt{toArray()}, and \texttt{toString()} trigger conservative fallbacks in our analysis, leading to less precise results.
+\paragraph{Root cause analysis of annotated mismatches.}
+Table~\ref{tab:fp-causes} categorizes the 117 annotated mismatches by their primary reported reason.
+The dominant cause is \emph{parameter escapes to global scope} (57.3\%), where the analysis conservatively determines that an argument escapes through a virtual method call it cannot fully resolve.
+This happens frequently with JDK collection methods that invoke interface methods (e.g., \texttt{Iterator.hasNext()}, \texttt{Comparator.compare()})---the analysis cannot determine which concrete implementation will be called, so it conservatively assumes the argument may escape globally.
 
-
-\paragraph{Root cause analysis of false positives.}
-Table~\ref{tab:fp-causes} categorizes the 297 false positives by their reported reason.
-The dominant cause is \emph{escape to global scope} (62.6\% of all FPs), where the analysis conservatively determines that an argument escapes through a virtual method call it cannot fully resolve.
-This happens frequently with JDK collection methods that invoke interface methods (e.g., \texttt{Iterator.hasNext()}, \texttt{Comparator.compare()}) --- the analysis cannot determine which concrete implementation will be called, so it conservatively assumes the argument may escape globally. Additionally, our on-demand cross-file analysis is bounded by depth, budget, and graph size limits; without these guards, the analysis is impractical. But they cause the tool to miss side-effect-free verdicts that an unbounded analysis would find, further increasing the false positive rate.
-
-
-The second largest category is \emph{writes to static field} (25.3\%), where the analysis detects a write to a static field in a callee method.
-Many of these are caused by on-demand analysis of JDK utility methods (e.g., string formatting, bounds-checking) that internally write to static fields for caching or error reporting, even though the caller method itself is side-effect-free.
+The second largest category is \emph{writes to static field} (21.4\%), where the analysis detects a write to a static field in a callee method.
+Many of these are spurious: JDK utility methods (e.g., string formatting, bounds-checking) internally write to static fields for caching or error reporting, even though the caller method itself is side-effect-free.
 
 \begin{table}[h]
 \centering
-\caption{Root causes of 297 tool false positives.}
+\caption{Root causes of 117 annotated mismatches (primary reason per method).}
 \label{tab:fp-causes}
-\begin{tabular}{lrr}
+\begin{tabular}{lp{7.5cm}rr}
 \toprule
-\textbf{Cause} & \textbf{Count} & \textbf{\%} \\
+\textbf{Cause} & \textbf{Explanation in our analysis} & \textbf{Count} & \textbf{\%} \\
 \midrule
-Parameter escapes to global scope   &  99 & 33.3\% \\
-Writes to static field              &  75 & 25.3\% \\
-Loaded object escapes to global scope &  50 & 16.8\% \\
-\texttt{this} escapes to global scope &  37 & 12.5\% \\
-Mutates pre-existing object         &  36 & 12.1\% \\
+Parameter escapes to global scope
+& A parameter node becomes reachable from global state, recorded by adding the node to the escaped set $E$.
+& 67 & 57.3\% \\
+
+Writes to static field
+& The method updates a static field, modeled as a mutation of the \texttt{GlobalNode} recorded in the mutation set $W$ as $(\text{GlobalNode}, f)$.
+& 25 & 21.4\% \\
+
+Loaded object escapes to global scope
+& A \texttt{LoadNode} object becomes reachable from global state, added to the escaped set $E$.
+& 16 & 13.7\% \\
+
+\texttt{this} escapes to global scope
+& The receiver object becomes reachable from global state (e.g., stored in a static field).
+& 8 & 6.8\% \\
+
+Mutates pre-existing object
+& The method writes to a field of an object that existed before method entry.
+& 1 & 0.9\% \\
+
 \midrule
-\textbf{Total}                        & \textbf{297} & \textbf{100.0\%} \\
+\textbf{Total} & & \textbf{117} & \textbf{100.0\%} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \paragraph{Per-file variation.}
-The false positive rate varies significantly across files.
-Twelve files achieve a \textbf{100\% agreement rate} on all annotated methods, including \texttt{ImmutableCollections.java} (20/20 annotated methods match), \texttt{OptionalInt.java} (9/9), \texttt{OptionalLong.java} (9/9), \texttt{OptionalDouble.java} (9/9), \texttt{Base64.java} (6/6), and \texttt{UUID.java} (4/4).
+The agreement rate varies significantly across files.
+Four files achieve a \textbf{100\% agreement rate}: \texttt{OptionalInt.java} (9/9), \texttt{Spliterators.java} (4/4), \texttt{ImmutableCollections.java} (3/3), and several others with single analyzed methods.
 These files contain self-contained methods with minimal virtual dispatch.
-
-Conversely, the files with the most false positives are \texttt{Collections.java} (59 FPs out of 166 annotated methods) and \texttt{Arrays.java} (37 FPs out of 64), both of which heavily rely on interface callbacks (comparators, iterators) that the analysis cannot resolve.
-Table~\ref{tab:per-file} shows the top files by annotation count with their agreement rates.
+Conversely, \texttt{Arrays.java} has the most false positives (42 FPs out of 56 analyzed annotated methods, 25.0\% agreement), because it heavily relies on interface callbacks (comparators, iterators) and system utility methods that the analysis cannot fully resolve.
+\texttt{Properties.java} has a 0\% agreement rate (0/6), as all its analyzed methods involve cross-class delegation to \texttt{Hashtable} internals that trigger escape analysis conservatism.
+Table~\ref{tab:per-file} shows the files with annotated methods in the cache and their agreement rates.
 
 \begin{table}[h]
 \centering
-\caption{Agreement rates for the 10 most heavily annotated files.}
+\caption{Agreement rates for files with annotated methods in the cache.}
 \label{tab:per-file}
 \begin{tabular}{lrrrr}
 \toprule
 \textbf{File} & \textbf{Annotated} & \textbf{Match} & \textbf{FP} & \textbf{Agreement} \\
 \midrule
-Collections.java       & 166 & 107 &  59 & 64.5\% \\
-Arrays.java            &  64 &  27 &  37 & 42.2\% \\
-IdentityHashMap.java   &  30 &  18 &  12 & 60.0\% \\
-Hashtable.java         &  29 &  19 &  10 & 65.5\% \\
-AbstractMap.java       &  23 &  11 &  12 & 47.8\% \\
-WeakHashMap.java       &  23 &   3 &  20 & 13.0\% \\
-ImmutableCollections.java & 20 & 20 &   0 & 100.0\% \\
-ArrayList.java         &  19 &  15 &   4 & 78.9\% \\
-Vector.java            &  19 &  14 &   5 & 73.7\% \\
-LinkedHashMap.java     &  18 &  12 &   6 & 66.7\% \\
+Arrays.java               &  63 &  14 &  42 & 25.0\% \\
+Collections.java          & 170 &  20 &  36 & 35.7\% \\
+ArrayList.java            &  20 &  13 &   5 & 72.2\% \\
+Objects.java              &  14 &  10 &   4 & 71.4\% \\
+Optional.java             &  13 &  10 &   3 & 76.9\% \\
+LinkedHashMap.java        &  18 &   4 &   5 & 44.4\% \\
+OptionalInt.java          &   9 &   9 &   0 & 100.0\% \\
+Properties.java           &  12 &   0 &   6 &  0.0\% \\
+HashMap.java              &  23 &   2 &   3 & 40.0\% \\
+Map.java                  &  17 &   2 &   3 & 40.0\% \\
+Spliterators.java         &   5 &   4 &   0 & 100.0\% \\
+ImmutableCollections.java &  20 &   3 &   0 & 100.0\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 
+\paragraph{Unannotated mismatch analysis.}
+Our tool identifies \textbf{316 methods} in annotated files that it classifies as side-effect-free but which lack any \texttt{@Pure} or \texttt{@SideEffectFree} annotation.
+To assess whether these represent true positives (the tool is correct and the annotations are incomplete) or false negatives in the ground truth (the methods are genuinely side-effecting), we cross-reference with a secondary oracle: the Randoop-generated side-effect-free method list~\cite{randoop}.
 
+Of the 316 unannotated mismatches, 315 are flagged by Randoop as side-effecting and only 1 is confirmed side-effect-free by Randoop.
+At first glance, this suggests our tool is over-approximating.
+However, manual inspection reveals that the vast majority of these 315 methods are \emph{genuinely side-effect-free}---the discrepancy stems from limitations in both the ground truth and Randoop, not from bugs in our analysis.
 
-\paragraph{Annotation deficit.}
-Beyond verifying existing annotations, our tool identifies \textbf{1,338 methods} in annotated files that it classifies as side-effect-free but which lack any manual annotation.
-An additional 903 methods are flagged in files that have no annotations at all.
-This \emph{annotation deficit} suggests that the Checker Framework's manual annotations are incomplete and that automated analysis could assist in expanding annotation coverage.
-
-Table~\ref{tab:deficit} shows the files with the largest annotation deficits.
-\texttt{Collections.java} alone has 366 potentially unannotated side-effect-free methods---more than double its existing 174 annotations.
-Many of these are inner-class methods in unmodifiable wrapper views (e.g., \texttt{UnmodifiableList.get()}, \texttt{UnmodifiableSortedSet.first()}) that are straightforward to verify as side-effect-free.
+Table~\ref{tab:unann-breakdown} categorizes the 315 methods by type.
 
 \begin{table}[h]
 \centering
-\caption{Top 10 files by annotation deficit (unannotated methods our tool classifies as side-effect-free).}
-\label{tab:deficit}
-\begin{tabular}{lrr}
+\caption{Breakdown of 315 unannotated methods classified as SEF by our tool but SE by Randoop.}
+\label{tab:unann-breakdown}
+\begin{tabular}{lrp{7.5cm}}
 \toprule
-\textbf{File} & \textbf{Deficit} & \textbf{Existing Annotations} \\
+\textbf{Category} & \textbf{Count} & \textbf{Example and Explanation} \\
 \midrule
-Collections.java          & 366 & 174 \\
-ImmutableCollections.java & 111 &  21 \\
-Spliterators.java         & 102 &   8 \\
-Locale.java               &  51 &   5 \\
-ArrayList.java            &  47 &  20 \\
-LinkedList.java           &  47 &  15 \\
-ResourceBundle.java       &  40 &   3 \\
-LinkedHashMap.java        &  39 &  18 \\
-Formatter.java            &  36 &   1 \\
-Arrays.java               &  31 &  64 \\
+Constructors
+& 105 & \texttt{HashMap.<init>()}, \texttt{HashSet.<init>(int)}: allocate new objects and write only to \texttt{this} fields---side-effect-free by our definition. Randoop does not classify constructors as SEF. \\
+
+Simple getters
+& 33 & \texttt{HashMap\$Node.getKey()}, \texttt{Spliterator.estimateSize()}: return a field or constant with no mutation. Not annotated because they are inner-class or private methods. \\
+
+Static/pure helpers
+& 26 & \texttt{HashMap.hash(Object)}, \texttt{Arrays.binarySearch0(...)}: pure computation with no state mutation. These are private utility methods the Checker Framework did not annotate. \\
+
+Factory methods
+& 22 & \texttt{List.of(...)}, \texttt{Collections.singletonMap(...)}: allocate new immutable objects without mutating parameters. Randoop does not detect these as SEF because it tests for observable mutations, not allocation. \\
+
+Exception-throwers
+& 10 & \texttt{Iterator.remove()}, \texttt{KeyValueHolder.setValue(Object)}: default implementations that throw \texttt{UnsupportedOperationException} without any mutation. Strictly SEF, but semantically intended as mutation operations. \\
+
+Other (Spliterator internals, etc.)
+& 119 & Inner-class methods in \texttt{Spliterators}, \texttt{ImmutableCollections}, \texttt{LinkedHashMap}, \texttt{Collections}: constructors, accessors, and delegation methods in inner classes not covered by Checker Framework annotations. \\
+\midrule
+\textbf{Total} & \textbf{315} & \\
 \bottomrule
 \end{tabular}
 \end{table}
 
+\paragraph{Interpretation.}
+The key insight is that \emph{absence of annotation is a weak negative signal}.
+The Checker Framework annotations focus on public API methods and commonly-used classes; private helpers, inner-class methods, and constructors are systematically under-annotated.
+Similarly, Randoop's dynamic analysis has difficulty testing constructors (which always ``mutate'' the new object from Randoop's perspective), private methods (not directly invocable), and factory methods that return new objects.
+
+Of the 315 methods, only the 10 exception-throwing methods represent genuinely debatable cases where our strict definition (no mutation = side-effect-free) diverges from the semantic intent of the method contract.
+The remaining $\sim$305 methods appear to be true positives from our tool that neither Randoop nor the Checker Framework detected, suggesting that our analysis can meaningfully expand annotation coverage beyond what manual or dynamic approaches achieve.
+
 
 \paragraph{Unit tests.}
-In addition to the JDK evaluation, our tool includes a suite of 30 unit tests covering intraprocedural analysis (arithmetic, new-object mutation, static field escape, constructor exception), interprocedural analysis (callee summary instantiation, transitive purity, factory patterns, iterator idioms), the paper's running example from Salcianu and Rinard~\cite{salcianu2005purity}, and merge-mode equivalence verification.
+In addition to the JDK evaluation, our tool includes a suite of 30 unit tests covering intraprocedural analysis (arithmetic, new-object mutation, static field escape, constructor exception), interprocedural analysis (callee summary instantiation, transitive purity, factory patterns, iterator idioms), the paper's running example from Salcianu-Rinard~\cite{salcianu2005purity}, and merge-mode equivalence verification.
 All 30 tests pass.
