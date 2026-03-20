@@ -37,6 +37,34 @@ TOOL_RESULTS_DIR = EXPERIMENT_DIR / "tool_results"
 GRADLE_CMD = "./gradlew"
 RANDOOP_SEF_PATH = EXPERIMENT_DIR / "Randoop-sef-methods.txt"
 
+# Priority ordering: leaf-to-root for override graph.
+# Concrete implementations first so their summaries are cached, then abstract
+# classes, then interfaces last — so override propagation has all concrete verdicts.
+PRIORITY_ORDER = [
+    # Phase 1: Small leaf utilities (no overrides, few dependencies)
+    "Objects.java", "Optional.java", "OptionalInt.java", "OptionalDouble.java",
+    "OptionalLong.java", "StringJoiner.java", "StringTokenizer.java", "UUID.java",
+    "Base64.java", "HexFormat.java", "BitSet.java",
+    # Phase 2: Concrete collections (leaf implementations — override graph leaves)
+    "HashSet.java", "LinkedHashSet.java", "Stack.java", "Vector.java",
+    "ArrayDeque.java", "PriorityQueue.java", "ArrayList.java", "LinkedList.java",
+    "HashMap.java", "LinkedHashMap.java", "TreeMap.java", "TreeSet.java",
+    "Hashtable.java", "EnumMap.java", "EnumSet.java", "IdentityHashMap.java",
+    "WeakHashMap.java",
+    # Phase 3: Complex utilities (concrete, depend on collections)
+    "Collections.java", "Arrays.java",
+    # Phase 4: Abstract base classes (mid-level in override graph)
+    "AbstractCollection.java", "AbstractList.java", "AbstractMap.java",
+    "AbstractSet.java", "AbstractQueue.java", "AbstractSequentialList.java",
+    # Phase 5: Interfaces (top of override graph — analyzed last)
+    "Collection.java", "List.java", "Map.java", "Set.java", "Deque.java",
+    "Queue.java", "Iterator.java", "Enumeration.java", "Comparator.java",
+    "NavigableMap.java", "NavigableSet.java", "SortedMap.java", "SortedSet.java",
+    "SequencedCollection.java", "SequencedMap.java", "SequencedSet.java",
+    "RandomAccess.java", "Spliterator.java", "PrimitiveIterator.java",
+    "ListIterator.java", "Formattable.java", "EventListener.java", "Observer.java",
+]
+
 
 def load_randoop_sef():
     """Load the set of method canonical keys that Randoop considers side-effect-free."""
@@ -87,25 +115,20 @@ def run_tool_on_file(java_file_path):
     if TIMING_DIR.exists():
         existing = set(TIMING_DIR.glob("timing_*.json"))
 
-    args_str = f"{java_file_path} --timing --callgraph-timeout 120 --method-timeout 60"
+    args_str = f"{java_file_path} --timing --callgraph-timeout 120 --method-timeout 120"
     cmd = [GRADLE_CMD, "run", f"--args={args_str}"]
 
     print(f"  Running: {' '.join(cmd)}")
     start_time = time.time()
 
     try:
+        # Stream stdout/stderr to terminal so per-method progress is visible
         result = subprocess.run(
             cmd,
-            capture_output=True,
-            text=True,
-            timeout=1800,  # 30 minute safety-net; Java handles granular timeouts internally
+            timeout=3600,  # 1 hour safety-net; Java handles granular timeouts internally
         )
         elapsed = time.time() - start_time
         print(f"  Completed in {elapsed:.1f}s (exit code {result.returncode})")
-
-        if result.returncode != 0:
-            print(f"  STDERR: {result.stderr[-500:]}" if result.stderr else "  (no stderr)")
-            # Still check for timing file — tool may have partially succeeded
 
     except subprocess.TimeoutExpired:
         elapsed = time.time() - start_time
@@ -164,10 +187,10 @@ def categorize(jdk_annotation, our_verdict, file_has_annotations):
         return 'Match'
 
     if has_annotation and our_verdict in ('SIDE_EFFECTING', 'GRAPH_VIOLATION'):
-        return 'Tool False Positive'
+        return 'Annotated Mismatch'
 
     if not has_annotation and our_verdict == 'SIDE_EFFECT_FREE':
-        return 'Annotation Deficit'
+        return 'Unannotated Mismatch'
       
 
     if not has_annotation and our_verdict in ('SIDE_EFFECTING', 'GRAPH_VIOLATION'):
@@ -379,7 +402,7 @@ def print_summary(rows):
 
     print(f"\nTotal methods in CSV: {len(rows)}")
     print("\nCategory Breakdown:")
-    for cat in ['Match', 'Tool False Positive', 'Annotation Deficit',
+    for cat in ['Match', 'Annotated Mismatch', 'Unannotated Mismatch',
                 'File Not Annotated', 'Both Side-Effecting', 'Not Analyzed', 'Timeout', 'Unknown']:
         count = categories.get(cat, 0)
         if count > 0:
@@ -391,11 +414,11 @@ def print_summary(rows):
 
     if analyzed_annotated:
         matches = sum(1 for r in analyzed_annotated if r['category'] == 'Match')
-        false_pos = sum(1 for r in analyzed_annotated if r['category'] == 'Tool False Positive')
+        false_pos = sum(1 for r in analyzed_annotated if r['category'] == 'Annotated Mismatch')
         total = len(analyzed_annotated)
         print(f"\nAnnotated methods analyzed: {total}")
         print(f"  Matches (tool agrees):     {matches} ({100*matches/total:.1f}%)")
-        print(f"  Tool False Positives:      {false_pos} ({100*false_pos/total:.1f}%)")
+        print(f"  Annotated Mismatches:      {false_pos} ({100*false_pos/total:.1f}%)")
 
     # Randoop vs JDK ground truth
     randoop_annotated = [r for r in rows if r['jdk_annotation'] in ('Pure', 'SideEffectFree')]
@@ -499,13 +522,23 @@ def main():
 
     # Step 1: Extract ground truth and load Randoop SEF list
     ground_truth = extract_ground_truth()
-    print(f"Ground truth: {len(ground_truth)} annotated methods")
+    annotated_count = sum(1 for e in ground_truth if e['annotation'] in ('Pure', 'SideEffectFree'))
+    print(f"Ground truth: {len(ground_truth)} methods ({annotated_count} annotated, {len(ground_truth) - annotated_count} unannotated)")
     randoop_sef_set = load_randoop_sef()
     java_util_randoop = sum(1 for k in randoop_sef_set if k.startswith('java.util.'))
     print(f"Randoop SEF list: {len(randoop_sef_set)} methods total, {java_util_randoop} from java.util")
 
     # Step 2: Run the tool on each file
-    java_files = sorted(JDK_UTIL_DIR.glob("*.java"))
+    # Sort files by priority order: priority files first, then alphabetical
+    priority_set = set(PRIORITY_ORDER)
+    priority_index = {name: i for i, name in enumerate(PRIORITY_ORDER)}
+    all_java_files = list(JDK_UTIL_DIR.glob("*.java"))
+    priority_files = sorted(
+        [f for f in all_java_files if f.name in priority_set],
+        key=lambda f: priority_index[f.name]
+    )
+    remaining_files = sorted(f for f in all_java_files if f.name not in priority_set)
+    java_files = priority_files + remaining_files
     if file_filter:
         java_files = [f for f in java_files if f.name == file_filter or file_filter in f.name]
         if not java_files:
