@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * CLI entry point for the side-effect analysis tool.
  *
  * Usage:
- *   ./gradlew run --args="MyFile.java [--show-graph] [--no-merge] [--method <name>] [--timing]"
+ *   ./gradlew run --args="MyFile.java [--show-graph] [--merge] [--method <name>] [--timing]"
  */
 public class Main {
 
