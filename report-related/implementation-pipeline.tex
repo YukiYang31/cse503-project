@@ -60,6 +60,7 @@
 
 \paragraph{JDK summary cache.}
 Analyzing user code inevitably requires resolving calls into the JDK standard library.
-Rather than re-analyzing library methods on every invocation, we persist method summaries to a disk-backed JSON cache (\texttt{jdk-cache/}).
-When a cross-file callee is encountered during call graph construction or dataflow analysis, the tool first consults this cache; only if no summary exists does it perform on-demand analysis of the library method.
-We ship a pre-computed cache covering common \texttt{java.util}, \texttt{java.lang}, and \texttt{java.io} methods, so that users benefit from library-level precision out of the box without incurring the cost of whole-JDK analysis.
+Rather than re-analyzing library methods on every run, we persist method summaries to a disk-backed JSON cache (\texttt{jdk-cache/}).
+At the start of a run, these cached summaries are loaded and used to pre-populate the in-memory summary cache before bottom-up analysis begins.
+During the run, newly analyzed library methods are written back to \texttt{jdk-cache/} so future runs can reuse them immediately.
+This cache complements the complete-call-graph pipeline: reachable JDK methods are still discovered up front by BFS and ordered together with user methods, but previously analyzed library summaries can be reused without recomputation.

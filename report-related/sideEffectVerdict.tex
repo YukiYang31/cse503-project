@@ -4,7 +4,7 @@ Before we infer the side-effectiveness of the method, we validate the exit point
 2. An outside node cannot lead to an inside edge.
 If either of the two rules is violated, we immediately return \texttt{GRAPH VIOLATION}.
 
-After the graph is validated, the analysis determines side-effectiveness by inspecting the exit points-to graph and the write set. The checker accumulates \emph{all} violations into a set of reasons and reports them together. The output type of the checker is therefore either \texttt{SIDE\_EFFECT\_FREE} or \texttt{SIDE\_EFFECTING(reasons)}, where \texttt{reasons} is a \texttt{Set<String>}, a set of human-readable strings each describing one distinct violation. 
+After the graph is validated, the analysis determines side-effectiveness by inspecting the exit points-to graph and the write set. The checker accumulates \emph{all} violations into a list of reasons and reports them together. The output type of the checker is therefore either \texttt{SIDE\_EFFECT\_FREE} or \texttt{SIDE\_EFFECTING(reasons)}, where \texttt{reasons} is a \texttt{List<String>} of human-readable strings describing the observed violations. 
 
 
 Following the algorithm of Salcianu--Rinard, we define two node sets from the exit graph. Let $\mathit{PrestateNodes}$ be the set of all nodes reachable from any parameter node by traversing only outside edges. These are the nodes that represent objects which existed before the method was called: the parameter nodes themselves plus any heap objects read from them. Let $\mathit{EscapedNodes}$ be the set of all nodes that escape. We say that a node $n$ \emph{escapes} if it is reachable from the global state --- if any part of the program outside the current method can access the object $n$ represents without going through the method's parameters. Formally, $n$ escapes if it is reachable from $E \cup \{n_{GBL}\}$ via any combination of inside and outside edges in the exit graph. Both sets are computed as graph reachability closures over the exit graph.
@@ -45,28 +45,28 @@ PrestateNodes $\leftarrow$ reachability({ n $\in$ G_exit : n is ParameterNode },
 //   E $\cup$ {$n_{GBL}$} via any combination of inside and outside edges.
 EscapedNodes $\leftarrow$ reachability(E $\cup$ { $n_{GBL}$ }, all edges)
 
-// Accumulate all violations into a set of reasons
-reasons $\leftarrow$ {}
+// Accumulate all violations into an ordered list of reasons
+reasons $\leftarrow$ []
 
 // Step 3: Check for writes to static fields (mutations of $n_{GBL}$)
 for each $\langle n_{GBL}$, f$\rangle$ in W do
-    reasons $\leftarrow$ reasons $\cup$ { "writes to static field f" }
+    append "writes to static field f" to reasons
 
 // Step 4: Check each prestate node for escape and mutation
 for each node n in PrestateNodes do
     // Escape check: prestate node must not be globally reachable
     if n in EscapedNodes then
-        reasons $\leftarrow$ reasons $\cup$ { "prestate node n escapes to global scope" }
+        append "prestate node n escapes to global scope" to reasons
 
     // Mutation check: prestate node must not appear in the write set
     for each $\langle$n, f$\rangle$ in W do
         // Constructor exception
         if m is a constructor and n = P0 then
             continue
-        reasons $\leftarrow$ reasons $\cup$ { "mutates prestate node n via field f" }
+        append "mutates prestate node n via field f" to reasons
 
 // Step 5: Return verdict with all accumulated reasons
-if reasons $\neq$ {} then
+if reasons is not empty then
     return SIDE_EFFECTING(reasons)
 verdict $\leftarrow$ SIDE_EFFECT_FREE
 
@@ -74,9 +74,9 @@ verdict $\leftarrow$ SIDE_EFFECT_FREE
 if OverrideGraph contains m then
     for each override o in OverrideGraph[m] do
         if SummaryCache[o].result = SIDE_EFFECTING then
-            reasons $\leftarrow$ reasons $\cup$ { "overridden by side-effecting o" }
+            append "overridden by side-effecting o" to reasons
 
-if reasons $\neq$ {} then
+if reasons is not empty then
     return SIDE_EFFECTING(reasons)
 
 return verdict

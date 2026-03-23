@@ -17,11 +17,11 @@ Both files are compiled into the same class directory. The pipeline is:
 
 3. **Callee analyzed first** — `Container.copy()` is analyzed, and its summary (exit graph + return targets) is stored in the `SummaryCache`
 
-4. **Caller hits Tier 2** — When `Reader.copyContainer` encounters the call `c.copy()`, `handleInvoke()` at line 501 does:
+4. **Caller hits Tier 2** — When `Reader.copyContainer` encounters the call `c.copy()`, `handleInvoke()` looks up the callee summary in the `SummaryCache`:
    ```java
    MethodSummary calleeSummary = summaryCache.lookup(fullSig, subSig);
    ```
-   This **hits** because `Container.copy`'s summary was cached in step 3. The summary is instantiated via `applySummaryToState()` (line 510).
+   This **hits** because `Container.copy`'s summary was cached in step 3. The summary is then instantiated into the caller graph.
 
 This is **same-file interprocedural** analysis — all classes are in one call graph.
 

@@ -57,8 +57,8 @@ This document describes the code structure, key design decisions, and how to ext
 - **`GraphInstantiator.java`** — Implements Section 5.3 of Salcianu & Rinard: instantiates callee summaries at call sites. Steps: (0) remap callee node IDs to fresh caller IDs, (1) compute node mapping mu via least fixed point of 3 constraints, (2) combine graphs (inside/outside edges, locals, escaped set), (3) remove captured load nodes, (4) propagate mutated fields W.
 - **`MethodSummary.java`** — Stores the analysis result for a single method: exit `PointsToGraph`, `SideEffectResult` enum (`SIDE_EFFECT_FREE`, `SIDE_EFFECTING`, `GRAPH_VIOLATION`), reason string, and return targets for inter-procedural instantiation.
 - **`SummaryCache.java`** — Dual-key cache: stores summaries by both full signature (e.g., `<java.util.HashMap: int size()>`) and sub-signature (e.g., `int size()`). The sub-signature fallback handles virtual/interface dispatch where the call site type differs from the implementation type.
-- **`CallGraphBuilder.java`** — Builds a call graph from Jimple invoke statements, including BFS discovery of JDK-reachable methods. Resolves virtual/interface calls to concrete implementations within the discovered classes. Computes bottom-up analysis order using Tarjan's SCC algorithm. Returns batches (single methods or SCCs). BFS is bounded by a 200-class cap and forbidden package prefixes (`sun.*`, `jdk.internal.*`, `java.awt.*`, etc.).
-- **`LibrarySummaryCache.java`** — Disk-backed cache for library (JDK) method summaries. Persists summaries to `jdk-cache/` as JSON files (SHA-256 hashed filenames) so they can be reused across CLI invocations.
+- **`CallGraphBuilder.java`** — Builds a call graph from Jimple invoke statements, including BFS discovery of JDK-reachable methods. The raw graph records direct declared-target calls, then a merged graph augments those edges with override relationships so callers and base methods are ordered after overriding implementations. Computes bottom-up analysis order using Tarjan's SCC algorithm. Returns batches (single methods or SCCs). BFS is bounded by a 200-class cap and forbidden package prefixes (`sun.*`, `jdk.internal.*`, `java.awt.*`, etc.).
+- **`LibrarySummaryCache.java`** — Disk-backed cache for library (JDK) method summaries. Persists summaries to `jdk-cache/` as readable, filesystem-safe JSON filenames derived from the method signature so they can be reused across CLI invocations.
 - **`MethodSummarySerializer.java`** — JSON serialization/deserialization for `MethodSummary` and `PointsToGraph` using Gson. Preserves node IDs and types for cache round-tripping.
 
 ### Output (`edu.uw.cse.sideeffect.output`)
@@ -107,7 +107,7 @@ The analysis processes methods bottom-up over a complete call graph that include
 2. **Cache pre-population**: Before analysis begins, the `SummaryCache` is pre-populated from the disk-backed `LibrarySummaryCache` (`jdk-cache/`), so JDK methods analyzed in prior runs are immediately available.
 3. **Bottom-up analysis**: Methods are analyzed in reverse topological order. Leaf methods (no callees) are analyzed first; their summaries are cached and used when analyzing their callers. Library method summaries are persisted to disk for reuse across runs.
 4. **Summary instantiation**: At each call site, `GraphInstantiator` maps callee parameter nodes to caller argument nodes (via a least-fixed-point mu mapping), combines inside/outside edges, removes captured load nodes, and propagates callee mutations to the caller's graph.
-5. **SCC handling**: For mutually recursive methods, the analysis iterates within each SCC until summaries stabilize (max 5 iterations).
+5. **SCC handling**: For mutually recursive methods, the analysis re-runs the whole SCC until the cached summaries stop changing.
 
 ### Complete Call Graph with BFS JDK Discovery
 
@@ -125,7 +125,7 @@ Instead of on-demand analysis at call sites, the tool builds a complete call gra
 - At startup, loads cached JDK method summaries from `jdk-cache/*.json` into memory
 - Pre-populates the `SummaryCache` so previously analyzed library methods are immediately available
 - After analyzing a library method, persists its summary to disk for future runs
-- Uses SHA-256 hashed filenames (Java method signatures contain filesystem-illegal characters)
+- Uses a readable sanitized form of the method signature as the filename
 
 For example, `HashSet.size()` calls `HashMap.size()`. The BFS discovers `HashMap` as a reachable class, includes it in the call graph, and ensures `HashMap.size()` is analyzed bottom-up before `HashSet.size()`. On subsequent runs, `HashMap.size()`'s cached summary is loaded from `jdk-cache/` without re-analysis.
 

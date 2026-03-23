@@ -1,6 +1,8 @@
 \section{Evaluation}
-\textcolor{red}{For Mike: A lot of the previous and unadressed corrections in this section have to do with the fact that we were using on-demand analysis in inter-file handling. We have since changed that (and are still in the process of) but haven't rerun the experiment yet. The numbers currently make no sense, and same for much of the text now. }
 We evaluate our side-effect analysis tool to answer three primary research questions regarding its scalability, correctness, and practical utility in downstream software engineering tasks.
+
+\paragraph{Status of this section.}
+The implementation described in this report now uses a complete-call-graph pipeline with BFS JDK discovery, bottom-up summary composition, and a disk-backed JDK summary cache. Any quantitative results presented in this section therefore need to be interpreted as results for the \emph{current} pipeline only if they were regenerated from the current experiment scripts and CSV artifacts. Older text that referred to the retired on-demand inter-file analysis model has been removed.
 
 
 \begin{itemize}
@@ -19,8 +21,8 @@ This package exercises the full spectrum of Java idioms (generics, inner classes
 
 \paragraph{Implementation}
 We loaded the \texttt{java.util} package from JDK 21 runtime bytecode via SootUp's \newline \texttt{JrtFileSystemAnalysisInputLocation}.
-Each file is analyzed independently: per-file setup includes IR loading, call graph construction within the file, and then method-by-method dataflow analysis in bottom-up call-graph order.
-Cross-file callees are resolved on demand from the JDK runtime image, with bounded depth (5 levels), a per-method budget (10 on-demand analyses), and a graph size guard (20 nodes) \textcolor{red}{(For Mike: This will be taken out once we finish reimplementing inter-file.)}to prevent blowup.
+Each file is analyzed independently for the experiment harness, but within each run the tool first discovers reachable JDK classes by bounded BFS, constructs a merged call graph, and then analyzes methods in bottom-up call-graph order.
+Cross-file JDK callees are therefore incorporated through the discovered call graph and summary cache rather than via the retired on-demand inter-file analysis path.
 
 
 
@@ -101,7 +103,7 @@ GregorianCalendar.java  &  4 &  4 \\
 \paragraph{Per-method timing.}
 Table~\ref{tab:method-timing} shows the distribution of per-method analysis time across all 4,304 analyzed methods.
 The median method completes in 0.4ms; 99.1\% of methods finish in under 100ms.
-Only 6 methods (0.1\%) exceed one second, all involving either deeply nested on-demand cross-file resolution (e.g., \texttt{Formatter.format} at 2.7s) or complex static initialization (e.g., \texttt{Tripwire.<clinit>} at 3.1s).
+Only 6 methods (0.1\%) exceed one second, concentrated in especially heavy inter-procedural cases (e.g., \texttt{Formatter.format} at 2.7s) or complex static initialization (e.g., \texttt{Tripwire.<clinit>} at 3.1s).
 
 \begin{table}[h]
 \centering
@@ -124,7 +126,7 @@ $> 1$~s           &     6 & 100.0\% \\
 The points-to graph size is a key driver of analysis cost.
 The median method produces a graph with 6 nodes and 4 edges; 48.4\% of methods have 5 or fewer nodes.
 However, the distribution has a long tail: 5.4\% of methods exceed 100 nodes, with a maximum of 1,494 nodes.
-The Pearson correlation between graph edge count and analysis time is $r = 0.35$, confirming that graph size is a moderate predictor of cost. \textcolor{red}{For Mike: This will also be irrelevant once on-demand calls are removed.}
+The Pearson correlation between graph edge count and analysis time is $r = 0.35$, confirming that graph size is a moderate predictor of cost.
 Jimple statement count, by contrast, is a poor predictor ($r = 0.03$), suggesting that the analysis cost is dominated by inter-procedural graph instantiation rather than intraprocedural statement processing.
 
 \paragraph{Scalability assessment.}

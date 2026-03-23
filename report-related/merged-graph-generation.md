@@ -23,7 +23,7 @@ The Override Graph maps a base method to its overriding implementations (e.g., `
     3. For each method $m$ in $C$, if $S$ contains a concrete method with the exact same sub-signature, an edge is recorded: $S.m \to C.m$.
 
 ### Call Graph Generation
-The Call Graph consists of edges mapping a caller to its potential callees (e.g., `Caller.m()` → `Callee.m()`). This graph determines the dependency structure for the analysis.
+The tool first builds a raw call graph of direct invoke targets and then augments it with override edges to obtain the merged graph used for analysis ordering.
 
 - **Scope:** This phase iterates over **all discovered classes** (both User input and discovered JDK classes).
 - **SootUp Usage:**
@@ -35,8 +35,9 @@ The Call Graph consists of edges mapping a caller to its potential callees (e.g.
     1. The tool retrieves the method body.
     2. It iterates through all instructions looking for invocation expressions.
     3. For each invocation, it extracts the declared target signature.
-    4. **Static Resolution:** The tool checks if the exact target method exists within the `JavaView` of analyzed classes. If it does, a direct edge $Caller \to Callee$ is added.
-- **Note:** This construction creates a static call graph based on declared types. Virtual method dispatch is not expanded here; instead, it is handled during the dataflow analysis phase using the `SummaryCache` and the `OverrideGraph`.
+    4. **Direct edge construction:** If the exact declared target exists among the discovered concrete methods, a raw edge $Caller \to Callee$ is added.
+    5. **Override augmentation:** After the raw graph is built, the tool adds edges from callers of base methods to all known overrides, and also adds direct base-to-override edges. The merged graph is the one passed to Tarjan's SCC algorithm.
+- **Note:** Virtual dispatch is therefore accounted for before bottom-up ordering, not deferred to a later on-demand inter-file pass.
 
 ### Analysis Order (Tarjan's SCC)
 Finally, the constructed Call Graph is fed into Tarjan's Algorithm to identify Strongly Connected Components (SCCs).
@@ -50,7 +51,7 @@ Finally, the constructed Call Graph is fed into Tarjan's Algorithm to identify S
 It is important to note that this project does **not** utilize SootUp's built-in call graph algorithms (such as CHA or Spark). Instead, a custom call graph builder (`CallGraphBuilder.java`) was implemented from scratch, though it **relies on SootUp components** (specifically `JavaView`, `JavaSootClass`, and `MethodBody`) to read bytecode and resolve class dependencies. This custom design choice was made for several reasons:
 
 1. **JRT Complexity:** Analyzing JDK source code requires resolving classes from the `jrt:/` filesystem (Java 9+ modules). Standard whole-program call graph generators often struggle with the complexity and scale of including the entire JDK.
-2. **Controlled Scope:** The analysis requires a specific "partial" world view: starting strictly from user input files and expanding lazily into the JDK (capped at 200 classes) to find relevant dependencies without loading the entire `java.base` module.
+2. **Controlled Scope:** The analysis requires a specific "partial" world view: starting strictly from user input files and expanding into the JDK via bounded BFS (capped at 200 classes) to find relevant dependencies without loading the entire `java.base` module.
 3. **Specific Analysis Order:** To support the summary-based inter-procedural logic efficiently, a precise bottom-up analysis order (computed via Tarjan's SCC) was required, which was more straightforward to implement directly on top of a custom lightweight graph structure.
 
 While SootUp provides the essential infrastructure for parsing bytecode, loading classes (`JavaView`), and generating the Jimple IR, the call graph analysis and traversal logic are entirely custom implementations tailored to the specific needs of this side-effect analysis tool.
