@@ -77,7 +77,12 @@ public class CallGraphBuilder {
 
         JavaView jrtView = new JavaView(new JrtFileSystemAnalysisInputLocation());
         Set<JavaSootClass> discoveredClasses = new LinkedHashSet<>(initialClasses);
+        Set<String> initialClassNames = new LinkedHashSet<>();
+        for (JavaSootClass cls : initialClasses) {
+            initialClassNames.add(cls.getType().getFullyQualifiedName());
+        }
         Queue<JavaSootClass> pendingClasses = new ArrayDeque<>(initialClasses);
+        Set<String> reachableLibraryMethods = new HashSet<>();
         Map<String, Set<String>> externalEdges = new HashMap<>();
         int jdkClassesDiscovered = 0;
         int maxDiscoveredClasses = 200;
@@ -142,6 +147,16 @@ public class CallGraphBuilder {
                             continue;
                         }
 
+                        String targetSig = target.getSignature().toString();
+                        if (LibrarySummaryCache.contains(targetSig)) {
+                            continue;
+                        }
+
+                        String targetClassName = target.getDeclaringClassType().getFullyQualifiedName();
+                        if (!initialClassNames.contains(targetClassName)) {
+                            reachableLibraryMethods.add(targetSig);
+                        }
+
                         JavaSootClass targetCls = resolveClass(target.getDeclaringClassType(), view, jrtView);
                         if (targetCls != null && discoveredClasses.add(targetCls)) {
                             pendingClasses.add(targetCls);
@@ -160,18 +175,26 @@ public class CallGraphBuilder {
                     + " additional JDK/library classes (total: " + discoveredClasses.size() + ")");
         }
 
-        return buildCallGraphAndOrder(discoveredClasses, view, config, externalEdges);
+        return buildCallGraphAndOrder(
+                discoveredClasses, initialClassNames, reachableLibraryMethods, view, config, externalEdges);
     }
 
     /** Backward-compatible overload: no view, no BFS — only user classes. */
     public static Result computeBottomUpOrder(
             Collection<JavaSootClass> classes, AnalysisConfig config) {
-        return buildCallGraphAndOrder(classes, null, config, Collections.emptyMap());
+        Set<String> initialClassNames = new LinkedHashSet<>();
+        for (JavaSootClass cls : classes) {
+            initialClassNames.add(cls.getType().getFullyQualifiedName());
+        }
+        return buildCallGraphAndOrder(
+                classes, initialClassNames, Collections.emptySet(), null, config, Collections.emptyMap());
     }
 
     /** Core call graph construction + Tarjan SCC ordering. */
     private static Result buildCallGraphAndOrder(
             Collection<? extends JavaSootClass> seedClasses,
+            Set<String> initialClassNames,
+            Set<String> reachableLibraryMethods,
             JavaView view,
             AnalysisConfig config,
             Map<String, Set<String>> externalEdges) {
@@ -184,8 +207,17 @@ public class CallGraphBuilder {
         Map<String, JavaSootMethod> concreteMethodBySig = new LinkedHashMap<>();
         for (JavaSootClass cls : allClasses) {
             for (JavaSootMethod method : cls.getMethods()) {
-                if (method.isConcrete()) {
-                    concreteMethodBySig.put(method.getSignature().toString(), method);
+                if (!method.isConcrete()) continue;
+
+                String methodSig = method.getSignature().toString();
+                if (SafeMethods.isSafe(method.getSignature()) || LibrarySummaryCache.contains(methodSig)) {
+                    continue;
+                }
+
+                String className = cls.getType().getFullyQualifiedName();
+                boolean isUserClass = initialClassNames.contains(className);
+                if (isUserClass || reachableLibraryMethods.contains(methodSig)) {
+                    concreteMethodBySig.put(methodSig, method);
                 }
             }
         }
