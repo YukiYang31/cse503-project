@@ -17,61 +17,78 @@ import java.util.stream.Stream;
 public class LibrarySummaryCache {
 
     private static final Path CACHE_DIR = Path.of("jdk-cache");
+    private static final Path INDEX_FILE = CACHE_DIR.resolve(".index.json");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    /** In-memory mirror of disk cache, loaded at startup. */
+    /** Lazily loaded summaries that were actually needed during this process. */
     private static final Map<String, MethodSummary> cache = new HashMap<>();
+    /** Signature -> file name index for all persisted summaries on disk. */
+    private static final Map<String, String> fileIndex = new HashMap<>();
+    private static boolean indexLoaded = false;
 
     private LibrarySummaryCache() {}
 
     /**
-     * Load all cached summaries from disk into memory.
-     * @return number of entries loaded
+     * Load the on-disk cache index.
+     * Returns the number of known cached summaries, not the number eagerly deserialized.
      */
-    public static int loadFromDisk() {
-        cache.clear();
-        if (!Files.isDirectory(CACHE_DIR)) return 0;
-
-        int loaded = 0;
-        try (Stream<Path> files = Files.list(CACHE_DIR)) {
-            for (Path file : files.toList()) {
-                if (!file.toString().endsWith(".json")) continue;
-                try {
-                    String json = Files.readString(file, StandardCharsets.UTF_8);
-                    JsonObject obj = JsonParser.parseString(json).getAsJsonObject();
-                    MethodSummary summary = MethodSummarySerializer.deserialize(obj);
-                    cache.put(summary.getMethodSignature(), summary);
-                    loaded++;
-                } catch (Exception e) {
-                    // Skip corrupt cache files
-                    System.err.println("Warning: skipping corrupt cache file " + file.getFileName() + ": " + e.getMessage());
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Warning: could not read cache directory: " + e.getMessage());
-        }
-        return loaded;
+    public static synchronized int loadFromDisk() {
+        ensureIndexLoaded();
+        return fileIndex.size();
     }
 
     /** Check if a method signature is in the cache. */
-    public static boolean contains(String fullSig) {
-        return cache.containsKey(fullSig);
+    public static synchronized boolean contains(String fullSig) {
+        ensureIndexLoaded();
+        return cache.containsKey(fullSig) || fileIndex.containsKey(fullSig);
     }
 
     /** Get a cached summary, or null. */
-    public static MethodSummary get(String fullSig) {
-        return cache.get(fullSig);
+    public static synchronized MethodSummary get(String fullSig) {
+        ensureIndexLoaded();
+
+        MethodSummary cachedSummary = cache.get(fullSig);
+        if (cachedSummary != null) {
+            return cachedSummary;
+        }
+
+        String fileName = fileIndex.get(fullSig);
+        if (fileName == null) {
+            return null;
+        }
+
+        Path file = CACHE_DIR.resolve(fileName);
+        try {
+            String json = Files.readString(file, StandardCharsets.UTF_8);
+            JsonObject obj = JsonParser.parseString(json).getAsJsonObject();
+            MethodSummary summary = MethodSummarySerializer.deserialize(obj);
+            cache.put(summary.getMethodSignature(), summary);
+            fileIndex.put(summary.getMethodSignature(), fileName);
+            return summary;
+        } catch (Exception e) {
+            System.err.println("Warning: skipping corrupt cache file " + file.getFileName() + ": " + e.getMessage());
+            return null;
+        }
     }
 
     /** Get all cached entries (for pre-populating SummaryCache). */
-    public static Map<String, MethodSummary> getAll() {
-        return new HashMap<>(cache);
+    public static synchronized Map<String, MethodSummary> getAll() {
+        ensureIndexLoaded();
+        Map<String, MethodSummary> all = new HashMap<>();
+        for (String sig : fileIndex.keySet()) {
+            MethodSummary summary = get(sig);
+            if (summary != null) {
+                all.put(sig, summary);
+            }
+        }
+        return all;
     }
 
     /**
      * Save a library method summary to both memory and disk.
      */
-    public static void put(String fullSig, MethodSummary summary) {
+    public static synchronized void put(String fullSig, MethodSummary summary) {
+        ensureIndexLoaded();
         cache.put(fullSig, summary);
         writeToDisk(fullSig, summary);
     }
@@ -83,6 +100,8 @@ public class LibrarySummaryCache {
             Path file = CACHE_DIR.resolve(fileName + ".json");
             JsonObject obj = MethodSummarySerializer.serialize(summary);
             Files.writeString(file, GSON.toJson(obj), StandardCharsets.UTF_8);
+            fileIndex.put(fullSig, file.getFileName().toString());
+            writeIndexFile();
         } catch (IOException e) {
             System.err.println("Warning: could not write cache for " + fullSig + ": " + e.getMessage());
         }
@@ -103,7 +122,86 @@ public class LibrarySummaryCache {
     }
 
     /** Return the number of entries currently in memory. */
-    public static int size() {
-        return cache.size();
+    public static synchronized int size() {
+        ensureIndexLoaded();
+        return fileIndex.size();
+    }
+
+    private static void ensureIndexLoaded() {
+        if (indexLoaded) return;
+
+        cache.clear();
+        fileIndex.clear();
+        indexLoaded = true;
+
+        if (!Files.isDirectory(CACHE_DIR)) {
+            return;
+        }
+
+        if (loadIndexFile()) {
+            return;
+        }
+
+        rebuildIndexFromCacheFiles();
+    }
+
+    private static boolean loadIndexFile() {
+        if (!Files.isRegularFile(INDEX_FILE)) {
+            return false;
+        }
+
+        try {
+            String json = Files.readString(INDEX_FILE, StandardCharsets.UTF_8);
+            JsonObject root = JsonParser.parseString(json).getAsJsonObject();
+            JsonObject entries = root.getAsJsonObject("entries");
+            if (entries == null) {
+                return false;
+            }
+            for (Map.Entry<String, JsonElement> entry : entries.entrySet()) {
+                fileIndex.put(entry.getKey(), entry.getValue().getAsString());
+            }
+            return true;
+        } catch (Exception e) {
+            System.err.println("Warning: could not read cache index: " + e.getMessage());
+            fileIndex.clear();
+            return false;
+        }
+    }
+
+    private static void rebuildIndexFromCacheFiles() {
+        try (Stream<Path> files = Files.list(CACHE_DIR)) {
+            for (Path file : files.toList()) {
+                if (!Files.isRegularFile(file)) continue;
+                if (!file.toString().endsWith(".json")) continue;
+                if (file.getFileName().equals(INDEX_FILE.getFileName())) continue;
+                try {
+                    String json = Files.readString(file, StandardCharsets.UTF_8);
+                    JsonObject obj = JsonParser.parseString(json).getAsJsonObject();
+                    JsonElement sigElem = obj.get("sig");
+                    if (sigElem == null) continue;
+                    fileIndex.put(sigElem.getAsString(), file.getFileName().toString());
+                } catch (Exception e) {
+                    System.err.println("Warning: skipping corrupt cache file " + file.getFileName() + ": " + e.getMessage());
+                }
+            }
+            writeIndexFile();
+        } catch (IOException e) {
+            System.err.println("Warning: could not read cache directory: " + e.getMessage());
+        }
+    }
+
+    private static void writeIndexFile() {
+        try {
+            Files.createDirectories(CACHE_DIR);
+            JsonObject root = new JsonObject();
+            JsonObject entries = new JsonObject();
+            for (Map.Entry<String, String> entry : fileIndex.entrySet()) {
+                entries.addProperty(entry.getKey(), entry.getValue());
+            }
+            root.add("entries", entries);
+            Files.writeString(INDEX_FILE, GSON.toJson(root), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            System.err.println("Warning: could not write cache index: " + e.getMessage());
+        }
     }
 }

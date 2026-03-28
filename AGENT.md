@@ -51,6 +51,58 @@ There are two distinct execution modes.
 
 This `classDir == null` fact is important because it is the main signal used to decide whether JDK cache updates are allowed.
 
+## How To Run
+
+Use the Gradle wrapper from the repository root.
+
+### Build
+
+```bash
+./gradlew build
+```
+
+### Analyze user Java files
+
+```bash
+./gradlew run --args="MyFile.java"
+./gradlew run --args="MyFile.java --method myMethod"
+./gradlew run --args="MyFile.java --show-graph --merge"
+./gradlew run --args="MyFile.java --debug"
+./gradlew run --args="MyFile.java --timing"
+```
+
+### Analyze JDK source files
+
+```bash
+./gradlew run --args="jdk/src/java.base/share/classes/java/lang/String.java"
+./gradlew run --args="jdk/src/java.base/share/classes/java/util/ArrayList.java --method add"
+```
+
+### Run tests
+
+```bash
+./gradlew test
+```
+
+### Focused test
+
+```bash
+./gradlew test --tests edu.uw.cse.sideeffect.SideEffectAnalysisTest
+```
+
+## Edit Discipline
+
+After every code edit, run:
+
+```bash
+./gradlew test
+```
+
+Do not consider an implementation change complete until `./gradlew test` passes, unless the user explicitly asks not to run tests or the environment prevents it.
+
+For complicated changes, make a concrete plan before proceeding with implementation.
+The plan should identify the affected components, the intended code changes, and how the result will be verified.
+
 ## Current Core Terminology
 
 Use these names consistently.

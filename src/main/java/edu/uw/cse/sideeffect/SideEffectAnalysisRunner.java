@@ -124,10 +124,10 @@ public class SideEffectAnalysisRunner {
             this.view = new JavaView(inputLocation);
         }
 
-        // Load global library cache from disk (for reuse across runs)
-        int diskCacheLoaded = LibrarySummaryCache.loadFromDisk();
-        if (diskCacheLoaded > 0 && config.debug) {
-            System.out.println("Debug== Loaded " + diskCacheLoaded + " cached library summaries from disk");
+        // Load the on-disk library summary index so reachable JDK summaries can be fetched lazily.
+        int diskCacheIndexed = LibrarySummaryCache.loadFromDisk();
+        if (diskCacheIndexed > 0 && config.debug) {
+            System.out.println("Debug== Indexed " + diskCacheIndexed + " cached library summaries from disk");
         }
 
         // Get classes — filter to targets when using JRT mode
@@ -210,6 +210,7 @@ public class SideEffectAnalysisRunner {
         List<List<JavaSootMethod>> batches = cgResult.batches();
         Map<String, Set<String>> dependencyGraph = cgResult.dependencyGraph();
         Map<String, Set<String>> overrideGraph = cgResult.overrideGraph();
+        Set<String> reachableCachedLibraryMethods = cgResult.reachableCachedLibraryMethods();
         this.rawCallGraph = cgResult.rawCallGraph();
         this.overrideGraph = overrideGraph;
         this.reverseOverrideGraph = invertGraph(overrideGraph);
@@ -230,12 +231,12 @@ public class SideEffectAnalysisRunner {
         // Analyze only methods reachable from the target (if methodFilter is set)
         SummaryCache cache = new SummaryCache();
 
-        // Pre-populate cache from disk-backed library cache
-        cache.putAll(LibrarySummaryCache.getAll());
-        if (config.debug && LibrarySummaryCache.size() > 0) {
-            System.out.println("Debug== Pre-populated SummaryCache with " + LibrarySummaryCache.size() + " library summaries");
+        // Lazily load only the cached library summaries that are reachable in this run.
+        preloadReachableLibrarySummaries(cache, reachableCachedLibraryMethods);
+        if (config.debug && !reachableCachedLibraryMethods.isEmpty()) {
+            System.out.println("Debug== Pre-populated SummaryCache with "
+                    + reachableCachedLibraryMethods.size() + " reachable cached library summaries");
         }
-        bootstrapMergedSummaries(cache);
 
         List<MethodSummary> summaries = new ArrayList<>();
 
@@ -522,8 +523,12 @@ public class SideEffectAnalysisRunner {
         propagateToBases(fullSig, cache);
     }
 
-    private void bootstrapMergedSummaries(SummaryCache cache) {
-        for (String methodSig : cache.keySetSnapshot()) {
+    private void preloadReachableLibrarySummaries(SummaryCache cache, Set<String> reachableCachedLibraryMethods) {
+        for (String methodSig : reachableCachedLibraryMethods) {
+            MethodSummary summary = LibrarySummaryCache.get(methodSig);
+            if (summary == null) continue;
+
+            mergeIntoCache(methodSig, summary, cache, false);
             propagateToBases(methodSig, cache);
         }
     }

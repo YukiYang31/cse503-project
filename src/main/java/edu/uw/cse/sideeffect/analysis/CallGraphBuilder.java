@@ -60,17 +60,19 @@ public class CallGraphBuilder {
      * @param dependencyGraph  merged graph used for analysis order and Tarjan SCC
      * @param rawCallGraph     direct invocation graph only
      * @param overrideGraph    base/declared method signature → set of direct overriding signatures
+     * @param reachableCachedLibraryMethods reachable library methods whose summaries already exist on disk
      */
     public record Result(
             List<List<JavaSootMethod>> batches,
             Map<String, Set<String>> dependencyGraph,
             Map<String, Set<String>> rawCallGraph,
-            Map<String, Set<String>> overrideGraph
+            Map<String, Set<String>> overrideGraph,
+            Set<String> reachableCachedLibraryMethods
     ) {}
 
     /**
      * Compute the bottom-up analysis order for all concrete methods in the given classes,
-     * plus all transitively reachable JDK/library methods discoverable via the view.
+     * plus all transitively reachable uncached JDK/library methods discoverable via method-based BFS.
      */
     public static Result computeBottomUpOrder(
             Collection<JavaSootClass> initialClasses, JavaView view, AnalysisConfig config) {
@@ -81,102 +83,117 @@ public class CallGraphBuilder {
         for (JavaSootClass cls : initialClasses) {
             initialClassNames.add(cls.getType().getFullyQualifiedName());
         }
-        Queue<JavaSootClass> pendingClasses = new ArrayDeque<>(initialClasses);
-        Set<String> reachableLibraryMethods = new HashSet<>();
-        Map<String, Set<String>> externalEdges = new HashMap<>();
-        int jdkClassesDiscovered = 0;
-        int maxDiscoveredClasses = 200;
-
-        while (!pendingClasses.isEmpty() && discoveredClasses.size() < maxDiscoveredClasses) {
-            JavaSootClass cls = pendingClasses.poll();
+        Queue<JavaSootMethod> pendingMethods = new ArrayDeque<>();
+        Set<String> queuedMethodSignatures = new HashSet<>();
+        for (JavaSootClass cls : initialClasses) {
             for (JavaSootMethod method : cls.getMethods()) {
                 if (!method.isConcrete()) continue;
-                Body body;
-                try {
-                    body = method.getBody();
-                } catch (Exception e) {
+                String methodSig = method.getSignature().toString();
+                if (queuedMethodSignatures.add(methodSig)) {
+                    pendingMethods.add(method);
+                }
+            }
+        }
+        Set<String> reachableLibraryMethods = new HashSet<>();
+        Set<String> reachableCachedLibraryMethods = new HashSet<>();
+        Map<String, Set<String>> externalEdges = new HashMap<>();
+        int jdkMethodsDiscovered = 0;
+        int maxDiscoveredLibraryMethods = 200;
+
+        while (!pendingMethods.isEmpty() && reachableLibraryMethods.size() < maxDiscoveredLibraryMethods) {
+            JavaSootMethod method = pendingMethods.poll();
+            if (!method.isConcrete()) continue;
+
+            Body body;
+            try {
+                body = method.getBody();
+            } catch (Exception e) {
+                continue;
+            }
+
+            String callerSig = method.getSignature().toString();
+            for (Stmt stmt : body.getStmtGraph().getStmts()) {
+                AbstractInvokeExpr invokeExpr = extractInvokeExpr(stmt);
+                if (invokeExpr == null) continue;
+
+                MethodSignature calleeSig = invokeExpr.getMethodSignature();
+
+                if (SafeMethods.isSafe(calleeSig)) {
+                    externalEdges.computeIfAbsent(callerSig, k -> new LinkedHashSet<>())
+                            .add(calleeSig + " [safe]");
                     continue;
                 }
 
-                String callerSig = method.getSignature().toString();
-                for (Stmt stmt : body.getStmtGraph().getStmts()) {
-                    AbstractInvokeExpr invokeExpr = extractInvokeExpr(stmt);
-                    if (invokeExpr == null) continue;
-
-                    MethodSignature calleeSig = invokeExpr.getMethodSignature();
-
-                    if (SafeMethods.isSafe(calleeSig)) {
-                        externalEdges.computeIfAbsent(callerSig, k -> new LinkedHashSet<>())
-                                .add(calleeSig + " [safe]");
-                        continue;
-                    }
-
-                    if (LibrarySummaryCache.contains(calleeSig.toString())) {
-                        externalEdges.computeIfAbsent(callerSig, k -> new LinkedHashSet<>())
-                                .add(calleeSig + " [cached]");
-                        continue;
-                    }
-
-                    String declClassName = calleeSig.getDeclClassType().getFullyQualifiedName();
-                    if (isForbiddenClassName(declClassName)) {
-                        externalEdges.computeIfAbsent(callerSig, k -> new LinkedHashSet<>())
-                                .add(calleeSig + " [forbidden]");
-                        continue;
-                    }
-
-                    Set<JavaSootMethod> targets = new LinkedHashSet<>();
-                    JavaSootMethod directTarget = resolveDirectTarget(calleeSig, view);
-                    if (directTarget == null) {
-                        directTarget = resolveDirectTarget(calleeSig, jrtView);
-                    }
-                    if (directTarget != null && directTarget.isConcrete()) {
-                        targets.add(directTarget);
-                    }
-
-                    if (isVirtualDispatch(invokeExpr)) {
-                        if (canResolveDeclClass(view, calleeSig)) {
-                            targets.addAll(resolveTargets(invokeExpr, view));
-                        }
-                        if (canResolveDeclClass(jrtView, calleeSig)) {
-                            targets.addAll(resolveTargets(invokeExpr, jrtView));
-                        }
-                    }
-
-                    for (JavaSootMethod target : targets) {
-                        if (SafeMethods.isSafe(target.getSignature()) || isForbiddenPackage(target)) {
-                            continue;
-                        }
-
-                        String targetSig = target.getSignature().toString();
-                        if (LibrarySummaryCache.contains(targetSig)) {
-                            continue;
-                        }
-
-                        String targetClassName = target.getDeclaringClassType().getFullyQualifiedName();
-                        if (!initialClassNames.contains(targetClassName)) {
-                            reachableLibraryMethods.add(targetSig);
-                        }
-
-                        JavaSootClass targetCls = resolveClass(target.getDeclaringClassType(), view, jrtView);
-                        if (targetCls != null && discoveredClasses.add(targetCls)) {
-                            pendingClasses.add(targetCls);
-                            jdkClassesDiscovered++;
-                        }
-                        if (discoveredClasses.size() >= maxDiscoveredClasses) break;
-                    }
-                    if (discoveredClasses.size() >= maxDiscoveredClasses) break;
+                if (LibrarySummaryCache.contains(calleeSig.toString())) {
+                    reachableCachedLibraryMethods.add(calleeSig.toString());
+                    externalEdges.computeIfAbsent(callerSig, k -> new LinkedHashSet<>())
+                            .add(calleeSig + " [cached]");
+                    continue;
                 }
-                if (discoveredClasses.size() >= maxDiscoveredClasses) break;
+
+                String declClassName = calleeSig.getDeclClassType().getFullyQualifiedName();
+                if (isForbiddenClassName(declClassName)) {
+                    externalEdges.computeIfAbsent(callerSig, k -> new LinkedHashSet<>())
+                            .add(calleeSig + " [forbidden]");
+                    continue;
+                }
+
+                Set<JavaSootMethod> targets = new LinkedHashSet<>();
+                JavaSootMethod directTarget = resolveDirectTarget(calleeSig, view);
+                if (directTarget == null) {
+                    directTarget = resolveDirectTarget(calleeSig, jrtView);
+                }
+                if (directTarget != null && directTarget.isConcrete()) {
+                    targets.add(directTarget);
+                }
+
+                if (isVirtualDispatch(invokeExpr)) {
+                    if (canResolveDeclClass(view, calleeSig)) {
+                        targets.addAll(resolveTargets(invokeExpr, view));
+                    }
+                    if (canResolveDeclClass(jrtView, calleeSig)) {
+                        targets.addAll(resolveTargets(invokeExpr, jrtView));
+                    }
+                }
+
+                for (JavaSootMethod target : targets) {
+                    if (SafeMethods.isSafe(target.getSignature()) || isForbiddenPackage(target)) {
+                        continue;
+                    }
+
+                    String targetSig = target.getSignature().toString();
+                    if (LibrarySummaryCache.contains(targetSig)) {
+                        reachableCachedLibraryMethods.add(targetSig);
+                        continue;
+                    }
+
+                    JavaSootClass targetCls = resolveClass(target.getDeclaringClassType(), view, jrtView);
+                    if (targetCls != null) {
+                        discoveredClasses.add(targetCls);
+                    }
+
+                    String targetClassName = target.getDeclaringClassType().getFullyQualifiedName();
+                    if (!initialClassNames.contains(targetClassName) && reachableLibraryMethods.add(targetSig)) {
+                        jdkMethodsDiscovered++;
+                    }
+
+                    if (queuedMethodSignatures.add(targetSig)) {
+                        pendingMethods.add(target);
+                    }
+                    if (reachableLibraryMethods.size() >= maxDiscoveredLibraryMethods) break;
+                }
+                if (reachableLibraryMethods.size() >= maxDiscoveredLibraryMethods) break;
             }
         }
 
-        if (config.debug && jdkClassesDiscovered > 0) {
-            System.out.println("Debug== BFS discovered " + jdkClassesDiscovered
-                    + " additional JDK/library classes (total: " + discoveredClasses.size() + ")");
+        if (config.debug && jdkMethodsDiscovered > 0) {
+            System.out.println("Debug== BFS discovered " + jdkMethodsDiscovered
+                    + " additional JDK/library methods across " + discoveredClasses.size() + " classes");
         }
 
         return buildCallGraphAndOrder(
-                discoveredClasses, initialClassNames, reachableLibraryMethods, view, config, externalEdges);
+                discoveredClasses, initialClassNames, reachableLibraryMethods,
+                reachableCachedLibraryMethods, view, config, externalEdges);
     }
 
     /** Backward-compatible overload: no view, no BFS — only user classes. */
@@ -187,7 +204,8 @@ public class CallGraphBuilder {
             initialClassNames.add(cls.getType().getFullyQualifiedName());
         }
         return buildCallGraphAndOrder(
-                classes, initialClassNames, Collections.emptySet(), null, config, Collections.emptyMap());
+                classes, initialClassNames, Collections.emptySet(), Collections.emptySet(),
+                null, config, Collections.emptyMap());
     }
 
     /** Core call graph construction + Tarjan SCC ordering. */
@@ -195,6 +213,7 @@ public class CallGraphBuilder {
             Collection<? extends JavaSootClass> seedClasses,
             Set<String> initialClassNames,
             Set<String> reachableLibraryMethods,
+            Set<String> reachableCachedLibraryMethods,
             JavaView view,
             AnalysisConfig config,
             Map<String, Set<String>> externalEdges) {
@@ -353,7 +372,8 @@ public class CallGraphBuilder {
             }
         }
 
-        return new Result(result, dependencyGraph, rawCallGraph, overrideGraph);
+        return new Result(result, dependencyGraph, rawCallGraph, overrideGraph,
+                Set.copyOf(reachableCachedLibraryMethods));
     }
 
     private static Set<JavaSootClass> expandHierarchy(Collection<? extends JavaSootClass> seedClasses,

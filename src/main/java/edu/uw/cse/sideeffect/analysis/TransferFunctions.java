@@ -496,6 +496,12 @@ public class TransferFunctions {
         // union of all implementation summaries in the cache.
         String fullSig = methodSig.toString();
         MethodSummary calleeSummary = summaryCache != null ? summaryCache.lookup(fullSig) : null;
+        if (calleeSummary == null) {
+            calleeSummary = LibrarySummaryCache.get(fullSig);
+            if (calleeSummary != null && summaryCache != null) {
+                summaryCache.put(fullSig, calleeSummary);
+            }
+        }
 
         if (calleeSummary != null) {
             applySummaryToState(calleeSummary, invokeExpr, returnVar, graph, methodSig);
