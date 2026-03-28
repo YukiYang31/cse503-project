@@ -106,6 +106,69 @@ This is how dynamic dispatch is handled in the current implementation.
 The transfer function does exact signature lookup only.
 The union over implementations has already been baked into the cached summary for the declared/base method.
 
+## 4.1 JDK Cache Update Policy
+
+There is an explicit distinction between:
+
+- analyzing JDK input classes in JRT mode
+- analyzing ordinary user code
+
+This distinction controls whether the disk-backed JDK cache in `jdk-cache/` may be updated.
+
+### Detecting JDK Input
+
+In `Main.java`, the tool calls `detectJdkClasses(sourceFiles)`.
+
+- if the input paths match JDK source layout, the run is treated as JDK-mode analysis
+- the runner is then created with `SideEffectAnalysisRunner.forJrt(...)`
+- in this mode, the runner does not use a compiled user `classDir`
+
+Otherwise:
+
+- the input is treated as normal user code
+- the files are compiled first
+- the runner is created with a real `classDir`
+
+### Persistence Gate
+
+The actual write policy is enforced in `SideEffectAnalysisRunner`.
+
+When a summary is stored, the runner eventually calls:
+
+- `mergeIntoCache(fullSig, incoming, cache, persist)`
+
+That method always updates the in-memory `SummaryCache`, but it writes to `LibrarySummaryCache` only if `persist` is true.
+
+The `persist` flag comes from:
+
+- `shouldPersistLibrarySummary(JavaSootMethod method)`
+- `shouldPersistLibrarySummary(String fullSig)`
+
+These methods return true only when both conditions hold:
+
+1. `classDir == null`
+2. the method signature belongs to a library/JDK class such as `java.*`, `javax.*`, `sun.*`, `com.sun.*`, or `jdk.*`
+
+So the rule is:
+
+- if the run is in JRT/JDK mode, JDK summaries may be written back to `jdk-cache/`
+- if the run is analyzing ordinary user code, the existing JDK cache may be loaded and reused, but it is not updated on disk
+
+### Practical Effect
+
+This prevents user-specific override information from contaminating the shared JDK cache.
+
+During a normal user-code run:
+
+- cached JDK summaries are loaded from disk at startup
+- those summaries may be merged with user-relevant information in memory for the current run
+- but no updated JDK summary is written back to disk
+
+During an explicit JDK/JRT run:
+
+- the tool is allowed to refine and persist library summaries
+- those persisted summaries become available to future runs
+
 ## 5. Per-Method Analysis
 
 Once the runner selects a method, it calls `analyzeMethod(...)`.
