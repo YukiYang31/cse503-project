@@ -13,6 +13,11 @@ public class LoadNode extends Node {
         this.label = label;
     }
 
+    public LoadNode(String id, String label) {
+        super(id);
+        this.label = label;
+    }
+
     public String getLabel() {
         return label;
     }

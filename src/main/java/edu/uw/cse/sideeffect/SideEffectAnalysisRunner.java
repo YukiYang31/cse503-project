@@ -47,6 +47,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -72,6 +74,7 @@ public class SideEffectAnalysisRunner {
     private JavaView view;                // set in run()
     private Map<String, Set<String>> rawCallGraph;   // direct invocations only (for debug)
     private Map<String, Set<String>> overrideGraph;  // base -> overrides (for debug)
+    private Map<String, Set<String>> reverseOverrideGraph; // override -> direct bases
 
     public SideEffectAnalysisRunner(AnalysisConfig config, Path classDir, List<Path> sourceFiles,
                                 TimingRecorder timer) {
@@ -205,10 +208,11 @@ public class SideEffectAnalysisRunner {
         }
 
         List<List<JavaSootMethod>> batches = cgResult.batches();
-        Map<String, Set<String>> callGraph = cgResult.callGraph();
+        Map<String, Set<String>> dependencyGraph = cgResult.dependencyGraph();
         Map<String, Set<String>> overrideGraph = cgResult.overrideGraph();
         this.rawCallGraph = cgResult.rawCallGraph();
         this.overrideGraph = overrideGraph;
+        this.reverseOverrideGraph = invertGraph(overrideGraph);
 
         if (config.timing) {
             timer.recordCallGraph(System.nanoTime() - cgStart);
@@ -231,6 +235,7 @@ public class SideEffectAnalysisRunner {
         if (config.debug && LibrarySummaryCache.size() > 0) {
             System.out.println("Debug== Pre-populated SummaryCache with " + LibrarySummaryCache.size() + " library summaries");
         }
+        bootstrapMergedSummaries(cache);
 
         List<MethodSummary> summaries = new ArrayList<>();
 
@@ -251,7 +256,7 @@ public class SideEffectAnalysisRunner {
             while (!work.isEmpty()) {
                 String sig = work.pop();
                 if (!reachable.add(sig)) continue;
-                for (String callee : callGraph.getOrDefault(sig, Set.of())) {
+                for (String callee : dependencyGraph.getOrDefault(sig, Set.of())) {
                     if (!reachable.contains(callee)) {
                         work.add(callee);
                     }
@@ -293,8 +298,7 @@ public class SideEffectAnalysisRunner {
 
                 // Check cache first
                 String fullSig = method.getSignature().toString();
-                String subSig = method.getSignature().getSubSignature().toString();
-                MethodSummary cached = cache.lookup(fullSig, subSig);
+                MethodSummary cached = cache.lookup(fullSig);
 
                 if (cached != null) {
                     if (config.debug) System.out.println("Debug== CACHE-HIT: " + fullSig);
@@ -318,7 +322,7 @@ public class SideEffectAnalysisRunner {
                     ExecutorService exec = Executors.newSingleThreadExecutor();
                     final List<DebugHtmlWriter.SourceFile> srcCapture = sourceContents;
                     Future<MethodSummary> future = exec.submit(
-                            () -> analyzeMethod(method, srcCapture, cache, callGraph));
+                            () -> analyzeMethod(method, srcCapture, cache, dependencyGraph));
                     try {
                         summary = future.get(config.methodTimeoutSecs, TimeUnit.SECONDS);
                     } catch (TimeoutException e) {
@@ -337,7 +341,7 @@ public class SideEffectAnalysisRunner {
                         exec.shutdownNow();
                     }
                 } else {
-                    summary = analyzeMethod(method, sourceContents, cache, callGraph);
+                    summary = analyzeMethod(method, sourceContents, cache, dependencyGraph);
                 }
                 methodsDone++;
                 printProgress(methodsDone, totalMethods);
@@ -347,7 +351,10 @@ public class SideEffectAnalysisRunner {
                     String methodSig = method.getSignature().toString();
                     if (userMethodSigs.contains(methodSig)
                             && (config.methodFilter == null || method.getName().equals(config.methodFilter))) {
-                        summaries.add(summary);
+                        MethodSummary effectiveSummary = cache.lookup(methodSig);
+                        if (effectiveSummary != null) {
+                            summaries.add(effectiveSummary);
+                        }
                     }
                 }
             } else {
@@ -355,7 +362,7 @@ public class SideEffectAnalysisRunner {
                 boolean allCached = true;
                 for (JavaSootMethod m : filteredBatch) {
                     if (m.isConcrete()) {
-                        if (cache.lookup(m.getSignature().toString(), m.getSignature().getSubSignature().toString()) == null) {
+                        if (cache.lookup(m.getSignature().toString()) == null) {
                             allCached = false;
                             break;
                         }
@@ -369,7 +376,7 @@ public class SideEffectAnalysisRunner {
                         methodsDone++;
 
                         String mSig = method.getSignature().toString();
-                        MethodSummary cached = cache.lookup(mSig, method.getSignature().getSubSignature().toString());
+                        MethodSummary cached = cache.lookup(mSig);
 
                         if (userMethodSigs.contains(mSig)
                                 && (config.methodFilter == null || method.getName().equals(config.methodFilter))) {
@@ -407,9 +414,8 @@ public class SideEffectAnalysisRunner {
                             for (JavaSootMethod method : batchFinal) {
                                 if (!method.isConcrete()) continue;
                                 MethodSummary oldSummary = cache.lookup(
-                                        method.getSignature().toString(),
-                                        method.getSignature().getSubSignature().toString());
-                                MethodSummary newSummary = analyzeMethod(method, srcFinal, cache, callGraph);
+                                        method.getSignature().toString());
+                                MethodSummary newSummary = analyzeMethod(method, srcFinal, cache, dependencyGraph);
                                 if (newSummary != null) {
                                     storeSummary(method, newSummary, cache);
                                     if (oldSummary == null || oldSummary.getResult() != newSummary.getResult()) {
@@ -448,9 +454,8 @@ public class SideEffectAnalysisRunner {
                         for (JavaSootMethod method : filteredBatch) {
                             if (!method.isConcrete()) continue;
                             MethodSummary oldSummary = cache.lookup(
-                                    method.getSignature().toString(),
-                                    method.getSignature().getSubSignature().toString());
-                            MethodSummary newSummary = analyzeMethod(method, sourceContents, cache, callGraph);
+                                    method.getSignature().toString());
+                            MethodSummary newSummary = analyzeMethod(method, sourceContents, cache, dependencyGraph);
                             if (newSummary != null) {
                                 storeSummary(method, newSummary, cache);
                                 if (oldSummary == null || oldSummary.getResult() != newSummary.getResult()) {
@@ -469,9 +474,7 @@ public class SideEffectAnalysisRunner {
                         String mSig = method.getSignature().toString();
                         if (!userMethodSigs.contains(mSig)) continue;
                         if (config.methodFilter != null && !method.getName().equals(config.methodFilter)) continue;
-                        MethodSummary summary = cache.lookup(
-                                mSig,
-                                method.getSignature().getSubSignature().toString());
+                        MethodSummary summary = cache.lookup(mSig);
                         if (summary != null) {
                             summaries.add(summary);
                         }
@@ -492,7 +495,7 @@ public class SideEffectAnalysisRunner {
                 GraphPrinter.writeDotFile(summary);
             }
             if (!overrideGraph.isEmpty()) {
-                GraphPrinter.writeOverrideDependencyDot(callGraph, overrideGraph);
+                GraphPrinter.writeOverrideDependencyDot(dependencyGraph, overrideGraph);
             }
         }
 
@@ -511,63 +514,98 @@ public class SideEffectAnalysisRunner {
         if (done >= total) System.err.println();
     }
 
-    /**
-     * If the method is a base method with at least one SIDE_EFFECTING override already in the
-     * cache, upgrade the summary to SIDE_EFFECTING. Called inside analyzeMethod (before the
-     * timing record and debug HTML are written) so all output reflects the final verdict.
-     */
-    private MethodSummary applyOverridePropagation(String methodSig, MethodSummary summary,
-                                                    Map<String, Set<String>> overrideGraph,
-                                                    SummaryCache cache) {
-        if (summary.getResult() == MethodSummary.SideEffectResult.SIDE_EFFECTING) return summary;
-        Set<String> overrides = overrideGraph.get(methodSig);
-        if (overrides == null) return summary;
-        List<String> reasons = new ArrayList<>();
-        for (String overrideSig : overrides) {
-            MethodSummary overrideSummary = cache.lookup(overrideSig, null);
-            if (overrideSummary != null &&
-                    overrideSummary.getResult() == MethodSummary.SideEffectResult.SIDE_EFFECTING) {
-                if (config.debug) {
-                    System.out.println("Debug== [override propagation] marking " + methodSig
-                            + " as SIDE_EFFECTING due to override " + overrideSig);
-                }
-                reasons.add("overridden by side-effecting " + overrideSig);
-            }
-        }
-        if (reasons.isEmpty()) return summary;
-        return new MethodSummary(methodSig, summary.getExitGraph(),
-                MethodSummary.SideEffectResult.SIDE_EFFECTING,
-                reasons,
-                summary.getReturnTargets());
-    }
-
-    /** Store a summary in the cache, keyed by both full and sub signature.
-     *  Also persists library (non-user) methods to the disk cache. */
+    /** Store an analyzed summary, then propagate it to all declared base methods. */
     private void storeSummary(JavaSootMethod method, MethodSummary summary, SummaryCache cache) {
         String fullSig = method.getSignature().toString();
-        String subSig = method.getSignature().getSubSignature().toString();
-        cache.put(fullSig, subSig, summary);
+        MethodSummary namespaced = summary.namespacedTo(fullSig, fullSig);
+        mergeIntoCache(fullSig, namespaced, cache, shouldPersistLibrarySummary(fullSig));
+        propagateToBases(fullSig, cache);
+    }
 
-        // Persist library methods to disk cache for reuse across runs
-        if (isLibraryMethod(method)) {
-            LibrarySummaryCache.put(fullSig, summary);
+    private void bootstrapMergedSummaries(SummaryCache cache) {
+        for (String methodSig : cache.keySetSnapshot()) {
+            propagateToBases(methodSig, cache);
         }
     }
 
-    /** A method is a "library method" if its declaring class is not from the user's classpath. */
-    private boolean isLibraryMethod(JavaSootMethod method) {
-        if (classDir == null) return true; // JRT mode: all methods are library
-        String className = method.getDeclaringClassType().getFullyQualifiedName();
-        // If the class comes from a JDK package, it's a library method
+    private void propagateToBases(String changedSig, SummaryCache cache) {
+        if (reverseOverrideGraph == null || reverseOverrideGraph.isEmpty()) return;
+
+        Deque<String> work = new ArrayDeque<>();
+        Set<String> seen = new HashSet<>();
+        work.add(changedSig);
+
+        while (!work.isEmpty()) {
+            String childSig = work.pop();
+            if (!seen.add(childSig)) continue;
+
+            MethodSummary childSummary = cache.lookup(childSig);
+            if (childSummary == null) continue;
+
+            for (String baseSig : reverseOverrideGraph.getOrDefault(childSig, Set.of())) {
+                MethodSummary rebased = rebindForBase(baseSig, childSummary);
+                mergeIntoCache(baseSig, rebased, cache, shouldPersistLibrarySummary(baseSig));
+                work.add(baseSig);
+            }
+        }
+    }
+
+    private MethodSummary rebindForBase(String baseSig, MethodSummary summary) {
+        return new MethodSummary(baseSig, summary.getExitGraph().copy(),
+                summary.getResult(), summary.getReasons(),
+                new LinkedHashSet<>(summary.getReturnTargets()));
+    }
+
+    private void mergeIntoCache(String fullSig, MethodSummary incoming, SummaryCache cache, boolean persist) {
+        MethodSummary existing = cache.lookup(fullSig);
+        MethodSummary merged = MethodSummary.union(fullSig, existing, incoming);
+        cache.put(fullSig, merged);
+        if (persist) {
+            LibrarySummaryCache.put(fullSig, merged);
+        }
+    }
+
+    private static Map<String, Set<String>> invertGraph(Map<String, Set<String>> graph) {
+        Map<String, Set<String>> reverse = new LinkedHashMap<>();
+        for (Map.Entry<String, Set<String>> entry : graph.entrySet()) {
+            for (String child : entry.getValue()) {
+                reverse.computeIfAbsent(child, k -> new LinkedHashSet<>()).add(entry.getKey());
+            }
+        }
+        return reverse;
+    }
+
+    /** Persist only when we are explicitly building the JDK/JRT cache. */
+    private boolean shouldPersistLibrarySummary(JavaSootMethod method) {
+        return classDir == null && isLibrarySignature(method.getSignature().toString());
+    }
+
+    /** Persist only when we are explicitly building the JDK/JRT cache. */
+    private boolean shouldPersistLibrarySummary(String fullSig) {
+        return classDir == null && isLibrarySignature(fullSig);
+    }
+
+    private boolean isLibrarySignature(String fullSig) {
+        String className = declaringClassName(fullSig);
         return className.startsWith("java.") || className.startsWith("javax.")
                 || className.startsWith("sun.") || className.startsWith("com.sun.")
                 || className.startsWith("jdk.");
     }
 
+    private static String declaringClassName(String fullSig) {
+        if (fullSig == null || fullSig.length() < 3) return "";
+        int start = fullSig.indexOf('<');
+        int colon = fullSig.indexOf(':');
+        if (start >= 0 && colon > start) {
+            return fullSig.substring(start + 1, colon).trim();
+        }
+        return "";
+    }
+
     private MethodSummary analyzeMethod(JavaSootMethod method,
                                         List<DebugHtmlWriter.SourceFile> sourceContents,
                                         SummaryCache cache,
-                                        Map<String, Set<String>> callGraph) {
+                                        Map<String, Set<String>> dependencyGraph) {
         try {
             // Fetch body and CFG once (Fix #6: View Cache Trap)
             Body body = method.getBody();
@@ -584,7 +622,7 @@ public class SideEffectAnalysisRunner {
                 for (Stmt stmt : cfg.getStmts()) {
                     debugWriter.addJimpleStatement(stmt.toString());
                 }
-                debugWriter.setGraphs(sig, rawCallGraph, overrideGraph, callGraph);
+                debugWriter.setGraphs(sig, rawCallGraph, overrideGraph, dependencyGraph);
             }
 
             try {
@@ -603,7 +641,7 @@ public class SideEffectAnalysisRunner {
 
                 // Run the forward flow analysis (with inter-procedural cache)
                 SideEffectFlowAnalysis analysis = new SideEffectFlowAnalysis(
-                    cfg, body, config, method.isStatic(), debugWriter, paramTypeNames, cache, overrideGraph);
+                    cfg, body, config, method.isStatic(), debugWriter, paramTypeNames, cache);
 
                 // Get the exit graph
                 PointsToGraph exitGraph = analysis.getExitGraph();
@@ -621,14 +659,6 @@ public class SideEffectAnalysisRunner {
                 MethodSummary summary = new MethodSummary(sig, exitGraph,
                         sideEffectResult.getResult(), sideEffectResult.getReasons(),
                         exitGraph.getReturnTargets());
-
-                // Apply override propagation eagerly so the timing record and debug HTML
-                // both reflect the final verdict (e.g. base method marked SIDE_EFFECTING
-                // because an overriding method already in the cache is side-effecting).
-                // The call in run() after analyzeMethod returns is then a no-op.
-                if (overrideGraph != null) {
-                    summary = applyOverridePropagation(sig, summary, overrideGraph, cache);
-                }
 
                 long sideEffectNs = 0;
                 if (config.timing) sideEffectNs = System.nanoTime() - sideEffectStart;

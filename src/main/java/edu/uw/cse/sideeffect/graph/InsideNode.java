@@ -13,6 +13,11 @@ public class InsideNode extends Node {
         this.label = label;
     }
 
+    public InsideNode(String id, String label) {
+        super(id);
+        this.label = label;
+    }
+
     public String getLabel() {
         return label;
     }

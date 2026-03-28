@@ -244,7 +244,7 @@ public class GraphPrinter {
      * Output: dot-graph/override-dependency.dot
      */
     public static void writeOverrideDependencyDot(
-            Map<String, Set<String>> callGraph,
+            Map<String, Set<String>> dependencyGraph,
             Map<String, Set<String>> overrideGraph) {
 
         File dotDir = new File("dot-graph");
@@ -260,8 +260,8 @@ public class GraphPrinter {
             out.println("  edge [fontname=\"Helvetica\", fontsize=9];");
             out.println();
 
-            // Node set: all methods in the call graph plus any overriding methods
-            Set<String> allMethods = new LinkedHashSet<>(callGraph.keySet());
+            // Node set: all methods in the dependency graph plus any overriding methods
+            Set<String> allMethods = new LinkedHashSet<>(dependencyGraph.keySet());
             for (Set<String> overrides : overrideGraph.values()) {
                 allMethods.addAll(overrides);
             }
@@ -274,7 +274,7 @@ public class GraphPrinter {
             out.println();
 
             // Emit call edges (blue) — only between methods in the analyzed set
-            for (Map.Entry<String, Set<String>> entry : callGraph.entrySet()) {
+            for (Map.Entry<String, Set<String>> entry : dependencyGraph.entrySet()) {
                 for (String callee : entry.getValue()) {
                     if (allMethods.contains(callee)) {
                         out.println("  \"" + escapeDot(entry.getKey()) + "\" -> \""

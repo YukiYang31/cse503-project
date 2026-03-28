@@ -51,18 +51,21 @@ public class SideEffectAnalysisTest {
 
         Collection<JavaSootClass> classes = view.getClasses();
 
-        // Build call graph and compute bottom-up order for inter-procedural analysis
-        List<List<JavaSootMethod>> batches = CallGraphBuilder.computeBottomUpOrder(classes, CONFIG).batches();
+        // Build dependency graph and compute bottom-up order for inter-procedural analysis
+        CallGraphBuilder.Result cgResult = CallGraphBuilder.computeBottomUpOrder(classes, CONFIG);
+        List<List<JavaSootMethod>> batches = cgResult.batches();
+        Map<String, Set<String>> overrideGraph = cgResult.overrideGraph();
+        Map<String, Set<String>> reverseOverrideGraph = invertGraph(overrideGraph);
         SummaryCache cache = new SummaryCache();
 
         for (List<JavaSootMethod> batch : batches) {
             if (batch.size() == 1) {
                 JavaSootMethod method = batch.get(0);
                 if (!method.isConcrete()) continue;
-                MethodSummary summary = analyzeWithCache(method, cache);
+                MethodSummary summary = analyzeWithCache(method, cache, overrideGraph);
                 if (summary != null) {
-                    storeSummary(method, summary, cache);
-                    storeResult(method, summary);
+                    storeSummary(method, summary, cache, reverseOverrideGraph);
+                    storeResult(method, cache.lookup(method.getSignature().toString()));
                 }
             } else {
                 // SCC: iterate until stable
@@ -71,11 +74,10 @@ public class SideEffectAnalysisTest {
                     for (JavaSootMethod method : batch) {
                         if (!method.isConcrete()) continue;
                         MethodSummary old = cache.lookup(
-                                method.getSignature().toString(),
-                                method.getSignature().getSubSignature().toString());
-                        MethodSummary summary = analyzeWithCache(method, cache);
+                                method.getSignature().toString());
+                        MethodSummary summary = analyzeWithCache(method, cache, overrideGraph);
                         if (summary != null) {
-                            storeSummary(method, summary, cache);
+                            storeSummary(method, summary, cache, reverseOverrideGraph);
                             if (old == null || old.getResult() != summary.getResult()) anyChanged = true;
                         }
                     }
@@ -84,15 +86,15 @@ public class SideEffectAnalysisTest {
                 for (JavaSootMethod method : batch) {
                     if (!method.isConcrete()) continue;
                     MethodSummary summary = cache.lookup(
-                            method.getSignature().toString(),
-                            method.getSignature().getSubSignature().toString());
+                            method.getSignature().toString());
                     if (summary != null) storeResult(method, summary);
                 }
             }
         }
     }
 
-    private static MethodSummary analyzeWithCache(JavaSootMethod method, SummaryCache cache) {
+    private static MethodSummary analyzeWithCache(JavaSootMethod method, SummaryCache cache,
+                                                  Map<String, Set<String>> overrideGraph) {
         try {
             Body body = method.getBody();
             StmtGraph<?> cfg = body.getStmtGraph();
@@ -115,15 +117,57 @@ public class SideEffectAnalysisTest {
         }
     }
 
-    private static void storeSummary(JavaSootMethod method, MethodSummary summary, SummaryCache cache) {
-        cache.put(method.getSignature().toString(),
-                method.getSignature().getSubSignature().toString(), summary);
+    private static void storeSummary(JavaSootMethod method, MethodSummary summary, SummaryCache cache,
+                                     Map<String, Set<String>> reverseOverrideGraph) {
+        String fullSig = method.getSignature().toString();
+        MethodSummary namespaced = summary.namespacedTo(fullSig, fullSig);
+        mergeIntoCache(fullSig, namespaced, cache);
+        propagateToBases(fullSig, cache, reverseOverrideGraph);
     }
 
     private static void storeResult(JavaSootMethod method, MethodSummary summary) {
+        if (summary == null) return;
         String className = method.getDeclaringClassType().getClassName();
         results.computeIfAbsent(className, k -> new HashMap<>())
                 .put(method.getName(), summary.getResult());
+    }
+
+    private static void propagateToBases(String changedSig, SummaryCache cache,
+                                         Map<String, Set<String>> reverseOverrideGraph) {
+        Deque<String> work = new ArrayDeque<>();
+        Set<String> seen = new HashSet<>();
+        work.add(changedSig);
+
+        while (!work.isEmpty()) {
+            String childSig = work.pop();
+            if (!seen.add(childSig)) continue;
+
+            MethodSummary childSummary = cache.lookup(childSig);
+            if (childSummary == null) continue;
+
+            for (String baseSig : reverseOverrideGraph.getOrDefault(childSig, Set.of())) {
+                MethodSummary rebased = new MethodSummary(baseSig, childSummary.getExitGraph().copy(),
+                        childSummary.getResult(), childSummary.getReasons(),
+                        new LinkedHashSet<>(childSummary.getReturnTargets()));
+                mergeIntoCache(baseSig, rebased, cache);
+                work.add(baseSig);
+            }
+        }
+    }
+
+    private static void mergeIntoCache(String fullSig, MethodSummary incoming, SummaryCache cache) {
+        MethodSummary merged = MethodSummary.union(fullSig, cache.lookup(fullSig), incoming);
+        cache.put(fullSig, merged);
+    }
+
+    private static Map<String, Set<String>> invertGraph(Map<String, Set<String>> graph) {
+        Map<String, Set<String>> reverse = new LinkedHashMap<>();
+        for (Map.Entry<String, Set<String>> entry : graph.entrySet()) {
+            for (String child : entry.getValue()) {
+                reverse.computeIfAbsent(child, k -> new LinkedHashSet<>()).add(entry.getKey());
+            }
+        }
+        return reverse;
     }
 
     // --- SideEffectFreeMethods ---
@@ -324,30 +368,32 @@ public class SideEffectAnalysisTest {
         JavaView view = new JavaView(inputLocation);
 
         Collection<JavaSootClass> classes = view.getClasses();
-        List<List<JavaSootMethod>> batches = CallGraphBuilder.computeBottomUpOrder(classes, CONFIG).batches();
+        CallGraphBuilder.Result cgResult = CallGraphBuilder.computeBottomUpOrder(classes, CONFIG);
+        List<List<JavaSootMethod>> batches = cgResult.batches();
+        Map<String, Set<String>> overrideGraph = cgResult.overrideGraph();
         SummaryCache cache = new SummaryCache();
+        Map<String, Set<String>> reverseOverrideGraph = invertGraph(overrideGraph);
 
         for (List<JavaSootMethod> batch : batches) {
             if (batch.size() == 1) {
                 JavaSootMethod method = batch.get(0);
                 if (!method.isConcrete()) continue;
-                MethodSummary summary = analyzeWithCache(method, cache);
+                MethodSummary summary = analyzeWithCache(method, cache, overrideGraph);
                 if (summary != null) {
-                    storeSummary(method, summary, cache);
+                    storeSummary(method, summary, cache, reverseOverrideGraph);
                     String className = method.getDeclaringClassType().getClassName();
                     ipResults.computeIfAbsent(className, k -> new HashMap<>())
-                            .put(method.getName(), summary.getResult());
+                            .put(method.getName(), cache.lookup(method.getSignature().toString()).getResult());
                 }
             } else {
                 for (int iter = 0; iter < 5; iter++) {
                     boolean anyChanged = false;
                     for (JavaSootMethod method : batch) {
                         if (!method.isConcrete()) continue;
-                        MethodSummary old = cache.lookup(method.getSignature().toString(),
-                                method.getSignature().getSubSignature().toString());
-                        MethodSummary summary = analyzeWithCache(method, cache);
+                        MethodSummary old = cache.lookup(method.getSignature().toString());
+                        MethodSummary summary = analyzeWithCache(method, cache, overrideGraph);
                         if (summary != null) {
-                            storeSummary(method, summary, cache);
+                            storeSummary(method, summary, cache, reverseOverrideGraph);
                             if (old == null || old.getResult() != summary.getResult()) anyChanged = true;
                         }
                     }
@@ -355,8 +401,7 @@ public class SideEffectAnalysisTest {
                 }
                 for (JavaSootMethod method : batch) {
                     if (!method.isConcrete()) continue;
-                    MethodSummary summary = cache.lookup(method.getSignature().toString(),
-                            method.getSignature().getSubSignature().toString());
+                    MethodSummary summary = cache.lookup(method.getSignature().toString());
                     if (summary != null) {
                         String className = method.getDeclaringClassType().getClassName();
                         ipResults.computeIfAbsent(className, k -> new HashMap<>())

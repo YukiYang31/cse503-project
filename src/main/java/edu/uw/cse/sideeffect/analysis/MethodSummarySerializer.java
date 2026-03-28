@@ -105,15 +105,20 @@ public class MethodSummarySerializer {
                     obj.get("paramIndex").getAsInt(),
                     obj.has("label") ? obj.get("label").getAsString() : "parameter");
             case "INSIDE" -> {
-                // Extract site index from id "I<num>"
-                int siteIndex = Integer.parseInt(id.substring(1));
-                yield new InsideNode(siteIndex,
-                        obj.has("label") ? obj.get("label").getAsString() : "cached");
+                String label = obj.has("label") ? obj.get("label").getAsString() : "cached";
+                if (id.matches("I\\d+")) {
+                    int siteIndex = Integer.parseInt(id.substring(1));
+                    yield new InsideNode(siteIndex, label);
+                }
+                yield new InsideNode(id, label);
             }
             case "LOAD" -> {
-                int siteIndex = Integer.parseInt(id.substring(1));
-                yield new LoadNode(siteIndex,
-                        obj.has("label") ? obj.get("label").getAsString() : "cached");
+                String label = obj.has("label") ? obj.get("label").getAsString() : "cached";
+                if (id.matches("L\\d+")) {
+                    int siteIndex = Integer.parseInt(id.substring(1));
+                    yield new LoadNode(siteIndex, label);
+                }
+                yield new LoadNode(id, label);
             }
             default -> throw new IllegalArgumentException("Unknown node kind: " + kind);
         };

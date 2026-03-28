@@ -13,7 +13,7 @@
 \node (soot)     [artifact, right=of bytecode, xshift=0.4cm] {Jimple};
 \node (callgen)  [artifact, right=of soot, xshift=0.5cm, yshift=0.8cm] {Call Graph};
 \node (overridegen) [artifact, right=of soot,xshift=0.3cm, yshift=-0.8cm] {Override Graph};
-\node (cg)       [artifact, right=of soot, xshift=3.6cm, ] {Merged Graph};
+\node (cg)       [artifact, right=of soot, xshift=3.6cm, ] {Dependency\\Graph};
 \node (jdk_cache) [artifact, above=of callgen, fill=gray!10] {JDK Summary\\Cache};
 
 % --- SECOND LINE (Positioned below the CallGraph) ---

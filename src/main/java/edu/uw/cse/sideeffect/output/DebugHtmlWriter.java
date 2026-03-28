@@ -52,7 +52,7 @@ public class DebugHtmlWriter implements Closeable {
     private String sideEffectReason;
     private String rawCallGraphDot;    // DOT: direct invocations only
     private String overrideGraphDot;   // DOT: override relationships
-    private String mergedGraphDot;     // DOT: call + override edges (used for analysis order)
+    private String mergedGraphDot;     // DOT: dependency graph = raw call graph + override edges
 
     private DebugHtmlWriter(String methodSig, Path outputPath) {
         this.methodSig = methodSig;
@@ -246,26 +246,26 @@ public class DebugHtmlWriter implements Closeable {
     }
 
     /**
-     * Generate DOT visualizations for the raw call graph, override graph, and merged graph.
+     * Generate DOT visualizations for the raw call graph, override graph, and dependency graph.
      * Called once per method in debug mode.
      *
      * @param currentMethodSig  the method being analyzed (highlighted in each graph)
      * @param rawCallGraph      caller → callees from direct invocations only
      * @param overrideGraph     base method → set of overriding methods
-     * @param mergedCallGraph   rawCallGraph augmented with override edges (used for analysis order)
+     * @param dependencyGraph   rawCallGraph augmented with override edges (used for analysis order)
      */
     public void setGraphs(String currentMethodSig,
                           Map<String, Set<String>> rawCallGraph,
                           Map<String, Set<String>> overrideGraph,
-                          Map<String, Set<String>> mergedCallGraph) {
+                          Map<String, Set<String>> dependencyGraph) {
         this.rawCallGraphDot   = buildCallGraphDot(currentMethodSig, rawCallGraph, rawCallGraph, overrideGraph, "Raw Call Graph");
         this.overrideGraphDot  = overrideGraph.isEmpty() ? null : buildOverrideGraphDot(currentMethodSig, overrideGraph);
-        this.mergedGraphDot    = buildCallGraphDot(currentMethodSig, mergedCallGraph, rawCallGraph, overrideGraph, "Merged Graph");
+        this.mergedGraphDot    = buildCallGraphDot(currentMethodSig, dependencyGraph, rawCallGraph, overrideGraph, "Dependency Graph");
     }
 
     /**
      * Build a call-graph DOT. Edges present in rawCallGraph are drawn in blue;
-     * edges only in mergedCallGraph (override-derived) are drawn in red.
+     * edges only in the dependency graph (override-derived) are drawn in red.
      */
     private String buildCallGraphDot(String currentMethodSig,
                                       Map<String, Set<String>> graph,
@@ -480,7 +480,7 @@ public class DebugHtmlWriter implements Closeable {
         }
         out.println("</pre>");
 
-        // Call Graph, Override Graph, Merged Graph
+        // Call Graph, Override Graph, Dependency Graph
         if (rawCallGraphDot != null) {
             out.println("<h2>Call Graph (Direct Invocations)</h2>");
             out.println("<p class=\"muted\">Edges from actual invoke statements. Current method highlighted in blue.</p>");
@@ -496,8 +496,8 @@ public class DebugHtmlWriter implements Closeable {
             out.println("</div>");
         }
         if (mergedGraphDot != null) {
-            out.println("<h2>Merged Graph (Analysis Order)</h2>");
-            out.println("<p class=\"muted\">Blue edges: direct call edges. Red edges: override-derived edges added for correct bottom-up ordering. Tarjan&apos;s SCC runs on this graph.</p>");
+            out.println("<h2>Dependency Graph (Analysis Order)</h2>");
+            out.println("<p class=\"muted\">Blue edges: direct call edges. Red edges: override-derived edges added to form the dependency graph. Tarjan&apos;s SCC runs on this dependency graph.</p>");
             out.println("<div class=\"graph-container\" id=\"merged-graph\">");
             out.println("<p class=\"loading\">Rendering graph...</p>");
             out.println("</div>");

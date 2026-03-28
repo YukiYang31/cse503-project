@@ -6,7 +6,7 @@ The analysis determines whether a Java method is **side-effect-free** — i.e., 
 
 ## 1. Overall Analysis Pipeline
 
-The top-level algorithm compiles source to Jimple IR, discovers reachable JDK methods via BFS, computes a bottom-up method ordering over the complete call graph, pre-populates the summary cache from a disk-backed library cache, analyzes each method intraprocedurally while composing callee summaries interprocedurally, and issues a verdict per method.
+The top-level algorithm compiles source to Jimple IR, discovers reachable JDK methods via BFS, builds a raw call graph and override graph, merges them into a dependency graph, computes a bottom-up method ordering over that dependency graph, pre-populates the summary cache from a disk-backed library cache, analyzes each method intraprocedurally while composing callee summaries interprocedurally, and issues a verdict per method.
 
 ```
 Algorithm: SideEffectAnalysis(sourceFiles)
@@ -75,7 +75,7 @@ Output: List of batches (each batch is a list of methods),
 16.                 discovered.add(targetClass)
 17.                 pending.enqueue(targetClass)
 
-18. // Phase B: Build call graph over all discovered classes
+18. // Phase B: Build raw call graph over all discovered classes
 19. methods <- all concrete methods from discovered classes
 20. for each method m in methods do
 21.     for each invoke statement s in body(m) do
@@ -83,9 +83,13 @@ Output: List of batches (each batch is a list of methods),
 23.         if target in methods then
 24.             addEdge(m -> target)
 
-25. // Phase C: Tarjan's SCC produces SCCs in reverse topological order
-26. batches <- TarjanSCC(methods, edges)
-27. return batches                        // first batch = leaves (no outgoing calls)
+25. // Phase C: Build override graph and merge into a dependency graph
+26. overrideGraph <- BuildOverrideGraph(discovered, view)
+27. dependencyGraph <- rawCallGraph U override-derived edges
+
+28. // Phase D: Tarjan's SCC produces SCCs in reverse topological order
+29. batches <- TarjanSCC(methods, dependencyGraph)
+30. return batches                        // first batch = leaves (no outgoing dependency edges)
 ```
 
 **BFS stop conditions** (prevent explosion):

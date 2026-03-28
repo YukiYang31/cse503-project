@@ -2,12 +2,27 @@ package edu.uw.cse.sideeffect.analysis;
 
 import edu.uw.cse.sideeffect.AnalysisConfig;
 import edu.uw.cse.sideeffect.util.SafeMethods;
-
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Queue;
+import java.util.Set;
 import sootup.core.jimple.basic.Value;
 import sootup.core.jimple.common.expr.AbstractInvokeExpr;
+import sootup.core.jimple.common.expr.JInterfaceInvokeExpr;
 import sootup.core.jimple.common.expr.JSpecialInvokeExpr;
 import sootup.core.jimple.common.expr.JStaticInvokeExpr;
+import sootup.core.jimple.common.expr.JVirtualInvokeExpr;
 import sootup.core.jimple.common.stmt.JAssignStmt;
 import sootup.core.jimple.common.stmt.JInvokeStmt;
 import sootup.core.jimple.common.stmt.Stmt;
@@ -22,7 +37,9 @@ import sootup.java.core.views.JavaView;
 
 
 /**
- * Builds a call graph (user code + JDK) and computes bottom-up analysis order.
+ * Builds the graphs used for analysis ordering:
+ * a raw call graph, an override graph, and their merged dependency graph.
+ * Computes bottom-up analysis order from that merged dependency graph.
  * For non-recursive programs, this is a reverse topological order.
  * For recursive programs (SCCs), methods in the same SCC are grouped into batches.
  */
@@ -38,15 +55,15 @@ public class CallGraphBuilder {
     );
 
     /**
-     * Result of call graph construction: the bottom-up analysis order plus the raw call graph.
-     * @param batches       methods grouped by SCC in bottom-up order
-     * @param callGraph     caller signature → set of callee signatures
-     * @param overrideGraph base method signature → set of overriding method signatures
-     *                      (populated only for methods in the explicitly-passed input classes)
+     * Result of graph construction: the bottom-up analysis order plus the component graphs.
+     * @param batches          methods grouped by SCC in bottom-up order
+     * @param dependencyGraph  merged graph used for analysis order and Tarjan SCC
+     * @param rawCallGraph     direct invocation graph only
+     * @param overrideGraph    base/declared method signature → set of direct overriding signatures
      */
     public record Result(
             List<List<JavaSootMethod>> batches,
-            Map<String, Set<String>> callGraph,
+            Map<String, Set<String>> dependencyGraph,
             Map<String, Set<String>> rawCallGraph,
             Map<String, Set<String>> overrideGraph
     ) {}
@@ -54,97 +71,87 @@ public class CallGraphBuilder {
     /**
      * Compute the bottom-up analysis order for all concrete methods in the given classes,
      * plus all transitively reachable JDK/library methods discoverable via the view.
-     *
-     * @param initialClasses the user's input classes
-     * @param view           JavaView including JRT (for resolving JDK methods)
-     * @param config         analysis configuration (for debug output)
-     * @return batches in bottom-up order
      */
     public static Result computeBottomUpOrder(
             Collection<JavaSootClass> initialClasses, JavaView view, AnalysisConfig config) {
 
-        // Phase A: BFS class discovery — discover JDK classes reachable from user code.
-        // Creates a separate JRT view for resolving JDK methods (lazy, only when needed).
-        // Uses lightweight resolution (declared class only, no CHA subtypes) to avoid
-        // triggering expensive TypeHierarchy construction and class explosion.
         JavaView jrtView = new JavaView(new JrtFileSystemAnalysisInputLocation());
         Set<JavaSootClass> discoveredClasses = new LinkedHashSet<>(initialClasses);
         Queue<JavaSootClass> pendingClasses = new ArrayDeque<>(initialClasses);
-        // Collect external edges (to SafeMethods, cached library methods, forbidden packages)
-        // for debug visualization — these methods aren't analyzed but edges should appear in the call graph
         Map<String, Set<String>> externalEdges = new HashMap<>();
         int jdkClassesDiscovered = 0;
-        int MAX_DISCOVERED_CLASSES = 200; // cap to prevent runaway BFS
+        int maxDiscoveredClasses = 200;
 
-        while (!pendingClasses.isEmpty() && discoveredClasses.size() < MAX_DISCOVERED_CLASSES) {
+        while (!pendingClasses.isEmpty() && discoveredClasses.size() < maxDiscoveredClasses) {
             JavaSootClass cls = pendingClasses.poll();
-            for (JavaSootMethod m : cls.getMethods()) {
-                if (!m.isConcrete()) continue;
+            for (JavaSootMethod method : cls.getMethods()) {
+                if (!method.isConcrete()) continue;
                 Body body;
                 try {
-                    body = m.getBody();
+                    body = method.getBody();
                 } catch (Exception e) {
                     continue;
                 }
-                String callerSig = m.getSignature().toString();
+
+                String callerSig = method.getSignature().toString();
                 for (Stmt stmt : body.getStmtGraph().getStmts()) {
                     AbstractInvokeExpr invokeExpr = extractInvokeExpr(stmt);
                     if (invokeExpr == null) continue;
 
                     MethodSignature calleeSig = invokeExpr.getMethodSignature();
 
-                    // Stop condition: SafeMethods — record external edge for visualization
                     if (SafeMethods.isSafe(calleeSig)) {
-                        externalEdges.computeIfAbsent(callerSig, k -> new HashSet<>())
-                                .add(calleeSig.toString() + " [safe]");
+                        externalEdges.computeIfAbsent(callerSig, k -> new LinkedHashSet<>())
+                                .add(calleeSig + " [safe]");
                         continue;
                     }
 
-                    // Stop condition: already in library cache — record external edge
                     if (LibrarySummaryCache.contains(calleeSig.toString())) {
-                        externalEdges.computeIfAbsent(callerSig, k -> new HashSet<>())
-                                .add(calleeSig.toString() + " [cached]");
+                        externalEdges.computeIfAbsent(callerSig, k -> new LinkedHashSet<>())
+                                .add(calleeSig + " [cached]");
                         continue;
                     }
 
-                    // Stop condition: forbidden package (check before resolving)
                     String declClassName = calleeSig.getDeclClassType().getFullyQualifiedName();
                     if (isForbiddenClassName(declClassName)) {
-                        externalEdges.computeIfAbsent(callerSig, k -> new HashSet<>())
-                                .add(calleeSig.toString() + " [forbidden]");
+                        externalEdges.computeIfAbsent(callerSig, k -> new LinkedHashSet<>())
+                                .add(calleeSig + " [forbidden]");
                         continue;
                     }
 
-                    // Resolve to the declared class only (no CHA/subtypes)
-                    // Try user view first, then JRT view
-                    JavaSootMethod target = resolveDirectTarget(calleeSig, view);
-                    if (target == null) {
-                        target = resolveDirectTarget(calleeSig, jrtView);
+                    Set<JavaSootMethod> targets = new LinkedHashSet<>();
+                    JavaSootMethod directTarget = resolveDirectTarget(calleeSig, view);
+                    if (directTarget == null) {
+                        directTarget = resolveDirectTarget(calleeSig, jrtView);
                     }
-                    if (target == null || !target.isConcrete()) continue;
-                    if (SafeMethods.isSafe(target.getSignature())) continue;
-                    if (isForbiddenPackage(target)) continue;
+                    if (directTarget != null && directTarget.isConcrete()) {
+                        targets.add(directTarget);
+                    }
 
-                    // Resolve the class from the appropriate view
-                    JavaSootClass targetCls = null;
-                    try {
-                        var opt = view.getClass(target.getDeclaringClassType());
-                        if (opt.isPresent()) {
-                            targetCls = opt.get();
-                        } else {
-                            var jrtOpt = jrtView.getClass(target.getDeclaringClassType());
-                            if (jrtOpt.isPresent()) targetCls = jrtOpt.get();
+                    if (isVirtualDispatch(invokeExpr)) {
+                        if (canResolveDeclClass(view, calleeSig)) {
+                            targets.addAll(resolveTargets(invokeExpr, view));
                         }
-                    } catch (Exception e) {
-                        continue;
+                        if (canResolveDeclClass(jrtView, calleeSig)) {
+                            targets.addAll(resolveTargets(invokeExpr, jrtView));
+                        }
                     }
-                    if (targetCls != null && discoveredClasses.add(targetCls)) {
-                        pendingClasses.add(targetCls);
-                        jdkClassesDiscovered++;
+
+                    for (JavaSootMethod target : targets) {
+                        if (SafeMethods.isSafe(target.getSignature()) || isForbiddenPackage(target)) {
+                            continue;
+                        }
+
+                        JavaSootClass targetCls = resolveClass(target.getDeclaringClassType(), view, jrtView);
+                        if (targetCls != null && discoveredClasses.add(targetCls)) {
+                            pendingClasses.add(targetCls);
+                            jdkClassesDiscovered++;
+                        }
+                        if (discoveredClasses.size() >= maxDiscoveredClasses) break;
                     }
-                    if (discoveredClasses.size() >= MAX_DISCOVERED_CLASSES) break;
+                    if (discoveredClasses.size() >= maxDiscoveredClasses) break;
                 }
-                if (discoveredClasses.size() >= MAX_DISCOVERED_CLASSES) break;
+                if (discoveredClasses.size() >= maxDiscoveredClasses) break;
             }
         }
 
@@ -153,71 +160,49 @@ public class CallGraphBuilder {
                     + " additional JDK/library classes (total: " + discoveredClasses.size() + ")");
         }
 
-        // Now run the existing call graph construction on the expanded class set
-        return buildCallGraphAndOrder(discoveredClasses, initialClasses, view, config, externalEdges);
+        return buildCallGraphAndOrder(discoveredClasses, view, config, externalEdges);
     }
 
-    /**
-     * Backward-compatible overload: no view, no BFS — only user classes.
-     */
+    /** Backward-compatible overload: no view, no BFS — only user classes. */
     public static Result computeBottomUpOrder(
             Collection<JavaSootClass> classes, AnalysisConfig config) {
-        return buildCallGraphAndOrder(classes, classes, null, config, Collections.emptyMap());
+        return buildCallGraphAndOrder(classes, null, config, Collections.emptyMap());
     }
 
-    /**
-     * Core call graph construction + Tarjan SCC ordering.
-     */
+    /** Core call graph construction + Tarjan SCC ordering. */
     private static Result buildCallGraphAndOrder(
-            Collection<? extends JavaSootClass> allClasses,
-            Collection<? extends JavaSootClass> inputClasses,
+            Collection<? extends JavaSootClass> seedClasses,
             JavaView view,
             AnalysisConfig config,
             Map<String, Set<String>> externalEdges) {
 
-        // Collect all concrete methods and build signature-to-method map
-        Map<String, JavaSootMethod> methodBySig = new LinkedHashMap<>();
+        JavaView jrtViewForResolution = view != null
+                ? new JavaView(new JrtFileSystemAnalysisInputLocation())
+                : null;
+        Set<JavaSootClass> allClasses = expandHierarchy(seedClasses, view, jrtViewForResolution);
 
+        Map<String, JavaSootMethod> concreteMethodBySig = new LinkedHashMap<>();
         for (JavaSootClass cls : allClasses) {
             for (JavaSootMethod method : cls.getMethods()) {
-                if (!method.isConcrete()) continue;
-                String sig = method.getSignature().toString();
-                methodBySig.put(sig, method);
-            }
-        }
-
-        // Build class-name → class lookup for override detection (input classes only)
-        Map<String, JavaSootClass> classByName = new LinkedHashMap<>();
-        for (JavaSootClass cls : inputClasses) {
-            classByName.put(cls.getType().getFullyQualifiedName(), cls);
-        }
-
-        // Detect override relationships among the loaded (input) classes only.
-        Map<String, Set<String>> overrideGraph = new LinkedHashMap<>();
-        for (JavaSootClass cls : inputClasses) {
-            Optional<JavaClassType> superTypeOpt = cls.getSuperclass();
-            if (superTypeOpt.isEmpty()) continue;
-            JavaSootClass superCls = classByName.get(superTypeOpt.get().getFullyQualifiedName());
-            if (superCls == null) continue;
-            for (JavaSootMethod method : cls.getMethods()) {
-                if (!method.isConcrete()) continue;
-                Optional<? extends JavaSootMethod> superMethod =
-                        superCls.getMethod(method.getSignature().getSubSignature());
-                if (superMethod.isPresent() && superMethod.get().isConcrete()) {
-                    String baseSig     = superMethod.get().getSignature().toString();
-                    String overrideSig = method.getSignature().toString();
-                    overrideGraph.computeIfAbsent(baseSig, k -> new LinkedHashSet<>())
-                                 .add(overrideSig);
+                if (method.isConcrete()) {
+                    concreteMethodBySig.put(method.getSignature().toString(), method);
                 }
             }
         }
 
-        // Build adjacency list: caller sig -> set of callee sigs
-        Map<String, Set<String>> callGraph = new HashMap<>();
-        for (var entry : methodBySig.entrySet()) {
+        Map<String, JavaSootClass> classByName = new LinkedHashMap<>();
+        for (JavaSootClass cls : allClasses) {
+            classByName.put(cls.getType().getFullyQualifiedName(), cls);
+        }
+
+        Map<String, Set<String>> overrideGraph =
+                buildOverrideGraph(allClasses, classByName, view, jrtViewForResolution);
+
+        Map<String, Set<String>> dependencyGraph = new HashMap<>();
+        for (var entry : concreteMethodBySig.entrySet()) {
             String callerSig = entry.getKey();
             JavaSootMethod method = entry.getValue();
-            Set<String> callees = new HashSet<>();
+            Set<String> callees = new LinkedHashSet<>();
 
             try {
                 Body body = method.getBody();
@@ -228,86 +213,97 @@ public class CallGraphBuilder {
                     MethodSignature calleeMSig = invokeExpr.getMethodSignature();
                     String calleeFullSig = calleeMSig.toString();
 
-                    // Only add edge if we have the exact target method
-                    if (methodBySig.containsKey(calleeFullSig)) {
-                        callees.add(calleeFullSig);
+                    Set<String> resolvedTargets = new LinkedHashSet<>();
+                    if (view != null) {
+                        if (canResolveDeclClass(view, calleeMSig)) {
+                            for (JavaSootMethod t : resolveTargets(invokeExpr, view)) {
+                                resolvedTargets.add(t.getSignature().toString());
+                            }
+                        }
+                        if (jrtViewForResolution != null && canResolveDeclClass(jrtViewForResolution, calleeMSig)) {
+                            for (JavaSootMethod t : resolveTargets(invokeExpr, jrtViewForResolution)) {
+                                resolvedTargets.add(t.getSignature().toString());
+                            }
+                        }
+                    }
+
+                    if (resolvedTargets.isEmpty() && concreteMethodBySig.containsKey(calleeFullSig)) {
+                        resolvedTargets.add(calleeFullSig);
+                    }
+
+                    Set<String> concreteTargets = new LinkedHashSet<>();
+                    for (String targetSig : resolvedTargets) {
+                        if (concreteMethodBySig.containsKey(targetSig)) {
+                            concreteTargets.add(targetSig);
+                        }
+                    }
+
+                    callees.addAll(concreteTargets);
+
+                    Set<String> overrides = overrideGraph.getOrDefault(calleeFullSig, Set.of());
+                    for (String overrideSig : overrides) {
+                        if (concreteMethodBySig.containsKey(overrideSig)) {
+                            callees.add(overrideSig);
+                        }
                     }
                 }
             } catch (Exception e) {
                 // Skip methods that can't be analyzed
             }
 
-            callGraph.put(callerSig, callees);
+            dependencyGraph.put(callerSig, callees);
+        }
+
+        Map<String, Set<String>> rawCallGraph = new HashMap<>();
+        for (var e : dependencyGraph.entrySet()) {
+            rawCallGraph.put(e.getKey(), new LinkedHashSet<>(e.getValue()));
+        }
+        for (var e : externalEdges.entrySet()) {
+            rawCallGraph.computeIfAbsent(e.getKey(), k -> new LinkedHashSet<>()).addAll(e.getValue());
+        }
+
+        for (Map.Entry<String, Set<String>> entry : overrideGraph.entrySet()) {
+            Set<String> concreteOverrides = new LinkedHashSet<>();
+            for (String overrideSig : entry.getValue()) {
+                if (concreteMethodBySig.containsKey(overrideSig)) {
+                    concreteOverrides.add(overrideSig);
+                }
+            }
+            if (!concreteOverrides.isEmpty()) {
+                dependencyGraph.computeIfAbsent(entry.getKey(), k -> new LinkedHashSet<>()).addAll(concreteOverrides);
+            }
         }
 
         if (config.debug) {
             System.out.println("\nDebug== Call graph (direct invocations only):");
-            for (var entry : callGraph.entrySet()) {
+            for (var entry : rawCallGraph.entrySet()) {
                 if (!entry.getValue().isEmpty()) {
                     System.out.println("Debug==   " + entry.getKey() + " -> " + entry.getValue());
                 }
             }
-            // Print external edges (calls to SafeMethods, cached library methods, forbidden packages)
-            if (!externalEdges.isEmpty()) {
-                System.out.println("\nDebug== External edges (JDK/library calls not in analysis scope):");
-                for (var entry : externalEdges.entrySet()) {
-                    if (!entry.getValue().isEmpty()) {
-                        System.out.println("Debug==   " + entry.getKey() + " -> " + entry.getValue());
-                    }
-                }
-            }
-            System.out.println("\nDebug== Override graph (base -> overrides):");
+            System.out.println("\nDebug== Override graph (base -> direct overrides):");
             for (var entry : overrideGraph.entrySet()) {
                 System.out.println("Debug==   " + entry.getKey() + " overridden by " + entry.getValue());
             }
-        }
-
-        // Snapshot the raw call graph before override augmentation, including external edges
-        Map<String, Set<String>> rawCallGraph = new HashMap<>();
-        for (var e : callGraph.entrySet()) {
-            rawCallGraph.put(e.getKey(), new HashSet<>(e.getValue()));
-        }
-        // Merge external edges into raw call graph for visualization
-        for (var e : externalEdges.entrySet()) {
-            rawCallGraph.computeIfAbsent(e.getKey(), k -> new HashSet<>())
-                    .addAll(e.getValue());
-        }
-
-        // Augment call graph with override edges
-        for (Map.Entry<String, Set<String>> entry : callGraph.entrySet()) {
-            Set<String> extras = new LinkedHashSet<>();
-            for (String calleeSig : entry.getValue()) {
-                Set<String> overrides = overrideGraph.getOrDefault(calleeSig, Collections.emptySet());
-                extras.addAll(overrides);
-            }
-            entry.getValue().addAll(extras);
-        }
-
-        // Add direct edges from each base method to its overrides
-        for (Map.Entry<String, Set<String>> entry : overrideGraph.entrySet()) {
-            callGraph.computeIfAbsent(entry.getKey(), k -> new HashSet<>())
-                     .addAll(entry.getValue());
-        }
-
-        if (config.debug) {
-            System.out.println("\nDebug== Merged graph (call + override edges, used for analysis order):");
-            for (var entry : callGraph.entrySet()) {
+            System.out.println("\nDebug== Dependency graph (raw call graph + override edges, used for analysis order):");
+            for (var entry : dependencyGraph.entrySet()) {
                 if (!entry.getValue().isEmpty()) {
                     System.out.println("Debug==   " + entry.getKey() + " -> " + entry.getValue());
                 }
             }
         }
 
-        // Compute SCCs using Tarjan's algorithm
-        List<List<String>> sccs = tarjanSCC(callGraph, methodBySig.keySet());
+        // Tarjan runs on the merged dependency graph, not on the raw call graph alone.
+        List<List<String>> sccs = tarjanSCC(dependencyGraph, concreteMethodBySig.keySet());
 
-        // SCCs are returned in reverse topological order by Tarjan's (leaves first)
         List<List<JavaSootMethod>> result = new ArrayList<>();
         for (List<String> scc : sccs) {
             List<JavaSootMethod> batch = new ArrayList<>();
             for (String sig : scc) {
-                JavaSootMethod m = methodBySig.get(sig);
-                if (m != null) batch.add(m);
+                JavaSootMethod method = concreteMethodBySig.get(sig);
+                if (method != null) {
+                    batch.add(method);
+                }
             }
             if (!batch.isEmpty()) {
                 result.add(batch);
@@ -325,15 +321,96 @@ public class CallGraphBuilder {
             }
         }
 
-        return new Result(result, callGraph, rawCallGraph, overrideGraph);
+        return new Result(result, dependencyGraph, rawCallGraph, overrideGraph);
     }
 
-    // --- BFS target resolution ---
+    private static Set<JavaSootClass> expandHierarchy(Collection<? extends JavaSootClass> seedClasses,
+                                                       JavaView view,
+                                                       JavaView jrtView) {
+        Set<JavaSootClass> allClasses = new LinkedHashSet<>(seedClasses);
+        Deque<JavaSootClass> work = new ArrayDeque<>(seedClasses);
 
-    /**
-     * Lightweight resolution: resolve to the method's declared class only.
-     * Used during BFS discovery to avoid triggering TypeHierarchy construction.
-     */
+        while (!work.isEmpty()) {
+            JavaSootClass cls = work.pop();
+            for (ClassType parentType : immediateParentsOf(cls)) {
+                JavaSootClass parent = resolveClass(parentType, view, jrtView);
+                if (parent != null && allClasses.add(parent)) {
+                    work.push(parent);
+                }
+            }
+        }
+        return allClasses;
+    }
+
+    private static Map<String, Set<String>> buildOverrideGraph(
+            Collection<JavaSootClass> allClasses,
+            Map<String, JavaSootClass> classByName,
+            JavaView view,
+            JavaView jrtView) {
+
+        Map<String, Set<String>> overrideGraph = new LinkedHashMap<>();
+        for (JavaSootClass cls : allClasses) {
+            List<JavaSootClass> parents = new ArrayList<>();
+            for (ClassType parentType : immediateParentsOf(cls)) {
+                JavaSootClass parentCls = classByName.get(parentType.getFullyQualifiedName());
+                if (parentCls == null) {
+                    parentCls = resolveClass(parentType, view, jrtView);
+                }
+                if (parentCls != null) {
+                    parents.add(parentCls);
+                }
+            }
+
+            for (JavaSootMethod childMethod : cls.getMethods()) {
+                if (!isDispatchCandidate(childMethod)) continue;
+                for (JavaSootClass parentCls : parents) {
+                    parentCls.getMethod(childMethod.getSignature().getSubSignature())
+                            .filter(CallGraphBuilder::isDispatchCandidate)
+                            .ifPresent(parentMethod -> overrideGraph
+                                    .computeIfAbsent(parentMethod.getSignature().toString(), k -> new LinkedHashSet<>())
+                                    .add(childMethod.getSignature().toString()));
+                }
+            }
+        }
+        return overrideGraph;
+    }
+
+    private static List<ClassType> immediateParentsOf(JavaSootClass cls) {
+        List<ClassType> parents = new ArrayList<>();
+        cls.getSuperclass().ifPresent(parents::add);
+        for (ClassType iface : cls.getInterfaces()) {
+            parents.add(iface);
+        }
+        return parents;
+    }
+
+    private static boolean isDispatchCandidate(JavaSootMethod method) {
+        return !method.isStatic()
+                && !method.isPrivate()
+                && !Objects.equals(method.getName(), "<init>")
+                && !Objects.equals(method.getName(), "<clinit>");
+    }
+
+    private static JavaSootClass resolveClass(ClassType classType, JavaView view, JavaView jrtView) {
+        if (view != null) {
+            try {
+                Optional<JavaSootClass> resolved = view.getClass(classType);
+                if (resolved.isPresent()) {
+                    return resolved.get();
+                }
+            } catch (Exception ignored) {
+            }
+        }
+        if (jrtView != null) {
+            try {
+                return jrtView.getClass(classType).orElse(null);
+            } catch (Exception ignored) {
+            }
+        }
+        return null;
+    }
+
+    /** Lightweight resolution: resolve to the method's declared class only. */
     private static JavaSootMethod resolveDirectTarget(MethodSignature sig, JavaView view) {
         try {
             return view.getClass(sig.getDeclClassType())
@@ -349,82 +426,89 @@ public class CallGraphBuilder {
     /**
      * Resolve call targets from an invoke expression.
      * For static/special calls: single concrete target.
-     * For virtual/interface calls: intercept java.lang.Object to avoid explosion,
-     * otherwise use SootUp TypeHierarchy for CHA resolution.
+     * For virtual/interface calls: use capped CHA and resolve inherited implementations too.
      */
     private static List<JavaSootMethod> resolveTargets(AbstractInvokeExpr invoke, JavaView view) {
         MethodSignature sig = invoke.getMethodSignature();
-        List<JavaSootMethod> targets = new ArrayList<>();
+        LinkedHashSet<JavaSootMethod> targets = new LinkedHashSet<>();
 
         if (invoke instanceof JStaticInvokeExpr || invoke instanceof JSpecialInvokeExpr) {
-            // Single concrete target
             try {
                 view.getClass(sig.getDeclClassType())
-                    .flatMap(c -> c.getMethod(sig.getSubSignature()))
-                    .filter(m -> ((JavaSootMethod) m).isConcrete())
-                    .ifPresent(m -> targets.add((JavaSootMethod) m));
-            } catch (Exception e) {
-                // skip unresolvable
-            }
-        } else {
-            // Virtual or interface call
-            String declClass = sig.getDeclClassType().getFullyQualifiedName();
-
-            // Object explosion trap: subtypesOf(Object) returns every class in the JDK
-            if (declClass.equals("java.lang.Object")) {
-                try {
-                    view.getClass(sig.getDeclClassType())
-                        .flatMap(c -> c.getMethod(sig.getSubSignature()))
-                        .ifPresent(m -> targets.add((JavaSootMethod) m));
-                } catch (Exception e) {
-                    // skip
-                }
-                return targets;
-            }
-
-            // Also guard against other very broad types
-            if (declClass.equals("java.lang.Comparable")
-                    || declClass.equals("java.io.Serializable")
-                    || declClass.equals("java.lang.Iterable")) {
-                try {
-                    view.getClass(sig.getDeclClassType())
-                        .flatMap(c -> c.getMethod(sig.getSubSignature()))
-                        .ifPresent(m -> targets.add((JavaSootMethod) m));
-                } catch (Exception e) {
-                    // skip
-                }
-                return targets;
-            }
-
-            // CHA via SootUp TypeHierarchy — with a cap to prevent runaway resolution
-            try {
-                var hierarchy = view.getTypeHierarchy();
-                int count = 0;
-                int MAX_SUBTYPES = 50;
-                for (ClassType subtype : hierarchy.subtypesOf(sig.getDeclClassType()).toList()) {
-                    if (count++ >= MAX_SUBTYPES) break;
-                    try {
-                        view.getClass(subtype)
-                            .flatMap(c -> c.getMethod(sig.getSubSignature()))
-                            .filter(m -> ((JavaSootMethod) m).isConcrete())
-                            .ifPresent(m -> targets.add((JavaSootMethod) m));
-                    } catch (Exception e) {
-                        // skip individual unresolvable subtypes
-                    }
-                }
-            } catch (Exception e) {
-                // TypeHierarchy may fail for some types — fall back to declared class only
-                try {
-                    view.getClass(sig.getDeclClassType())
                         .flatMap(c -> c.getMethod(sig.getSubSignature()))
                         .filter(m -> ((JavaSootMethod) m).isConcrete())
                         .ifPresent(m -> targets.add((JavaSootMethod) m));
-                } catch (Exception ex) {
-                    // skip
+            } catch (Exception e) {
+                // skip unresolvable
+            }
+            return new ArrayList<>(targets);
+        }
+
+        String declClass = sig.getDeclClassType().getFullyQualifiedName();
+        if (declClass.equals("java.lang.Object")
+                || declClass.equals("java.lang.Comparable")
+                || declClass.equals("java.io.Serializable")
+                || declClass.equals("java.lang.Iterable")) {
+            JavaSootMethod inherited = resolveConcreteImplementation(sig.getDeclClassType(), sig, view);
+            if (inherited != null) {
+                targets.add(inherited);
+            }
+            return new ArrayList<>(targets);
+        }
+
+        try {
+            var hierarchy = view.getTypeHierarchy();
+            int count = 0;
+            int maxSubtypes = 50;
+            for (ClassType subtype : hierarchy.subtypesOf(sig.getDeclClassType()).toList()) {
+                if (count++ >= maxSubtypes) break;
+                JavaSootMethod target = resolveConcreteImplementation(subtype, sig, view);
+                if (target != null) {
+                    targets.add(target);
                 }
             }
+        } catch (Exception e) {
+            JavaSootMethod fallback = resolveConcreteImplementation(sig.getDeclClassType(), sig, view);
+            if (fallback != null) {
+                targets.add(fallback);
+            }
         }
-        return targets;
+        return new ArrayList<>(targets);
+    }
+
+    private static JavaSootMethod resolveConcreteImplementation(ClassType startType,
+                                                                 MethodSignature targetSig,
+                                                                 JavaView view) {
+        ClassType current = startType;
+        Set<String> seen = new HashSet<>();
+        while (current != null && seen.add(current.getFullyQualifiedName())) {
+            try {
+                Optional<JavaSootClass> clsOpt = view.getClass(current);
+                if (clsOpt.isEmpty()) return null;
+                JavaSootClass cls = clsOpt.get();
+                Optional<JavaSootMethod> methodOpt = cls.getMethod(targetSig.getSubSignature());
+                if (methodOpt.isPresent() && methodOpt.get().isConcrete()) {
+                    return methodOpt.get();
+                }
+                current = cls.getSuperclass().orElse(null);
+            } catch (Exception e) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    private static boolean isVirtualDispatch(AbstractInvokeExpr invokeExpr) {
+        return (invokeExpr instanceof JVirtualInvokeExpr)
+                || (invokeExpr instanceof JInterfaceInvokeExpr);
+    }
+
+    private static boolean canResolveDeclClass(JavaView view, MethodSignature sig) {
+        try {
+            return view.getClass(sig.getDeclClassType()).isPresent();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /** Check if a method belongs to a forbidden package. */
@@ -440,7 +524,7 @@ public class CallGraphBuilder {
         return false;
     }
 
-    /** Extract an invoke expression from a statement, if present */
+    /** Extract an invoke expression from a statement, if present. */
     private static AbstractInvokeExpr extractInvokeExpr(Stmt stmt) {
         if (stmt instanceof JInvokeStmt invokeStmt) {
             return invokeStmt.getInvokeExpr();

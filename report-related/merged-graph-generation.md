@@ -23,7 +23,7 @@ The Override Graph maps a base method to its overriding implementations (e.g., `
     3. For each method $m$ in $C$, if $S$ contains a concrete method with the exact same sub-signature, an edge is recorded: $S.m \to C.m$.
 
 ### Call Graph Generation
-The tool first builds a raw call graph of direct invoke targets and then augments it with override edges to obtain the merged graph used for analysis ordering.
+The tool first builds a raw call graph of direct invoke targets and then augments it with override edges to obtain the dependency graph used for analysis ordering.
 
 - **Scope:** This phase iterates over **all discovered classes** (both User input and discovered JDK classes).
 - **SootUp Usage:**
@@ -36,11 +36,11 @@ The tool first builds a raw call graph of direct invoke targets and then augment
     2. It iterates through all instructions looking for invocation expressions.
     3. For each invocation, it extracts the declared target signature.
     4. **Direct edge construction:** If the exact declared target exists among the discovered concrete methods, a raw edge $Caller \to Callee$ is added.
-    5. **Override augmentation:** After the raw graph is built, the tool adds edges from callers of base methods to all known overrides, and also adds direct base-to-override edges. The merged graph is the one passed to Tarjan's SCC algorithm.
+    5. **Override augmentation:** After the raw graph is built, the tool adds edges from callers of base methods to all known overrides, and also adds direct base-to-override edges. This merged result is called the dependency graph, and Tarjan's SCC algorithm runs on that dependency graph.
 - **Note:** Virtual dispatch is therefore accounted for before bottom-up ordering, not deferred to a later on-demand inter-file pass.
 
 ### Analysis Order (Tarjan's SCC)
-Finally, the constructed Call Graph is fed into Tarjan's Algorithm to identify Strongly Connected Components (SCCs).
+Finally, the constructed dependency graph is fed into Tarjan's Algorithm to identify Strongly Connected Components (SCCs).
 
 - The algorithm produces a list of "batches" sorted in **topological bottom-up order**.
 - Leaf methods (those that make no outgoing calls or only call external/native methods) appear first.
