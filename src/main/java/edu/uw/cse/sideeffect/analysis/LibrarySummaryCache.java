@@ -71,19 +71,6 @@ public class LibrarySummaryCache {
         }
     }
 
-    /** Get all cached entries (for pre-populating SummaryCache). */
-    public static synchronized Map<String, MethodSummary> getAll() {
-        ensureIndexLoaded();
-        Map<String, MethodSummary> all = new HashMap<>();
-        for (String sig : fileIndex.keySet()) {
-            MethodSummary summary = get(sig);
-            if (summary != null) {
-                all.put(sig, summary);
-            }
-        }
-        return all;
-    }
-
     /**
      * Save a library method summary to both memory and disk.
      */
@@ -119,12 +106,6 @@ public class LibrarySummaryCache {
                   .replace('/', '_')
                   .replace('\\', '_')
                   .trim();
-    }
-
-    /** Return the number of entries currently in memory. */
-    public static synchronized int size() {
-        ensureIndexLoaded();
-        return fileIndex.size();
     }
 
     private static void ensureIndexLoaded() {

@@ -53,6 +53,7 @@ public class CallGraphBuilder {
             "java.lang.invoke.", "java.lang.reflect.",
             "java.util.concurrent."
     );
+    private static final int MAX_DISCOVERED_LIBRARY_METHODS = 200;
 
     /**
      * Result of graph construction: the bottom-up analysis order plus the component graphs.
@@ -79,28 +80,16 @@ public class CallGraphBuilder {
 
         JavaView jrtView = new JavaView(new JrtFileSystemAnalysisInputLocation());
         Set<JavaSootClass> discoveredClasses = new LinkedHashSet<>(initialClasses);
-        Set<String> initialClassNames = new LinkedHashSet<>();
-        for (JavaSootClass cls : initialClasses) {
-            initialClassNames.add(cls.getType().getFullyQualifiedName());
-        }
+        Set<String> initialClassNames = collectClassNames(initialClasses);
         Queue<JavaSootMethod> pendingMethods = new ArrayDeque<>();
         Set<String> queuedMethodSignatures = new HashSet<>();
-        for (JavaSootClass cls : initialClasses) {
-            for (JavaSootMethod method : cls.getMethods()) {
-                if (!method.isConcrete()) continue;
-                String methodSig = method.getSignature().toString();
-                if (queuedMethodSignatures.add(methodSig)) {
-                    pendingMethods.add(method);
-                }
-            }
-        }
+        enqueueConcreteMethods(initialClasses, pendingMethods, queuedMethodSignatures);
         Set<String> reachableLibraryMethods = new HashSet<>();
         Set<String> reachableCachedLibraryMethods = new HashSet<>();
         Map<String, Set<String>> externalEdges = new HashMap<>();
         int jdkMethodsDiscovered = 0;
-        int maxDiscoveredLibraryMethods = 200;
 
-        while (!pendingMethods.isEmpty() && reachableLibraryMethods.size() < maxDiscoveredLibraryMethods) {
+        while (!pendingMethods.isEmpty() && reachableLibraryMethods.size() < MAX_DISCOVERED_LIBRARY_METHODS) {
             JavaSootMethod method = pendingMethods.poll();
             if (!method.isConcrete()) continue;
 
@@ -119,42 +108,23 @@ public class CallGraphBuilder {
                 MethodSignature calleeSig = invokeExpr.getMethodSignature();
 
                 if (SafeMethods.isSafe(calleeSig)) {
-                    externalEdges.computeIfAbsent(callerSig, k -> new LinkedHashSet<>())
-                            .add(calleeSig + " [safe]");
+                    addExternalEdge(externalEdges, callerSig, calleeSig, "safe");
                     continue;
                 }
 
                 if (LibrarySummaryCache.contains(calleeSig.toString())) {
                     reachableCachedLibraryMethods.add(calleeSig.toString());
-                    externalEdges.computeIfAbsent(callerSig, k -> new LinkedHashSet<>())
-                            .add(calleeSig + " [cached]");
+                    addExternalEdge(externalEdges, callerSig, calleeSig, "cached");
                     continue;
                 }
 
                 String declClassName = calleeSig.getDeclClassType().getFullyQualifiedName();
                 if (isForbiddenClassName(declClassName)) {
-                    externalEdges.computeIfAbsent(callerSig, k -> new LinkedHashSet<>())
-                            .add(calleeSig + " [forbidden]");
+                    addExternalEdge(externalEdges, callerSig, calleeSig, "forbidden");
                     continue;
                 }
 
-                Set<JavaSootMethod> targets = new LinkedHashSet<>();
-                JavaSootMethod directTarget = resolveDirectTarget(calleeSig, view);
-                if (directTarget == null) {
-                    directTarget = resolveDirectTarget(calleeSig, jrtView);
-                }
-                if (directTarget != null && directTarget.isConcrete()) {
-                    targets.add(directTarget);
-                }
-
-                if (isVirtualDispatch(invokeExpr)) {
-                    if (canResolveDeclClass(view, calleeSig)) {
-                        targets.addAll(resolveTargets(invokeExpr, view));
-                    }
-                    if (canResolveDeclClass(jrtView, calleeSig)) {
-                        targets.addAll(resolveTargets(invokeExpr, jrtView));
-                    }
-                }
+                Set<JavaSootMethod> targets = resolveTargetsAcrossViews(invokeExpr, calleeSig, view, jrtView);
 
                 for (JavaSootMethod target : targets) {
                     if (SafeMethods.isSafe(target.getSignature()) || isForbiddenPackage(target)) {
@@ -180,9 +150,9 @@ public class CallGraphBuilder {
                     if (queuedMethodSignatures.add(targetSig)) {
                         pendingMethods.add(target);
                     }
-                    if (reachableLibraryMethods.size() >= maxDiscoveredLibraryMethods) break;
+                    if (reachableLibraryMethods.size() >= MAX_DISCOVERED_LIBRARY_METHODS) break;
                 }
-                if (reachableLibraryMethods.size() >= maxDiscoveredLibraryMethods) break;
+                if (reachableLibraryMethods.size() >= MAX_DISCOVERED_LIBRARY_METHODS) break;
             }
         }
 
@@ -264,19 +234,8 @@ public class CallGraphBuilder {
                     MethodSignature calleeMSig = invokeExpr.getMethodSignature();
                     String calleeFullSig = calleeMSig.toString();
 
-                    Set<String> resolvedTargets = new LinkedHashSet<>();
-                    if (view != null) {
-                        if (canResolveDeclClass(view, calleeMSig)) {
-                            for (JavaSootMethod t : resolveTargets(invokeExpr, view)) {
-                                resolvedTargets.add(t.getSignature().toString());
-                            }
-                        }
-                        if (jrtViewForResolution != null && canResolveDeclClass(jrtViewForResolution, calleeMSig)) {
-                            for (JavaSootMethod t : resolveTargets(invokeExpr, jrtViewForResolution)) {
-                                resolvedTargets.add(t.getSignature().toString());
-                            }
-                        }
-                    }
+                    Set<String> resolvedTargets =
+                            resolveTargetSignaturesAcrossViews(invokeExpr, calleeMSig, view, jrtViewForResolution);
 
                     if (resolvedTargets.isEmpty() && concreteMethodBySig.containsKey(calleeFullSig)) {
                         resolvedTargets.add(calleeFullSig);
@@ -374,6 +333,79 @@ public class CallGraphBuilder {
 
         return new Result(result, dependencyGraph, rawCallGraph, overrideGraph,
                 Set.copyOf(reachableCachedLibraryMethods));
+    }
+
+    private static Set<String> collectClassNames(Collection<JavaSootClass> classes) {
+        Set<String> classNames = new LinkedHashSet<>();
+        for (JavaSootClass cls : classes) {
+            classNames.add(cls.getType().getFullyQualifiedName());
+        }
+        return classNames;
+    }
+
+    private static void enqueueConcreteMethods(Collection<JavaSootClass> classes,
+                                               Queue<JavaSootMethod> pendingMethods,
+                                               Set<String> queuedMethodSignatures) {
+        for (JavaSootClass cls : classes) {
+            for (JavaSootMethod method : cls.getMethods()) {
+                if (!method.isConcrete()) continue;
+                String methodSig = method.getSignature().toString();
+                if (queuedMethodSignatures.add(methodSig)) {
+                    pendingMethods.add(method);
+                }
+            }
+        }
+    }
+
+    private static void addExternalEdge(Map<String, Set<String>> externalEdges,
+                                        String callerSig,
+                                        MethodSignature calleeSig,
+                                        String label) {
+        externalEdges.computeIfAbsent(callerSig, k -> new LinkedHashSet<>())
+                .add(calleeSig + " [" + label + "]");
+    }
+
+    private static Set<JavaSootMethod> resolveTargetsAcrossViews(AbstractInvokeExpr invokeExpr,
+                                                                 MethodSignature calleeSig,
+                                                                 JavaView primaryView,
+                                                                 JavaView secondaryView) {
+        LinkedHashSet<JavaSootMethod> targets = new LinkedHashSet<>();
+        JavaSootMethod directTarget = resolveDirectTarget(calleeSig, primaryView);
+        if (directTarget == null) {
+            directTarget = resolveDirectTarget(calleeSig, secondaryView);
+        }
+        if (directTarget != null && directTarget.isConcrete()) {
+            targets.add(directTarget);
+        }
+
+        if (!isVirtualDispatch(invokeExpr)) {
+            return targets;
+        }
+
+        addResolvedTargets(targets, invokeExpr, calleeSig, primaryView);
+        addResolvedTargets(targets, invokeExpr, calleeSig, secondaryView);
+        return targets;
+    }
+
+    private static void addResolvedTargets(Set<JavaSootMethod> targets,
+                                           AbstractInvokeExpr invokeExpr,
+                                           MethodSignature calleeSig,
+                                           JavaView view) {
+        if (view == null || !canResolveDeclClass(view, calleeSig)) {
+            return;
+        }
+        targets.addAll(resolveTargets(invokeExpr, view));
+    }
+
+    private static Set<String> resolveTargetSignaturesAcrossViews(AbstractInvokeExpr invokeExpr,
+                                                                  MethodSignature calleeSig,
+                                                                  JavaView primaryView,
+                                                                  JavaView secondaryView) {
+        Set<String> resolvedTargets = new LinkedHashSet<>();
+        for (JavaSootMethod target : resolveTargetsAcrossViews(invokeExpr, calleeSig, primaryView, secondaryView)) {
+            resolvedTargets.add(target.getSignature().toString());
+        }
+        return resolvedTargets;
     }
 
     private static Set<JavaSootClass> expandHierarchy(Collection<? extends JavaSootClass> seedClasses,
