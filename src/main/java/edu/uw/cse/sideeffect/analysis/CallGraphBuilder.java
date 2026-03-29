@@ -68,7 +68,19 @@ public class CallGraphBuilder {
             Map<String, Set<String>> dependencyGraph,
             Map<String, Set<String>> rawCallGraph,
             Map<String, Set<String>> overrideGraph,
-            Set<String> reachableCachedLibraryMethods
+            Set<String> reachableCachedLibraryMethods,
+            GraphTiming timing
+    ) {}
+
+    /**
+     * Timing breakdown for call graph construction.
+     * directCallGraphNs includes BFS discovery and direct invoke-edge construction.
+     * mergeNs includes override augmentation plus SCC ordering.
+     */
+    public record GraphTiming(
+            long directCallGraphNs,
+            long overrideGraphNs,
+            long mergeNs
     ) {}
 
     /**
@@ -88,6 +100,7 @@ public class CallGraphBuilder {
         Set<String> reachableCachedLibraryMethods = new HashSet<>();
         Map<String, Set<String>> externalEdges = new HashMap<>();
         int jdkMethodsDiscovered = 0;
+        long directStartNs = config.timing ? System.nanoTime() : 0L;
 
         while (!pendingMethods.isEmpty() && reachableLibraryMethods.size() < MAX_DISCOVERED_LIBRARY_METHODS) {
             JavaSootMethod method = pendingMethods.poll();
@@ -161,9 +174,11 @@ public class CallGraphBuilder {
                     + " additional JDK/library methods across " + discoveredClasses.size() + " classes");
         }
 
+        long bfsNs = config.timing ? System.nanoTime() - directStartNs : 0L;
+
         return buildCallGraphAndOrder(
                 discoveredClasses, initialClassNames, reachableLibraryMethods,
-                reachableCachedLibraryMethods, view, config, externalEdges);
+                reachableCachedLibraryMethods, view, config, externalEdges, bfsNs);
     }
 
     /** Backward-compatible overload: no view, no BFS — only user classes. */
@@ -175,7 +190,7 @@ public class CallGraphBuilder {
         }
         return buildCallGraphAndOrder(
                 classes, initialClassNames, Collections.emptySet(), Collections.emptySet(),
-                null, config, Collections.emptyMap());
+                null, config, Collections.emptyMap(), 0L);
     }
 
     /** Core call graph construction + Tarjan SCC ordering. */
@@ -186,8 +201,10 @@ public class CallGraphBuilder {
             Set<String> reachableCachedLibraryMethods,
             JavaView view,
             AnalysisConfig config,
-            Map<String, Set<String>> externalEdges) {
+            Map<String, Set<String>> externalEdges,
+            long preDirectNs) {
 
+        long directStartNs = config.timing ? System.nanoTime() : 0L;
         JavaView jrtViewForResolution = view != null
                 ? new JavaView(new JrtFileSystemAnalysisInputLocation())
                 : null;
@@ -216,14 +233,13 @@ public class CallGraphBuilder {
             classByName.put(cls.getType().getFullyQualifiedName(), cls);
         }
 
-        Map<String, Set<String>> overrideGraph =
-                buildOverrideGraph(allClasses, classByName, view, jrtViewForResolution);
-
-        Map<String, Set<String>> dependencyGraph = new HashMap<>();
+        Map<String, Set<String>> rawDependencyGraph = new HashMap<>();
+        Map<String, Set<String>> declaredCallGraph = new HashMap<>();
         for (var entry : concreteMethodBySig.entrySet()) {
             String callerSig = entry.getKey();
             JavaSootMethod method = entry.getValue();
             Set<String> callees = new LinkedHashSet<>();
+            Set<String> declaredCallees = new LinkedHashSet<>();
 
             try {
                 Body body = method.getBody();
@@ -233,6 +249,7 @@ public class CallGraphBuilder {
 
                     MethodSignature calleeMSig = invokeExpr.getMethodSignature();
                     String calleeFullSig = calleeMSig.toString();
+                    declaredCallees.add(calleeFullSig);
 
                     Set<String> resolvedTargets =
                             resolveTargetSignaturesAcrossViews(invokeExpr, calleeMSig, view, jrtViewForResolution);
@@ -249,27 +266,45 @@ public class CallGraphBuilder {
                     }
 
                     callees.addAll(concreteTargets);
-
-                    Set<String> overrides = overrideGraph.getOrDefault(calleeFullSig, Set.of());
-                    for (String overrideSig : overrides) {
-                        if (concreteMethodBySig.containsKey(overrideSig)) {
-                            callees.add(overrideSig);
-                        }
-                    }
                 }
             } catch (Exception e) {
                 // Skip methods that can't be analyzed
             }
 
-            dependencyGraph.put(callerSig, callees);
+            rawDependencyGraph.put(callerSig, callees);
+            declaredCallGraph.put(callerSig, declaredCallees);
         }
 
+        long directCallGraphNs = config.timing ? preDirectNs + (System.nanoTime() - directStartNs) : 0L;
+
+        long overrideStartNs = config.timing ? System.nanoTime() : 0L;
+        Map<String, Set<String>> overrideGraph =
+                buildOverrideGraph(allClasses, classByName, view, jrtViewForResolution);
+        long overrideGraphNs = config.timing ? System.nanoTime() - overrideStartNs : 0L;
+
         Map<String, Set<String>> rawCallGraph = new HashMap<>();
-        for (var e : dependencyGraph.entrySet()) {
+        for (var e : rawDependencyGraph.entrySet()) {
             rawCallGraph.put(e.getKey(), new LinkedHashSet<>(e.getValue()));
         }
         for (var e : externalEdges.entrySet()) {
             rawCallGraph.computeIfAbsent(e.getKey(), k -> new LinkedHashSet<>()).addAll(e.getValue());
+        }
+
+        long mergeStartNs = config.timing ? System.nanoTime() : 0L;
+        Map<String, Set<String>> dependencyGraph = new HashMap<>();
+        for (var entry : rawDependencyGraph.entrySet()) {
+            dependencyGraph.put(entry.getKey(), new LinkedHashSet<>(entry.getValue()));
+        }
+
+        for (Map.Entry<String, Set<String>> entry : declaredCallGraph.entrySet()) {
+            Set<String> mergedCallees = dependencyGraph.computeIfAbsent(entry.getKey(), k -> new LinkedHashSet<>());
+            for (String calleeSig : entry.getValue()) {
+                for (String overrideSig : overrideGraph.getOrDefault(calleeSig, Set.of())) {
+                    if (concreteMethodBySig.containsKey(overrideSig)) {
+                        mergedCallees.add(overrideSig);
+                    }
+                }
+            }
         }
 
         for (Map.Entry<String, Set<String>> entry : overrideGraph.entrySet()) {
@@ -305,6 +340,7 @@ public class CallGraphBuilder {
 
         // Tarjan runs on the merged dependency graph, not on the raw call graph alone.
         List<List<String>> sccs = tarjanSCC(dependencyGraph, concreteMethodBySig.keySet());
+        long mergeNs = config.timing ? System.nanoTime() - mergeStartNs : 0L;
 
         List<List<JavaSootMethod>> result = new ArrayList<>();
         for (List<String> scc : sccs) {
@@ -332,7 +368,8 @@ public class CallGraphBuilder {
         }
 
         return new Result(result, dependencyGraph, rawCallGraph, overrideGraph,
-                Set.copyOf(reachableCachedLibraryMethods));
+                Set.copyOf(reachableCachedLibraryMethods),
+                new GraphTiming(directCallGraphNs, overrideGraphNs, mergeNs));
     }
 
     private static Set<String> collectClassNames(Collection<JavaSootClass> classes) {

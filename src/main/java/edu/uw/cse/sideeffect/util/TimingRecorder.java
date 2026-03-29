@@ -53,6 +53,9 @@ public class TimingRecorder {
     private long compilationNs;
     private long irLoadingNs;
     private long callGraphNs;
+    private long directCallGraphNs;
+    private long overrideGraphNs;
+    private long mergeGraphNs;
 
     // Per-method data (also used to accumulate dataflow/side-effect totals)
     private final List<MethodTiming> methods = new ArrayList<>();
@@ -80,6 +83,12 @@ public class TimingRecorder {
 
     public void recordCallGraph(long ns) {
         callGraphNs = ns;
+    }
+
+    public void recordCallGraphBreakdown(long directNs, long overrideNs, long mergeNs) {
+        directCallGraphNs = directNs;
+        overrideGraphNs = overrideNs;
+        mergeGraphNs = mergeNs;
     }
 
     public void addMethodTiming(MethodTiming mt) {
@@ -117,6 +126,9 @@ public class TimingRecorder {
                 ms(irLoadingNs), pct(irLoadingNs, totalNs));
         System.out.printf("  Call graph construction:     %8.1f ms  (%s)%n",
                 ms(callGraphNs), pct(callGraphNs, totalNs));
+        System.out.printf("    Direct call graph:         %8.1f ms%n", ms(directCallGraphNs));
+        System.out.printf("    Override graph:            %8.1f ms%n", ms(overrideGraphNs));
+        System.out.printf("    Graph merge/order:         %8.1f ms%n", ms(mergeGraphNs));
         System.out.printf("  Dataflow analysis (total):   %8.1f ms  (%s)%n",
                 ms(dataflowTotalNs), pct(dataflowTotalNs, totalNs));
         System.out.printf("  Side-effect checking (total): %8.1f ms  (%s)%n",
@@ -198,6 +210,9 @@ public class TimingRecorder {
             sb.append("    \"compilationMs\": ").append(roundMs(compilationNs)).append(",\n");
             sb.append("    \"irLoadingMs\": ").append(roundMs(irLoadingNs)).append(",\n");
             sb.append("    \"callGraphMs\": ").append(roundMs(callGraphNs)).append(",\n");
+            sb.append("    \"directCallGraphMs\": ").append(roundMs(directCallGraphNs)).append(",\n");
+            sb.append("    \"overrideGraphMs\": ").append(roundMs(overrideGraphNs)).append(",\n");
+            sb.append("    \"graphMergeMs\": ").append(roundMs(mergeGraphNs)).append(",\n");
             sb.append("    \"dataflowTotalMs\": ").append(roundMs(dataflowTotalNs)).append(",\n");
             sb.append("    \"sideEffectTotalMs\": ").append(roundMs(sideEffectTotalNs)).append(",\n");
             long accountedNs = compilationNs + irLoadingNs + callGraphNs + dataflowTotalNs + sideEffectTotalNs;
@@ -277,6 +292,7 @@ public class TimingRecorder {
         @Override public void recordCompilation(long ns) {}
         @Override public void recordIrLoading(long ns) {}
         @Override public void recordCallGraph(long ns) {}
+        @Override public void recordCallGraphBreakdown(long directNs, long overrideNs, long mergeNs) {}
         @Override public void addMethodTiming(MethodTiming mt) {}
         @Override public void setSourceFiles(List<String> sourceFiles) {}
         @Override public void printReport() {}

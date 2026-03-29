@@ -219,6 +219,10 @@ public class SideEffectAnalysisRunner {
 
         if (config.timing) {
             timer.recordCallGraph(System.nanoTime() - cgStart);
+            timer.recordCallGraphBreakdown(
+                    cgResult.timing().directCallGraphNs(),
+                    cgResult.timing().overrideGraphNs(),
+                    cgResult.timing().mergeNs());
         }
 
         // Build set of user-class method signatures (for output filtering — don't show
