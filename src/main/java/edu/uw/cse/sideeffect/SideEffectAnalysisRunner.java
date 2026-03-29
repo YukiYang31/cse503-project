@@ -76,6 +76,8 @@ public class SideEffectAnalysisRunner {
     private Map<String, Set<String>> overrideGraph;  // base -> overrides (for debug)
     private Map<String, Set<String>> reverseOverrideGraph; // override -> direct bases
 
+    private record AnalysisResult(MethodSummary summary, DebugHtmlWriter debugWriter) {}
+
     public SideEffectAnalysisRunner(AnalysisConfig config, Path classDir, List<Path> sourceFiles,
                                 TimingRecorder timer) {
         this.config = config;
@@ -301,7 +303,7 @@ public class SideEffectAnalysisRunner {
                 String fullSig = method.getSignature().toString();
                 MethodSummary cached = cache.lookup(fullSig);
 
-                if (cached != null) {
+                if (cached != null && shouldSkipAnalysisBecauseCached(fullSig, userMethodSigs)) {
                     if (config.debug) System.out.println("Debug== CACHE-HIT: " + fullSig);
                     methodsDone++;
                     printProgress(methodsDone, totalMethods);
@@ -318,14 +320,14 @@ public class SideEffectAnalysisRunner {
                     continue;
                 }
 
-                MethodSummary summary;
+                AnalysisResult analysisResult;
                 if (config.methodTimeoutSecs > 0) {
                     ExecutorService exec = Executors.newSingleThreadExecutor();
                     final List<DebugHtmlWriter.SourceFile> srcCapture = sourceContents;
-                    Future<MethodSummary> future = exec.submit(
+                    Future<AnalysisResult> future = exec.submit(
                             () -> analyzeMethod(method, srcCapture, cache, dependencyGraph));
                     try {
-                        summary = future.get(config.methodTimeoutSecs, TimeUnit.SECONDS);
+                        analysisResult = future.get(config.methodTimeoutSecs, TimeUnit.SECONDS);
                     } catch (TimeoutException e) {
                         future.cancel(true);
                         String sig = method.getSignature().toString();
@@ -335,24 +337,25 @@ public class SideEffectAnalysisRunner {
                             timer.addMethodTiming(new TimingRecorder.MethodTiming(
                                     sig, "TIMEOUT", "method analysis timed out", 0, 0, 0, 0, 0));
                         }
-                        summary = null;
+                        analysisResult = null;
                     } catch (InterruptedException | ExecutionException e) {
-                        summary = null;
+                        analysisResult = null;
                     } finally {
                         exec.shutdownNow();
                     }
                 } else {
-                    summary = analyzeMethod(method, sourceContents, cache, dependencyGraph);
+                    analysisResult = analyzeMethod(method, sourceContents, cache, dependencyGraph);
                 }
                 methodsDone++;
                 printProgress(methodsDone, totalMethods);
-                if (summary != null) {
-                    storeSummary(method, summary, cache);
+                if (analysisResult != null) {
+                    storeSummary(method, analysisResult.summary(), cache);
                     // Only include in output if it's a user method and matches filter
                     String methodSig = method.getSignature().toString();
+                    MethodSummary effectiveSummary = cache.lookup(methodSig);
+                    finalizeDebugWriter(analysisResult.debugWriter(), effectiveSummary);
                     if (userMethodSigs.contains(methodSig)
                             && (config.methodFilter == null || method.getName().equals(config.methodFilter))) {
-                        MethodSummary effectiveSummary = cache.lookup(methodSig);
                         if (effectiveSummary != null) {
                             summaries.add(effectiveSummary);
                         }
@@ -363,7 +366,9 @@ public class SideEffectAnalysisRunner {
                 boolean allCached = true;
                 for (JavaSootMethod m : filteredBatch) {
                     if (m.isConcrete()) {
-                        if (cache.lookup(m.getSignature().toString()) == null) {
+                        String methodSig = m.getSignature().toString();
+                        if (cache.lookup(methodSig) == null
+                                || !shouldSkipAnalysisBecauseCached(methodSig, userMethodSigs)) {
                             allCached = false;
                             break;
                         }
@@ -416,10 +421,17 @@ public class SideEffectAnalysisRunner {
                                 if (!method.isConcrete()) continue;
                                 MethodSummary oldSummary = cache.lookup(
                                         method.getSignature().toString());
-                                MethodSummary newSummary = analyzeMethod(method, srcFinal, cache, dependencyGraph);
-                                if (newSummary != null) {
-                                    storeSummary(method, newSummary, cache);
-                                    if (oldSummary == null || oldSummary.getResult() != newSummary.getResult()) {
+                                AnalysisResult analysisResult =
+                                        analyzeMethod(method, srcFinal, cache, dependencyGraph);
+                                if (analysisResult != null) {
+                                    storeSummary(method, analysisResult.summary(), cache);
+                                    MethodSummary effectiveSummary =
+                                            cache.lookup(method.getSignature().toString());
+                                    finalizeDebugWriter(analysisResult.debugWriter(), effectiveSummary);
+                                    if (oldSummary == null
+                                            || effectiveSummary == null
+                                            || oldSummary.getResult() != effectiveSummary.getResult()
+                                            || !oldSummary.getReasons().equals(effectiveSummary.getReasons())) {
                                         anyChanged = true;
                                     }
                                 }
@@ -456,10 +468,17 @@ public class SideEffectAnalysisRunner {
                             if (!method.isConcrete()) continue;
                             MethodSummary oldSummary = cache.lookup(
                                     method.getSignature().toString());
-                            MethodSummary newSummary = analyzeMethod(method, sourceContents, cache, dependencyGraph);
-                            if (newSummary != null) {
-                                storeSummary(method, newSummary, cache);
-                                if (oldSummary == null || oldSummary.getResult() != newSummary.getResult()) {
+                            AnalysisResult analysisResult =
+                                    analyzeMethod(method, sourceContents, cache, dependencyGraph);
+                            if (analysisResult != null) {
+                                storeSummary(method, analysisResult.summary(), cache);
+                                MethodSummary effectiveSummary =
+                                        cache.lookup(method.getSignature().toString());
+                                finalizeDebugWriter(analysisResult.debugWriter(), effectiveSummary);
+                                if (oldSummary == null
+                                        || effectiveSummary == null
+                                        || oldSummary.getResult() != effectiveSummary.getResult()
+                                        || !oldSummary.getReasons().equals(effectiveSummary.getReasons())) {
                                     anyChanged = true;
                                 }
                             }
@@ -597,6 +616,15 @@ public class SideEffectAnalysisRunner {
                 || className.startsWith("jdk.");
     }
 
+    /**
+     * User methods should still analyze their own bodies even if an override-propagated summary
+     * already occupies the base signature in the cache. Cached summaries only short-circuit
+     * library methods or explicitly preloaded disk-backed summaries.
+     */
+    private static boolean shouldSkipAnalysisBecauseCached(String fullSig, Set<String> userMethodSigs) {
+        return !userMethodSigs.contains(fullSig);
+    }
+
     private static String declaringClassName(String fullSig) {
         if (fullSig == null || fullSig.length() < 3) return "";
         int start = fullSig.indexOf('<');
@@ -607,10 +635,11 @@ public class SideEffectAnalysisRunner {
         return "";
     }
 
-    private MethodSummary analyzeMethod(JavaSootMethod method,
-                                        List<DebugHtmlWriter.SourceFile> sourceContents,
-                                        SummaryCache cache,
-                                        Map<String, Set<String>> dependencyGraph) {
+    private AnalysisResult analyzeMethod(JavaSootMethod method,
+                                         List<DebugHtmlWriter.SourceFile> sourceContents,
+                                         SummaryCache cache,
+                                         Map<String, Set<String>> dependencyGraph) {
+        DebugHtmlWriter debugWriter = null;
         try {
             // Fetch body and CFG once (Fix #6: View Cache Trap)
             Body body = method.getBody();
@@ -618,7 +647,6 @@ public class SideEffectAnalysisRunner {
             String sig = method.getSignature().toString();
 
             // Set up debug writer if debug mode is enabled
-            DebugHtmlWriter debugWriter = null;
             if (config.debug) {
                 debugWriter = DebugHtmlWriter.create(sig);
                 debugWriter.setSourceCode(
@@ -630,78 +658,87 @@ public class SideEffectAnalysisRunner {
                 debugWriter.setGraphs(sig, rawCallGraph, overrideGraph, dependencyGraph);
             }
 
-            try {
-                if (config.debug) System.out.println("\nDebug== ===== Analyzing method: " + sig + " =====");
+            if (config.debug) System.out.println("\nDebug== ===== Analyzing method: " + sig + " =====");
 
-                // Extract simple type names for parameter labels
-                List<String> paramTypeNames = method.getSignature().getParameterTypes()
-                    .stream()
-                    .map(Type::toString)
-                    .map(t -> { int dot = t.lastIndexOf('.'); return dot >= 0 ? t.substring(dot + 1) : t; })
-                    .toList();
+            // Extract simple type names for parameter labels
+            List<String> paramTypeNames = method.getSignature().getParameterTypes()
+                .stream()
+                .map(Type::toString)
+                .map(t -> { int dot = t.lastIndexOf('.'); return dot >= 0 ? t.substring(dot + 1) : t; })
+                .toList();
 
-                // --- Dataflow timing ---
-                long dataflowStart = 0;
-                if (config.timing) dataflowStart = System.nanoTime();
+            // --- Dataflow timing ---
+            long dataflowStart = 0;
+            if (config.timing) dataflowStart = System.nanoTime();
 
-                // Run the forward flow analysis (with inter-procedural cache)
-                SideEffectFlowAnalysis analysis = new SideEffectFlowAnalysis(
-                    cfg, body, config, method.isStatic(), debugWriter, paramTypeNames, cache);
+            // Run the forward flow analysis (with inter-procedural cache)
+            SideEffectFlowAnalysis analysis = new SideEffectFlowAnalysis(
+                cfg, body, config, method.isStatic(), debugWriter, paramTypeNames, cache);
 
-                // Get the exit graph
-                PointsToGraph exitGraph = analysis.getExitGraph();
+            // Get the exit graph
+            PointsToGraph exitGraph = analysis.getExitGraph();
 
-                long dataflowNs = 0;
-                if (config.timing) dataflowNs = System.nanoTime() - dataflowStart;
+            long dataflowNs = 0;
+            if (config.timing) dataflowNs = System.nanoTime() - dataflowStart;
 
-                // --- side-effect check timing ---
-                long sideEffectStart = 0;
-                if (config.timing) sideEffectStart = System.nanoTime();
+            // --- side-effect check timing ---
+            long sideEffectStart = 0;
+            if (config.timing) sideEffectStart = System.nanoTime();
 
-                // Check side-effect (include return targets for inter-procedural summaries)
-                boolean isConstructor = "<init>".equals(method.getName());
-                MethodSummary sideEffectResult = SideEffectChecker.check(sig, exitGraph, isConstructor, config.debug);
-                MethodSummary summary = new MethodSummary(sig, exitGraph,
-                        sideEffectResult.getResult(), sideEffectResult.getReasons(),
-                        exitGraph.getReturnTargets());
+            // Check side-effect (include return targets for inter-procedural summaries)
+            boolean isConstructor = "<init>".equals(method.getName());
+            MethodSummary sideEffectResult = SideEffectChecker.check(sig, exitGraph, isConstructor, config.debug);
+            MethodSummary summary = new MethodSummary(sig, exitGraph,
+                    sideEffectResult.getResult(), sideEffectResult.getReasons(),
+                    exitGraph.getReturnTargets());
 
-                long sideEffectNs = 0;
-                if (config.timing) sideEffectNs = System.nanoTime() - sideEffectStart;
-                // --- Record timing data ---
-                if (config.timing) {
-                    int stmtCount = cfg.getStmts().size();
-                    int nodeCount = exitGraph.getAllNodes().size();
-                    int edgeCount = countEdges(exitGraph);
-                    timer.addMethodTiming(new TimingRecorder.MethodTiming(
-                            sig, summary.getResult().name(), summary.getReason(),
-                            dataflowNs, sideEffectNs, stmtCount, nodeCount, edgeCount));
-                }
-
-                // Write debug output
-                if (debugWriter != null) {
-                    debugWriter.setExitGraph(exitGraph);
-                    debugWriter.setInsideEdges(exitGraph);
-                    debugWriter.setOutsideEdges(exitGraph);
-                    debugWriter.setLocalVariables(exitGraph);
-                    debugWriter.setEscapedNodes(exitGraph.getGlobalEscaped());
-                    debugWriter.setPrestateNodes(SideEffectChecker.computePrestateNodes(exitGraph));
-                    debugWriter.setGloballyEscapedNodes(SideEffectChecker.computeGloballyEscapedNodes(exitGraph));
-                    debugWriter.setMutatedFields(exitGraph.getMutatedFields());
-                    debugWriter.setSideEffectResult(
-                        summary.getResult().name(), summary.getReason());
-                }
-
-                return summary;
-            } finally {
-                if (debugWriter != null) {
-                    debugWriter.close();
-                }
+            long sideEffectNs = 0;
+            if (config.timing) sideEffectNs = System.nanoTime() - sideEffectStart;
+            // --- Record timing data ---
+            if (config.timing) {
+                int stmtCount = cfg.getStmts().size();
+                int nodeCount = exitGraph.getAllNodes().size();
+                int edgeCount = countEdges(exitGraph);
+                timer.addMethodTiming(new TimingRecorder.MethodTiming(
+                        sig, summary.getResult().name(), summary.getReason(),
+                        dataflowNs, sideEffectNs, stmtCount, nodeCount, edgeCount));
             }
 
+            return new AnalysisResult(summary, debugWriter);
         } catch (Exception e) {
+            closeDebugWriterQuietly(debugWriter);
             System.err.println("Error analyzing " + method.getName() + ": " + e.getMessage());
             e.printStackTrace();
             return null;
+        }
+    }
+
+    private void finalizeDebugWriter(DebugHtmlWriter debugWriter, MethodSummary effectiveSummary) {
+        if (debugWriter == null) return;
+        try {
+            if (effectiveSummary != null) {
+                PointsToGraph exitGraph = effectiveSummary.getExitGraph();
+                debugWriter.setExitGraph(exitGraph);
+                debugWriter.setInsideEdges(exitGraph);
+                debugWriter.setOutsideEdges(exitGraph);
+                debugWriter.setLocalVariables(exitGraph);
+                debugWriter.setEscapedNodes(exitGraph.getGlobalEscaped());
+                debugWriter.setPrestateNodes(SideEffectChecker.computePrestateNodes(exitGraph));
+                debugWriter.setGloballyEscapedNodes(SideEffectChecker.computeGloballyEscapedNodes(exitGraph));
+                debugWriter.setMutatedFields(exitGraph.getMutatedFields());
+                debugWriter.setSideEffectResult(
+                        effectiveSummary.getResult().name(), effectiveSummary.getReason());
+            }
+        } finally {
+            closeDebugWriterQuietly(debugWriter);
+        }
+    }
+
+    private static void closeDebugWriterQuietly(DebugHtmlWriter debugWriter) {
+        if (debugWriter == null) return;
+        try {
+            debugWriter.close();
+        } catch (IOException ignored) {
         }
     }
 

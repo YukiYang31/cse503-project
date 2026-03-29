@@ -96,7 +96,7 @@ When multiple `.java` files are passed as input and one class overrides a method
 Output:
 ```
 OverrideDerived.process(java.lang.Object)  : SIDE_EFFECTING  (mutates this via field value)
-OverrideBase.process(java.lang.Object)     : SIDE_EFFECTING  (overridden by side-effecting <OverrideDerived: ...>)
+OverrideBase.process(java.lang.Object)     : SIDE_EFFECTING  (mutates this via field value)
 OverrideBase.caller(OverrideBase,Object)   : SIDE_EFFECTING  (mutates OverrideBase parameter via field value)
 ```
 
@@ -108,9 +108,11 @@ OverrideBase.caller(OverrideBase,Object)   : SIDE_EFFECTING  (mutates OverrideBa
    - **Callers of base methods** also get edges to all overrides — ensuring callers are analyzed after all implementations are known.
    - **Each base method** gets a direct edge to all its overrides — ensuring overrides are always analyzed before the base method itself in the bottom-up order.
 
-3. **Base method propagation** — Immediately after a base method is analyzed, the tool checks whether any of its overrides is already cached as `SIDE_EFFECTING`. If so, the base method's verdict is upgraded to `SIDE_EFFECTING` before it is stored in the cache. This means `Base.m()` correctly reflects the worst-case behavior of all its concrete implementations, not just its own body. Because the call graph ordering guarantees overrides are processed first, the override's cached result is always available at this point.
+3. **Base method analysis still runs** — Override summaries do not replace the base method body analysis. Instead, the bottom-up order guarantees that overriding methods are analyzed first, their summaries are propagated upward onto the base signature, and then the base method body is analyzed as usual. When the base summary is stored, it is unioned with any override-derived summaries already cached under the same base signature. This means `Base.m()` reflects the union of:
+   - the base method's own body, and
+   - all known overriding implementations analyzed earlier in the run.
 
-4. **Exact summary lookup at call sites** — At an invoke site, the transfer function performs exact full-signature lookup only. For virtual dispatch, the conservative union happens earlier through call-graph ordering plus base-summary propagation, so declared/base signatures such as `Base.m()` are expected to already hold the union of their reachable overriding implementations in the cache.
+4. **Exact summary lookup at call sites** — At an invoke site, the transfer function performs exact full-signature lookup only. For virtual dispatch, the conservative union happens earlier through call-graph ordering plus override propagation plus base-body analysis, so declared/base signatures such as `Base.m()` are expected to already hold the complete merged summary in the cache.
 
 5. **Override dependency DOT file** (produced when `--show-graph` is used) — `dot-graph/override-dependency.dot` shows:
    - **Blue arrows** — call edges between analyzed methods
@@ -121,7 +123,7 @@ OverrideBase.caller(OverrideBase,Object)   : SIDE_EFFECTING  (mutates OverrideBa
    dot -Tpng dot-graph/override-dependency.dot -o override-dependency.png
    ```
 
-**Scope:** Override detection and the propagation semantics apply only to files explicitly passed as input. JDK and external library calls use the three-tier resolution (SafeMethods whitelist → summary cache → conservative fallback). Static calls and constructor calls always use exact-match dispatch — no union is applied.
+**Scope:** Override detection and merged-base semantics apply only to files explicitly passed as input. JDK and external library calls use the three-tier resolution (SafeMethods whitelist → summary cache → conservative fallback). Static calls and constructor calls always use exact-match dispatch — no override union is applied there.
 
 **Running with test files:**
 ```bash
