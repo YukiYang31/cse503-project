@@ -223,12 +223,7 @@ public class SideEffectAnalysisRunner {
 
         // Build set of user-class method signatures (for output filtering — don't show
         // JDK library methods discovered via BFS in the results table)
-        Set<String> userMethodSigs = new HashSet<>();
-        for (JavaSootClass cls : classes) {
-            for (JavaSootMethod m : cls.getMethods()) {
-                userMethodSigs.add(m.getSignature().toString());
-            }
-        }
+        Set<String> userMethodSigs = buildUserMethodSignatures(classes);
 
         // Analyze only methods reachable from the target (if methodFilter is set)
         SummaryCache cache = new SummaryCache();
@@ -242,57 +237,15 @@ public class SideEffectAnalysisRunner {
 
         List<MethodSummary> summaries = new ArrayList<>();
 
-        Set<String> reachable = null;
-        if (config.methodFilter != null) {
-            // Find all signatures matching the filter
-            Set<String> startMethods = new HashSet<>();
-            for (List<JavaSootMethod> batch : batches) {
-                for (JavaSootMethod m : batch) {
-                    if (m.getName().equals(config.methodFilter)) {
-                        startMethods.add(m.getSignature().toString());
-                    }
-                }
-            }
-            // Compute transitive closure
-            reachable = new HashSet<>();
-            Deque<String> work = new ArrayDeque<>(startMethods);
-            while (!work.isEmpty()) {
-                String sig = work.pop();
-                if (!reachable.add(sig)) continue;
-                for (String callee : dependencyGraph.getOrDefault(sig, Set.of())) {
-                    if (!reachable.contains(callee)) {
-                        work.add(callee);
-                    }
-                }
-            }
-        }
+        Set<String> reachable = computeReachableMethods(batches, dependencyGraph);
 
         // Pre-count total concrete methods to analyze (for progress bar)
-        int totalMethods = 0;
-        for (List<JavaSootMethod> batch : batches) {
-            List<JavaSootMethod> fb = batch;
-            if (reachable != null) {
-                final Set<String> r = reachable;
-                fb = batch.stream().filter(m -> r.contains(m.getSignature().toString())).toList();
-            }
-            if (fb.size() == 1) {
-                if (fb.get(0).isConcrete()) totalMethods++;
-            } else {
-                for (JavaSootMethod m : fb) { if (m.isConcrete()) totalMethods++; }
-            }
-        }
+        int totalMethods = countConcreteMethods(batches, reachable);
         int methodsDone = 0;
         if (totalMethods > 0) printProgress(methodsDone, totalMethods);
 
         for (List<JavaSootMethod> batch : batches) {
-            // Only analyze methods in reachable set (if filter is set)
-            List<JavaSootMethod> filteredBatch = batch;
-            if (reachable != null) {
-                final Set<String> reachableFinal = reachable;
-                filteredBatch = batch.stream()
-                    .filter(m -> reachableFinal.contains(m.getSignature().toString()))
-                    .toList();
-            }
+            List<JavaSootMethod> filteredBatch = filterBatch(batch, reachable);
             if (filteredBatch.isEmpty()) continue;
 
             if (filteredBatch.size() == 1) {
@@ -320,62 +273,20 @@ public class SideEffectAnalysisRunner {
                     continue;
                 }
 
-                AnalysisResult analysisResult;
-                if (config.methodTimeoutSecs > 0) {
-                    ExecutorService exec = Executors.newSingleThreadExecutor();
-                    final List<DebugHtmlWriter.SourceFile> srcCapture = sourceContents;
-                    Future<AnalysisResult> future = exec.submit(
-                            () -> analyzeMethod(method, srcCapture, cache, dependencyGraph));
-                    try {
-                        analysisResult = future.get(config.methodTimeoutSecs, TimeUnit.SECONDS);
-                    } catch (TimeoutException e) {
-                        future.cancel(true);
-                        String sig = method.getSignature().toString();
-                        System.err.println("\nTIMEOUT: method analysis exceeded " +
-                                config.methodTimeoutSecs + "s for " + sig);
-                        if (config.timing) {
-                            timer.addMethodTiming(new TimingRecorder.MethodTiming(
-                                    sig, "TIMEOUT", "method analysis timed out", 0, 0, 0, 0, 0));
-                        }
-                        analysisResult = null;
-                    } catch (InterruptedException | ExecutionException e) {
-                        analysisResult = null;
-                    } finally {
-                        exec.shutdownNow();
-                    }
-                } else {
-                    analysisResult = analyzeMethod(method, sourceContents, cache, dependencyGraph);
-                }
+                AnalysisResult analysisResult =
+                        analyzeMethodWithOptionalTimeout(method, sourceContents, cache, dependencyGraph);
                 methodsDone++;
                 printProgress(methodsDone, totalMethods);
                 if (analysisResult != null) {
-                    storeSummary(method, analysisResult.summary(), cache);
-                    // Only include in output if it's a user method and matches filter
-                    String methodSig = method.getSignature().toString();
-                    MethodSummary effectiveSummary = cache.lookup(methodSig);
-                    finalizeDebugWriter(analysisResult.debugWriter(), effectiveSummary);
-                    if (userMethodSigs.contains(methodSig)
-                            && (config.methodFilter == null || method.getName().equals(config.methodFilter))) {
+                    MethodSummary effectiveSummary = storeAndFinalize(method, analysisResult, cache);
+                    if (shouldIncludeInResults(method, userMethodSigs)) {
                         if (effectiveSummary != null) {
                             summaries.add(effectiveSummary);
                         }
                     }
                 }
             } else {
-                // Check if whole SCC is cached
-                boolean allCached = true;
-                for (JavaSootMethod m : filteredBatch) {
-                    if (m.isConcrete()) {
-                        String methodSig = m.getSignature().toString();
-                        if (cache.lookup(methodSig) == null
-                                || !shouldSkipAnalysisBecauseCached(methodSig, userMethodSigs)) {
-                            allCached = false;
-                            break;
-                        }
-                    }
-                }
-
-                if (allCached) {
+                if (isFullyCachedScc(filteredBatch, cache, userMethodSigs)) {
                     if (config.debug) System.out.println("Debug== CACHE-HIT: SCC batch of size " + filteredBatch.size());
                     for (JavaSootMethod method : filteredBatch) {
                         if (!method.isConcrete()) continue;
@@ -384,8 +295,7 @@ public class SideEffectAnalysisRunner {
                         String mSig = method.getSignature().toString();
                         MethodSummary cached = cache.lookup(mSig);
 
-                        if (userMethodSigs.contains(mSig)
-                                && (config.methodFilter == null || method.getName().equals(config.methodFilter))) {
+                        if (shouldIncludeInResults(method, userMethodSigs)) {
                             if (cached != null) summaries.add(cached);
                         }
                         if (config.timing) {
@@ -397,104 +307,19 @@ public class SideEffectAnalysisRunner {
                     continue;
                 }
 
-                // SCC (mutually recursive methods): iterate until summaries stabilize
                 if (config.debug) {
                     List<String> names = filteredBatch.stream()
                             .map(m -> m.getDeclaringClassType().getClassName() + "." + m.getName())
                             .toList();
                     System.out.println("Debug== Analyzing SCC: " + names);
                 }
-                boolean sccTimedOut = false;
-                // this part needs refactoring. Code works but bad code. 
-                if (config.methodTimeoutSecs > 0) {
-                    long sccTimeoutSecs = (long) filteredBatch.size() * config.methodTimeoutSecs;
-                    ExecutorService exec = Executors.newSingleThreadExecutor();
-                    final List<JavaSootMethod> batchFinal = filteredBatch;
-                    final List<DebugHtmlWriter.SourceFile> srcFinal = sourceContents;
-                    Future<?> future = exec.submit(() -> {
-                        boolean anyChanged;
-                        int iter = 0;
-                        do {
-                            anyChanged = false;
-                            iter++;
-                            for (JavaSootMethod method : batchFinal) {
-                                if (!method.isConcrete()) continue;
-                                MethodSummary oldSummary = cache.lookup(
-                                        method.getSignature().toString());
-                                AnalysisResult analysisResult =
-                                        analyzeMethod(method, srcFinal, cache, dependencyGraph);
-                                if (analysisResult != null) {
-                                    storeSummary(method, analysisResult.summary(), cache);
-                                    MethodSummary effectiveSummary =
-                                            cache.lookup(method.getSignature().toString());
-                                    finalizeDebugWriter(analysisResult.debugWriter(), effectiveSummary);
-                                    if (oldSummary == null
-                                            || effectiveSummary == null
-                                            || oldSummary.getResult() != effectiveSummary.getResult()
-                                            || !oldSummary.getReasons().equals(effectiveSummary.getReasons())) {
-                                        anyChanged = true;
-                                    }
-                                }
-                            }
-                        } while (anyChanged);
-                        if (config.debug) System.out.println("Debug== SCC stabilized after " + iter + " iterations");
-                    });
-                    try {
-                        future.get(sccTimeoutSecs, TimeUnit.SECONDS);
-                    } catch (TimeoutException e) {
-                        future.cancel(true);
-                        sccTimedOut = true;
-                        System.err.println("\nTIMEOUT: SCC batch analysis exceeded " + sccTimeoutSecs + "s");
-                        if (config.timing) {
-                            for (JavaSootMethod method : filteredBatch) {
-                                if (!method.isConcrete()) continue;
-                                timer.addMethodTiming(new TimingRecorder.MethodTiming(
-                                        method.getSignature().toString(), "TIMEOUT",
-                                        "method analysis timed out", 0, 0, 0, 0, 0));
-                            }
-                        }
-                    } catch (InterruptedException | ExecutionException e) {
-                        // fall through, collect what's in the cache
-                    } finally {
-                        exec.shutdownNow();
-                    }
-                } else {
-                    boolean anyChanged;
-                    int iter = 0;
-                    do {
-                        anyChanged = false;
-                        iter++;
-                        for (JavaSootMethod method : filteredBatch) {
-                            if (!method.isConcrete()) continue;
-                            MethodSummary oldSummary = cache.lookup(
-                                    method.getSignature().toString());
-                            AnalysisResult analysisResult =
-                                    analyzeMethod(method, sourceContents, cache, dependencyGraph);
-                            if (analysisResult != null) {
-                                storeSummary(method, analysisResult.summary(), cache);
-                                MethodSummary effectiveSummary =
-                                        cache.lookup(method.getSignature().toString());
-                                finalizeDebugWriter(analysisResult.debugWriter(), effectiveSummary);
-                                if (oldSummary == null
-                                        || effectiveSummary == null
-                                        || oldSummary.getResult() != effectiveSummary.getResult()
-                                        || !oldSummary.getReasons().equals(effectiveSummary.getReasons())) {
-                                    anyChanged = true;
-                                }
-                            }
-                        }
-                    } while (anyChanged);
-                    if (config.debug) System.out.println("Debug== SCC stabilized after " + iter + " iterations");
-                }
-                // Collect final summaries for the SCC methods (skip if whole SCC timed out)
+                boolean sccTimedOut = analyzeScc(filteredBatch, sourceContents, cache, dependencyGraph);
                 if (!sccTimedOut) {
                     for (JavaSootMethod method : filteredBatch) {
                         if (!method.isConcrete()) continue;
                         methodsDone++;
-                        String mSig = method.getSignature().toString();
-                        if (!userMethodSigs.contains(mSig)) continue;
-                        if (config.methodFilter != null && !method.getName().equals(config.methodFilter)) continue;
-                        MethodSummary summary = cache.lookup(mSig);
+                        if (!shouldIncludeInResults(method, userMethodSigs)) continue;
+                        MethodSummary summary = cache.lookup(method.getSignature().toString());
                         if (summary != null) {
                             summaries.add(summary);
                         }
@@ -521,6 +346,187 @@ public class SideEffectAnalysisRunner {
 
         // Print results
         ResultPrinter.print(summaries);
+    }
+
+    private static Set<String> buildUserMethodSignatures(Collection<JavaSootClass> classes) {
+        Set<String> userMethodSigs = new HashSet<>();
+        for (JavaSootClass cls : classes) {
+            for (JavaSootMethod method : cls.getMethods()) {
+                userMethodSigs.add(method.getSignature().toString());
+            }
+        }
+        return userMethodSigs;
+    }
+
+    private Set<String> computeReachableMethods(List<List<JavaSootMethod>> batches,
+                                                Map<String, Set<String>> dependencyGraph) {
+        if (config.methodFilter == null) return null;
+
+        Set<String> startMethods = new HashSet<>();
+        for (List<JavaSootMethod> batch : batches) {
+            for (JavaSootMethod method : batch) {
+                if (method.getName().equals(config.methodFilter)) {
+                    startMethods.add(method.getSignature().toString());
+                }
+            }
+        }
+
+        Set<String> reachable = new HashSet<>();
+        Deque<String> work = new ArrayDeque<>(startMethods);
+        while (!work.isEmpty()) {
+            String sig = work.pop();
+            if (!reachable.add(sig)) continue;
+            for (String callee : dependencyGraph.getOrDefault(sig, Set.of())) {
+                if (!reachable.contains(callee)) {
+                    work.add(callee);
+                }
+            }
+        }
+        return reachable;
+    }
+
+    private static List<JavaSootMethod> filterBatch(List<JavaSootMethod> batch, Set<String> reachable) {
+        if (reachable == null) return batch;
+        return batch.stream()
+                .filter(m -> reachable.contains(m.getSignature().toString()))
+                .toList();
+    }
+
+    private static int countConcreteMethods(List<List<JavaSootMethod>> batches, Set<String> reachable) {
+        int totalMethods = 0;
+        for (List<JavaSootMethod> batch : batches) {
+            for (JavaSootMethod method : filterBatch(batch, reachable)) {
+                if (method.isConcrete()) {
+                    totalMethods++;
+                }
+            }
+        }
+        return totalMethods;
+    }
+
+    private boolean shouldIncludeInResults(JavaSootMethod method, Set<String> userMethodSigs) {
+        String methodSig = method.getSignature().toString();
+        return userMethodSigs.contains(methodSig)
+                && (config.methodFilter == null || method.getName().equals(config.methodFilter));
+    }
+
+    private boolean isFullyCachedScc(List<JavaSootMethod> batch,
+                                     SummaryCache cache,
+                                     Set<String> userMethodSigs) {
+        for (JavaSootMethod method : batch) {
+            if (!method.isConcrete()) continue;
+            String methodSig = method.getSignature().toString();
+            if (cache.lookup(methodSig) == null
+                    || !shouldSkipAnalysisBecauseCached(methodSig, userMethodSigs)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private AnalysisResult analyzeMethodWithOptionalTimeout(JavaSootMethod method,
+                                                            List<DebugHtmlWriter.SourceFile> sourceContents,
+                                                            SummaryCache cache,
+                                                            Map<String, Set<String>> dependencyGraph) {
+        if (config.methodTimeoutSecs <= 0) {
+            return analyzeMethod(method, sourceContents, cache, dependencyGraph);
+        }
+
+        ExecutorService exec = Executors.newSingleThreadExecutor();
+        try {
+            Future<AnalysisResult> future = exec.submit(
+                    () -> analyzeMethod(method, sourceContents, cache, dependencyGraph));
+            return future.get(config.methodTimeoutSecs, TimeUnit.SECONDS);
+        } catch (TimeoutException e) {
+            recordMethodTimeout(method.getSignature().toString(), config.methodTimeoutSecs);
+            return null;
+        } catch (InterruptedException | ExecutionException e) {
+            return null;
+        } finally {
+            exec.shutdownNow();
+        }
+    }
+
+    private void recordMethodTimeout(String sig, long timeoutSecs) {
+        System.err.println("\nTIMEOUT: method analysis exceeded " + timeoutSecs + "s for " + sig);
+        if (config.timing) {
+            timer.addMethodTiming(new TimingRecorder.MethodTiming(
+                    sig, "TIMEOUT", "method analysis timed out", 0, 0, 0, 0, 0));
+        }
+    }
+
+    private MethodSummary storeAndFinalize(JavaSootMethod method,
+                                           AnalysisResult analysisResult,
+                                           SummaryCache cache) {
+        storeSummary(method, analysisResult.summary(), cache);
+        MethodSummary effectiveSummary = cache.lookup(method.getSignature().toString());
+        finalizeDebugWriter(analysisResult.debugWriter(), effectiveSummary);
+        return effectiveSummary;
+    }
+
+    private boolean analyzeScc(List<JavaSootMethod> batch,
+                               List<DebugHtmlWriter.SourceFile> sourceContents,
+                               SummaryCache cache,
+                               Map<String, Set<String>> dependencyGraph) {
+        if (config.methodTimeoutSecs <= 0) {
+            iterateUntilStable(batch, sourceContents, cache, dependencyGraph);
+            return false;
+        }
+
+        long sccTimeoutSecs = (long) batch.size() * config.methodTimeoutSecs;
+        ExecutorService exec = Executors.newSingleThreadExecutor();
+        try {
+            Future<?> future = exec.submit(
+                    () -> iterateUntilStable(batch, sourceContents, cache, dependencyGraph));
+            future.get(sccTimeoutSecs, TimeUnit.SECONDS);
+            return false;
+        } catch (TimeoutException e) {
+            System.err.println("\nTIMEOUT: SCC batch analysis exceeded " + sccTimeoutSecs + "s");
+            if (config.timing) {
+                for (JavaSootMethod method : batch) {
+                    if (!method.isConcrete()) continue;
+                    timer.addMethodTiming(new TimingRecorder.MethodTiming(
+                            method.getSignature().toString(), "TIMEOUT",
+                            "method analysis timed out", 0, 0, 0, 0, 0));
+                }
+            }
+            return true;
+        } catch (InterruptedException | ExecutionException e) {
+            return false;
+        } finally {
+            exec.shutdownNow();
+        }
+    }
+
+    private void iterateUntilStable(List<JavaSootMethod> batch,
+                                    List<DebugHtmlWriter.SourceFile> sourceContents,
+                                    SummaryCache cache,
+                                    Map<String, Set<String>> dependencyGraph) {
+        boolean anyChanged;
+        int iter = 0;
+        do {
+            anyChanged = false;
+            iter++;
+            for (JavaSootMethod method : batch) {
+                if (!method.isConcrete()) continue;
+                MethodSummary oldSummary = cache.lookup(method.getSignature().toString());
+                AnalysisResult analysisResult =
+                        analyzeMethod(method, sourceContents, cache, dependencyGraph);
+                if (analysisResult == null) continue;
+
+                MethodSummary effectiveSummary = storeAndFinalize(method, analysisResult, cache);
+                if (summaryChanged(oldSummary, effectiveSummary)) {
+                    anyChanged = true;
+                }
+            }
+        } while (anyChanged);
+        if (config.debug) System.out.println("Debug== SCC stabilized after " + iter + " iterations");
+    }
+
+    private static boolean summaryChanged(MethodSummary oldSummary, MethodSummary newSummary) {
+        if (oldSummary == null || newSummary == null) return true;
+        return oldSummary.getResult() != newSummary.getResult()
+                || !oldSummary.getReasons().equals(newSummary.getReasons());
     }
 
     /** Print an in-place progress bar to stderr: [####----] done/total methods */
@@ -597,11 +603,6 @@ public class SideEffectAnalysisRunner {
             }
         }
         return reverse;
-    }
-
-    /** Persist only when we are explicitly building the JDK/JRT cache. */
-    private boolean shouldPersistLibrarySummary(JavaSootMethod method) {
-        return classDir == null && isLibrarySignature(method.getSignature().toString());
     }
 
     /** Persist only when we are explicitly building the JDK/JRT cache. */
