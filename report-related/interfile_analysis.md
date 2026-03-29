@@ -35,21 +35,21 @@ This is what happens during **JDK analysis**. For example, when analyzing `HashS
 
 1. **HashSet's classes loaded** — The runner loads `HashSet` (and its inner classes) from the JRT filesystem as the initial class set.
 
-2. **BFS class discovery** — `CallGraphBuilder.computeBottomUpOrder()` performs a BFS from the initial classes. When it encounters `HashSet.size()` calling `this.map.size()` (which resolves to `HashMap.size()`), it discovers `HashMap` as a reachable class and adds it to the discovered set. The BFS continues transitively from `HashMap`'s methods, discovering further reachable classes, bounded by 200 classes and forbidden package prefixes.
+2. **Method-based BFS discovery** — `CallGraphBuilder.computeBottomUpOrder()` performs a BFS from the initial concrete methods. When it encounters `HashSet.size()` calling `this.map.size()` (which resolves to `HashMap.size()`), it discovers `HashMap.size()` as a reachable uncached method and adds that method to the worklist. The BFS continues transitively from newly reached uncached methods, bounded by 200 methods and forbidden package prefixes.
 
-3. **Complete call graph built** — After BFS, the call graph includes both `HashSet` and `HashMap` (and other discovered classes). `HashMap.size()` appears as a callee of `HashSet.size()` in the graph.
+3. **Complete call graph built** — After BFS, the call graph includes `HashSet.size()` and the explicitly reachable uncached JDK methods it depends on. `HashMap.size()` appears as a callee of `HashSet.size()` in the graph.
 
-4. **Library cache pre-population** — Before analysis begins, cached summaries from `jdk-cache/` are loaded into the `SummaryCache`. If `HashMap.size()` was analyzed in a prior run, its summary is immediately available.
+4. **Library cache pre-population** — Before analysis begins, only the cached summaries reachable from the current call graph are loaded into the `SummaryCache`. If `HashMap.size()` was analyzed in a prior run, its summary is immediately available.
 
 5. **Bottom-up analysis** — Tarjan's SCC produces a bottom-up order where `HashMap.size()` is analyzed before `HashSet.size()`. When `HashSet.size()` is analyzed, `HashMap.size()`'s summary is already in the cache (Tier 2 hit) and is instantiated via `applySummaryToState()`.
 
 6. **Library cache persistence** — After analyzing each library method, its summary is written to `jdk-cache/` for reuse in future runs.
 
-7. **Conservative fallback** — If a method is not discovered by BFS (e.g., in a forbidden package, beyond the 200-class cap, or native), the conservative fallback marks all arguments as globally escaped — the sound safe default.
+7. **Conservative fallback** — If a method is not discovered by BFS (e.g., in a forbidden package, beyond the 200-method cap, or native), the conservative fallback marks all arguments as globally escaped — the sound safe default.
 
 ## How callee bodies are obtained during BFS discovery
 
-During BFS class discovery, the `CallGraphBuilder` resolves callee classes through SootUp's `JavaView`:
+During method-based BFS discovery, the `CallGraphBuilder` resolves callee methods through SootUp's `JavaView`:
 
 1. **Method signature from Jimple IR** — Each invoke statement carries the full `MethodSignature` (class type + name + parameter types + return type) encoded in the bytecode.
 2. **Class resolved from JavaView** — `view.getClass(classType)` lazily loads the class. In JRT mode, this loads from the JDK module image (`jrt:/`).
@@ -62,7 +62,7 @@ The BFS uses a separate JRT `JavaView` to resolve JDK classes. Every class in ev
 
 **Limits on BFS scope:**
 - **Forbidden packages**: `sun.*`, `com.sun.*`, `jdk.internal.*`, `java.awt.*`, `javax.swing.*`, `java.nio.*`, `java.security.*`, `javax.crypto.*`, `java.lang.invoke.*`, `java.lang.reflect.*`, `java.util.concurrent.*` — implementation internals and frameworks with limited analysis value
-- **Class cap**: Maximum 200 discovered classes to prevent explosion
+- **Method cap**: Maximum 200 discovered uncached library methods to prevent explosion
 - **SafeMethods/LibrarySummaryCache**: Methods already known to be safe or already cached are not traversed further
 - **Native/abstract methods**: No bytecode body, cannot be analyzed
 

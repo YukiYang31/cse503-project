@@ -84,14 +84,14 @@ ResultPrinter / GraphPrinter / DebugHtmlWriter
 
 ### Three-Tier Method Resolution (in TransferFunctions)
 1. `SafeMethods` whitelist — known side-effect-free methods
-2. `SummaryCache` — previously computed summaries (dual-keyed: full sig + sub-sig for virtual dispatch), pre-populated from disk-backed library cache
+2. `SummaryCache` — previously computed summaries keyed by exact full signature; reachable cached library summaries are preloaded for the current run, and exact library summaries can also be fetched lazily from disk
 3. Conservative fallback — assume side-effecting when analysis is impossible
 
 ### Key Design Points
 - **Inter-file override analysis**: Detects override relationships across input files; propagates verdicts so overriding methods that add side-effects mark the base method as side-effecting.
 - **Node merging** (`--merge`): Madhavan et al. optimization — enforces ≤1 outgoing edge per `(node, field, edgeType)` triple, bounding graph size.
 - **Graph invariant validation**: Checked before side-effect determination to catch analysis bugs early.
-- **Dual-key SummaryCache**: Needed because virtual/interface call sites resolve by sub-signature, not always by the full implementation signature.
+- **Exact full-signature SummaryCache**: Virtual/interface dispatch is handled by call-graph ordering plus base-summary propagation, not by sub-signature lookup at call sites.
 
 ## Key Source Files
 
@@ -104,7 +104,7 @@ ResultPrinter / GraphPrinter / DebugHtmlWriter
 | `SideEffectFlowAnalysis.java` | SootUp forward dataflow framework integration |
 | `GraphInstantiator.java` | Callee summary instantiation (Section 5.3 of Salcianu & Rinard) |
 | `SideEffectChecker.java` | Final verdict computation from exit graph |
-| `CallGraphBuilder.java` | Call graph with BFS JDK discovery + Tarjan SCC for bottom-up order |
+| `CallGraphBuilder.java` | Call graph with method-based uncached-JDK BFS + Tarjan SCC for bottom-up order |
 | `SafeMethods.java` | Whitelist of known side-effect-free library methods |
 | `NodeMerger.java` | Madhavan et al. graph bounding optimization |
 | `LibrarySummaryCache.java` | Disk-backed cache for library method summaries (`jdk-cache/`) |

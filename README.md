@@ -110,9 +110,7 @@ OverrideBase.caller(OverrideBase,Object)   : SIDE_EFFECTING  (mutates OverrideBa
 
 3. **Base method propagation** — Immediately after a base method is analyzed, the tool checks whether any of its overrides is already cached as `SIDE_EFFECTING`. If so, the base method's verdict is upgraded to `SIDE_EFFECTING` before it is stored in the cache. This means `Base.m()` correctly reflects the worst-case behavior of all its concrete implementations, not just its own body. Because the call graph ordering guarantees overrides are processed first, the override's cached result is always available at this point.
 
-4. **Union of summaries at call sites** — At any virtual dispatch site (e.g. `obj.m()` where `obj` is declared as type `Base`), the tool applies the side-effect summaries of **all** known implementations — `Base.m()` and `Derived.m()` — to the points-to graph. The result is the conservative union:
-   - `SIDE_EFFECT_FREE` only if **all** override implementations are side-effect-free
-   - `SIDE_EFFECTING` if **any** implementation mutates pre-existing state
+4. **Exact summary lookup at call sites** — At an invoke site, the transfer function performs exact full-signature lookup only. For virtual dispatch, the conservative union happens earlier through call-graph ordering plus base-summary propagation, so declared/base signatures such as `Base.m()` are expected to already hold the union of their reachable overriding implementations in the cache.
 
 5. **Override dependency DOT file** (produced when `--show-graph` is used) — `dot-graph/override-dependency.dot` shows:
    - **Blue arrows** — call edges between analyzed methods
@@ -338,7 +336,7 @@ The script saves per-file results to `experiment/tool_results/` as it goes. On r
 ## Known Limitations
 
 - **JDK analysis uses runtime bytecode**: When analyzing JDK source files, classes are loaded from the JDK runtime image rather than compiling from source. The analysis results reflect the compiled bytecode, which may differ slightly from source-level expectations (e.g., compiler-generated bridge methods, synthetic fields).
-- **BFS class discovery has bounded scope**: The call graph builder discovers JDK-reachable methods via BFS from user code, but limits discovery to 200 classes and excludes forbidden packages (`sun.*`, `jdk.internal.*`, `java.awt.*`, etc.). Methods in excluded packages or beyond the discovery cap fall back to conservative.
+- **Method-based JDK BFS has bounded scope**: The call graph builder discovers uncached JDK-reachable methods via BFS from user code, but limits discovery to 200 library methods and excludes forbidden packages (`sun.*`, `jdk.internal.*`, `java.awt.*`, etc.). Methods in excluded packages, beyond the discovery cap, or already covered by `SafeMethods` / `jdk-cache` fall back to cached or conservative handling.
 - **Inter-file analysis only covers co-compiled files**: When analyzing user code, the `JavaView` is backed only by the compiled output of the files explicitly passed as arguments. If file1 calls file2 but only file1 is given as input, file2 is never compiled or loaded — the call falls back to conservative (all arguments globally escaped). To get proper inter-procedural analysis across user-defined files, all files must be passed together as arguments.
 - **Mutually recursive methods (SCCs) are iterated batch-wise until summaries stop changing**: Methods in an SCC are re-analyzed until the cached summaries in that batch stabilize. When `--method-timeout` is set, the tool applies a timeout budget to the whole SCC batch (`batch size × method timeout`) as a safety net.
 - **No exception-path precision**: Exception control flow is handled by SootUp's CFG but not modeled with special precision.

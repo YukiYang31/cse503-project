@@ -46,19 +46,19 @@ This phase has two jobs:
 1. discover reachable methods and classes, including some JDK/library code
 2. compute an analysis order where callees appear before callers when possible
 
-### 3.1 BFS Class Discovery
+### 3.1 Method-Based BFS Discovery
 
-Starting from the user classes, the builder scans method bodies for invocations.
-For each call, it tries to resolve targets using SootUp.
+Starting from the concrete user methods, the builder scans method bodies for invocations.
+For each call, it tries to resolve exact and bounded virtual/interface targets using SootUp.
 
 Some calls are intentionally not expanded:
 
 - methods in `SafeMethods`
 - methods already present in the disk-backed library cache
-- classes in forbidden package prefixes
+- methods in forbidden package prefixes
 
 For virtual and interface calls, it also performs bounded target resolution so likely runtime implementations can be discovered.
-This is especially important for library code and dynamic dispatch.
+Only the explicitly reached uncached target methods are enqueued, rather than sweeping every method in the declaring class.
 
 ### 3.2 Override Graph
 

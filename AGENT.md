@@ -148,7 +148,7 @@ This terminology was explicitly clarified and updated in the code and docs.
 
 - central orchestrator
 - creates the SootUp view
-- loads disk-backed library summaries
+- loads the on-disk library cache index and lazily fetches reachable summaries
 - runs call-graph construction
 - drives bottom-up analysis
 - stores summaries
@@ -156,7 +156,7 @@ This terminology was explicitly clarified and updated in the code and docs.
 
 ### `CallGraphBuilder.java`
 
-- performs bounded BFS discovery into reachable library/JDK classes
+- performs bounded method-based BFS discovery into reachable uncached library/JDK methods
 - builds the raw call graph
 - builds the override graph
 - merges them into the dependency graph
@@ -227,7 +227,7 @@ Also supports:
 ### `LibrarySummaryCache.java`
 
 - disk-backed cache under `jdk-cache/`
-- loaded at startup
+- indexes cached summaries at startup and loads summary bodies lazily
 - written only when persistence is explicitly allowed
 
 ## Current Dispatch / Summary Design
@@ -354,7 +354,7 @@ This is enforced in `SideEffectAnalysisRunner.shouldPersistLibrarySummary(...)`.
 
 When analyzing ordinary user code:
 
-- the existing JDK cache is loaded and reused
+- the existing JDK cache index is loaded and reused
 - in-memory cache entries may be refined for the current run
 - but those refinements are **not** written back to disk
 

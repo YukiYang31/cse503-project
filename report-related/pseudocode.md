@@ -6,7 +6,7 @@ The analysis determines whether a Java method is **side-effect-free** — i.e., 
 
 ## 1. Overall Analysis Pipeline
 
-The top-level algorithm compiles source to Jimple IR, discovers reachable JDK methods via BFS, builds a raw call graph and override graph, merges them into a dependency graph, computes a bottom-up method ordering over that dependency graph, pre-populates the summary cache from a disk-backed library cache, analyzes each method intraprocedurally while composing callee summaries interprocedurally, and issues a verdict per method.
+The top-level algorithm compiles source to Jimple IR, discovers reachable uncached JDK methods via method-based BFS, builds a raw call graph and override graph, merges them into a dependency graph, computes a bottom-up method ordering over that dependency graph, preloads only reachable cached library summaries, analyzes each method intraprocedurally while composing callee summaries interprocedurally, and issues a verdict per method.
 
 ```
 Algorithm: SideEffectAnalysis(sourceFiles)
@@ -17,10 +17,10 @@ Output: For each method m, a verdict SIDE_EFFECT_FREE or SIDE_EFFECTING(reason)
 1.  Compile sourceFiles to bytecode; load into Jimple IR via SootUp
 2.  view    <- JavaView over the class directory (or JDK runtime image)
 3.  classes <- all loaded classes
-4.  Load disk-backed library cache from jdk-cache/
-5.  cache   <- empty summary cache
-6.  cache.putAll(library cache entries)               // pre-populate from prior runs
-7.  batches <- ComputeBottomUpOrder(classes, view)    // Algorithm 2 (with BFS JDK discovery)
+4.  Index disk-backed library cache from jdk-cache/
+5.  batches <- ComputeBottomUpOrder(classes, view)    // Algorithm 2 (with method-based JDK BFS)
+6.  cache   <- empty summary cache
+7.  preload only reachable cached library summaries into cache
 
 8.  for each batch in batches do                      // leaves-first order
 9.      if |batch| = 1 then
@@ -57,26 +57,30 @@ Input:  Set of initial (user) classes, JavaView for resolving JDK classes
 Output: List of batches (each batch is a list of methods),
         ordered so callees appear before callers
 
-1.  // Phase A: BFS class discovery (expand to JDK-reachable classes)
-2.  discovered <- initialClasses
-3.  pending    <- queue(initialClasses)
-4.  while pending is not empty and |discovered| < MAX_DISCOVERED_CLASSES do
-5.      cls <- pending.dequeue()
-6.      for each method m in cls.methods do
-7.          if not m.hasBody() then continue
-8.          for each invoke statement s in body(m) do
-9.              target <- resolveDirectTarget(s, view)   // declared-class-only, no CHA
-10.             if target is null then continue
-11.             if SafeMethods.isSafe(target) then continue
-12.             if LibrarySummaryCache.contains(target) then continue
-13.             if isForbiddenPackage(target) then continue
-14.             targetClass <- target.declaringClass
-15.             if targetClass not in discovered then
-16.                 discovered.add(targetClass)
-17.                 pending.enqueue(targetClass)
+1.  // Phase A: Method-based BFS discovery of uncached library methods
+2.  discoveredClasses <- initialClasses
+3.  pendingMethods    <- all concrete methods from initialClasses
+4.  reachableLibraryMethods <- empty set
+5.  reachableCachedLibraryMethods <- empty set
+6.  while pendingMethods is not empty and |reachableLibraryMethods| < MAX_DISCOVERED_LIBRARY_METHODS do
+7.      m <- pendingMethods.dequeue()
+8.      if not m.hasBody() then continue
+9.      for each invoke statement s in body(m) do
+10.         if SafeMethods.isSafe(s.callee) then continue
+11.         if LibrarySummaryCache.contains(s.callee) then
+12.             reachableCachedLibraryMethods.add(s.callee)
+13.             continue
+14.         if isForbiddenPackage(s.callee) then continue
+15.         targets <- resolveDirectTarget(s) plus bounded virtual/interface targets
+16.         for each target in targets do
+17.             if target is safe, cached, or forbidden then continue
+18.             reachableLibraryMethods.add(target)
+19.             discoveredClasses.add(target.declaringClass)
+20.             enqueue target method if unseen
 
-18. // Phase B: Build raw call graph over all discovered classes
-19. methods <- all concrete methods from discovered classes
+21. // Phase B: Build raw call graph over user methods plus reachable uncached library methods
+22. methods <- all concrete methods in discoveredClasses filtered by:
+23.           user methods OR reachableLibraryMethods
 20. for each method m in methods do
 21.     for each invoke statement s in body(m) do
 22.         target <- resolve(s)
@@ -460,4 +464,4 @@ return SIDE_EFFECT_FREE
 | **mu** | Node mapping from callee namespace to caller namespace |
 | **Set A** | Prestate nodes: objects existing before method entry |
 | **Set B** | Globally escaped closure: objects reachable from global state |
-| **view** | JavaView handle to the classpath or JDK runtime, used by BFS class discovery |
+| **view** | JavaView handle to the classpath or JDK runtime, used by method-based BFS discovery |
