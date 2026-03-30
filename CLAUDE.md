@@ -104,7 +104,7 @@ ResultPrinter / GraphPrinter / DebugHtmlWriter
 | `SideEffectFlowAnalysis.java` | SootUp forward dataflow framework integration |
 | `GraphInstantiator.java` | Callee summary instantiation (Section 5.3 of Salcianu & Rinard) |
 | `SideEffectChecker.java` | Final verdict computation from exit graph |
-| `CallGraphBuilder.java` | Call graph with method-based uncached-JDK BFS + Tarjan SCC for bottom-up order |
+| `CallGraphBuilder.java` | Call graph with method-based uncached-JDK BFS + Tarjan SCC for bottom-up order; BFS caches per-method body traversal results (`BfsBodyCache`) so each body is parsed once; single JRT view shared between BFS and call graph construction |
 | `SafeMethods.java` | Whitelist of known side-effect-free library methods |
 | `NodeMerger.java` | Madhavan et al. graph bounding optimization |
 | `LibrarySummaryCache.java` | Disk-backed cache for library method summaries (`jdk-cache/`) |

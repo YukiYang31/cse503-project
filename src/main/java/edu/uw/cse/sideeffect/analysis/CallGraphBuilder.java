@@ -42,6 +42,13 @@ import sootup.java.core.views.JavaView;
  * Computes bottom-up analysis order from that merged dependency graph.
  * For non-recursive programs, this is a reverse topological order.
  * For recursive programs (SCCs), methods in the same SCC are grouped into batches.
+ *
+ * <p>During BFS, each processed method body is traversed once and its declared callees
+ * and resolved concrete targets are stored in a {@link BfsBodyCache}. The subsequent
+ * call graph construction pass reuses this cache instead of re-reading method bodies,
+ * so each body is parsed at most once. A single {@code JrtFileSystemAnalysisInputLocation}
+ * view is created in {@code computeBottomUpOrder} and shared with
+ * {@code buildCallGraphAndOrder} to avoid redundant JRT image initialisation.
  */
 public class CallGraphBuilder {
 
@@ -84,8 +91,28 @@ public class CallGraphBuilder {
     ) {}
 
     /**
+     * Body traversal results cached during BFS so that buildCallGraphAndOrder
+     * can skip re-reading the same method bodies.
+     *
+     * declaredCallees  — raw declared callee MethodSignatures (may include abstract/interface
+     *                    methods); used to populate declaredCallGraph for override lookup.
+     * resolvedTargetSigs — concrete target signatures from CHA resolution, plus the declared
+     *                    callee sig itself when CHA returns empty (mirrors the fallback in
+     *                    buildCallGraphAndOrder); filtered against concreteMethodBySig at use time.
+     */
+    private record BfsBodyCache(
+            Set<MethodSignature> declaredCallees,
+            Set<String> resolvedTargetSigs
+    ) {}
+
+    /**
      * Compute the bottom-up analysis order for all concrete methods in the given classes,
      * plus all transitively reachable uncached JDK/library methods discoverable via method-based BFS.
+     *
+     * <p>Each dequeued method's body is traversed once during BFS and its results cached in a
+     * {@link BfsBodyCache}. The cache and the BFS {@code JrtFileSystemAnalysisInputLocation} view
+     * are forwarded to {@link #buildCallGraphAndOrder} so that neither body re-traversal nor a
+     * second JRT view construction is needed.
      */
     public static Result computeBottomUpOrder(
             Collection<JavaSootClass> initialClasses, JavaView view, AnalysisConfig config) {
@@ -99,6 +126,7 @@ public class CallGraphBuilder {
         Set<String> reachableLibraryMethods = new HashSet<>();
         Set<String> reachableCachedLibraryMethods = new HashSet<>();
         Map<String, Set<String>> externalEdges = new HashMap<>();
+        Map<String, BfsBodyCache> bfsBodyCache = new HashMap<>();
         int jdkMethodsDiscovered = 0;
         long directStartNs = config.timing ? System.nanoTime() : 0L;
 
@@ -114,11 +142,15 @@ public class CallGraphBuilder {
             }
 
             String callerSig = method.getSignature().toString();
+            Set<MethodSignature> cachedDeclared = new LinkedHashSet<>();
+            Set<String> cachedResolved = new LinkedHashSet<>();
+
             for (Stmt stmt : body.getStmtGraph().getStmts()) {
                 AbstractInvokeExpr invokeExpr = extractInvokeExpr(stmt);
                 if (invokeExpr == null) continue;
 
                 MethodSignature calleeSig = invokeExpr.getMethodSignature();
+                cachedDeclared.add(calleeSig);
 
                 if (SafeMethods.isSafe(calleeSig)) {
                     addExternalEdge(externalEdges, callerSig, calleeSig, "safe");
@@ -139,6 +171,11 @@ public class CallGraphBuilder {
 
                 Set<JavaSootMethod> targets = resolveTargetsAcrossViews(invokeExpr, calleeSig, view, jrtView);
 
+                if (targets.isEmpty()) {
+                    // Mirrors the fallback in buildCallGraphAndOrder: if CHA finds nothing,
+                    // record the declared sig; concreteMethodBySig.containsKey filters it at use time.
+                    cachedResolved.add(calleeSig.toString());
+                }
                 for (JavaSootMethod target : targets) {
                     if (SafeMethods.isSafe(target.getSignature()) || isForbiddenPackage(target)) {
                         continue;
@@ -149,6 +186,8 @@ public class CallGraphBuilder {
                         reachableCachedLibraryMethods.add(targetSig);
                         continue;
                     }
+
+                    cachedResolved.add(targetSig);
 
                     JavaSootClass targetCls = resolveClass(target.getDeclaringClassType(), view, jrtView);
                     if (targetCls != null) {
@@ -167,6 +206,7 @@ public class CallGraphBuilder {
                 }
                 if (reachableLibraryMethods.size() >= MAX_DISCOVERED_LIBRARY_METHODS) break;
             }
+            bfsBodyCache.put(callerSig, new BfsBodyCache(cachedDeclared, cachedResolved));
         }
 
         if (config.debug && jdkMethodsDiscovered > 0) {
@@ -178,7 +218,8 @@ public class CallGraphBuilder {
 
         return buildCallGraphAndOrder(
                 discoveredClasses, initialClassNames, reachableLibraryMethods,
-                reachableCachedLibraryMethods, view, config, externalEdges, bfsNs);
+                reachableCachedLibraryMethods, view, config, externalEdges, bfsNs,
+                jrtView, bfsBodyCache);
     }
 
     /** Backward-compatible overload: no view, no BFS — only user classes. */
@@ -190,10 +231,20 @@ public class CallGraphBuilder {
         }
         return buildCallGraphAndOrder(
                 classes, initialClassNames, Collections.emptySet(), Collections.emptySet(),
-                null, config, Collections.emptyMap(), 0L);
+                null, config, Collections.emptyMap(), 0L, null, Collections.emptyMap());
     }
 
-    /** Core call graph construction + Tarjan SCC ordering. */
+    /**
+     * Core call graph construction + Tarjan SCC ordering.
+     *
+     * @param jrtView        the JRT view created during BFS; reused here to avoid a second
+     *                       {@code JrtFileSystemAnalysisInputLocation} initialisation. {@code null}
+     *                       when called from the no-BFS backward-compatible overload.
+     * @param bfsBodyCache   per-method body traversal results collected during BFS. Methods present
+     *                       in this map skip body re-traversal; methods absent (e.g. library methods
+     *                       enqueued but never dequeued due to the 200-method cap) fall back to
+     *                       on-demand body traversal.
+     */
     private static Result buildCallGraphAndOrder(
             Collection<? extends JavaSootClass> seedClasses,
             Set<String> initialClassNames,
@@ -202,13 +253,12 @@ public class CallGraphBuilder {
             JavaView view,
             AnalysisConfig config,
             Map<String, Set<String>> externalEdges,
-            long preDirectNs) {
+            long preDirectNs,
+            JavaView jrtView,
+            Map<String, BfsBodyCache> bfsBodyCache) {
 
         long directStartNs = config.timing ? System.nanoTime() : 0L;
-        JavaView jrtViewForResolution = view != null
-                ? new JavaView(new JrtFileSystemAnalysisInputLocation())
-                : null;
-        Set<JavaSootClass> allClasses = expandHierarchy(seedClasses, view, jrtViewForResolution);
+        Set<JavaSootClass> allClasses = expandHierarchy(seedClasses, view, jrtView);
 
         Map<String, JavaSootMethod> concreteMethodBySig = new LinkedHashMap<>();
         for (JavaSootClass cls : allClasses) {
@@ -241,34 +291,46 @@ public class CallGraphBuilder {
             Set<String> callees = new LinkedHashSet<>();
             Set<String> declaredCallees = new LinkedHashSet<>();
 
-            try {
-                Body body = method.getBody();
-                for (Stmt stmt : body.getStmtGraph().getStmts()) {
-                    AbstractInvokeExpr invokeExpr = extractInvokeExpr(stmt);
-                    if (invokeExpr == null) continue;
-
-                    MethodSignature calleeMSig = invokeExpr.getMethodSignature();
-                    String calleeFullSig = calleeMSig.toString();
-                    declaredCallees.add(calleeFullSig);
-
-                    Set<String> resolvedTargets =
-                            resolveTargetSignaturesAcrossViews(invokeExpr, calleeMSig, view, jrtViewForResolution);
-
-                    if (resolvedTargets.isEmpty() && concreteMethodBySig.containsKey(calleeFullSig)) {
-                        resolvedTargets.add(calleeFullSig);
+            BfsBodyCache cached = bfsBodyCache.get(callerSig);
+            if (cached != null) {
+                // Body was already traversed during BFS — reuse cached results.
+                for (MethodSignature ms : cached.declaredCallees()) {
+                    declaredCallees.add(ms.toString());
+                }
+                for (String targetSig : cached.resolvedTargetSigs()) {
+                    if (concreteMethodBySig.containsKey(targetSig)) {
+                        callees.add(targetSig);
                     }
+                }
+            } else {
+                // Method was discovered but never dequeued in BFS (e.g. library method added
+                // near the 200-cap); fall back to traversing the body now.
+                try {
+                    Body body = method.getBody();
+                    for (Stmt stmt : body.getStmtGraph().getStmts()) {
+                        AbstractInvokeExpr invokeExpr = extractInvokeExpr(stmt);
+                        if (invokeExpr == null) continue;
 
-                    Set<String> concreteTargets = new LinkedHashSet<>();
-                    for (String targetSig : resolvedTargets) {
-                        if (concreteMethodBySig.containsKey(targetSig)) {
-                            concreteTargets.add(targetSig);
+                        MethodSignature calleeMSig = invokeExpr.getMethodSignature();
+                        String calleeFullSig = calleeMSig.toString();
+                        declaredCallees.add(calleeFullSig);
+
+                        Set<String> resolvedTargets =
+                                resolveTargetSignaturesAcrossViews(invokeExpr, calleeMSig, view, jrtView);
+
+                        if (resolvedTargets.isEmpty() && concreteMethodBySig.containsKey(calleeFullSig)) {
+                            resolvedTargets.add(calleeFullSig);
+                        }
+
+                        for (String targetSig : resolvedTargets) {
+                            if (concreteMethodBySig.containsKey(targetSig)) {
+                                callees.add(targetSig);
+                            }
                         }
                     }
-
-                    callees.addAll(concreteTargets);
+                } catch (Exception e) {
+                    // Skip methods that can't be analyzed
                 }
-            } catch (Exception e) {
-                // Skip methods that can't be analyzed
             }
 
             rawDependencyGraph.put(callerSig, callees);
@@ -279,7 +341,7 @@ public class CallGraphBuilder {
 
         long overrideStartNs = config.timing ? System.nanoTime() : 0L;
         Map<String, Set<String>> overrideGraph =
-                buildOverrideGraph(allClasses, classByName, view, jrtViewForResolution);
+                buildOverrideGraph(allClasses, classByName, view, jrtView);
         long overrideGraphNs = config.timing ? System.nanoTime() - overrideStartNs : 0L;
 
         Map<String, Set<String>> rawCallGraph = new HashMap<>();
