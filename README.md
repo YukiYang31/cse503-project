@@ -56,7 +56,7 @@ Constructors have a special rule: direct field writes to `this` (`this.f = x`) a
 # Debug a specific method
 ./gradlew run --args="MyFile.java --debug --method myMethod"
 
-# Print timing summary and save JSON to timing/
+# Print timing summary and save timestamped JSON to timing/
 ./gradlew run --args="MyFile.java --timing"
 ./gradlew run --args="jdk/src/java.base/share/classes/java/lang/Long.java --timing"
 
@@ -201,80 +201,75 @@ Graphs are rendered in the browser using [viz.js](https://github.com/nicknisi/vi
 
 ### Timing Pipeline
 
-When `--timing` is enabled, timestamps are recorded around each phase of the pipeline.
-The flowchart below shows exactly where each measurement is taken:
+When `--timing` is enabled, the tool records elapsed durations for each phase of the pipeline and saves them to a timestamped JSON file in `timing/` named `timing_yyyy-MM-dd_HHmmss.json`. The JSON payload also includes a top-level `"timestamp"` field formatted as `yyyy-MM-ddTHH:mm:ss`.
+The flowchart below shows exactly where each duration measurement is taken:
 
 ```
-Main.java                              SideEffectAnalysisRunner.java
-─────────                              ─────────────────────────────
+Main.java                                  SideEffectAnalysisRunner.run()
+─────────                                  ──────────────────────────────
 
-timer.startTotal()                     ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐
-    │                                                                        │
-    ▼                                                                        │
-┌──────────────────────────┐                                                 │
-│  JavaCompiler.compile()  │  ◀── ⏱ Compilation (javac)                     │
-│  timer.recordCompilation │                                                 │
-└──────────────────────────┘                                                 │
-    │                                                                        │
-    ▼                                                                        │
-  runner.run() ───────────────▶  run()                                       │
-                                  │                                          │
-                                  ▼                                          │
-                            ┌────────────────────────┐                       │
-                            │  new JavaView(classDir) │                      │
-                            │  view.getClasses()      │  ◀── ⏱ SootUp IR    │  Total
-                            │  timer.recordIrLoading  │       loading        │  wall-
-                            └────────────────────────┘                       │  clock
-                                  │                                          │
-                                  ▼                                          │
-                            ┌────────────────────────┐                       │
-                            │  readSourceFiles()      │  (not timed;         │
-                            │  (debug mode only)      │   negligible)        │
-                            └────────────────────────┘                       │
-                                  │                                          │
-                                  ▼                                          │
-                            ┌─────────────────────────────┐                  │
-                            │  CallGraphBuilder            │                 │
-                            │    .computeBottomUpOrder()   │  ◀── ⏱ Call     │
-                            │  timer.recordCallGraph       │      graph      │
-                            └─────────────────────────────┘                  │
-                                  │                                          │
-                                  ▼                                          │
-                            ┌─ for each method batch ──────────────────┐     │
-                            │                                          │     │
-                            │  ┌────────────────────────────────────┐  │     │
-                            │  │  SideEffectFlowAnalysis(...)      │  │     │
-                            │  │  analysis.getExitGraph()           │  │     │
-                            │  │  dataflowNs = elapsed              │  │     │
-                            │  └────────────────────────────────────┘  │     │
-                            │        │              ◀── ⏱ Dataflow     │     │
-                            │        ▼                  (per-method)   │     │
-                            │  ┌────────────────────────────────────┐  │     │
-                            │  │  SideEffectChecker.check(...)     │  │     │
-                            │  │  sideEffectNs = elapsed                │  │     │
-                            │  └────────────────────────────────────┘  │     │
-                            │        │              ◀── ⏱ Side-effect       │     │
-                            │        ▼                  (per-method)   │     │
-                            │  timer.addMethodTiming(...)              │     │
-                            │  (accumulates into dataflow/side-effect       │     │
-                            │   totals)                                │     │
-                            └──────────────────────────────────────────┘     │
-                                  │                                          │
-                                  ▼                                          │
-                            ┌────────────────────────┐                       │
-                            │  GraphPrinter           │  (not timed;         │
-                            │  ResultPrinter.print()  │   negligible)        │
-                            └────────────────────────┘                       │
-                                  │                                          │
-    ◀──────────────────────── return                                         │
-    │                                                                        │
-timer.endTotal()                   ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘
+timer.startTotal()                         ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐
+    │                                                                       │
+    ├─ if regular source:                                                   │
+    │    JavaCompiler.compile(...)                                          │
+    │    timer.recordCompilation(...)    ◀── ⏱ Compilation                  │
+    │                                                                       │
+    ├─ if JDK source: skip compilation                                      │
+    │                                                                       │
+    ▼                                                                       │
+runner.run() ───────────────────────▶  irStart = System.nanoTime()          │
+                                        │                                   │
+                                        ├─ create JavaView                  │
+                                        │    regular source: classDir       │
+                                        │    JDK source: jrt:/ runtime      │
+                                        │
+                                        ├─ LibrarySummaryCache.loadFromDisk()
+                                        │
+                                        ├─ load/resolve target classes
+                                        │
+                                        └─ timer.recordIrLoading(...) ◀── ⏱ IR loading
+                                            (all of the above is inside IR timing)
+                                        │
+                                        ├─ if --debug: readSourceFiles()
+                                        │              (not separately timed)
+                                        │
+                                        ├─ cgStart = System.nanoTime()
+                                        ├─ CallGraphBuilder.computeBottomUpOrder(...)
+                                        ├─ timer.recordCallGraph(...) ◀── ⏱ Call graph
+                                        └─ timer.recordCallGraphBreakdown(...)
+                                           (direct / override / merge subtimings)
+                                        │
+                                        ├─ preloadReachableLibrarySummaries(...)
+                                        ├─ computeReachableMethods(...)
+                                        ├─ filterBatch(...) / cache checks
+                                        │   (included only in total/overhead)
+                                        │
+                                        ├─ for each analyzed method:
+                                        │    dataflowStart = System.nanoTime()
+                                        │    SideEffectFlowAnalysis(...)
+                                        │    analysis.getExitGraph()
+                                        │    dataflowNs = elapsed        ◀── ⏱ Dataflow
+                                        │
+                                        │    sideEffectStart = System.nanoTime()
+                                        │    SideEffectChecker.check(...)
+                                        │    sideEffectNs = elapsed      ◀── ⏱ Side-effect
+                                        │
+                                        │    timer.addMethodTiming(...)
+                                        │    (cached / timeout entries are recorded
+                                        │     with 0 ms phase times)
+                                        │
+                                        ├─ if --show-graph: GraphPrinter...
+                                        ├─ ResultPrinter.print(...)
+                                        │   (not separately timed)
+                                        │
+    ◀──────────────────────────────── return                                │
+    │                                                                       │
+timer.endTotal()                           ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘
 timer.printReport()
 timer.saveJson()
 ```
 
-The five timed phases (Compilation → IR Loading → Call Graph → Dataflow → Side-effect) account for the vast majority of wall-clock time. Small gaps between phases (source file reading, result printing,
-loop overhead) are not individually timed.
+The five explicit timing buckets are Compilation, IR Loading, Call Graph, Dataflow, and Side-effect. Everything else that happens before `timer.endTotal()` is still included in total wall-clock time, but is reported under `overheadMs` rather than as its own phase. That includes debug source loading, reachable-summary preloading, reachability filtering, cache checks, graph/result printing, and loop/framework overhead.
 
 > **JDK source files**: When analyzing JDK sources (paths matching `jdk/src/<module>/share/classes/...`), the Compilation phase is skipped entirely. Instead, the IR Loading phase uses `JrtFileSystemAnalysisInputLocation` to load pre-compiled classes directly from the running JDK's module image (`jrt:/` filesystem). This avoids the impossible task of compiling JDK internals standalone.
 
@@ -310,7 +305,7 @@ The script saves per-file results to `experiment/tool_results/` as it goes. On r
 
 1. **Extract ground truth** (`extract_annotations.py`): Parses `@Pure`/`@SideEffectFree` annotations from JDK source files, handling inner classes, receiver parameters, generic erasure, and abstract methods. Outputs `experiment/ground_truth.json`.
 
-2. **Run the tool**: Executes the side-effect analysis on each `.java` file one at a time via `./gradlew run --args="<file> --timing --callgraph-timeout 120 --method-timeout 60"`. The call graph phase has a 2-minute timeout; each method has a 1-minute timeout. Timed-out methods appear as `TIMEOUT` entries in the per-file JSON so partial results are always preserved. Tool results (timing JSON with verdicts) are saved to `experiment/tool_results/` for reproducibility.
+2. **Run the tool**: Executes the side-effect analysis on each `.java` file one at a time via `./gradlew run --args="<file> --timing --callgraph-timeout 120 --method-timeout 120"`. The call graph phase has a 2-minute timeout; each method has a 2-minute timeout. Timed-out methods appear as `TIMEOUT` entries in the per-file JSON so partial results are always preserved. Tool results (timing JSON with verdicts) are saved to `experiment/tool_results/` for reproducibility.
 
 3. **Produce CSV**: Each row is one method with columns for JDK annotation, tool verdict, match category, per-method timing, and per-file pipeline timing. Written to `experiment/results.csv` by default; when `--force` is used, written to a timestamped file (e.g. `experiment/results_20260226_143022.csv`) so the existing `results.csv` is not overwritten.
 
