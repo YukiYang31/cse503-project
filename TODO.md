@@ -74,3 +74,5 @@
      - `LibrarySummaryCache.contains(...)`
      - `reachableCachedLibraryMethods`
    - Check that the override graph and the call graph stop for already-cached library summaries in user mode, while still allowing cache updates in JDK-cache-building mode when needed.
+
+2. ./gradlew test is updated to include more test cases. This command is used for agent everytime it modifies the code. An agent cannot return a code edit if it does not pass ./gradlew test. We need to make sure that current ./gradlew test does include full test cases and that all intended behaviors are correct. 
