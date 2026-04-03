@@ -205,66 +205,90 @@ When `--timing` is enabled, the tool records elapsed durations for each phase of
 The flowchart below shows exactly where each duration measurement is taken:
 
 ```
-Main.java                                  SideEffectAnalysisRunner.run()
-─────────                                  ──────────────────────────────
-
-timer.startTotal()                         ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐
-    │                                                                       │
-    ├─ if regular source:                                                   │
-    │    JavaCompiler.compile(...)                                          │
-    │    timer.recordCompilation(...)    ◀── ⏱ Compilation                  │
-    │                                                                       │
-    ├─ if JDK source: skip compilation                                      │
-    │                                                                       │
-    ▼                                                                       │
-runner.run() ───────────────────────▶  irStart = System.nanoTime()          │
-                                        │                                   │
-                                        ├─ create JavaView                  │
-                                        │    regular source: classDir       │
-                                        │    JDK source: jrt:/ runtime      │
-                                        │
-                                        ├─ LibrarySummaryCache.loadFromDisk()
-                                        │
-                                        ├─ load/resolve target classes
-                                        │
-                                        └─ timer.recordIrLoading(...) ◀── ⏱ IR loading
-                                            (all of the above is inside IR timing)
-                                        │
-                                        ├─ if --debug: readSourceFiles()
-                                        │              (not separately timed)
-                                        │
-                                        ├─ cgStart = System.nanoTime()
-                                        ├─ CallGraphBuilder.computeBottomUpOrder(...)
-                                        ├─ timer.recordCallGraph(...) ◀── ⏱ Call graph
-                                        └─ timer.recordCallGraphBreakdown(...)
-                                           (direct / override / merge subtimings)
-                                        │
-                                        ├─ preloadReachableLibrarySummaries(...)
-                                        ├─ computeReachableMethods(...)
-                                        ├─ filterBatch(...) / cache checks
-                                        │   (included only in total/overhead)
-                                        │
-                                        ├─ for each analyzed method:
-                                        │    dataflowStart = System.nanoTime()
-                                        │    SideEffectFlowAnalysis(...)
-                                        │    analysis.getExitGraph()
-                                        │    dataflowNs = elapsed        ◀── ⏱ Dataflow
-                                        │
-                                        │    sideEffectStart = System.nanoTime()
-                                        │    SideEffectChecker.check(...)
-                                        │    sideEffectNs = elapsed      ◀── ⏱ Side-effect
-                                        │
-                                        │    timer.addMethodTiming(...)
-                                        │    (cached / timeout entries are recorded
-                                        │     with 0 ms phase times)
-                                        │
-                                        ├─ if --show-graph: GraphPrinter...
-                                        ├─ ResultPrinter.print(...)
-                                        │   (not separately timed)
-                                        │
-    ◀──────────────────────────────── return                                │
-    │                                                                       │
-timer.endTotal()                           ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘
+TOTAL WALL-CLOCK TIMER
+timer.startTotal() -------------------------------------------------------------+
+                                                                                |
+Main.java                                                                       |
+  |                                                                             |
+  +--> detect JDK source? --------------------------------------------------+   |
+  |                                                                         |   |
+  | no                                                                      | yes
+  v                                                                         v   |
++------------------------------------+                         +------------------------------+
+| Compile source files               |                         | Skip compilation             |
+| JavaCompiler.compile(...)          |                         | use JRT runtime classes      |
+| timer.recordCompilation(...)       |                         |                              |
+| [TIMED: Compilation]               |                         | [Compilation = 0 ms]         |
++------------------------------------+                         +------------------------------+
+  |                                                                         |   |
+  +-----------------------------------------+-------------------------------+   |
+                                            |                                   |
+                                            v                                   |
+SideEffectAnalysisRunner.run()                                                  |
+  |                                                                             |
+  v                                                                             |
++--------------------------------------------------------------------------+    |
+| IR loading section                                                       |    |
+| irStart = System.nanoTime()                                              |    |
+| - create JavaView (classDir or jrt:/)                                    |    |
+| - LibrarySummaryCache.loadFromDisk()                                      |    |
+| - load / resolve target classes                                           |    |
+| - timer.recordIrLoading(...)                                              |    |
+| [TIMED: IR Loading]                                                       |    |
++--------------------------------------------------------------------------+    |
+  |                                                                             |
+  +--> if --debug: readSourceFiles() [NOT SEPARATELY TIMED]                    |
+  |                                                                             |
+  v                                                                             |
++--------------------------------------------------------------------------+    |
+| Call graph section                                                       |    |
+| cgStart = System.nanoTime()                                              |    |
+| - CallGraphBuilder.computeBottomUpOrder(...)                             |    |
+| - timer.recordCallGraph(...)                                             |    |
+| - timer.recordCallGraphBreakdown(...)                                    |    |
+|   directCallGraphMs / overrideGraphMs / graphMergeMs                     |    |
+| [TIMED: Call Graph]                                                      |    |
++--------------------------------------------------------------------------+    |
+  |                                                                             |
+  v                                                                             |
++--------------------------------------------------------------------------+    |
+| Pre-analysis setup                                                       |    |
+| - preloadReachableLibrarySummaries(...)                                  |    |
+| - computeReachableMethods(...)                                           |    |
+| - filterBatch(...) / cache checks                                        |    |
+| [COUNTED IN totalMs -> overheadMs]                                       |    |
++--------------------------------------------------------------------------+    |
+  |                                                                             |
+  v                                                                             |
++--------------------------------------------------------------------------+    |
+| Per-method analysis loop                                                 |    |
+|                                                                          |    |
+|  +--> Dataflow subsection                                                |    |
+|  |    dataflowStart = System.nanoTime()                                  |    |
+|  |    SideEffectFlowAnalysis(...)                                        |    |
+|  |    analysis.getExitGraph()                                            |    |
+|  |    dataflowNs = elapsed                                               |    |
+|  |    [TIMED: Dataflow]                                                  |    |
+|  |                                                                       |    |
+|  +--> Side-effect subsection                                             |    |
+|  |    sideEffectStart = System.nanoTime()                                |    |
+|  |    SideEffectChecker.check(...)                                       |    |
+|  |    sideEffectNs = elapsed                                             |    |
+|  |    [TIMED: Side-effect]                                               |    |
+|  |                                                                       |    |
+|  +--> Record method timing                                               |    |
+|       timer.addMethodTiming(...)                                         |    |
+|       cached / timeout entries are recorded with 0 ms phase times        |    |
++--------------------------------------------------------------------------+    |
+  |                                                                             |
+  +--> if --show-graph: GraphPrinter... [NOT SEPARATELY TIMED]                 |
+  +--> ResultPrinter.print(...)   [NOT SEPARATELY TIMED]                       |
+  |                                                                             |
+  v                                                                             |
+return to Main                                                                  |
+  |                                                                             |
+  v                                                                             |
+timer.endTotal() ---------------------------------------------------------------+
 timer.printReport()
 timer.saveJson()
 ```
