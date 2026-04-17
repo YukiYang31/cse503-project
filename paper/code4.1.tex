@@ -1,0 +1,38 @@
+
+\label{agl4i}
+\begin{lstlisting}[
+caption={Handling interprocedural calls}, 
+    label={alg:handle-interprocedural-calls},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=none,
+    keepspaces=true,
+    showstringspaces=false,
+    mathescape=true
+]
+Apply(v = w.foo(a1, ..., ak), G):
+
+    sig $\leftarrow$ method signature of foo
+
+    if IsSafeMethod(sig) then
+        // Known manually-labelled side-effect-free library method
+        if v has reference type then
+            n $\leftarrow$ fresh InsideNode // TODO: Ongoing optimization will handle this soundly
+            strongUpdate(v, { n })
+        return
+   
+    if cache.contains(sig) then
+        // Use cached interprocedural summary
+        calleeSummary $\leftarrow$ cache.get(sig)
+        InstantiateSummary(G, calleeSummary, [w, a1, ..., ak], v)  // Algorithm 5
+        return
+
+    // Conservative fallback: assume the worst
+    for each reference-type argument a in [w, a1, ..., ak] do
+        for each node n in L(a) do
+            markGlobalEscaped(n)
+    if v has reference type then
+        strongUpdate(v, { GlobalNode })
+\end{lstlisting}
+

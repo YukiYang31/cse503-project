@@ -2,14 +2,15 @@
 % Include this file via \input{report-related/illustrative_example}
 % Requires: tikz (arrows.meta, positioning, calc), listings, amsmath, amssymb, booktabs
 
+
 \subsection{Illustrative Example}
 \label{sec:example}
 
-We demonstrate the analysis on a two-method example that exercises the key algorithmic steps: intraprocedural dataflow, the constructor exception rule, interprocedural summary instantiation, and side-effect checking.
+We demonstrate the analysis on a two-method example that captures the key algorithmic steps: intra-procedural dataflow, the constructor exception rule, inter-procedural summary instantiation, and side-effect checking.
 
 \begin{figure}[H]
 \begin{lstlisting}[language=Java, basicstyle=\ttfamily\small, numbers=left, xleftmargin=2em]
-class BankAccount {
+static class BankAccount {
     Object owner;
     int amount;
 
@@ -32,22 +33,23 @@ class Wallet {
 \label{fig:example-code}
 \end{figure}
 
-Our analysis first uses Algorithm \ref{alg:ComputeBottomUpOrder} to obtain a call graph and the corresponding batch order. The call graph places the \texttt{BankAccount} constructor before \texttt{swapAccount()}, so the constructor's summary is cached before the caller is analyzed.
+Our analysis first uses Algorithm \ref{alg:ComputeBottomUpOrder} to obtain a call graph and the corresponding batch order. The call graph places the \texttt{BankAccount} constructor before \texttt{Wallet.swapAccount()}, so the constructor's summary is cached before the caller is analyzed.
 
 %% ────────────────────────────────────────────────────
-\paragraph{Analysis of \texttt{BankAccount(Object owner, int amount)} (callee).}
-The constructor is fully intraprocedural --- it contains no method calls. The analysis processes it via forward dataflow (Algorithm~3), applying transfer functions to each statement:
+\subsubsection{Analysis of \texttt{BankAccount(Object owner, int amount)} (callee)}
+The constructor is fully intra-procedural -- it contains no method calls. The analysis processes it via forward dataflow (Figure \ref{alg:intraprocedural}), applying transfer functions to each statement:
 
 \begin{enumerate}
-\item \textbf{Identity} (Alg.~4a): \texttt{this} $\to P_0$, \texttt{owner} $\to P_1$. The primitive parameter \texttt{amount} is not tracked in the points-to graph.
+\item \textbf{Identity} (\hyperref[agl4a]{rule a) of 3.3.1}): \texttt{this} $\to P_0$, \texttt{owner} $\to P_1$. The primitive parameter \texttt{amount} is not tracked in the points-to graph.
 
-\item \textbf{Field store} (Alg.~4e): Writing \texttt{this.owner = owner} with $\text{pt}(\texttt{this}) = \{P_0\}$ and $\text{pt}(\texttt{owner}) = \{P_1\}$ adds an inside edge $P_0 \xrightarrow{\texttt{owner}} P_1$ to $I$ and records $(P_0, \texttt{owner})$ in $W$.
+\item \textbf{Field store} (\hyperref[agl4e]{rule e) of 3.3.1}): Writing \texttt{this.owner = owner} with $L(\texttt{this}) = \{P_0\}$ and $L(\texttt{owner}) = \{P_1\}$ adds an inside edge $P_0 \xrightarrow{\texttt{owner}} P_1$ to $I$ and records $(P_0, \texttt{owner})$ in $W$.
 
-\item \textbf{Field store} (Alg.~4e): Writing \texttt{this.amount = amount} --- since \texttt{amount} is a primitive (\texttt{int}), no inside edge is created (there is no reference target). However, the mutation $(P_0, \texttt{amount})$ is still recorded in $W$.
+\item \textbf{Field store} (\hyperref[agl4e]{rule e) of 3.3.1}): Writing \texttt{this.amount = amount} --- since \texttt{amount} is a primitive (\texttt{int}), no inside edge is created (there is no reference target). However, the mutation $(P_0, \texttt{amount})$ is still recorded in $W$.
 \end{enumerate}
 
 \noindent
-Figure~\ref{fig:ctor-exit} shows the exit graph. The side-effect checker (Algorithm~8) computes the prestate set $A = \{P_0, P_1\}$ (both are ParameterNodes; there are no outside edges to expand). Although $W = \{(P_0, \texttt{owner}), (P_0, \texttt{amount})\}$ and $P_0 \in A$, the checker applies the \textbf{constructor exception}: direct field writes to \texttt{this} in a constructor are allowed, because they initialize the newly created object rather than mutating a pre-existing one. Since $P_0$ is the constructor's \texttt{this} and the method is a constructor, $P_0$ is skipped. No other prestate node is mutated, so the verdict is \textsc{side\_effect\_free}. The summary is stored in the cache.
+\Cref{fig:ctor-exit} shows the exit graph. Both nodes are ParameterNodes (blue ellipses). The inside edge $P_0 \xrightarrow{\texttt{owner}} P_1$ records the reference field store \texttt{this.owner = owner}. The primitive store \texttt{this.amount = amount} adds $(P_0, \texttt{amount})$ to $W$ but no edge (primitives have no pointer targets). Although $P_0$ is mutated and $P_0 \in A$ (prestate), the constructor exception rule skips $P_0$: initializing \texttt{this} in a constructor is allowed.
+  The final verdict indicates that the method is \textsc{side\_effect\_free}.
 
 \begin{figure}[h]
 \centering
@@ -70,30 +72,24 @@ Figure~\ref{fig:ctor-exit} shows the exit graph. The side-effect checker (Algori
     \node[below=0.6cm of $(P0)!0.5!(P1)$, font=\footnotesize, text=gray]
         {$W = \{(P_0, \texttt{owner}),\; (P_0, \texttt{amount})\}$ --- excused by constructor rule};
 \end{tikzpicture}
-\caption{Exit graph of the \texttt{BankAccount} constructor.
-  Both nodes are ParameterNodes (blue ellipses).
-  The inside edge $P_0 \xrightarrow{\texttt{owner}} P_1$ records the reference field store \texttt{this.owner = owner}.
-  The primitive store \texttt{this.amount = amount} adds $(P_0, \texttt{amount})$ to $W$ but no edge (primitives have no pointer targets).
-  Although $P_0$ is mutated and $P_0 \in A$ (prestate), the constructor exception rule skips $P_0$: initializing \texttt{this} in a constructor is allowed.
-  Verdict: \textsc{side\_effect\_free}.}
+\caption{Exit graph of the \texttt{BankAccount} constructor.}
 \label{fig:ctor-exit}
 \end{figure}
 
-
 %% ────────────────────────────────────────────────────
-\paragraph{Analysis of \texttt{Wallet.swapAccount(Object newOwner)} (caller).}
+\subsubsection{Analysis of \texttt{Wallet.swapAccount(Object newOwner)} (caller)}
 
 \begin{enumerate}
-\item \textbf{Identity} (Alg.~4a): \texttt{this} $\to P_0$, \texttt{newOwner} $\to P_1$.
+\item \textbf{Identity} (\hyperref[agl4a]{rule a) of 3.3.1}): \texttt{this} $\to P_0$, \texttt{newOwner} $\to P_1$.
 
-\item \textbf{Allocation + Constructor Invoke} (Alg.~4b, 4i):
+\item \textbf{Allocation + Constructor Invoke} (\hyperref[agl4b]{rule b) of 3.3.1}, \hyperref[agl4i]{rule i) of 3.3.1}): 
   In Jimple, \texttt{new BankAccount(newOwner, 0)} is decomposed into two statements:
   \begin{enumerate}
     \item[(a)] \textbf{Allocation}: \texttt{\$r = new BankAccount} creates a fresh InsideNode $I_0$; \texttt{\$r} $\to I_0$.
     \item[(b)] \textbf{Constructor call}: \texttt{\$r.\textless init\textgreater(newOwner, 0)} invokes the constructor with actual arguments $[\texttt{\$r}, \texttt{newOwner}, \texttt{0}]$.
   \end{enumerate}
 
-  The cached constructor summary is instantiated into the caller's graph via Algorithm~5:
+  The cached constructor summary is instantiated into the caller's graph via Algorithm \ref{alg:graph-combination}:
 
   \begin{itemize}
   \item \textit{Node mapping} $\mu$ (Step~1): The constructor's $P_0^{\text{callee}}$ (\texttt{this}) maps to $\{I_0\}$ (the freshly allocated object), and $P_1^{\text{callee}}$ (\texttt{owner}) maps to $\{P_1\}$ (\texttt{newOwner}).
@@ -136,19 +132,13 @@ Figure~\ref{fig:ctor-exit} shows the exit graph. The side-effect checker (Algori
     \node[varlbl, above=2pt of I0] {temp};
     \node[varlbl, above=2pt of P1] {newOwner};
 \end{tikzpicture}
-\caption{Exit graph of \texttt{swapAccount()}.
-  $P_0$ (double red border) is a mutated prestate node: the inside edge $P_0 \xrightarrow{\texttt{account}} I_0$ records the field store \texttt{this.account = temp}, and $(P_0, \texttt{account}) \in W$.
-  $I_0$ (green box) is the freshly allocated \texttt{BankAccount}; the edge $I_0 \xrightarrow{\texttt{owner}} P_1$ was introduced by instantiating the constructor summary.
-  Since $P_0 \in A$ and $(P_0, \texttt{account}) \in W$, the verdict is \textsc{side\_effecting}.}
+\caption{Exit graph of \texttt{swapAccount()}.}
 \label{fig:swap-exit}
 \end{figure}
 
 \noindent
-Figure~\ref{fig:swap-exit} shows the final exit graph.
-The side-effect checker computes $A = \{P_0, P_1\}$ (both are ParameterNodes; there are no outside edges, so $A$ is not expanded).
-Since $(P_0, \texttt{account}) \in W$ and $P_0 \in A$, the method mutates a pre-existing object.
-Note that unlike the constructor, \texttt{swapAccount()} is \emph{not} a constructor, so the constructor exception does not apply --- the mutation to $P_0$ is a genuine side effect.
-The verdict is \textsc{side\_effecting} (\textit{mutates} \texttt{this} \textit{via field} \texttt{account}).
+\Cref{fig:swap-exit} shows the final exit graph.
+$P_0$ (double red border) is a mutated prestate node: the inside edge $P_0 \xrightarrow{\texttt{account}} I_0$ records the field store \texttt{this.account = temp}, and $(P_0, \texttt{account}) \in W$. $I_0$ (green box) is the freshly allocated \texttt{BankAccount}; the edge $I_0 \xrightarrow{\texttt{owner}} P_1$ was introduced by instantiating the constructor summary. Since $P_0 \in A$ and $(P_0, \texttt{account}) \in W$, the verdict is \textsc{side\_effecting}.
 
 \medskip
 \noindent

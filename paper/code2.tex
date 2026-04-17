@@ -1,0 +1,29 @@
+\begin{lstlisting}[
+    caption={Compute Call Graph}, 
+    label={alg:ComputeBottomUpOrder},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=none,
+    keepspaces=true,
+    showstringspaces=false,
+    mathescape=true
+]
+Algorithm: ComputeBottomUpOrder(methods)
+
+Input:  Set of all concrete methods
+Output: List of batches (each batch is a list of methods),
+        ordered so callees appear before callers
+
+1.  // Build call graph
+2.  for each method m in methods do
+3.      for each invoke statement s in body(m) do
+4.          target $\leftarrow$ resolve(s)          // exact signature, then sub-signature
+5.          if target in methods then
+6.              addEdge(m $\rightarrow$ target)
+7.  // Tarjan's SCC algorithm produces SCCs in reverse topological order
+8.  batches $\leftarrow$ TarjanSCC(methods, edges)
+9.  return batches                         // first batch = leaves (no outgoing calls)
+\end{lstlisting}
+
+

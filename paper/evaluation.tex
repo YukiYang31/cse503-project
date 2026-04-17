@@ -1,9 +1,6 @@
 \section{Evaluation}
 We evaluate our side-effect analysis tool to answer three primary research questions regarding its scalability, correctness, and practical utility in downstream software engineering tasks.
 
-\paragraph{Status of this section.}
-The implementation described in this report now uses a complete-call-graph pipeline with BFS JDK discovery, bottom-up summary composition, and a disk-backed JDK summary cache. Any quantitative results presented in this section therefore need to be interpreted as results for the \emph{current} pipeline only if they were regenerated from the current experiment scripts and CSV artifacts. Older text that referred to the retired on-demand inter-file analysis model has been removed.
-
 
 \begin{itemize}
     \item RQ1: Scalability: What are the performance characteristics and scalability limits of the Salcianu--Rinard analysis on modern Java libraries?
@@ -15,14 +12,15 @@ The implementation described in this report now uses a complete-call-graph pipel
 
 \subsection{Experimental Setup}
 
+
 \paragraph{Benchmark}
 We evaluate our side-effect analysis tool on the \texttt{java.util} package of the OpenJDK standard library. It contains 128 source files comprising 451 classes and 5,305 methods.
 This package exercises the full spectrum of Java idioms (generics, inner classes, iterators, concurrent data structures). 
 
 \paragraph{Implementation}
 We loaded the \texttt{java.util} package from JDK 21 runtime bytecode via SootUp's \newline \texttt{JrtFileSystemAnalysisInputLocation}.
-Each file is analyzed independently for the experiment harness, but within each run the tool first discovers reachable JDK classes by bounded BFS, constructs a merged call graph, and then analyzes methods in bottom-up call-graph order.
-Cross-file JDK callees are therefore incorporated through the discovered call graph and summary cache rather than via the retired on-demand inter-file analysis path.
+Each file is analyzed independently: per-file setup includes IR loading, call graph construction within the file, and then method-by-method dataflow analysis in bottom-up call-graph order.
+
 
 
 
@@ -30,7 +28,7 @@ Cross-file JDK callees are therefore incorporated through the discovered call gr
 % ============================================================
 \subsection{RQ1: Scalability}
 % ============================================================
-
+\textcolor{red}{This entire section is outdated because with the JDK cache, we need a new way to measure runtime of JDK methods (some of them are already cached)}
 
 \paragraph{Metrics.}
 We report \emph{analysis time} broken down by pipeline phase. For each method, we measure
@@ -103,7 +101,7 @@ GregorianCalendar.java  &  4 &  4 \\
 \paragraph{Per-method timing.}
 Table~\ref{tab:method-timing} shows the distribution of per-method analysis time across all 4,304 analyzed methods.
 The median method completes in 0.4ms; 99.1\% of methods finish in under 100ms.
-Only 6 methods (0.1\%) exceed one second, concentrated in especially heavy inter-procedural cases (e.g., \texttt{Formatter.format} at 2.7s) or complex static initialization (e.g., \texttt{Tripwire.<clinit>} at 3.1s).
+Only 6 methods (0.1\%) exceed one second, all involving either deeply nested on-demand cross-file resolution (e.g., \texttt{Formatter.format} at 2.7s) or complex static initialization (e.g., \texttt{Tripwire.<clinit>} at 3.1s).
 
 \begin{table}[h]
 \centering
@@ -126,7 +124,7 @@ $> 1$~s           &     6 & 100.0\% \\
 The points-to graph size is a key driver of analysis cost.
 The median method produces a graph with 6 nodes and 4 edges; 48.4\% of methods have 5 or fewer nodes.
 However, the distribution has a long tail: 5.4\% of methods exceed 100 nodes, with a maximum of 1,494 nodes.
-The Pearson correlation between graph edge count and analysis time is $r = 0.35$, confirming that graph size is a moderate predictor of cost.
+The Pearson correlation between graph edge count and analysis time is $r = 0.35$, confirming that graph size is a moderate predictor of cost. \textcolor{red}{For Mike: It is still the case that interprocedural calls takes up the most amount of time. But current time data are from an old study.}
 Jimple statement count, by contrast, is a poor predictor ($r = 0.03$), suggesting that the analysis cost is dominated by inter-procedural graph instantiation rather than intraprocedural statement processing.
 
 \paragraph{Scalability assessment.}
@@ -176,7 +174,7 @@ Not In Cache & Method exists in ground truth but was not analyzed by the tool \\
 
 
 \paragraph{Overall results.}
-We compare the tool's cached verdicts for \texttt{java.util} methods against the expanded ground truth.
+We compare the tool's cached verdicts for \texttt{java.util} methods against the ground truth.
 Of the 4,646 ground-truth methods, 1,142 overlap with the tool's cache (the remaining 3,441 were not reached during analysis).
 Table~\ref{tab:results} presents the classification of these 1,142 overlapping methods.
 
@@ -264,7 +262,7 @@ Table~\ref{tab:per-file} shows the files with annotated methods in the cache and
 \label{tab:per-file}
 \begin{tabular}{lrrrr}
 \toprule
-\textbf{File} & \textbf{Annotated} & \textbf{Match} & \textbf{FP} & \textbf{Agreement} \\
+\textbf{File} & \textbf{Annotated} & \textbf{Match} & \textbf{Mismatch} & \textbf{Agreement} \\
 \midrule
 Arrays.java               &  63 &  14 &  42 & 25.0\% \\
 Collections.java          & 170 &  20 &  36 & 35.7\% \\
@@ -336,3 +334,33 @@ The remaining $\sim$305 methods appear to be true positives from our tool that n
 \paragraph{Unit tests.}
 In addition to the JDK evaluation, our tool includes a suite of 30 unit tests covering intraprocedural analysis (arithmetic, new-object mutation, static field escape, constructor exception), interprocedural analysis (callee summary instantiation, transitive purity, factory patterns, iterator idioms), the paper's running example from Salcianu-Rinard~\cite{salcianu2005purity}, and merge-mode equivalence verification.
 All 30 tests pass.
+
+
+
+\subsection{RQ3: Downstream analysis}
+We will demonstrate the utility of our tool by integrating its output into two of the three widely used software analysis tools. 
+\begin{itemize}
+    \item \textbf{The Checker Framework}. The Checker Framework relies on side-effect information to maintain precision. For example, if the analyzer knows a field F is \texttt{NonNull}, but then encounters a call to an unknown method \texttt{F.unknownMethod()}, it must conservatively assume \texttt{F} might have become null to maintain soundness. But precision is lost. 
+    To evaluate the utility of our tool on Checker Framework, we will run the Checker Framework using: (1) current JDK side-effect annotations, and (2) current specifications plus our inferred side-effect stubs. We will then be able to compare:
+\begin{itemize}
+    \item Total warnings and distinct warning sites
+    \item Reduction in warnings attributable to lost flow refinements across calls
+    \item Any regressions (new warnings or type-check failures).
+\end{itemize}
+
+\item \textbf{Randoop (Safe Test Generation)}. Randoop is an automated unit test generator for Java that produces tests in JUnit format. To guarantee test validity, Randoop must avoid using side-effecting methods within assertions (e.g., \texttt{assert(obj.isValid())}). Invoking a side-effecting method inside an assertion alters the program state, effectively invalidating the test case it attempts to verify.
+
+Randoop accepts a whitelist of side-effect-free methods via the \texttt{--side-effect-free-methods} argument. Providing this information enables the tool to safely utilize more methods in assertions, leading to more meaningful and stable tests. Notably, the Randoop developers explicitly list improved side-effect analysis as a key area for future enhancement \cite{RandoopProjectIdeas}.
+
+To evaluate our tool's impact, we will execute Randoop in two configurations: \begin{itemize} \item \textbf{Run A (Baseline):} Randoop with default settings. \item \textbf{Run B (Enhanced):} Randoop configured with the \texttt{--side-effect-free-methods} list generated by our analysis. \end{itemize}
+
+We will assess whether our analysis effectively filters out methods that have side effects, preventing Randoop from generating ``flaky'' or invalid tests that inadvertently mutate the state they are intended to verify.
+
+
+\item \textbf{Daikon (Invariant Detection)}. Daikon \cite{DaikonWebsite} infers invariants (e.g., \texttt{x > 0}) by observing program execution. It needs to call observer methods to inspect object state, but calling a method that may have side effects during observation is unsafe. It could crash the program or corrupt the data being measured.
+
+To complete the experiment and test the utility of our tool, we will run Daikon with the \texttt{--purity-file} flag, feeding it the side-effect results from our tool.
+
+We will measure if providing this automated purity list allows Daikon to safely execute more observer methods, resulting in a richer set of detected invariants compared to running Daikon without this information.
+
+\end{itemize}

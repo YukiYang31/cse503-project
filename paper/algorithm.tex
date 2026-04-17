@@ -1,0 +1,21 @@
+
+
+
+
+\section{Node Merging Optimization}
+
+An optional optimization from Madhavan et al. (SAS 2011) enforces that each \texttt{(source, field, edgeType)} triple has at most one target, bounding graph size. Applied after field loads, at CFG join points, and at method exit.
+
+\begin{lstlisting}
+Algorithm: EnforceUniqueness(G)
+
+repeat until no violation exists:
+    find (source, field, type) with targets {t1, t2, ...} where |targets| > 1
+    pick representative r from {t1, t2} by priority:
+        ParameterNode > GlobalNode > InsideNode > LoadNode
+        break ties by lexicographic ID
+    let other = the non-representative node
+    replaceNode(other, r)        // substitute r for other everywhere in G
+\end{lstlisting}
+
+

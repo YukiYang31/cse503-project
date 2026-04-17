@@ -1,0 +1,59 @@
+\begin{lstlisting}[
+    caption={Side-effect checker}, 
+    label={alg:sideEffectChecker},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=none,
+    keepspaces=true,
+    showstringspaces=false,
+    mathescape=true
+]
+Algorithm: CheckSideEffects(m, G_exit)
+
+Input:  Method m, exit graph G_exit = (I, O, L, E, W)
+Output: SIDE_EFFECT_FREE or SIDE_EFFECTING(reason)
+
+// Step 1: Compute prestate nodes A
+//    (objects that existed before the method was called)
+A $\leftarrow$ { n in G_exit : n is ParameterNode }
+Expand A by BFS along outside edges only:
+    worklist $\leftarrow$ A
+    while worklist is not empty do
+        n $\leftarrow$ worklist.pop()
+        for each outside edge (n --f--> n') in O do
+            if n' not in A then
+                A $\leftarrow$ A $\cup$ { n' }
+                worklist.push(n')
+
+// Step 2: Compute globally escaped nodes B
+//    (objects reachable from global state)
+B $\leftarrow$ E $\cup$ { GlobalNode }
+Expand B by BFS along all edges (inside and outside):
+    worklist $\leftarrow$ B
+    while worklist is not empty do
+        n $\leftarrow$ worklist.pop()
+        for each edge (n --f--> n') in I $\cup$ O do
+            if n' not in B then
+                B $\leftarrow$ B $\cup$ { n' }
+                worklist.push(n')
+
+// Step 3: Check for static field mutations
+for each (GlobalNode, f) in W do
+    return SIDE_EFFECTING("writes to static field f")
+
+// Step 4: Check each prestate node
+for each node n in A do
+    // Skip 'this' mutations in constructors (allowed to initialize own fields)
+    if m is a constructor and n = P0 then
+        continue
+
+    if n in B then
+        return SIDE_EFFECTING("prestate node n escapes to global scope")
+
+    for each (n, f) in W do
+        return SIDE_EFFECTING("mutates prestate node n via field f")
+
+// Step 5: All checks passed
+return SIDE_EFFECT_FREE
+\end{lstlisting}

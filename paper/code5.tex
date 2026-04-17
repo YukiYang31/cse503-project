@@ -1,0 +1,90 @@
+\begin{lstlisting}[
+    caption={Viewpoint Adaptation}, 
+    label={alg:graph-combination},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=none,
+    keepspaces=true,
+    showstringspaces=false,
+    mathescape=true
+]
+Algorithm: InstantiateSummary(G_caller, summary_callee, actualArgs, returnVar)
+
+Input:  Caller's current graph G_caller,
+        callee's exit-graph summary G_callee = (I_c, O_c, L_c, E_c, W_c),
+        actual arguments [a0, ..., ak],
+        variable to receive return value (may be null)
+Output: G_caller updated in place
+
+// --- Step 0: Remap callee node IDs to fresh caller-namespace IDs ---
+//     (InsideNodes and LoadNodes get fresh IDs; ParameterNodes are not remapped;
+//      GlobalNode maps to itself)
+
+for each InsideNode n in G_callee do
+    remap(n) $\leftarrow$ fresh InsideNode in G_caller
+for each LoadNode n in G_callee do
+    remap(n) $\leftarrow$ fresh LoadNode in G_caller
+Apply remap to all edges, return targets, E_c, and W_c in G_callee
+
+// --- Step 1: Compute node mapping mu (least fixed point) ---
+
+Initialize mu:
+    for i = 0, ..., k do
+        mu(P_i) $\leftarrow$ pt_caller(actualArgs[i])      // Constraint 1
+    for all other callee nodes n do
+        mu(n) $\leftarrow$ {}
+
+repeat until mu reach a fixed-point:
+    // Constraint 2: callee outside edge meets caller inside edge
+    for each outside edge (n1 --f--> n2) in O_c do
+        for each node n3 in mu(n1) do
+            for each node n4 in InsideEdgeTargets_caller(n3, f) do
+                mu(n2) $\leftarrow$ mu(n2) $\cup$ { n4 }
+
+    // Constraint 3: callee outside edge meets callee inside edge (aliasing)
+    for each outside edge (n1 --f--> n2) in O_c do
+        for each inside edge (n3 --f--> n4) in I_c do
+            S1 $\leftarrow$ mu(n1) $\cup$ ({n1} \ ParameterNode)
+            S3 $\leftarrow$ mu(n3) $\cup$ ({n3} \ ParameterNode)
+            if S1 intersects S3 and (n1 != n3 or n1 is LoadNode) then
+                mu(n2) $\leftarrow$ mu(n2) $\cup$ mu(n4) $\cup$ ({n4} \ ParameterNode)
+
+// Extended mapping: identity for non-parameter nodes
+mu'(n) = mu(n) $\cup$ ({n} \ ParameterNode)
+
+// --- Step 2 and 3: Combine graphs ---
+
+// Inside edges
+for each inside edge (n1 --f--> n2) in I_c do
+    for each n1' in mu'(n1), n2' in mu'(n2) do
+        addInsideEdge_caller(n1', f, n2')
+
+// Outside edges (skip if source maps to InsideNode)
+for each outside edge (n --f--> nL) in O_c do
+    for each n' in mu'(n) do
+        if n' is not InsideNode then
+            addOutsideEdge_caller(n', f, nL)
+
+// Return value
+if returnVar != null then
+    retNodes $\leftarrow$ Union of mu'(n) for each n in returnTargets(G_callee)
+    strongUpdate(returnVar, retNodes)
+
+// Escaped nodes
+E_caller $\leftarrow$ E_caller $\cup$ { n' : n in E_c, n' in mu'(n) }
+
+// Update Write Set
+for each (n, f) in W_c do
+    for each n' in mu'(n) do
+        if n' is not InsideNode and n' exists in G_caller then
+            recordMutation_caller(n', f)
+
+// --- Step 4: Remove captured load nodes ---
+//     A LoadNode is "captured" if it is unreachable from any root
+//     (parameters, global escaped nodes, variable targets).
+liveNodes $\leftarrow$ BFS from roots of G_caller along all edges
+for each LoadNode nL in G_caller do
+    if nL not in liveNodes then
+        removeNode(nL)
+\end{lstlisting}
