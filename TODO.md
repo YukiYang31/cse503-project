@@ -53,7 +53,7 @@
      - `JVirtualInvokeExpr` and `JInterfaceInvokeExpr` are the main cases that may need multiple targets
    - Decide whether the current call graph construction and the summary lookup policy agree:
      - `CallGraphBuilder` already adds override-based dependencies for ordering
-     - `TransferFunctions` currently does not consult that graph at call time
+     - `TransferFunctions` currently does not consult the override graph at call time
      - either keep the current design and document it clearly, or move part of the dispatch union logic into `TransferFunctions`
 
 3. Address the four code-vs-paper findings from the whole-codebase review.
