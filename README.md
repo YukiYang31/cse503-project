@@ -361,7 +361,10 @@ The script saves per-file results to `experiment/tool_results/` as it goes. On r
 - **Inter-file analysis only covers co-compiled files**: When analyzing user code, the `JavaView` is backed only by the compiled output of the files explicitly passed as arguments. If file1 calls file2 but only file1 is given as input, file2 is never compiled or loaded — the call falls back to conservative (all arguments globally escaped). To get proper inter-procedural analysis across user-defined files, all files must be passed together as arguments.
 - **Mutually recursive methods (SCCs) are iterated batch-wise until summaries stop changing**: Methods in an SCC are re-analyzed until the cached summaries in that batch stabilize. When `--method-timeout` is set, the tool applies a timeout budget to the whole SCC batch (`batch size × method timeout`) as a safety net.
 - **No exception-path precision**: Exception control flow is handled by SootUp's CFG but not modeled with special precision.
-- **Array modeling is simplified**: Array elements are tracked via mutation records but not with per-index precision.
+- **Array modeling uses a synthetic null field**: Array element access is modeled like field access with `null` as a synthetic field key (since Java arrays have no named fields). Specifically:
+  - `x = arr[i]` (array load): if the array base node is prestate-reachable, a `LoadNode` is created and an outside edge `arr -null-> LoadNode` is added — this lets `SideEffectChecker` traverse the edge and recognize the loaded element as prestate-reachable, so a later mutation on it is caught.
+  - `arr[i] = y` (array store): inside edges `arr -null-> rhsNode` are added for each node pointed to by the RHS, and a mutation on the array node is recorded — consistent with weak field-store semantics.
+  - Analysis is index-insensitive (all elements share the same `null` slot); no per-index precision.
 
 ## References
 

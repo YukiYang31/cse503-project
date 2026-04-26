@@ -297,6 +297,22 @@ Prestate-reachable means:
 - add inside edges
 - record mutation in `W`
 
+### Array load
+
+`x = arr[i]` is modeled like a field load using `null` as a synthetic "array element" field signature (since Java arrays have no named fields).
+
+- collect existing inside/outside targets for the `null` slot
+- if the array base node is prestate-reachable, create a `LoadNode` and add an outside edge `array -null-> LoadNode`
+- this outside edge lets `SideEffectChecker.computePrestateNodes` reach the loaded element via BFS, so a later mutation on that element is detected correctly
+
+### Array store
+
+`arr[i] = y` is modeled like a weak field store using `null` as the synthetic field.
+
+- add inside edges `array -null-> rhsNode` for each node pointed to by the RHS
+- record mutation `(arrayNode, null)` in `W`
+- the inside edges preserve what was stored so downstream loads can find the values
+
 ### Static field store
 
 - mark RHS nodes globally escaped
@@ -404,7 +420,7 @@ Targeted test command that passed during this session:
 - dynamic dispatch is handled by summary propagation, not call-site override union
 - user-code runs must not persist into `jdk-cache/`
 - constructor behavior is intentionally special-cased
-- array modeling is simplified
+- array elements use `null` as a synthetic field key in the edge maps (HashMap supports null keys)
 - unknown calls are conservative by design
 
 ## Suggested First Files To Read

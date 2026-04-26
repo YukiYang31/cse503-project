@@ -392,11 +392,9 @@ public class TransferFunctions {
         }
     }
 
-    /** x = y[i] → treat like field load with synthetic field */
+    /** x = y[i] → treat like field load using null as the synthetic array-element field */
     private void handleArrayLoad(Local lhs, JArrayRef arrayRef, PointsToGraph graph) {
         if (!(lhs.getType() instanceof ReferenceType)) return;
-        // We treat array element access as a field access with a null field signature
-        // This is a simplification — we use the base's existing edges
         Local base = (Local) arrayRef.getBase();
         Set<Node> baseNodes = graph.pointsTo(base);
         Set<Node> result = new HashSet<>();
@@ -404,27 +402,32 @@ public class TransferFunctions {
         if (config.debug) System.out.println("Debug== array load: " + lhs.getName() + " = " + base.getName() + "[i], base points to " + nodeSetToString(baseNodes));
 
         for (Node n : baseNodes) {
-            // For arrays, we model element access: the array node itself "contains" its elements
-            // A simple model: if the array node is prestate, create a load node
+            // Collect existing inside- and outside-edge targets for the null (array-element) slot
+            result.addAll(graph.getTargets(n, null, EdgeType.INSIDE));
+            result.addAll(graph.getTargets(n, null, EdgeType.OUTSIDE));
+
+            // If n is prestate-reachable, create a LoadNode and add an outside edge (mirrors field load)
             if (isPrestateReachable(n)) {
-                LoadNode loadNode = nextLoadNode(graph,
-                    "array element from " + describeNode(n));
-                result.add(loadNode);
-                if (config.debug) System.out.println("Debug==   created LoadNode " + loadNode.getId() + " for array element from " + n.getId());
-            }
-            // Also include any InsideNodes that were stored into this array
-            for (var fieldEntry : graph.getEdges().getOrDefault(n, java.util.Map.of()).entrySet()) {
-                for (var et : fieldEntry.getValue()) {
-                    result.add(et.target());
+                Set<Node> existingOutside = graph.getTargets(n, null, EdgeType.OUTSIDE);
+                if (existingOutside.isEmpty()) {
+                    LoadNode loadNode = nextLoadNode(graph,
+                        "array element from " + describeNode(n));
+                    graph.addOutsideEdge(n, null, loadNode);
+                    result.add(loadNode);
+                    if (config.debug) System.out.println("Debug==   created LoadNode " + loadNode.getId() + " for array element from " + n.getId());
                 }
             }
         }
 
         graph.strongUpdate(lhs, result);
         if (config.debug) System.out.println("Debug==   result: " + lhs.getName() + " -> " + nodeSetToString(result));
+
+        if (config.merge) {
+            NodeMerger.enforceUniqueness(graph);
+        }
     }
 
-    /** y[i] = x → treat like field store */
+    /** y[i] = x → treat like weak field store using null as the synthetic array-element field */
     private void handleArrayStore(JArrayRef arrayRef, Value rhs, PointsToGraph graph) {
         Local base = (Local) arrayRef.getBase();
         Set<Node> baseNodes = graph.pointsTo(base);
@@ -434,12 +437,11 @@ public class TransferFunctions {
         if (config.debug) System.out.println("Debug== array store: " + base.getName() + "[i] = " + rhs + ", base points to " + nodeSetToString(baseNodes));
 
         for (Node baseNode : baseNodes) {
-            // Record as mutation of the array object
-            // We use null field to represent array element writes
+            for (Node rhsNode : rhsNodes) {
+                graph.addInsideEdge(baseNode, null, rhsNode);
+            }
             graph.recordMutation(baseNode, null);
             if (config.debug) System.out.println("Debug==   recorded mutation: (" + baseNode.getId() + ", [])");
-            // We don't add specific field edges for arrays (simplification)
-            // The mutation record is sufficient for side-effect checking
         }
     }
 

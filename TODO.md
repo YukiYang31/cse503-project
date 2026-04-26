@@ -83,7 +83,7 @@
        - mixed class/interface hierarchies.
      - Update README/implementation docs after behavior is fixed and validated.
 
-   3.2 Critical: array load/store modeling can miss side effects on prestate objects.
+   3.2 [FIXED] Critical: array load/store modeling can miss side effects on prestate objects.
    - Problem summary:
      - Current array handling is weaker than the field rules used by the paper-style abstraction.
      - Array load creates load nodes but does not create corresponding outside edges from array base nodes.

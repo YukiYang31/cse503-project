@@ -64,7 +64,8 @@ public class SideEffectAnalysisTest {
         "src/test/resources/intraprocedural/SideEffectingExamples.java",
         "src/test/resources/intraprocedural/EdgeCases.java",
         "src/test/resources/intraprocedural/ComplexSideEffectFreeExample.java",
-        "src/test/resources/intraprocedural/ConstructorExamples.java"
+        "src/test/resources/intraprocedural/ConstructorExamples.java",
+        "src/test/resources/intraprocedural/ArrayExamples.java"
     };
 
     private static final String[] INTERPROCEDURAL_TEST_FILES = {
@@ -515,6 +516,15 @@ public class SideEffectAnalysisTest {
                 expect("LinkedNode", "<init>", SideEffectResult.SIDE_EFFECT_FREE),
                 expect("LinkedNode", "setValue", SideEffectResult.SIDE_EFFECTING),
                 expect("LinkedNode", "getValue", SideEffectResult.SIDE_EFFECT_FREE));
+    }
+
+    @Test
+    public void testArrayExamples() throws Exception {
+        assertAllResults(intraprocedural(),
+                expect("ArrayExamples", "mutateLoadedElement", SideEffectResult.SIDE_EFFECTING),
+                expect("ArrayExamples", "storeIntoParamArray", SideEffectResult.SIDE_EFFECTING),
+                expect("ArrayExamples", "createAndFillFreshArray", SideEffectResult.SIDE_EFFECT_FREE),
+                expect("ArrayExamples", "readArrayElement", SideEffectResult.SIDE_EFFECT_FREE));
     }
 
     @Test
